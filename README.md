@@ -5,6 +5,10 @@ git config --global user.name "jbperin"
 
 git config --global user.email "jbperin@users.noreply.github.com"
 
+git clone https://github.com/jbperin/hello-world.git
+
+git config --global credential.helper wincred
+
 
 
 
