@@ -9,6 +9,7 @@ git clone https://github.com/jbperin/hello-world.git
 
 git config --global credential.helper wincred
 
+git pull
 
 
 
