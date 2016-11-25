@@ -11,6 +11,12 @@ git config --global credential.helper wincred
 
 git pull
 
+git add README.md
+
+git commit -m "Add a few git tips"
+
+git push
+
 
 
 essai de modif pour tester le pull request
