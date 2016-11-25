@@ -1,5 +1,13 @@
 # hello-world
 tutorial github
+
+git config --global user.name "jbperin"
+
+git config --global user.email "jbperin@users.noreply.github.com"
+
+
+
+
 essai de modif pour tester le pull request
 
     import os, sys
