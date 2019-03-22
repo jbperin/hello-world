@@ -2,9 +2,26 @@
 
 # Système
 
-```
-sudo deluser -remove-home pi
 
+```
+sudo raspi-config
+```
+
+
+```
+sudo vi /etc/adduser.conf 
+sudo deluser -remove-home pi
+sudo passwd <username>
+su - <username>
+```
+
+```
+sudo apt-cache search games
+sudo apt-get install openarena
+```
+
+
+```
 sudo tail -f /var/log/auth.log
 ```
 
@@ -14,19 +31,10 @@ sudo tail -f /var/log/auth.log
 sudo ifconfig wlan0 down
 sudo ifconfig wlan0 up
 ```
-
-# XRDP
-
-```
-sudo apt-get install xrdp
-sudo service xrdp stop
-```
-
-# FAIL2BAN
+## Gestion des services
 
 ```
-sudo apt-get install fail2ban
-sudo vi /etc/ssh/sshd_config /etc/fail2ban/filter.d/sshd.conf /etc/fail2ban/jail.local
+sudo service --status-all
 ```
 
 
@@ -38,6 +46,32 @@ sudo vi /etc/ssh/sshd_config /etc/fail2ban/filter.d/sshd.conf /etc/fail2ban/jail
 
 sudo apt install openssh-server
 sudo vi /etc/ssh/sshd_config
+```
+
+```
+Port 22
+
+LogLevel VERBOSE
+
+PermitRootLogin no
+#StrictModes yes
+#MaxAuthTries 6
+MaxSessions 3
+
+# To disable tunneled clear text passwords, change to no here!
+PasswordAuthentication no
+PermitEmptyPasswords no
+
+
+UsePAM no
+
+X11Forwarding yes
+
+```
+
+
+
+```
 sudo systemctl restart ssh
 
 sudo systemctl status ssh
@@ -48,9 +82,45 @@ sudo service ssh reload
 ```
 
 
+```
+ssh-keygen.exe -t rsa -C "" -b 4096 
+```
+```
+sudo nc -l -p  2200 > id_pub.rsa.key
 
-# Git &  github
+nc 192.168.1.15 2200 < .ssh/id_rsa.pub
+ssh -Y <user>@192.168.1.15
+```
 
+
+
+# XRDP
+
+```
+sudo apt-get install xrdp
+sudo service xrdp stop
+```
+
+# RDESKTOP
+
+```
+sudo apt-get install rdesktop
+rdesktop <IP_DEST>:3389
+```
+
+
+# FAIL2BAN
+
+```
+sudo apt-get install fail2ban
+sudo vi /etc/ssh/sshd_config /etc/fail2ban/filter.d/sshd.conf /etc/fail2ban/jail.local
+sudo iptables --list
+
+sudo fail2ban-client set ssh unbanip 192.168.1.30
+sudo fail2ban-client status
+sudo service fail2ban restart
+
+```
 
 
 # Git &  github
@@ -91,9 +161,11 @@ git push
 # PYTHON
 
 https://git-scm.com/book/fr/v2/Utilitaires-Git-Stockage-des-identifiants
+
 ```
 sudo python -m SimpleHTTPServer 80
 ```
+
 essai de modif pour tester le pull request
 ```python 
 import os, sys
@@ -121,7 +193,26 @@ def main(argv):
     sys.stdout.write("FIN\n")
 ```
 
+# JEUX
+
+## GNUGO
+
+```
+gnugo -l game.sgf -L 2
+
+```
+```
+gnugo --mode ascii --level 10 -o game.sgf --boardsize 9 --color white --handicap 0
+gnugo -l game.sgf --mode ascii  --replay black --printboard
+gnugo -l 2018-12-27-White-0.5.sgf --score finish
+```
+
+## DOOMSLIKE
 
 
+```
 
-
+chocolate-doom -iwad /home/perin/Downloads/DOOM1.WAD 
+chocolate-doom-setup -iwad /home/perin/Downloads/DOOM1.WAD
+chocolate-heretic-setup -iwad /home/perin/Downloads/HERETIC.WAD
+```
