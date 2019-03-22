@@ -1,7 +1,61 @@
 
-# tutorial github
 
-## Gestion  des credentials dans Git
+# Système
+
+```
+sudo deluser -remove-home pi
+
+sudo tail -f /var/log/auth.log
+```
+
+## Gestion des interfaces réseau
+
+```
+sudo ifconfig wlan0 down
+sudo ifconfig wlan0 up
+```
+
+# XRDP
+
+```
+sudo apt-get install xrdp
+sudo service xrdp stop
+```
+
+# FAIL2BAN
+
+```
+sudo apt-get install fail2ban
+sudo vi /etc/ssh/sshd_config /etc/fail2ban/filter.d/sshd.conf /etc/fail2ban/jail.local
+```
+
+
+# SSH
+
+
+
+```
+
+sudo apt install openssh-server
+sudo vi /etc/ssh/sshd_config
+sudo systemctl restart ssh
+
+sudo systemctl status ssh
+
+cat id_rsa.pub >> ~/.ssh/authorized_keys
+
+sudo service ssh reload
+```
+
+
+
+# Git &  github
+
+
+
+# Git &  github
+
+## Configuration de base GitHub
 ```
 git config --global user.name "jbperin"
 git config --global user.email "jbperin@users.noreply.github.com"
@@ -19,6 +73,7 @@ git config --global credential.helper store
 ```
 NB : je n'arrive pas à faire marcher --file ~/.my-credentials
 
+
 ## Récupération d'une repo Git
 
 ```
@@ -33,7 +88,12 @@ git commit -m "Add a few git tips"
 git push
 ```
 
+# PYTHON
 
+https://git-scm.com/book/fr/v2/Utilitaires-Git-Stockage-des-identifiants
+```
+sudo python -m SimpleHTTPServer 80
+```
 essai de modif pour tester le pull request
 ```python 
 import os, sys
