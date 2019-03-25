@@ -167,6 +167,8 @@ sudo python -m SimpleHTTPServer 80
 ```
 
 essai de modif pour tester le pull request
+
+
 ```python 
 import os, sys
 import platform
@@ -192,6 +194,44 @@ def main(argv):
 
     sys.stdout.write("FIN\n")
 ```
+Script pour publier l'adresse de sa box sur un serveur ftp
+
+```python 
+#!/usr/bin/python
+
+IP_FILE="homeip.txt"
+FTP_SERVER=''
+FTP_LOGIN=''
+FTP_PASSWD=''
+
+# Retrieve Internet Box's Ip address from whatip.com
+import urllib.request
+contents = urllib.request.urlopen("http://www.whatip.com").read()
+
+import re
+result=re.compile(">([0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3})<").search(str(contents))
+strIp=result.group(1)
+
+# write IP String to local file
+with open(IP_FILE, "w") as text_file:
+    text_file.write(strIp)
+
+
+
+# transfert IP File to 
+import ftplib 
+with ftplib.FTP(FTP_SERVER) as ftp:
+    try:    
+        ftp.login(FTP_LOGIN, FTP_PASSWD)  
+        with open(IP_FILE, 'rb') as fp:
+            res = ftp.storlines("STOR " + IP_FILE, fp)
+    except ftplib.all_errors as e:
+        print('FTP error:', e) 
+
+
+
+```
+
 
 # JEUX
 
