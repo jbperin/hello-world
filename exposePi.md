@@ -28,9 +28,19 @@ configuration avancée / configuration réseau / NAT/PAT
 |HTTP|80|\<PORTWEB\>|TCP+UDP|\<HOSTNAME\>|[x]|
 
 
-### Configurer le parefeu pour autoriser
+### Configurer le parefeu pour autoriser les connexions entrantes
 
 |app/service|protocole|port source|port dest|action|
 |--|--|--|--|--|--|
 |HTTP|TCP+UDP|\<PORTWEB\>|80|accepter|--|
 |HTTPS|TCP||443|accepter|--|
+
+
+
+## Tester
+
+
+sudo python -m SimpleHTTPServer 80
+
+
+http://\<IPBOX\>:\<PORTWEB\>/
