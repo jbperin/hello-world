@@ -31,16 +31,27 @@ configuration avancée / configuration réseau / NAT/PAT
 ### Configurer le parefeu pour autoriser les connexions entrantes
 
 |app/service|protocole|port source|port dest|action|
-|--|--|--|--|--|--|
-|HTTP|TCP+UDP|\<PORTWEB\>|80|accepter|--|
-|HTTPS|TCP||443|accepter|--|
-
+|--|--|--|--|--|
+|HTTP|TCP+UDP|\<PORTWEB\>|80|accepter|
+|HTTPS|TCP||443|accepter|
+| DNS | TCP | |53 | accepter|
 
 
 ## Tester
 
+Lancer un serveur WEB
 
+```
 sudo python -m SimpleHTTPServer 80
+```
 
+Depuis une machine extérieure au réseau domestique, visiter la page web 
 
 http://\<IPBOX\>:\<PORTWEB\>/
+
+
+# RESSOURCES
+
+https://www.techcoil.com/blog/how-to-deploy-python-3-flask-application-on-raspberry-pi-3-with-raspbian-stretch-lite-nginx-supervisor-virtualenv-and-gunicorn/
+
+
