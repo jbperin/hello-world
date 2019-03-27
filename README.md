@@ -204,6 +204,7 @@ FTP_SERVER=''
 FTP_LOGIN=''
 FTP_PASSWD=''
 
+
 # Retrieve Internet Box's Ip address from whatip.com
 import urllib.request
 contents = urllib.request.urlopen("http://www.whatip.com").read()
@@ -212,21 +213,39 @@ import re
 result=re.compile(">([0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3})<").search(str(contents))
 strIp=result.group(1)
 
+print ("IP address of box = %s"%strIp)
 # write IP String to local file
 with open(IP_FILE, "w") as text_file:
     text_file.write(strIp)
 
 
+print ("FTP updating ")
 
 # transfert IP File to 
 import ftplib 
 with ftplib.FTP(FTP_SERVER) as ftp:
     try:    
-        ftp.login(FTP_LOGIN, FTP_PASSWD)  
+        ftp.login(FTP_LOGIN, FTP_PASSWD)
+        print ("\tLogged In. Deleting old ipfile.")
+        
+        try:
+            ftp.delete(IP_FILE)
+            print ("\told ipfile deleted. Uploading new ipfile")
+        except ftplib.error_perm as e:
+            print('FTP delete error:', e) 
+            pass
+        
         with open(IP_FILE, 'rb') as fp:
             res = ftp.storlines("STOR " + IP_FILE, fp)
+            
+        print ('\tClosing FTP connection')
+        ftp.close()
+        
     except ftplib.all_errors as e:
         print('FTP error:', e) 
+
+print ("Quiting FTP...")
+ftp.quit()
 
 
 
