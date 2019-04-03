@@ -14,10 +14,15 @@ sudo chmod -R 770 /var/www/html/
 
 et consultale à l'adresse : [`http://127.0.0.1/`](http://127.0.0.1/)
 
+La configuration ngix se trouve dans `sudo leafpad /etc/nginx/nginx.conf`
 
 
-Dans le fichier `/etc/nginx/sites-available/default`, configurer la ligne `index` pour ajouter le cas php.
+Dans le fichier `/etc/nginx/sites-enabled/default`, configurer la ligne `index` pour ajouter le cas php.
 
+
+```
+sudo systemctl status nginx
+```
 
 Pour la prise en compte par nginx des modifications:
 
@@ -38,6 +43,8 @@ Si problème d'accès:
 ```
 sudo apt install php-fpm
 ```
+
+
 
 # Ressources
 
