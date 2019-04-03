@@ -203,6 +203,7 @@ IP_FILE="homeip.txt"
 FTP_SERVER=''
 FTP_LOGIN=''
 FTP_PASSWD=''
+WEB_URL=""
 
 # Retrieve Internet Box's Ip address from whatip.com
 import urllib.request
@@ -210,24 +211,62 @@ contents = urllib.request.urlopen("http://www.whatip.com").read()
 
 import re
 result=re.compile(">([0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3})<").search(str(contents))
-strIp=result.group(1)
+strCurrentIp=result.group(1)
 
-# write IP String to local file
-with open(IP_FILE, "w") as text_file:
-    text_file.write(strIp)
+print ("current IP = %s."%(strCurrentIp))
 
 
+# Retrieve Former Internet Box's Ip address from web site
+import urllib.request
+contents = urllib.request.urlopen(WEB_URL+"/"+IP_FILE).read()
 
-# transfert IP File to 
-import ftplib 
-with ftplib.FTP(FTP_SERVER) as ftp:
-    try:    
-        ftp.login(FTP_LOGIN, FTP_PASSWD)  
-        with open(IP_FILE, 'rb') as fp:
-            res = ftp.storlines("STOR " + IP_FILE, fp)
-    except ftplib.all_errors as e:
-        print('FTP error:', e) 
+import re
+result=re.compile("([0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3})").search(str(contents))
+strPreviousIp=result.group(1)
 
+print ("saved IP = %s."%(strPreviousIp))
+
+
+if (strCurrentIp != strPreviousIp) :
+    
+    print ("IP address Out-of-date .. ")
+    
+    # write IP String to local file
+    with open(IP_FILE, "w") as text_file:
+        text_file.write(strCurrentIp)
+
+
+    print ("FTP updating ")
+
+    # transfert IP File to 
+    import ftplib 
+    with ftplib.FTP(FTP_SERVER) as ftp:
+        try:    
+            ftp.login(FTP_LOGIN, FTP_PASSWD)
+            print ("\tLogged In. Deleting old ipfile.")
+            
+            try:
+                ftp.delete(IP_FILE)
+                print ("\told ipfile deleted.")
+            except ftplib.error_perm as e:
+                print('FTP delete error:', e) 
+                pass
+
+            print ("\tUploading new ipfile")
+            with open(IP_FILE, 'rb') as fp:
+                res = ftp.storlines("STOR " + IP_FILE, fp)
+                
+            print ("\tQuiting FTP...")
+            ftp.quit()
+            
+            print ('\tClosing FTP connection')
+            ftp.close()
+            
+        except ftplib.all_errors as e:
+            print('FTP error:', e) 
+
+else:
+    print ("IP address up-to-date ..  No need to update")
 
 
 ```
