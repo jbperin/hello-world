@@ -205,6 +205,7 @@ FTP_LOGIN=''
 FTP_PASSWD=''
 WEB_URL=""
 
+
 # Retrieve Internet Box's Ip address from whatip.com
 import urllib.request
 contents = urllib.request.urlopen("http://www.whatip.com").read()
@@ -213,6 +214,7 @@ import re
 result=re.compile(">([0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3})<").search(str(contents))
 strCurrentIp=result.group(1)
 
+<<<<<<< HEAD
 print ("current IP = %s."%(strCurrentIp))
 
 
@@ -267,7 +269,6 @@ if (strCurrentIp != strPreviousIp) :
 
 else:
     print ("IP address up-to-date ..  No need to update")
-
 
 ```
 
