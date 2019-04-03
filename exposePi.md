@@ -54,4 +54,4 @@ http://\<IPBOX\>:\<PORTWEB\>/
 
 https://www.techcoil.com/blog/how-to-deploy-python-3-flask-application-on-raspberry-pi-3-with-raspbian-stretch-lite-nginx-supervisor-virtualenv-and-gunicorn/
 
-
+https://python.developpez.com/actu/94911/Mise-en-production-d-un-site-Django-en-utilisant-Nginx-et-Gunicorn/
