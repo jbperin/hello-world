@@ -69,27 +69,58 @@ X11Forwarding yes
 
 ```
 
+Si des difficultés sont rencontrés pour se connecter avec des clés, il peut être nécessaire de spécifier au serveur qu'on souhaite utiliser une méthode d'authentification basée sur des clés publique en décommentant les lignes suivantes du fichier `/etc/ssh/sshd_config`
+
+```
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys
+```` 
 
 
+
+Prise en compte des modifs de configuration ou de clé et consultation de l'état:
 ```
 sudo systemctl restart ssh
 
 sudo systemctl status ssh
 
-cat id_rsa.pub >> ~/.ssh/authorized_keys
-
 sudo service ssh reload
 ```
 
-
+Génération d'une clé ssh
 ```
 ssh-keygen.exe -t rsa -C "" -b 4096 
 ```
-```
-sudo nc -l -p  2200 > id_pub.rsa.key
+Cela va générer une clé publique dans `.ssh/id_rsa.pub`
 
+## Transfert d'une clé publique vers le serveur par netcat
+
+Sur le serveur, se placer en écoute sur un port (ex: 2200) 
+```
+sudo nc -l -p  2200 > id_rsa.pub
+```
+
+Sur le client, envoyer la clé
+```
 nc 192.168.1.15 2200 < .ssh/id_rsa.pub
+```
+
+Sur le serveur ajouter une clé publique au fichier des clés autorisées:
+```
+cat id_rsa.pub >> ~/.ssh/authorized_keys
+```
+
+## Se connecter en ssh
+
+Pour se connecter en utilisant le mode grpahique:
+
+```
 ssh -Y <user>@192.168.1.15
+```
+
+Pour se connecter en spécifiant explicitement la clé privée à utiliser:
+```
+ssh -vvv -i ~/.shh/id_rsa <user>@192.168.1.15
 ```
 
 
