@@ -28,30 +28,14 @@ configuration avancée / configuration réseau / NAT/PAT
 |HTTP|80|\<PORTWEB\>|TCP+UDP|\<HOSTNAME\>|[x]|
 
 
-### Configurer le parefeu pour autoriser les connexions entrantes
+### Configurer le parefeu pour autoriser
+
+Etape *non nécessaire* pour exposer le RPI. Le firewal de la box peut être laissé sur le niveau de sécurité Moyen.
+Si le firewall est mis au niveau Personalisé, les sessions FTP sortante ne fonctionnent pas. Même si le port FTP est déclaré dans les règles du firewall.
 
 |app/service|protocole|port source|port dest|action|
-|--|--|--|--|--|
-|HTTP|TCP+UDP|\<PORTWEB\>|80|accepter|
-|HTTPS|TCP||443|accepter|
-| DNS | TCP | |53 | accepter|
-
-
-## Tester
-
-Lancer un serveur WEB
-
-```
-sudo python -m SimpleHTTPServer 80
-```
-
-Depuis une machine extérieure au réseau domestique, visiter la page web 
-
-http://\<IPBOX\>:\<PORTWEB\>/
-
-
-# RESSOURCES
-
-https://www.techcoil.com/blog/how-to-deploy-python-3-flask-application-on-raspberry-pi-3-with-raspbian-stretch-lite-nginx-supervisor-virtualenv-and-gunicorn/
-
-https://python.developpez.com/actu/94911/Mise-en-production-d-un-site-Django-en-utilisant-Nginx-et-Gunicorn/
+|--|--|--|--|--|--|
+|HTTP|TCP+UDP|8080|80|accepter|--|
+|HTTPS|TCP||443|accepter|--|
+|DNS|TCP+UDP||53|accepter|--|
+|xrdp|TCP+UDP|3389|3389|accepter|--|
