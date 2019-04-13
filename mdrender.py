@@ -3,7 +3,9 @@ import markdown
 from markdown.extensions.toc import TocExtension
 import codecs
 
-input_file = codecs.open("pythonMarkdown.md", mode="r", encoding="utf-8")
+FILENAME_RAD = "essai2"
+
+input_file = codecs.open(FILENAME_RAD+".md", mode="r", encoding="utf-8")
 text = input_file.read()
 ##text = """
 ##[TOC]
@@ -25,24 +27,41 @@ extension_configs = {
     },
     'plantuml_markdown': {
     },
+    'fenced_code':{
+    },
+    'latex':{
+    },
     'codehilite': {
         'linenums':False
-        ,'guess_lang':False
-        ,'css_class':'codehilite'
+        ,'guess_lang':True
+        ,'css_class':'highlight'
         ,'pygments_style':'default' # Pygments HTML Formatter Style (ColorScheme). Defaults to default.
-        ,'noclasses':True
+        ,'noclasses':False
         ,'use_pygments':True
     }
 }
-html = markdown.markdown(text, extensions=["extra", "toc", "plantuml_markdown", "codehilite"], extension_configs=extension_configs)
 
+#html = markdown.markdown(text, extensions=["extra", "toc", "plantuml_markdown", "codehilite"], extension_configs=extension_configs)
+html = markdown.markdown(text, extensions=["extra", "toc", "plantuml_markdown", "fenced_code", "latex", "codehilite"], extension_configs=extension_configs) #, 
 
+result = """<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="emacs.css">
+</head>
+<body>
+  %s
+  <script src="mermaid.js"></script>
+  <script>mermaid.initialize({startOnLoad:true});</script>
+</body>
+</html>"""%(html)
 
-output_file = codecs.open("pythonMarkdown.html", "w",
+output_file = codecs.open(FILENAME_RAD+".html", "w",
                           encoding="utf-8",
                           errors="xmlcharrefreplace"
 )
-output_file.write(html)
+output_file.write(result)
 output_file.close()
 
 print (html)

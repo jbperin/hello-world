@@ -23,7 +23,7 @@ python3 -m markdown <fichier.md>
 
 Usage programmatique
 
-```python hl_lines="1 3"
+```python3
 import markdown
 
 text = """#Coucou
@@ -64,18 +64,6 @@ usecase (Last\nusecase) as UC4
 @enduml
 ```
 
-```plantuml format="png" classes="uml myDiagram" alt="My super diagram placeholder" title="My super diagram" width="300px" height="300px"
-@@startdot
-digraph foo {
-  node [style=rounded]
-  node1 [shape=box]
-  node2 [fillcolor=yellow, style="rounded,filled", shape=diamond]
-  node3 [shape=record, label="{ a | b | c }"]
-
-  node1 -> node2 -> node3
-}
-@enddot
-```
 
 ## Extension CodeHilite
 
@@ -83,4 +71,26 @@ digraph foo {
 sudo apt-get install python3-pygments
 pip3 install Pygments
 ```
+
+## Exemple Mermaid
+
+<div class="mermaid">
+  graph LR
+      A --- B
+      B-->C[fa:fa-ban forbidden]
+      B-->D(fa:fa-spinner);
+</div>
+
+
+## Extension Latex
+
+Après avoir suivi la [procédure d'installation de latex](latex.md) pour raspberry Pi, installer l'extension comme suit:
+
+```bash
+wget https://raw.githubusercontent.com/justinvh/Markdown-LaTeX/master/latex.py
+mv latex.py /home/perin/.local/lib/python3.5/site-packages/markdown/extensions
+```
+Mais je n'arrive pas à faire marcher en utilisant le site-packages . je suis obligé d'avoir le fichier latex.py dans le répertoire courant :-(
+
+
 
