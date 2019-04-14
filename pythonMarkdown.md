@@ -67,20 +67,61 @@ usecase (Last\nusecase) as UC4
 
 ## Extension CodeHilite
 
+L'extension CodeHilite se base sur pygments que l'on peut installer de la façon suivante:
 ```
 sudo apt-get install python3-pygments
 pip3 install Pygments
 ```
 
+L'extension génère du html avec des balises qui définissent la couleur des différents mots.
+Ces balises sont regroupées dans un fichier css qu'il faut incorporer en entête du fichier html rendu.
+```html hl=4
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="emacs.css">
+</head>
+<body>
+  ...
+</body>
+</html>
+```
+
+Tel qu'indiqué dans [la documentation](https://python-markdown.github.io/extensions/code_hilite/), il est possible de générer les fichiers css par des commandes du type:
+
+```
+pygmentize -S default -f html -a .codehilite > styles.css
+```
+Ou bien de puiser dans les [css déjà générés](https://github.com/richleland/pygments-css) et ilustrés dans le [cataloque de css](http://richleland.github.io/pygments-css/) fourni par Richard Leland.
+
+
 ## Exemple Mermaid
 
+Pour utiliser l'extension Mermaid, il faut inclure le script mermaid.js dans  le fichier HTML template utiliser pour le rendu.
+```
+<html lang="fr">
+<head>
+...
+</head>
+<body>
+  ...
+  <INSERT HTML CODE HERE>
+  ...
+  <script src="mermaid.js"></script>
+  <script>mermaid.initialize({startOnLoad:true});</script>
+</body>
+</html>
+```
+
+Ensuite, dans le fichier markdown, pour utiliser le mermaid, il faut placer la description mermaid dans une division de classe mermaid `<div class="mermaid">`
+```
 <div class="mermaid">
   graph LR
       A --- B
       B-->C[fa:fa-ban forbidden]
       B-->D(fa:fa-spinner);
 </div>
-
+```
 
 ## Extension Latex
 
