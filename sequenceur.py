@@ -74,5 +74,5 @@ def litCSV(filepath, nb = None):
 
 if __name__ == '__main__':
 
-    FILEPATH = "C:\\Users\\tbpk7658\\Documents\\Projets\\STIB\\data\\Inputs and Outputs0_20181009_105730_HMI_Panel.csv"
+    FILEPATH = "C:\\Users\\HMI_Panel.csv"
     litCSV(FILEPATH, 12)
