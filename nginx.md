@@ -30,6 +30,15 @@ Pour la prise en compte par nginx des modifications:
 sudo /etc/init.d/nginx restart
 ```
 
+
+
+```
+sudo service nginx start 
+sudo service nginx stop 
+sudo service nginx status 
+```
+
+
 Si problème d'accès:
 ```
  chown www-data:www-data /var/www
@@ -43,8 +52,6 @@ Si problème d'accès:
 ```
 sudo apt install php-fpm
 ```
-
-
 
 # Ressources
 
