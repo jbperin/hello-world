@@ -17,7 +17,7 @@ SERVER = "liveobjects.orange-business.com"
 PORT = 1883
 API_KEY   = "e36519a3c5474778a0f0d2a867843eba"
 USERNAME  = "json+device"
-CLIENT_ID = "urn:lo:nsid:flexy205:0475410668"
+CLIENT_ID = "urn:lo:nsid:flexy205:JBP0475410668"
 
 
 #Publications parameters
@@ -70,7 +70,7 @@ def processRow (row, offset_time ):
     dtformated = date_time_obj.strftime("%Y-%m-%dT%H:%M:%S")
 
     msg = '{"s":"'+CLIENT_ID+'!uplink",'            ## source
-    msg = msg + '"m":"MyModel" '					## model (for indexation)
+    msg = msg + '"m":"Flexy205" '					## model (for indexation)
     msg = msg + ', "value":{'
     msg = msg + ' "variable" : "' + row[0] + '"'
     msg = msg + ', "valeur" : ' + row[2]
@@ -79,6 +79,7 @@ def processRow (row, offset_time ):
     msg = msg + '} '								## data (json format)
     msg = msg + ', "loc":[45.759723,4.84223]'       ## loc
     msg = msg + ', "t": ["MyTag"]'
+    msg = msg + ', "ts": "' + dtformated + 'Z"';  	## timestamp
     msg = msg + '}'									## tags
 
     if row[0] in [ "ibo_Zen_A1-A2_rel_R" ]:
@@ -111,10 +112,7 @@ def litCSV(filepath, nb = None):
             nbval = nbval + 1
             if (nb != None) and (nbval > 100) : break
 
-
-
-
 if __name__ == '__main__':
 
-    FILEPATH = "C:\\Users\\HMI_Panel.csv"
-    litCSV(FILEPATH, 12)
+    FILEPATH = "C:\\Users\\tbpk7658\\Documents\\Projets\\STIB\\data\\Inputs and Outputs0_20181009_105730_HMI_Panel.csv"
+    litCSV(FILEPATH, 2400000)
