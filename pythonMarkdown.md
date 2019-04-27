@@ -75,7 +75,7 @@ pip3 install Pygments
 
 L'extension génère du html avec des balises qui définissent la couleur des différents mots.
 Ces balises sont regroupées dans un fichier css qu'il faut incorporer en entête du fichier html rendu.
-```html hl=4
+```html
 <html lang="fr">
 <head>
   <meta charset="utf-8">
