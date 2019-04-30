@@ -1,0 +1,13 @@
+
+
+## Installation
+
+```
+sudo apt-get install supervisor
+```
+
+
+## Ressources
+
+
+[Site officiel de supervizor] (http://supervisord.org/)
