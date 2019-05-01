@@ -14,9 +14,13 @@ global = {
 
 notes_basse = {
     ees des c bes | aes ges f ees | des f aes g | f aes bes f | 
+	\break
     ees des c bes | aes c ees d | des f fis g | aes g f ees | 
+	\break 
     bes d f d | bes d f d | ees ges bes ges | ees ges bes ges | 
-    g des g, des' | c ees f g | fis a b fis | f aes bes f | 
+	\break
+    g' des g, des' | c ees f g | fis a b fis | f aes bes f | 
+	\break
 }
 
 grille_accord = \chordmode {
