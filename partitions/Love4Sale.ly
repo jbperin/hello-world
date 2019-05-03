@@ -13,13 +13,13 @@ global = {
 }
 
 notes_basse = {
-    ees des c bes | aes ges f ees | des f aes g | f aes bes f | 
+    ees' des c bes | aes ges f ees | des f aes g | f aes bes f |
 	\break
-    ees des c bes | aes c ees d | des f fis g | aes g f ees | 
-	\break 
-    bes d f d | bes d f d | ees ges bes ges | ees ges bes ges | 
+    ees des c bes | aes c ees d | des f fis g | aes g f ees |
 	\break
-    g' des g, des' | c ees f g | fis a b fis | f aes bes f | 
+    bes d f d | bes d f d | ees ges bes ges | ees ges bes ges |
+	\break
+    g des g, des' | c ees f g | fis a b fis | f aes bes f |
 	\break
 }
 
@@ -43,16 +43,16 @@ grille_accord = \chordmode {
     }
 
     \new Voice = "one" {
-		\global 
+		\global
 		\clef bass
-		\set Staff.midiInstrument = #"electric bass (finger)" 
+		\set Staff.midiInstrument = #"electric bass (finger)"
 
-		%\transpose c' c \notes_basse 
-		\relative c \notes_basse 
+		%\transpose c' c \notes_basse
+		\relative c \notes_basse
 
     }
-    
-      
+
+
   >>
 	\layout{
 		indent = 0.0\cm
