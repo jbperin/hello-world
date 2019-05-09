@@ -29,20 +29,20 @@ g1*1|
 c1*1|
 }
 notes_basse = {
-c4 d ees d | d aes g d | c  ees g f | d aes g d |
+c4 d ees d | d aes g d | c  ees g ees | d aes g d |
 		\break
 c d ees f | g aes bes c' | d' aes d aes | g f ees d |
 		\break
 c d ees f | ges aes ges ees | f g f d | ees f ees c |
 		\break
-d c bes, a,| g, a, bes, a, | aes, bes, c d | ees d c bes, |
+d c bes, aes,| g, aes, bes, aes, | aes, bes, c d | ees d c bes, |
  \break
 }
 
 grille_accord = \chordmode {
 
 c1:m7 d2:dim g:7 c1:m7 d2:dim g:7  c1:m7 c:m7 d:dim g:7
-c1:m7 ges:7 f:m7 ees:7 d:7 g:7 aes:7 aes:7
+c1:m7 ges:7 f:m7 ees:7 d:dim7 g:7 aes:7 aes:7
 }
 
 \score{
@@ -59,9 +59,9 @@ c1:m7 ges:7 f:m7 ees:7 d:7 g:7 aes:7 aes:7
     \new Voice = "theme" {
 		\global 
 		\clef treble
-		\set Staff.midiInstrument = #"Tenor Sax" 
+		\set Staff.midiInstrument = #"Sax Tenor" 
 
-		\transpose c c' \notes_theme
+		\transpose c c' \notes_theme 
 		%\absolute \notes_theme 
 
     }
