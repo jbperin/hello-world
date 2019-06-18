@@ -76,6 +76,17 @@ Dans le fichier `AndroidManifest.xml`
 </manifest>
 ```
 
+Compiler avec [build.bat](sources/build.bat)
+
+## Utiliser Orange Nura pour débugger
+
+Brancher le Orange Nura sur un port USB
+Sur le Téléphone, cliqer sur Connecté en tant qu'appareil multimedia et sélectionner le protocole MTP.
+
+Un disque dur apparaît. Aller dans le répertroire  Driver et exécuter DriverInstaller.exe
+
+Pour pouvoir utiliser adb il faut disposer du driver usb android qui vient avec l'application [Smart Suite](http://www.alcatel-mobile.com/fr/support/smartsuite/list)
+
 
 # Ressources
 
