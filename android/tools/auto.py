@@ -19,7 +19,7 @@ def main():
 
     child.logfileread = sys.stdout
 
-    keytcmd = "C:\\Users\\tbpk7658\\Applis\\ideaIC-2016.3\\ideaIC-2016.3\\jdk\\bin\\keytool.exe -genkeypair -validity 365 -keystore akey.keystore -keyalg RSA -keysize 2048"
+    keytcmd = "C:\\Users\\tbpk7658\\Applis\\ideaIC-2016.3\\ideaIC-2016.3\\jdk\\bin\\keytool.exe -genkeypair -validity 365 -keystore thekey.keystore -keyalg RSA -keysize 2048"
 
 
     print ("done1")
@@ -48,7 +48,7 @@ def main():
 
         # Ville de résidence
         child.expect(":", timeout=3)
-        child.sendline("ville de residenc")
+        child.sendline("ville de residence")
 
         # Etat province
         child.expect(":", timeout=3)

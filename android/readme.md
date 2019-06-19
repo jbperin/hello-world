@@ -2,7 +2,7 @@
 
 # Les sources
 
-Se placer dans le répertoire du projet
+Se placer dans le répertoire du projet et créer la structure projet avec les commandes suivantes:
 
 ```
 mkdir src\com\example\helloandroid
@@ -75,18 +75,34 @@ Dans le fichier `AndroidManifest.xml`
     </application>
 </manifest>
 ```
+Générer un certificat avec l'utilitaire [auto.py](auto.py) et placer ce certificat dans `sources\thekey.keystore`
 
 Compiler avec [build.bat](sources/build.bat)
 
+
+
 ## Utiliser Orange Nura pour débugger
 
+### Première utilisation  
 Brancher le Orange Nura sur un port USB
-Sur le Téléphone, cliqer sur Connecté en tant qu'appareil multimedia et sélectionner le protocole MTP.
+Sur le Téléphone, cliquer sur `Connecté en tant qu'appareil multimedia` et sélectionner le protocole MTP.
 
 Un disque dur apparaît. Aller dans le répertroire  Driver et exécuter DriverInstaller.exe
 
 Pour pouvoir utiliser adb il faut disposer du driver usb android qui vient avec l'application [Smart Suite](http://www.alcatel-mobile.com/fr/support/smartsuite/list)
 
+### Installation de l'apk
+
+Pour installer l'apk, utiliser la commande:
+```
+%ANDROID_HOME%\platform-tools\adb install ./bin/hello.apk
+```
+
+L'application peut etre lancée par la commande:
+```
+%ANDROID_HOME%\platform-tools\adb shell am start -a android.intent.action.MAIN -n com.example.he
+lloandroid/com.example.helloandroid.MainActivity
+```
 
 # Ressources
 

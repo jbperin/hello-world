@@ -17,7 +17,7 @@ copy %PROJ%\bin\classes.dex .
 
 REM %JDK_PATH%\bin\keytool.exe -genkeypair -validity 365 -keystore mykey.keystore -keyalg RSA -keysize 2048
 
-CALL %SDK_PATH%\build-tools\25.0.1\apksigner.bat sign --ks mykey.keystore %PROJ%\bin\hello.apk
+CALL %SDK_PATH%\build-tools\25.0.1\apksigner.bat sign --ks thekey.keystore %PROJ%\bin\hello.unaligned.apk
 
 %SDK_PATH%\build-tools\25.0.1\zipalign.exe -f 4 %PROJ%\bin\hello.unaligned.apk %PROJ%\bin\hello.apk
 
