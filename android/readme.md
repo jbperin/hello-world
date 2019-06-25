@@ -75,7 +75,7 @@ Dans le fichier `AndroidManifest.xml`
     </application>
 </manifest>
 ```
-Générer un certificat avec l'utilitaire [auto.py](auto.py) et placer ce certificat dans `sources\thekey.keystore`
+Générer un certificat avec l'utilitaire [auto.py](tools/auto.py) et placer ce certificat dans `sources\thekey.keystore`
 
 Compiler avec [build.bat](sources/build.bat)
 
