@@ -100,8 +100,7 @@ Pour installer l'apk, utiliser la commande:
 
 L'application peut etre lancée par la commande:
 ```
-%ANDROID_HOME%\platform-tools\adb shell am start -a android.intent.action.MAIN -n com.example.he
-lloandroid/com.example.helloandroid.MainActivity
+%ANDROID_HOME%\platform-tools\adb shell am start -a android.intent.action.MAIN -n com.example.helloandroid/com.example.helloandroid.MainActivity
 ```
 
 # Ressources
