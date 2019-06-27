@@ -75,9 +75,12 @@ Dans le fichier `AndroidManifest.xml`
     </application>
 </manifest>
 ```
+
+Préparer la partie métier de l'application en construisant l'archive `metier.jar` grâce au script [metier/build.bat](metier/build.bat) et en la placant dans le répetoire `sources/libs` avec les autres dépendances.
+
 Générer un certificat avec l'utilitaire [auto.py](tools/auto.py) et placer ce certificat dans `sources\thekey.keystore`
 
-Compiler avec [build.bat](sources/build.bat)
+Compiler avec [sources/build.bat](sources/build.bat)
 
 
 
