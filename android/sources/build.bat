@@ -1,4 +1,10 @@
 
+
+cd ..\metier
+CALL build.bat
+move metier.jar ..\sources\libs
+cd ..\sources
+
 set PROJ=C:\Users\tbpk7658\Documents\Projets\hello-world\android\sources
 set SDK_PATH=C:\Users\tbpk7658\Applis\ideaIC-2016.3\ideaIC-2016.3\sdk
 set JDK_PATH=C:\Users\tbpk7658\Applis\ideaIC-2016.3\ideaIC-2016.3\jdk
@@ -7,7 +13,7 @@ set JDK_PATH=C:\Users\tbpk7658\Applis\ideaIC-2016.3\ideaIC-2016.3\jdk
 
 %JDK_PATH%\bin\javac -source 1.7 -target 1.7 -d obj -classpath "src;libs\mqtt-client-0.4.0.jar;libs\gson-2.8.5.jar;libs\metier.jar" -bootclasspath %SDK_PATH%\platforms\android-25\android.jar src\com\example\helloandroid\*.java
 
-CALL %SDK_PATH%\build-tools\25.0.1\dx.bat --dex --output=%PROJ%\bin\classes.dex %PROJ%\obj %PROJ%\libs\*.jar
+CALL %SDK_PATH%\build-tools\25.0.1\dx.bat --dex --output=%PROJ%\bin\classes.dex %PROJ%\libs\*.jar %PROJ%\obj 
 
 %SDK_PATH%\build-tools\25.0.1\aapt.exe package -f -m -F %PROJ%\bin\hello.unaligned.apk -M %PROJ%\AndroidManifest.xml -S %PROJ%\res -I %SDK_PATH%\platforms\android-25\android.jar
 
