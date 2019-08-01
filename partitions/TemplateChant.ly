@@ -1,4 +1,4 @@
-\version "2.18.2"  % necessary for upgrading to future LilyPond versions.
+% LilyBin
 
 \header {
   title = "Titre"
@@ -60,7 +60,7 @@ paroles_chant = \lyricmode {
   <<
     \set Score.skipBars = ##t
     \set Score.markFormatter = #format-mark-box-alphabet
-    
+
     \new ChordNames {
       \set chordChanges = ##t
       \grille_accord
@@ -85,7 +85,7 @@ paroles_chant = \lyricmode {
   <<
     \set Score.skipBars = ##t
     \set Score.markFormatter = #format-mark-box-alphabet
-    
+
     \new ChordNames {
       \set chordChanges = ##t
       \grille_accord
@@ -105,7 +105,7 @@ paroles_chant = \lyricmode {
 \score {
   <<
     \set Score.skipBars = ##t
-    
+
 
     \new Voice = "one" {
       \global
