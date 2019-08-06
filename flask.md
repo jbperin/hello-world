@@ -23,7 +23,7 @@ def hello():
 lancer l'application
 
 ```bash
-env FLASK_APP=mySite.py flask run
+env FLASK_APP=mySite.py flask run --host=0.0.0.0 --port=8000
 ```
 
 <div class="mermaid">

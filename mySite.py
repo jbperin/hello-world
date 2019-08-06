@@ -49,7 +49,7 @@ def renderHtmlContent(html):
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="emacs.css">
+  <link rel="stylesheet" type="text/css" href="/emacs.css">
 </head>
 <body>
   %s
@@ -75,7 +75,7 @@ def render_md_file(mdfile):
         input_file.close()
         html = markdown.markdown(text, extensions=["extra", "toc", "plantuml_markdown", "fenced_code", "latex", "codehilite"], extension_configs=extension_configs) #, 
         # show the user profile for that user
-        result = renderHtmlConent(html)
+        result = renderHtmlContent(html)
     return result
     
     
@@ -102,7 +102,7 @@ def upload_md_file():
             input_file.close()
             html = markdown.markdown(text, extensions=["extra", "toc", "plantuml_markdown", "fenced_code", "latex", "codehilite"], extension_configs=extension_configs) #, 
             # show the user profile for that user
-            result = renderHtmlConent(html)
+            result = renderHtmlContent(html)
 
  
             #return redirect(url_for('uploaded_file',

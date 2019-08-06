@@ -79,7 +79,7 @@ Ces balises sont regroupées dans un fichier css qu'il faut incorporer en entêt
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="emacs.css">
+  <link rel="stylesheet" type="text/css" href="/emacs.css">
 </head>
 <body>
   ...
@@ -92,12 +92,12 @@ Tel qu'indiqué dans [la documentation](https://python-markdown.github.io/extens
 ```
 pygmentize -S default -f html -a .codehilite > styles.css
 ```
-Ou bien de puiser dans les [css déjà générés](https://github.com/richleland/pygments-css) et ilustrés dans le [cataloque de css](http://richleland.github.io/pygments-css/) fourni par Richard Leland.
+Ou bien de puiser dans les [css déjà générés](https://github.com/richleland/pygments-css) et illustrés dans le [cataloque de css](http://richleland.github.io/pygments-css/) fourni par Richard Leland.
 
 
 ## Exemple Mermaid
 
-Pour utiliser l'extension Mermaid, il faut inclure le script mermaid.js dans  le fichier HTML template utiliser pour le rendu.
+Pour utiliser l'extension Mermaid, il faut inclure le script mermaid.js dans  le fichier HTML template utilisé pour le rendu.
 ```
 <html lang="fr">
 <head>
@@ -114,6 +114,7 @@ Pour utiliser l'extension Mermaid, il faut inclure le script mermaid.js dans  le
 ```
 
 Ensuite, dans le fichier markdown, pour utiliser le mermaid, il faut placer la description mermaid dans une division de classe mermaid `<div class="mermaid">`
+Par exemple, la section suivante 
 ```
 <div class="mermaid">
   graph LR
@@ -122,6 +123,14 @@ Ensuite, dans le fichier markdown, pour utiliser le mermaid, il faut placer la d
       B-->D(fa:fa-spinner);
 </div>
 ```
+sera rendue de la façon suivante:
+
+<div class="mermaid">
+  graph LR
+      A --- B
+      B-->C[fa:fa-ban forbidden]
+      B-->D(fa:fa-spinner);
+</div>
 
 ## Extension Latex
 

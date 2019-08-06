@@ -6,7 +6,7 @@ from credentials import IP_FILE, FTP_SERVER, FTP_LOGIN, FTP_PASSWD, WEB_URL, HTM
 
 # Retrieve Internet Box's Ip address from whatip.com
 import urllib.request
-contents = urllib.request.urlopen("http://www.whatip.com").read()
+contents = urllib.request.urlopen("http://www.whatip.org").read()
 
 import re
 result=re.compile(">([0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3})<").search(str(contents))
@@ -41,20 +41,21 @@ if (strCurrentIp != strPreviousIp) :
 
     # transfert IP File to 
     import ftplib 
-    with ftplib.FTP(FTP_SERVER) as ftp:
+    with ftplib.FTP_TLS(FTP_SERVER) as ftps:
         try:    
-            ftp.login(FTP_LOGIN, FTP_PASSWD)
+            ftps.login(FTP_LOGIN, FTP_PASSWD)
+            ftps.prot_p() 
             print ("\tLogged In. Deleting old ipfile.")
             
             try:
-                ftp.delete(IP_FILE)
+                ftps.delete(IP_FILE)
                 print ("\told ipfile deleted.")
             except ftplib.error_perm as e:
                 print('FTP delete error:', e) 
                 pass
 
             try:
-                ftp.delete(HTM_REDIRECT)
+                ftps.delete(HTM_REDIRECT)
                 print ("\thtm redirect deleted.")
             except ftplib.error_perm as e:
                 print('FTP delete error:', e) 
@@ -62,17 +63,17 @@ if (strCurrentIp != strPreviousIp) :
 
             print ("\tUploading new ipfile")
             with open(IP_FILE, 'rb') as fp:
-                res = ftp.storlines("STOR " + IP_FILE, fp)
+                res = ftps.storlines("STOR " + IP_FILE, fp)
                 
             print ("\tUploading HTML Redirect file")
             with open(HTM_REDIRECT, 'rb') as fp:
-                res = ftp.storlines("STOR " + HTM_REDIRECT, fp)
+                res = ftps.storlines("STOR " + HTM_REDIRECT, fp)
                 
             print ("\tQuiting FTP...")
-            ftp.quit()
+            ftps.quit()
             
             print ('\tClosing FTP connection')
-            ftp.close()
+            ftps.close()
             
         except ftplib.all_errors as e:
             print('FTP error:', e) 
