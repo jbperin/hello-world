@@ -94,17 +94,27 @@ Un disque dur apparaît. Aller dans le répertroire  Driver et exécuter DriverI
 
 Pour pouvoir utiliser adb il faut disposer du driver usb android qui vient avec l'application [Smart Suite](http://www.alcatel-mobile.com/fr/support/smartsuite/list)
 
+
+Sinon, un moyen générique d'installer un drivers ADB se trouve [ici](http://adbdriver.com/upload/AdbDriverInstaller.exe) chez http://adbdriver.com/
+
+
 ### Installation de l'apk
 
 Pour installer l'apk, utiliser la commande:
 ```
-%ANDROID_HOME%\platform-tools\adb install ./bin/hello.apk
+%ANDROID_HOME%\platform-tools\adb.exe install ./bin/hello.apk
 ```
 
 L'application peut etre lancée par la commande:
 ```
-%ANDROID_HOME%\platform-tools\adb shell am start -a android.intent.action.MAIN -n com.example.helloandroid/com.example.helloandroid.MainActivity
+%ANDROID_HOME%\platform-tools\adb.exe shell am start -a android.intent.action.MAIN -n com.example.helloandroid/com.example.helloandroid.MainActivity
 ```
+
+Pour voir les logs android, dans une autre fenêtre, taper la commande:
+```
+%ANDROID_HOME%\platform-tools\adb.exe logcat
+```
+
 
 # Ressources
 
