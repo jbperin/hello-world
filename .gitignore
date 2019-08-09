@@ -3,3 +3,4 @@ credentials.py
 launch.bat
 *.apk
 *.mid
+*.keystore
