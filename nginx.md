@@ -56,4 +56,4 @@ sudo apt install php-fpm
 # Ressources
 
 [NGINX sur RPI](https://raspbian-france.fr/installer-nginx-raspbian-raspberry/)
-[Admin Bible] (https://github.com/trimstray/nginx-admins-handbook)
+[Admin Bible](https://github.com/trimstray/nginx-admins-handbook)
