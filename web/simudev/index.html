@@ -12,7 +12,7 @@
 		let payload = {
 			"s":client_id+'!uplink',
 			"m":"Flexy205",
-			"value":{ 
+			"value":{
 				"variable" : "toto",
 				"valeur" : "titi"
 			},
@@ -31,10 +31,10 @@
 		}
 		function onConnectionLost(){
 			console.log("connection lost");
-		}		
+		}
 	 	function onConnect() {
 	  // Once a connection has been made, make a subscription and send a message.
-	
+
 		console.log("Connected ");
 		mqtt.subscribe("dev/cmd");
 		console.log("Sending "+ JSON.stringify(payload))
@@ -51,16 +51,16 @@
 			useSSL:false,
 			timeout: 3,
 			userName:"json+device",
-			password:"e36519a3c5474778a0f0d2a867843eba",
+			password:"INSERT API_KEY HERE",
 			onSuccess: onConnect,
 			onFailure: onFailure
-		  
+
 		 };
 		mqtt.onConnectionLost = onConnectionLost;
-		mqtt.onMessageArrived = onMessageArrived 
+		mqtt.onMessageArrived = onMessageArrived
 		mqtt.connect(options); //connect
 		}
-	 
+
 	  </script>
    </head>
      <body>
@@ -68,5 +68,5 @@
  	<script>
 	MQTTconnect();
 	</script>
-   </body>	
+   </body>
 </html>
