@@ -4,3 +4,4 @@ launch.bat
 *.apk
 *.mid
 *.keystore
+.idea
