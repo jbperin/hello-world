@@ -7,10 +7,19 @@
     <title>My Site</title>
     <link href="w3.css" rel="stylesheet" />
     <!--script src="https://momentjs.com/downloads/moment.min.js"></script-->
+    <script src="default.js" type="text/javascript"></script>
+    <script src="wavedrom.min.js" type="text/javascript"></script>
   </head>
 
-  <body>
+  <body onload="WaveDrom.ProcessAll()">
     <div id="root"></div>
+    <!--script type="WaveDrom">
+{ signal : [
+  { name: "clk",  wave: "p......" },
+  { name: "bus",  wave: "x.34.5x",   data: "head body tail" },
+  { name: "wire", wave: "0.1..0." },
+]}
+</script-->
     <script src="script.js"></script>
   </body>
 </html>
