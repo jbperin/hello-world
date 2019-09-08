@@ -42,8 +42,9 @@ sudo service --status-all
 
 
 
-```
+## Serveur sur le RaspBerry Pi:
 
+```
 sudo apt install openssh-server
 sudo vi /etc/ssh/sshd_config
 ```
@@ -87,9 +88,26 @@ sudo systemctl status ssh
 sudo service ssh reload
 ```
 
+
+## Client sur Fdroid Termux
+
+
+Installer `openshh` pour générer une clé et `netcat` tranferer la clé sur le serveur.
+
+pkg install openssh
+
+ssh-keygen -t rsa -C "" -b 4096
+
+
+pkg install netcat
+
+
+
+
+
 Génération d'une clé ssh
 ```
-ssh-keygen.exe -t rsa -C "" -b 4096 
+ssh-keygen -t rsa -C "" -b 4096 
 ```
 Cela va générer une clé publique dans `.ssh/id_rsa.pub`
 
@@ -97,7 +115,7 @@ Cela va générer une clé publique dans `.ssh/id_rsa.pub`
 
 Sur le serveur, se placer en écoute sur un port (ex: 2200) 
 ```
-sudo nc -l -p  2200 > id_rsa.pub
+sudo nc -l -p  2200 > id_rsa_POSTE_CONCERNE.pub
 ```
 
 Sur le client, envoyer la clé
@@ -107,7 +125,7 @@ nc 192.168.1.15 2200 < .ssh/id_rsa.pub
 
 Sur le serveur ajouter une clé publique au fichier des clés autorisées:
 ```
-cat id_rsa.pub >> ~/.ssh/authorized_keys
+cat id_rsa_POSTE_CONCERNE.pub >> ~/.ssh/authorized_keys
 ```
 
 ## Se connecter en ssh

@@ -6,7 +6,7 @@
 	 </script>
 	 <script src="http://wavedrom.com/skins/default.js" type="text/javascript"></script>
 	<script src="http://wavedrom.com/wavedrom.min.js" type="text/javascript"></script>
-	
+	<script src="credentials.js" type="text/javascript"></script>
 	 <script type = "text/javascript" language = "javascript">
 		var mqtt;
 		var reconnectTimeout = 2000;
@@ -120,6 +120,12 @@ function inputCSVFile(app, onValidFileLoaded) {
 	app.appendChild(container)
 }	
 //const app = document.getElementById('root')
+
+
+	let para = document.createElement('p')
+	para.textContent = myCredentials.liveobjects.password
+	document.getElementById('root').appendChild(para)
+
 inputCSVFile(document.getElementById('root'), (fileContent) => {
 	console.log (fileContent)
 })

@@ -1,5 +1,5 @@
 
-const kAPI=undefined
+const kAPI=myCredentials.liveobjects.password
 //const deviceId="urn:lo:nsid:flexy205:3475410668"
 const deviceId=undefined
 const streamId=undefined
@@ -30,6 +30,7 @@ function inputApiKey (app, onValidValue, onInvalidValue){
     inp.value = kAPI
     if (inp.value.match(alphaExp)) {
       inp.setAttribute('class', 'w3-input')
+
       onValidValue(inp.value)
     } else {
       inp.setAttribute('class', 'w3-input w3-border w3-pale-blue')
@@ -126,10 +127,11 @@ function  retrieveKeyInfo (api_key, key_listener) {
    url, true)
   request.setRequestHeader("X-API-KEY",api_key)
   request.setRequestHeader("Accept",'application/json')
-  request.setRequestHeader("Content-type",'application/json')
+  //request.setRequestHeader("Content-type",'application/json')
 
-
+  console.log ("retrieveKeyInfo API Key " + api_key);
   request.onload = function () {
+    console.log ("retrieveKeyInfo API Key onLoad");
     var data = JSON.parse(this.response)
     if (request.status >= 200 && request.status < 400) {
       //console.log(data)
@@ -850,8 +852,9 @@ function listStoredDataMessages(app, stored_messages) {
 inputApiKey (app, onValidValue = (api_key) => {
   console.log ("Valid API Key :" + api_key)
   retrieveKeyInfo (api_key, (info) => {
-    //console.log (info);
-    //displayKey(app, api_key, info );
+    console.log ("Retrieving Key Info");
+    console.log (info);
+    displayKey(app, api_key, info );
 
     retrieveDevices(api_key, (devices)=> {
       console.log (devices);
