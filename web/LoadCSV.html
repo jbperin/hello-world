@@ -1,0 +1,127 @@
+<html>
+   <head>
+      <title>JavaScript MQTT WebSocket Example</title>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript">
+	 </script>
+	 <script src="http://wavedrom.com/skins/default.js" type="text/javascript"></script>
+	<script src="http://wavedrom.com/wavedrom.min.js" type="text/javascript"></script>
+	
+	 <script type = "text/javascript" language = "javascript">
+		var mqtt;
+		var reconnectTimeout = 2000;
+		var host="liveobjects.orange-business.com"; //change this
+		var port=80;
+		var client_id="urn:lo:nsid:flexy205:JBP0475410668"
+		let payload = {
+			"s":client_id+'!uplink',
+			"m":"Flexy205",
+			"value":{ 
+				"variable" : "toto",
+				"valeur" : "titi"
+			},
+			"loc":[45.759723,4.84223],
+			"ts": "22Z"
+		}
+		function onFailure(message) {
+			console.log("Connection Attempt to Host "+host+"Failed");
+			setTimeout(MQTTconnect, reconnectTimeout);
+        }
+		function onMessageArrived(msg){
+			out_msg="Message received "+msg.payloadString+"<br>";
+			out_msg=out_msg+"Message received Topic "+msg.destinationName;
+			console.log(out_msg);
+
+		}
+		function onConnectionLost(){
+			console.log("connection lost");
+		}		
+	 	function onConnect() {
+	  // Once a connection has been made, make a subscription and send a message.
+	
+		console.log("Connected ");
+		mqtt.subscribe("dev/cmd");
+		console.log("Sending "+ JSON.stringify(payload))
+		message = new Paho.MQTT.Message(JSON.stringify(payload));
+		//message.destinationName = "sensor1";
+		//mqtt.send(message);
+	  }
+	  function MQTTconnect() {
+		console.log("connecting to "+ host +" "+ port);
+		mqtt = new Paho.MQTT.Client(host,port,client_id);
+		//document.write("connecting to "+ host);
+		//mqtt.tls_set('c:/python34/steve/mqtt-demos/certs/ca.crt')
+		var options = {
+			useSSL:false,
+			timeout: 3,
+			userName:"json+device",
+			password:"e36519a3c5474778a0f0d2a867843eba",
+			onSuccess: onConnect,
+			onFailure: onFailure
+		  
+		 };
+		mqtt.onConnectionLost = onConnectionLost;
+		mqtt.onMessageArrived = onMessageArrived 
+		mqtt.connect(options); //connect
+		}
+	 
+	  </script>
+   </head>
+    <body onload="WaveDrom.ProcessAll()">
+   <h1>Main Body</h1>
+<output id="out">
+    file contents will appear here
+</output>
+
+  <div id="root"></div>
+ 	<script>
+	//MQTTconnect();
+function inputCSVFile(app, onValidFileLoaded) {
+
+	let container = document.createElement('div')
+	container.setAttribute('class', 'w3-container')
+	container.setAttribute('id', 'CSVFileSelector')
+	
+	let para = document.createElement('p')
+	para.textContent = "Select local CSV File:"
+	container.appendChild(para)
+	
+	let fileInput = document.createElement("input")
+	fileInput.setAttribute('id', 'csv_file_input')
+	fileInput.setAttribute('type', 'file')
+	
+	container.appendChild(fileInput)
+	
+    readFile = function () {
+        var reader = new FileReader();
+        reader.onload = function (readerEvent) {
+			var content = readerEvent.target.result; // this is the content!
+			console.log( content );
+			let fields = content.replace(/\r/g, '').split('\n')[0].replace(/\"/g, '').split(',')
+			let lines = content.replace(/\r/g, '').replace(/\"/g, '').split('\n').slice(1).map(elem => elem.split(','))
+			let listOfLines = new Array()
+			for (li of lines){
+				let jsLine = {}
+				for (fi of fields) {
+					jsLine[fi]=li[fields.indexOf(fi)]
+					
+				}
+				listOfLines.push(jsLine)
+			}
+			//console.log(listOfLines)
+			onValidFileLoaded(listOfLines)
+        };
+        // start reading the file. When it is done, calls the onload event defined above.
+        //reader.readAsBinaryString(fileInput.files[0]);
+		reader.readAsText(fileInput.files[0],'UTF-8');
+    };
+
+	fileInput.addEventListener('change', readFile);
+	app.appendChild(container)
+}	
+//const app = document.getElementById('root')
+inputCSVFile(document.getElementById('root'), (fileContent) => {
+	console.log (fileContent)
+})
+	</script>
+   </body>	
+</html>
