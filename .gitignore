@@ -1,4 +1,5 @@
 credentials.py
+credentials.js
 *.pyc
 launch.bat
 *.apk
