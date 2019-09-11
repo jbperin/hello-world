@@ -30,7 +30,7 @@ app.appendChild(logo)
 
 function buildTimeGraph(stored_messages) {
   let variables_to_display = stored_messages
-                            .filter(msg => msg.value.variable.startsWith('ibo_p'))
+                            //.filter(msg => msg.value.variable.startsWith('ibo_p'))
                             .map (msg => msg.value.variable)
                             .filter((value, index, self) => self.indexOf(value) === index)
   console.log (variables_to_display)
