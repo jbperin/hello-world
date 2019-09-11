@@ -1,68 +1,39 @@
 <html>
    <head>
-     <meta charset="utf-8" />
-      <title>Device Simulator</title>
-	  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript">
-		  
-	 </script>
-	 <script src="credentials.js" type="text/javascript"></script>
-	 <script type = "text/javascript" language = "javascript">
-var mqtt;
-var mqtt_cansend = false;
-var reconnectTimeout = 2000;
-var host="liveobjects.orange-business.com"; //change this
-var port=80;
-var client_id=myCredentials.liveobjects.client_id
-
-function onMessageArrived(msg){
-    out_msg="Message received "+msg.payloadString+"<br>";
-    out_msg=out_msg+"Message received Topic "+msg.destinationName;
-    console.log(out_msg);
-
-}
-function onConnectionLost(){
-    console.log("connection lost");
-    mqtt_cansend = false;
-}
-
-function MQTTconnect(_onConnect, _onFailure) {
-    console.log("connecting to "+ host +" "+ port);
-    mqtt = new Paho.MQTT.Client(host,port,client_id);
-    //document.write("connecting to "+ host);
-    //mqtt.tls_set('c:/python34/steve/mqtt-demos/certs/ca.crt')
-    var options = {
-        useSSL:false,
-        timeout: 3,
-        userName:"json+device",
-        password:myCredentials.liveobjects.password,
-        onSuccess: _onConnect,
-        onFailure: _onFailure
-
-     };
-    mqtt.onConnectionLost = onConnectionLost;
-    mqtt.onMessageArrived = onMessageArrived
-    mqtt.connect(options); //connect
-    mqtt_cansend = true;
-}
-
-function MQTTpublish(txtPayload) {
-
-    console.log("Sending Payload "+txtPayload)
-
-    message = new Paho.MQTT.Message(txtPayload);
-    message.destinationName = "dev/data";
-    message.qos = 1;
-    mqtt.send(message);
-
-}
-
-
-	  </script>
+      <title>CSV Loader</title>
+	  <script src="credentials.js" type="text/javascript"></script>
    </head>
-     <body>
-   <h1>Load CSV</h1>
-   <div id="root"></div>
+    <body>
+   <h1>Main Body</h1>
+
+  <div id="root"></div>
  	<script>
+
+var spool = new Array();
+
+var spool_timer = undefined;
+
+function spoolBulk (theBulk){
+	spool.push(theBulk)
+	if (spool_timer == undefined) {
+		spool_timer = setInterval (tache_periodique, 1000)
+	}
+}
+function nextBulk (){
+	if (spool.length == 0) return undefined
+	return spool.shift()
+}
+function tache_periodique (){
+	if ((chunk = nextBulk ()) != undefined) {
+		uploadBulk(myCredentials.liveobjects.password,  chunk)
+	} else {
+		clearInterval(spool_timer)
+		spool_timer = undefined
+	}
+}
+
+
+
 function inputCSVFile(app, onValidFileLoaded) {
 
 	let container = document.createElement('div')
@@ -78,15 +49,26 @@ function inputCSVFile(app, onValidFileLoaded) {
 	fileInput.setAttribute('type', 'file')
 	
 	container.appendChild(fileInput)
-	
+	let FIELD_SEPARATOR = ';'
     readFile = function () {
         var reader = new FileReader();
         reader.onload = function (readerEvent) {
 			var content = readerEvent.target.result; // this is the content!
-			console.log( content );
-			
+			//console.log( content );
+			let fields = content.replace(/\r/g, '').split('\n')[0].replace(/\"/g, '').split(FIELD_SEPARATOR)
+			console.log(fields)
+			let lines = content.replace(/\r/g, '').replace(/\"/g, '').split('\n').slice(1, 20).map(elem => elem.split(FIELD_SEPARATOR))
+			let listOfLines = new Array()
+			for (li of lines){
+				let jsLine = {}
+				for (fi of fields) {
+					jsLine[fi]=li[fields.indexOf(fi)]
+					
+				}
+				listOfLines.push(jsLine)
+			}
 			//console.log(listOfLines)
-			onValidFileLoaded(content)
+			onValidFileLoaded(listOfLines)
         };
         // start reading the file. When it is done, calls the onload event defined above.
         //reader.readAsBinaryString(fileInput.files[0]);
@@ -95,65 +77,93 @@ function inputCSVFile(app, onValidFileLoaded) {
 
 	fileInput.addEventListener('change', readFile);
 	app.appendChild(container)
-}	
-
-
-
-function csv2Stream (csv_records, stream_consumer) {
-    // first line is column's titles
-	let fields = csv_records.split('\n')[0].replace(/\r/g, '').replace(/\"/g, '').split(';')
-    //stream_consumer.init(fields)
-    console.log(fields)
-	let lines = csv_records.replace(/\r/g, '').replace(/\"/g, '').split('\n').slice(1, 20).map(elem => elem.split(';'))
-    //console.log(lines)
-    function sendNwait (li) {
-            let jsLine = {}
-            for (fi of fields) {
-                jsLine[fi]=li[fields.indexOf(fi)]
-            }
-            stream_consumer(jsLine)
-            setTimeout(end_emission, 1000)
-        }
-    function end_emission(){
-    }
-    Array.from(lines.slice(1)).forEach( (li) => sendNwait (li))
 }
-function csvtime2lotime(csvtime) {
-// Change time from "2018-06-21 09:55:47" to "2018-06-21T09:55:47Z"
-    return csvtime.substring(0,10) + 'T' + csvtime.substring(11,11+8) + 'Z'
-
+	
+function toto (event){
+	if (this.status === 202) {
+		//console.log(this.responseText)
+	} else {
+		console.log("erreur")
+	}
 }
+function uploadBulk (api_key, data) {
+	var request = new XMLHttpRequest ();
+	request.open('POST', 
+	'https://liveobjects.orange-business.com/api/v0/data/bulk', true
+	)
+	request.setRequestHeader("X-API-KEY",api_key)
+	request.setRequestHeader("Accept",'application/json')
+	request.setRequestHeader("Content-type",'application/json')
+	  
+	request.onLoad= toto;
 
-function publishLine(event_data){
-    console.log(event_data)
-    let lo_data={
-        "s":"urn:lo:nsid:flexy205:0475410668!uplink",
-        "m":"MyModel",
-        "v":{
-            "variable":event_data.VarName,
-            "v": (event_data.VarValue == "0" )? 0:1,
-            "timestamp":csvtime2lotime(event_data.TimeString),}
-        }
-       console.log(lo_data)
-    MQTTpublish(JSON.stringify(lo_data));
+	body = JSON.stringify(data)
+	console.log ("injecting bulk")
+	console.log (data)
+	
+	request.send(body)
+}
+function toIsoUtc(timeString) {
+	// TODO : to be reworked with Moment.js
+	aDate = timeString.substr(6,4)+'-'+timeString.substr(3,2)+'-'+timeString.substr(0,2)+ "T" + timeString.substr(11) + ".000Z";
+	return aDate //timeString.substr(0,10).replace(/\//g,'-' ) + "T" + timeString.substr(11) + ".000Z";
 }
 
-inputCSVFile(document.getElementById('root'), onValidFileLoaded = (fileContent) => {
-    
-	MQTTconnect(onConnect= () => {
-        console.log("Connected ");
-        mqtt.subscribe("dev/cmd");
-        
-        csv2Stream (fileContent, stream_consumer = publishLine);
-        
-        
-    } , onFailure = () => {    
-        console.log("Connection Attempt to Host "+host+"Failed");
-        setTimeout(MQTTconnect, reconnectTimeout);
-    });
-})        
 
-    
+function csvBulkInject(fileContent){
+	let nbValsPerBulk = 3
+	let stream_id = "simul_InputsAndOutputs0_20181009_105730_HMI_Panel"
+	let client_id = "urn:lo:nsid:flexy205:0475410668"
+	var data;
+	for (ii = 0; ii< fileContent.length; ii+=nbValsPerBulk) {
+		data = fileContent.slice(ii, ii+nbValsPerBulk).map(  (elem) => ({
+			//"location": {
+			//  "accuracy": 10,
+			//  "alt": 5.00001,
+			//  "lat": 45.000009,
+			//  "lon": -30.00001,
+			//  "provider": "GPS"
+			//},
+			"metadata": {
+				  "connector": "mqtt",
+				  "source": "urn:lo:nsid:flexy205:0475410668",
+				  "group": {
+					 "path": "/Valence/STIB",
+					 "id": "hGx1rd"
+				  },
+				  "network": {
+					 "http": {
+						"clientId": client_id
+					 }
+				  }
+			   },
+			"model": "flexy205",
+			"streamId": stream_id,
+			"tags": [
+			  "jibe",
+			  "valence"
+			],
+			"timestamp": toIsoUtc(elem.TimeString), // ex "2019-09-07T10:39:52.598Z",
+			"value": {
+			  "valeur": parseInt(elem.VarValue), 
+			  "timestamp2": parseFloat(elem.Time_ms.replace(',', '.')), // ex: 43272413743.5185, 
+			  "variable": elem.VarName, // ex : "obo_24V_R_AE1.381", 
+			  "timestamp": toIsoUtc(elem.TimeString), // "2018-06-21T09:55:47.000Z"
+			}
+		  })
+		)
+		//console.log(data)
+		spoolBulk (data)
+	}
+	//console.log(data.slice(2,3))
+	//sbulkInject (api_key,data.slice(2,3))
+}
+
+//const app = document.getElementById('root')
+inputCSVFile(document.getElementById('root'), (fileContent) => {
+	//console.log (fileContent)
+	csvBulkInject( fileContent)
+})
 	</script>
-   </body>
+   </body>	
 </html>
