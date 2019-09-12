@@ -283,9 +283,9 @@ function retrieveStreamContent (api_key, stream_id, stream_listener) {
   request.send()
 }
 
-function retrievePagedStreamContent (api_key, stream_id, stream_listener, nb_max_page = 2, bookmark_id) {
+function retrievePagedStreamContent (api_key, stream_id, stream_listener, nb_max_page = 2, bookmark_id, onFinishHandler) {
   if (nb_max_page != 0) {
-    let record_per_page = 100
+    let record_per_page = 1000
     //curl -X GET  'https://liveobjects.orange-business.com/api/v0/data/streams/urn%3Alo%3Ansid%3Aibo_Steps_OK&#33;uplink?limit=100'
     parms = {"limit":record_per_page,}
 
@@ -311,10 +311,12 @@ function retrievePagedStreamContent (api_key, stream_id, stream_listener, nb_max
         if (data.length < record_per_page) {
           console.log ("Reached the end of stream")
         } else {
-          retrievePagedStreamContent (api_key, stream_id, stream_listener, nb_max_page - 1, data[data.length -1].id )
+          retrievePagedStreamContent (api_key, stream_id, stream_listener, nb_max_page - 1, data[data.length -1].id, onFinishHandler )
         }
-        //
         stream_listener(data)
+        if ((nb_max_page == 1) || (data.length < record_per_page)){
+          onFinishHandler()
+        }
       } else {
         console.log('error')
       }

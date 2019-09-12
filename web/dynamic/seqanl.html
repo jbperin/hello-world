@@ -25,23 +25,10 @@ var msgs = undefined;
 
 function newData(data) {
   console.log ("Some new data arrived")
-  console.log (data)
+
   if (msgs == undefined) msgs = new Array();
   data.map(e => msgs.push(e))
-
-  triggers = [
-    {'t':'0','v':'ibo_point_L3_AE1.381'},
-    {'t':'1', 'v':'ibo_point_L3_AE1.381'},
-    {'t':'1', 'v':'ibo_Zen_A1-A2_rel_R'},
-    {'t':'0', 'v':'ibo_Zen_A1-A2_rel_R'},
-  ];
-  //console.log(JSON.stringify(triggers))
-  if (document.getElementById("time_diagram_script") == undefined) {
-    displayTimeGraph(document.getElementById("root"), buildTimeGraph(msgs, selected_variables = undefined, soughtSequence = JSON.stringify(triggers)))
-  } else {
-    //document.getElementById("time_diagram_script")
-    updateTimeGraph(document.getElementById("time_diagram_script"), buildTimeGraph(msgs, selected_variables = undefined, soughtSequence = JSON.stringify(triggers)))
-  }
+  //console.log (msgs)
 }
 
 function buildTimeGraph(stored_messages, selected_variables = undefined, soughtSequence = undefined) {
@@ -49,7 +36,7 @@ function buildTimeGraph(stored_messages, selected_variables = undefined, soughtS
   if (soughtSequence != undefined) {
     //console.log(soughtSequence)
     tab_seq = JSON.parse(soughtSequence)
-    console.log (tab_seq)
+    //console.log (tab_seq)
   }
   let variables_to_display = stored_messages
                             //.filter(msg => msg.value.variable.startsWith('ibo_p'))
@@ -65,7 +52,7 @@ function buildTimeGraph(stored_messages, selected_variables = undefined, soughtS
 
 
   let description_time_graph = { signal: [], edge: [] }
-  description_time_graph.edge.push()
+  //description_time_graph.edge.push()
   variables_to_display.forEach(varName => description_time_graph.signal.push ({
     name : varName,
     wave : 'x',
@@ -172,16 +159,54 @@ function displayTimeGraph(app, description_time_graph) {
    container.appendChild(my_awesome_script)
    WaveDrom.ProcessAll()
 }
+function unconvert(type) {
+  return (type == '1')?-1:0;
+}
+
+function runThrough (trigs) {
+
+  console.log(trigs)
+  let idx = 0;
+  let oldelem = undefined;
+
+
+  msgs
+  .slice (1,200)
+  .sort ((el1, el2)=>el1.value.timestamp2 > el2.value.timestamp2)
+  .forEach(elem => {
+    if ((elem.value.variable == trigs[idx].v) && (elem.value.valeur == trigs[idx].t)) {
+
+      if (idx != 0) {
+        console.log ("BINGO " + elem.value.variable + " " + elem.value.valeur + " " + elem.value.timestamp2 )
+        console.log (elem)
+        console .log ("t"+idx + " = " + (elem.value.timestamp2 - oldelem.value.timestamp2))
+      }
+      oldelem = elem
+      idx = (idx + 1) % trigs.length;
+      //console.log ("next is " + trigs[idx].v + " " + trigs[idx].t )
+    }
+    //console.log(elem.value.variable)
+  })
+  console.log ("Out")
+}
 
 
 api_key = myCredentials.liveobjects.password;
 stream_id = "simul_InputsAndOutputs0_20181009_105730_HMI_Panel"
-retrievePagedStreamContent (api_key, stream_id, newData, nb_max_page = 1, bookmark_id = undefined)
-
-//setTimeout (console.log (), 2000)
 
 
-
+retrievePagedStreamContent (api_key, stream_id, newData, nb_max_page = 2, bookmark_id = undefined
+  , onFinish = (nb_vals) => {
+    console.log ("Objects was successfully loaded " + nb_vals)
+    triggers = [
+      {'t':'0','v':'ibo_point_L3_AE1.381'},
+      {'t':'1', 'v':'ibo_point_L3_AE1.381'},
+      {'t':'1', 'v':'ibo_Zen_A1-A2_rel_R'},
+      {'t':'0', 'v':'ibo_Zen_A1-A2_rel_R'},
+    ];
+    displayTimeGraph(document.getElementById("root"), buildTimeGraph(msgs.slice (1,120), selected_variables = undefined, soughtSequence = JSON.stringify(triggers)))
+    runThrough(triggers.map( (el) => ({'t':unconvert(el.t), 'v':el.v})));
+} )
 
 
     </script>
