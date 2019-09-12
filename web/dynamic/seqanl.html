@@ -1,0 +1,189 @@
+<!--DOCTYPE html-->
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>My Site</title>
+    <link href="w3.css" rel="stylesheet" />
+    <!--script src="https://momentjs.com/downloads/moment.min.js"></script-->
+    <script src="default.js" type="text/javascript"></script>
+    <script src="wavedrom.min.js" type="text/javascript"></script>
+    <script src="credentials.js" type="text/javascript"></script>
+    <script src="lo.js" type="text/javascript"></script>
+    <script src="gui_input.js" type="text/javascript"></script>
+    <script src="gui_display.js" type="text/javascript"></script>
+  </head>
+
+  <body onload="WaveDrom.ProcessAll()">
+    <div id="root"></div>
+    <script type="text/javascript">
+
+
+
+var msgs = undefined;
+
+function newData(data) {
+  console.log ("Some new data arrived")
+  console.log (data)
+  if (msgs == undefined) msgs = new Array();
+  data.map(e => msgs.push(e))
+
+  triggers = [
+    {'t':'0','v':'ibo_point_L3_AE1.381'},
+    {'t':'1', 'v':'ibo_point_L3_AE1.381'},
+    {'t':'1', 'v':'ibo_Zen_A1-A2_rel_R'},
+    {'t':'0', 'v':'ibo_Zen_A1-A2_rel_R'},
+  ];
+  //console.log(JSON.stringify(triggers))
+  if (document.getElementById("time_diagram_script") == undefined) {
+    displayTimeGraph(document.getElementById("root"), buildTimeGraph(msgs, selected_variables = undefined, soughtSequence = JSON.stringify(triggers)))
+  } else {
+    //document.getElementById("time_diagram_script")
+    updateTimeGraph(document.getElementById("time_diagram_script"), buildTimeGraph(msgs, selected_variables = undefined, soughtSequence = JSON.stringify(triggers)))
+  }
+}
+
+function buildTimeGraph(stored_messages, selected_variables = undefined, soughtSequence = undefined) {
+  let tab_seq = undefined
+  if (soughtSequence != undefined) {
+    //console.log(soughtSequence)
+    tab_seq = JSON.parse(soughtSequence)
+    console.log (tab_seq)
+  }
+  let variables_to_display = stored_messages
+                            //.filter(msg => msg.value.variable.startsWith('ibo_p'))
+                            .map (msg => msg.value.variable)
+                            .filter((value, index, self) => self.indexOf(value) === index)
+  //console.log (variables_to_display)
+  function convert_value(value) {return  (value == "0")? 0: 1};
+  //function firstValueOfVariable (var_name) {
+  //  return convert_value(stored_messages
+  //  .filter (msg => msg.value.variable == var_name)
+  //  .sort ((msg1, msg2) => msg1.value.timestamp2 >= msg2.value.timestamp2) [0].value.valeur)
+  //}
+
+
+  let description_time_graph = { signal: [], edge: [] }
+  description_time_graph.edge.push()
+  variables_to_display.forEach(varName => description_time_graph.signal.push ({
+    name : varName,
+    wave : 'x',
+    node : '.'
+  }))
+
+  let current_ts = undefined
+  let lst_nod = undefined
+  let beacons = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+  function beacons_shift() {
+    beac = beacons.shift()
+    if (beac == 'a') {
+    } else if (beac == 'b') {
+      description_time_graph.edge.push('a~>b t'+(25-beacons.length))
+    } else {
+      description_time_graph.edge.push(lst_nod+'~>'+beac + ' t'+(25-beacons.length))
+    }
+    lst_nod = beac
+    return (beac)
+  }
+  let msg_to_process = stored_messages
+    .filter(msg => variables_to_display.includes(msg.value.variable))
+    .sort ((msg1, msg2) => msg1.value.timestamp2 >= msg2.value.timestamp2)
+
+  function isNextAwaitedEvent (variable, valeur){
+    //variable.startsWith('ibo_point')
+    if ((tab_seq.length != 0) &&(tab_seq[0].v==variable) && (tab_seq[0].t == convert_value(valeur))) {
+      tab_seq.shift()
+      return true;
+    }
+    return false ;
+  }
+  for( unMsg of msg_to_process){
+    nxt_event = isNextAwaitedEvent (unMsg.value.variable, unMsg.value.valeur)
+    //console.log (unMsg.value.variable + ' ' + unMsg.value.valeur +' '+ unMsg.value.timestamp2+ ' ' + unMsg.value.timestamp)
+    if (current_ts == undefined) {
+      for (let sig of description_time_graph.signal) {
+        if (sig.name === unMsg.value.variable) {
+          sig.wave = sig.wave + convert_value(unMsg.value.valeur)
+          let node_entry = (nxt_event &&(beacons.length != 0))? beacons_shift(): '.';
+          sig.node = sig.node + node_entry
+        } else {
+          sig.wave = sig.wave + '.'
+          sig.node = sig.node + '.'
+        }
+      }
+    } else {
+
+      if (unMsg.value.timestamp == current_ts) {
+        let sig = description_time_graph.signal.filter (s => s.name == unMsg.value.variable)[0]
+        sig.wave = sig.wave.replace(/.$/,(unMsg.value.valeur == 0)? '0':'1')
+        let node_entry = (nxt_event &&(beacons.length != 0))? beacons_shift(): '.';
+        sig.node = sig.node.replace(/.$/,node_entry)
+
+      } else {
+        for (sig of description_time_graph.signal) {
+          if (sig.name === unMsg.value.variable) {
+            sig.wave = sig.wave + convert_value(unMsg.value.valeur)
+            let node_entry = (nxt_event &&(beacons.length != 0))? beacons_shift(): '.';
+            sig.node = sig.node + node_entry
+          } else {
+            sig.wave = sig.wave + '.'
+            sig.node = sig.node + '.'
+          }
+        }
+
+      }
+    }
+    current_ts = unMsg.value.timestamp
+  }
+  console.log(description_time_graph)
+  //let description_time_graph = { signal: [], edge: [] }
+  // description_time_graph.signal.push({ name: 'A', wave: '01........0....',  node: '.a........j' });
+  // description_time_graph.signal.push({ name: 'B', wave: '0.1.......0.1..',  node: '..b.......i' });
+  // description_time_graph.signal.push({ name: 'C', wave: '0..1....0...1..',  node: '...c....h..' });
+  // description_time_graph.signal.push({ name: 'D', wave: '0...1..0.....1.',  node: '....d..g...' });
+  // description_time_graph.signal.push({ name: 'E', wave: '0....10.......1',  node: '.....ef....' });
+  // description_time_graph.edge = [
+  //   'a~b t1', 'c-~a t2', 'c-~>d time 3', 'd~-e',
+  //   'e~>f', 'f->g', 'g-~>h', 'h~>i some text', 'h~->j'
+  // ]
+  return description_time_graph
+}
+
+function updateTimeGraph(app, description_time_graph) {
+  document.getElementById("time_diagram_script").textContent = JSON.stringify(
+      description_time_graph
+   )
+}
+function displayTimeGraph(app, description_time_graph) {
+
+  var container = document.createElement('div')
+  container.setAttribute('class', 'w3-container')
+  container.setAttribute('id', 'time_diagram')
+
+  var my_awesome_script = document.createElement('script');
+  my_awesome_script.setAttribute('type','WaveDrom');
+  my_awesome_script.setAttribute('id', 'time_diagram_script')
+  //the_graph = buildTimeGraph(stored_messages)
+  my_awesome_script.textContent = JSON.stringify(
+      description_time_graph
+   )
+   app.appendChild(container)
+   container.appendChild(my_awesome_script)
+   WaveDrom.ProcessAll()
+}
+
+
+api_key = myCredentials.liveobjects.password;
+stream_id = "simul_InputsAndOutputs0_20181009_105730_HMI_Panel"
+retrievePagedStreamContent (api_key, stream_id, newData, nb_max_page = 1, bookmark_id = undefined)
+
+//setTimeout (console.log (), 2000)
+
+
+
+
+
+    </script>
+  </body>
+</html>

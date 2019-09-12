@@ -1,4 +1,15 @@
 
+
+function formatParams( params ){
+  return "?" + Object
+        .keys(params)
+        .map(function(key){
+          return key+"="+encodeURIComponent(params[key])
+        })
+        .join("&")
+}
+
+
 //curl -X GET --header 'Accept: application/json' --header 'X-API-KEY: e36519a3c5474778a0f0d2a867843eba' 'https://liveobjects.orange-business.com/api/v0/apiKeys?size=20&page=0&showSessionKeys=false&showMasterKey=true'
 
 function  retrieveTenants (api_key, tenants_listener) {
@@ -240,9 +251,8 @@ function retrieveDeviceStreams(api_key,device_id,stream_listener){
     }
   }
   request.send()
-
-
 }
+
 function retrieveStreamContent (api_key, stream_id, stream_listener) {
   //curl -X GET  'https://liveobjects.orange-business.com/api/v0/data/streams/urn%3Alo%3Ansid%3Aibo_Steps_OK&#33;uplink?limit=100'
   var url = 'https://liveobjects.orange-business.com/api/v0/data/streams/'+encodeURIComponent(stream_id) + formatParams({
@@ -264,13 +274,52 @@ function retrieveStreamContent (api_key, stream_id, stream_listener) {
   request.onload = function () {
     var data = JSON.parse(this.response)
     if (request.status >= 200 && request.status < 400) {
-      //console.log(data)
-      stream_listener(data)
+      console.log(data)
+      //stream_listener(data)
     } else {
       console.log('error')
     }
   }
   request.send()
+}
 
+function retrievePagedStreamContent (api_key, stream_id, stream_listener, nb_max_page = 2, bookmark_id) {
+  if (nb_max_page != 0) {
+    let record_per_page = 100
+    //curl -X GET  'https://liveobjects.orange-business.com/api/v0/data/streams/urn%3Alo%3Ansid%3Aibo_Steps_OK&#33;uplink?limit=100'
+    parms = {"limit":record_per_page,}
+
+    if (bookmark_id != undefined) parms.bookmarkId = bookmark_id;
+    formatted_params = formatParams(parms)
+    var url = 'https://liveobjects.orange-business.com/api/v0/data/streams/'+encodeURIComponent(stream_id) + formatted_params;
+
+    // Create a request variable and assign a new XMLHttpRequest object to it.
+    //console.log (url)
+    let request = new XMLHttpRequest()
+    // Open a new connection, using the GET request on the URL endpoint
+    request.open('GET', url, true)
+    request.setRequestHeader("X-API-KEY",api_key)
+    request.setRequestHeader("Accept",'application/json')
+    request.setRequestHeader("Content-type",'application/json')
+
+
+    request.onload = function () {
+      var data = JSON.parse(this.response)
+      if (request.status >= 200 && request.status < 400) {
+        //console.log(data)
+        //console.log(data[data.length -1].id)
+        if (data.length < record_per_page) {
+          console.log ("Reached the end of stream")
+        } else {
+          retrievePagedStreamContent (api_key, stream_id, stream_listener, nb_max_page - 1, data[data.length -1].id )
+        }
+        //
+        stream_listener(data)
+      } else {
+        console.log('error')
+      }
+    }
+    request.send()
+  }
 
 }
