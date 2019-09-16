@@ -15,7 +15,7 @@ var spool_timer = undefined;
 
 function spoolBulk (theBulk){
 	spool.push(theBulk)
-	if (spool_timer == undefined) {
+	if (spool_timer === undefined) {
 		spool_timer = setInterval (tache_periodique, 50)
 	}
 }
@@ -53,30 +53,29 @@ function inputCSVFile(app, onValidFileLoaded) {
 
 	container.appendChild(fileInput)
 	let FIELD_SEPARATOR = ';'
-    readFile = function () {
-        var reader = new FileReader();
-        reader.onload = function (readerEvent) {
-			var content = readerEvent.target.result; // this is the content!
+  readFile = function () {
+      var reader = new FileReader();
+      reader.onload = function (readerEvent) {
+    		var content = readerEvent.target.result; // this is the content!
 
-			let fields = content.replace(/\r/g, '').split('\n')[0].replace(/\"/g, '').split(FIELD_SEPARATOR)
+    		let fields = content.replace(/\r/g, '').split('\n')[0].replace(/\"/g, '').split(FIELD_SEPARATOR)
 
-			let lines = content.replace(/\r/g, '').replace(/\"/g, '').split('\n').slice(1).map(elem => elem.split(FIELD_SEPARATOR))
-			let listOfLines = new Array()
-			for (li of lines){
-				let jsLine = {}
-				for (fi of fields) {
-					jsLine[fi]=li[fields.indexOf(fi)]
-
-				}
-				listOfLines.push(jsLine)
-			}
-			//console.log(listOfLines)
-			onValidFileLoaded(listOfLines)
-        };
-		reader.readAsText(fileInput.files[0],'UTF-8');
-    };
+    		let lines = content.replace(/\r/g, '').replace(/\"/g, '').split('\n').slice(1).map(elem => elem.split(FIELD_SEPARATOR))
+    		let listOfLines = new Array()
+    		for (li of lines){
+    			let jsLine = {}
+    			for (fi of fields) {
+    				jsLine[fi]=li[fields.indexOf(fi)]
+    			}
+    			listOfLines.push(jsLine)
+    		}
+    		onValidFileLoaded(listOfLines)
+      };
+	    reader.readAsText(fileInput.files[0],'UTF-8');
+  };
 
 	fileInput.addEventListener('change', readFile);
+
 	app.appendChild(container)
 }
 
