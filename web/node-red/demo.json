@@ -1,0 +1,446 @@
+[
+    {
+        "id": "e7fb6aba.dfe3e8",
+        "type": "mqtt in",
+        "z": "92962e21.6c2b6",
+        "name": "fifoSTIB",
+        "topic": "fifo/test_cedric",
+        "qos": "1",
+        "datatype": "json",
+        "broker": "cdc9556.67e9628",
+        "x": 119.99998474121094,
+        "y": 206.40000915527344,
+        "wires": [
+            [
+                "e0f0378e.361ee8",
+                "ecb150c8.73f39"
+            ]
+        ]
+    },
+    {
+        "id": "ecb150c8.73f39",
+        "type": "switch",
+        "z": "92962e21.6c2b6",
+        "name": "obo vars",
+        "property": "payload.value.tag",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "obo_SST*",
+                "vt": "str",
+                "case": false
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 337,
+        "y": 247.80003356933594,
+        "wires": [
+            [
+                "bd049a7d.4aa39",
+                "6bc5662a.839ce8"
+            ]
+        ]
+    },
+    {
+        "id": "26235cec.d2d7d4",
+        "type": "function",
+        "z": "92962e21.6c2b6",
+        "name": "Générateur",
+        "func": "const var_name_list = [\"var1\", \"var2\", \"var3\"];\nlet idx_rand = Math.floor(Math.random()*var_name_list.length);\nlet var_name = var_name_list[idx_rand]\nnmsg = {\n    payload : {\n        value: Math.floor(Math.random()*2), \n        timestamp: msg.payload,\n        variable: var_name\n    }\n    \n}\nreturn nmsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 587.2000427246094,
+        "y": 397.20001220703125,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dfe2ae38.ce0f78",
+        "type": "function",
+        "z": "92962e21.6c2b6",
+        "name": "Analyseur Logique Multi-Canal",
+        "func": "const MAX_SIZE_OF_BUFF =  100;\nvar nmsg=null;\nvar event_buffer=context.get('event_buffer') || undefined;\nif (event_buffer === undefined) {\n    context.set('event_buffer',[]);\n    context.get('event_buffer').push(msg);\n    nmsg = null;\n} else {\n    event_buffer.push (msg)// .sort()\n    while (event_buffer.length > MAX_SIZE_OF_BUFF) {\n        event_buffer.shift()\n    }\n    if (event_buffer.length >= 1) {\n        // prepare series = [\"A\", \"B\", \"C\"];\n        let series = event_buffer.map(e=>e.payload.variable).filter((value, index, self) =>  self.indexOf(value) === index ).sort()\n        //[\"A\", \"B\", \"C\"];\n        labels = event_buffer.map(e=>e.timestamp);\n        \n        let data=[];\n        series.forEach(e=>data.push([]))\n        event_buffer.forEach(event => {\n            data[series.indexOf(event.payload.variable)].push (\n                {\n                    \"x\":event.payload.timestamp, \n                    \"y\":event.payload.value + 2*series.indexOf(event.payload.variable)\n                }    \n            )\n        })\n        nmsg = {\"payload\":[{\"series\": series,\"data\": data,\"labels\": labels}]}\n        //nmsg = {\"payload\":[{}]}\n        //nmsg = {\"payload\":[{}]}        \n//event_buffer//.map((elem) => elem)\n    } else {\n        nmsg = null;\n    }\n}\nreturn nmsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 960.2000122070312,
+        "y": 277.2000274658203,
+        "wires": [
+            [
+                "4250ada5.60888c",
+                "8cfae683.43659"
+            ]
+        ]
+    },
+    {
+        "id": "4250ada5.60888c",
+        "type": "ui_chart",
+        "z": "92962e21.6c2b6",
+        "name": "",
+        "group": "cfb9e5f9.83bb8",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "label": "vars",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": true,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 1240.2000122070312,
+        "y": 277.2000274658203,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2d28715b.fd4b8e",
+        "type": "ui_button",
+        "z": "92962e21.6c2b6",
+        "name": "",
+        "group": "cfb9e5f9.83bb8",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "new event",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "date",
+        "topic": "",
+        "x": 336.20001220703125,
+        "y": 402.20001220703125,
+        "wires": [
+            [
+                "26235cec.d2d7d4"
+            ]
+        ]
+    },
+    {
+        "id": "d8170263.4eeed8",
+        "type": "function",
+        "z": "92962e21.6c2b6",
+        "name": "Détecteur Séquence",
+        "func": "const sequence = [\n    {\"varName\": \"obo_SST_Vert_B_AE1\", \"value\": 1},\n    {\"varName\": \"obo_SST_R_AE\", \"value\": 1},\n    {\"varName\": \"obo_SST_STOP_AE1\", \"value\": 1},\n    //{\"varName\": \"var1\", \"value\": 0},\n    ];\nlet nmsg = null;    \nvar etat_courant=context.get('etat_courant') || 0;\n\nvar pile_contexte=context.get('pile_contexte') || undefined;\nif (pile_contexte === undefined) {\n    context.set('pile_contexte',[]);\n}\nif ((msg.payload.variable === sequence[etat_courant].varName) &&\n(msg.payload.value === sequence[etat_courant].value)) {\n        \n    //node.error(\"Something happened\");    \n    \n    etat_courant = (etat_courant+1)%sequence.length\n    context.set('etat_courant', etat_courant)\n    context.get('pile_contexte').push(msg);\n    \n    if (etat_courant === 0) {\n        // Got a sequence .. Log It\n        nmsg = []\n        start_time = context.get('pile_contexte').shift().payload.timestamp;\n        //node.error(start_time);    \n        while (context.get('pile_contexte').length !== 0) {\n            el = context.get('pile_contexte').shift()\n            //node.error(el);    \n            delta_time = el.payload.timestamp - start_time;\n            \n            nmsg.push({\"payload\" : {\n                \"variable\" :  \"t\"+(sequence.length - context.get('pile_contexte').length - 1),\n                \"value\" : delta_time,\n                \"timestamp\" : el.payload.timestamp,\n            }})\n            //node.error(nmsg); \n            start_time = el.payload.timestamp\n        }\n\n        //context.get('pile_contexte').map(e)\n        //nmsg.payload = {\"cont\" : context.get('pile_contexte'), \"etat_courant\":etat_courant};\n    \n        // Vider la mémoire\n        //while (pile_contexte.length !== 0) \n   } else {\n        // Sequence not yet finished \n    }\n} else {\n    // Sequence detection failed\n    // Vider la mémoire\n//    while (pile_contexte.length !== 0) pile_contexte.shift()\n    // Repartir à l'état initial\n//    context.set('etat_courant', 0)\n}\nif (nmsg != null) return [nmsg]\nreturn nmsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 875.2000122070312,
+        "y": 375.20001220703125,
+        "wires": [
+            [
+                "291218be.974c68"
+            ]
+        ]
+    },
+    {
+        "id": "f5e29aaa.6d1bc",
+        "type": "inject",
+        "z": "92962e21.6c2b6",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "0.5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 336,
+        "y": 470,
+        "wires": [
+            [
+                "26235cec.d2d7d4"
+            ]
+        ]
+    },
+    {
+        "id": "291218be.974c68",
+        "type": "function",
+        "z": "92962e21.6c2b6",
+        "name": "Tampon d'Affichage",
+        "func": "const MAX_SIZE_OF_BUFF =  20;\nvar nmsg=null;\nvar event_buffer=context.get('event_buffer') || undefined;\nif (event_buffer === undefined) {\n    context.set('event_buffer',[]);\n    context.get('event_buffer').push(msg);\n} else {\n    event_buffer.push (msg)// .sort()\n    while (event_buffer.length > MAX_SIZE_OF_BUFF) {\n        event_buffer.shift()\n    }\n    if (event_buffer.length >= 1) {\n        // prepare series = [\"A\", \"B\", \"C\"];\n        let series = event_buffer.map(e=>e.payload.variable).filter((value, index, self) =>  self.indexOf(value) === index ).sort()\n\n        let labels = [\"\"];\n        \n        let data=[];\n        series.forEach(e=>data.push([]))\n        event_buffer.forEach(event => {\n            data[series.indexOf(event.payload.variable)].push (\n                {\n                    \"x\":event.payload.timestamp, \n                    \"y\":event.payload.value,\n                }    \n            )\n        })\n        \n        nmsg = {\"payload\":[{\"series\": series,\"data\": data,\"labels\": labels}]}\n    } else {\n        nmsg = null;\n    }\n}\nreturn nmsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1122.1998901367188,
+        "y": 371.4000244140625,
+        "wires": [
+            [
+                "f40b19e5.4a04c"
+            ]
+        ]
+    },
+    {
+        "id": "e0f0378e.361ee8",
+        "type": "debug",
+        "z": "92962e21.6c2b6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 393,
+        "y": 116.20001220703125,
+        "wires": []
+    },
+    {
+        "id": "bd049a7d.4aa39",
+        "type": "function",
+        "z": "92962e21.6c2b6",
+        "name": "Adaptateur de Payload",
+        "func": "let nmsg=null;\nnmsg = {payload : {\n    variable : msg.payload.value.tag,\n    timestamp: msg.payload.value.timemsec/28.296,\n    value : (msg.payload.value.value === 0)?0:1,\n    \n}}\nreturn nmsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 582.9999847412109,
+        "y": 277.5999755859375,
+        "wires": [
+            [
+                "dfe2ae38.ce0f78",
+                "d8170263.4eeed8",
+                "5d1d641.dea2d1c",
+                "f594e7cb.667b4"
+            ]
+        ]
+    },
+    {
+        "id": "5d1d641.dea2d1c",
+        "type": "debug",
+        "z": "92962e21.6c2b6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 945,
+        "y": 171.40000915527344,
+        "wires": []
+    },
+    {
+        "id": "8cfae683.43659",
+        "type": "debug",
+        "z": "92962e21.6c2b6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1173,
+        "y": 172.40000915527344,
+        "wires": []
+    },
+    {
+        "id": "6bc5662a.839ce8",
+        "type": "debug",
+        "z": "92962e21.6c2b6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 604.9999847412109,
+        "y": 140.1999969482422,
+        "wires": []
+    },
+    {
+        "id": "a173bc8.7a033c",
+        "type": "debug",
+        "z": "92962e21.6c2b6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1226.9998779296875,
+        "y": 479.20001220703125,
+        "wires": []
+    },
+    {
+        "id": "f594e7cb.667b4",
+        "type": "function",
+        "z": "92962e21.6c2b6",
+        "name": "Mémoire dEtat",
+        "func": "let nmsg = null;\n\nlist_of_var_value = context.get(\"list_of_var_value\") || {};\n\nlist_of_var_value[msg.payload.variable] = msg.payload.value\n\ncontext.set(\"list_of_var_value\", list_of_var_value)\nnmsg = {\"payload\": list_of_var_value}\nreturn nmsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 813.9999847412109,
+        "y": 481.7999725341797,
+        "wires": [
+            [
+                "b0f35f67.b1cf7"
+            ]
+        ]
+    },
+    {
+        "id": "b0f35f67.b1cf7",
+        "type": "function",
+        "z": "92962e21.6c2b6",
+        "name": "",
+        "func": "let tab=Array();\nObject.keys(msg.payload).forEach (ke => tab.push({\n    \"topic\": ke,\n    \"payload\": msg.payload[ke]+2*Object.keys(msg.payload).indexOf(ke),\n}))\n\nreturn [tab];",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1035.9998779296875,
+        "y": 544.7999877929688,
+        "wires": [
+            [
+                "a173bc8.7a033c",
+                "f4e7d728.bb0ea"
+            ]
+        ]
+    },
+    {
+        "id": "f4e7d728.bb0ea",
+        "type": "ui_chart",
+        "z": "92962e21.6c2b6",
+        "name": "",
+        "group": "cfb9e5f9.83bb8",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "chart",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "20",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 1219.0000457763672,
+        "y": 551.1999969482422,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f40b19e5.4a04c",
+        "type": "ui_chart",
+        "z": "92962e21.6c2b6",
+        "name": "",
+        "group": "cfb9e5f9.83bb8",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "label": "times",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 1293.0000457763672,
+        "y": 376.1999969482422,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cdc9556.67e9628",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "JiBe_accede_a_LiveOject",
+        "broker": "liveobjects.orange-business.com",
+        "port": "1883",
+        "clientid": "RANDOM_STRING_xip8230",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "30",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "cfb9e5f9.83bb8",
+        "type": "ui_group",
+        "z": "",
+        "name": "Chrono",
+        "tab": "f28fa894.87c04",
+        "disp": true,
+        "width": "18",
+        "collapse": true
+    },
+    {
+        "id": "f28fa894.87c04",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Demo",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
