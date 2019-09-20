@@ -1,0 +1,141 @@
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>API Key </title>
+    <link href="w3.css" rel="stylesheet" />
+    <script src="lo.js" type="text/javascript"></script>
+    <script src="gui_input.js" type="text/javascript"></script>
+  </head>
+
+  <body>
+    <div id="root">
+<div class="w3-left-align"><p id="le_texte_a_afficher">Left aligned text.</p></div>
+    </div>
+    <script type="text/javascript">
+
+
+//
+function affiche (txt) {
+  document.getElementById("le_texte_a_afficher").textContent=document.getElementById("le_texte_a_afficher").textContent + "\n" + txt;
+}
+
+function  retrieveKeyInfo (api_key, key_listener, key_error) {
+
+  var url = 'https://liveobjects.orange-business.com/api/v0/apiKeys/current_key'
+  let request = new XMLHttpRequest()
+  // Open a new connection, using the GET request on the URL endpoint
+  request.open('GET',
+   url, true)
+  request.setRequestHeader("X-API-KEY",api_key)
+  request.setRequestHeader("Accept",'application/json')
+
+  console.log ("retrieveKeyInfo API Key " + api_key);
+  request.onload = function () {
+    console.log ("retrieveKeyInfo API Key onLoad");
+    var data = JSON.parse(this.response)
+    if (request.status == 200) {
+      key_listener(data)
+    } else {
+       if (request.status == 400) {
+         console.log('error 400')
+       } else if (request.status == 404){
+         console.log('error 404')
+       } else {
+         console.log('error '+ request.status)
+       }
+       key_error()
+    }
+  }
+  request.send()
+}
+
+    function obtainApiKey (app, onValidValue, onInvalidValue){
+
+      function apiKeyNotFoundOnLocalStorage (app, p_onValidValue, p_onInvalidValue){
+        console.log ("api_key not found on local storage")
+        let inp = document.createElement('input')
+        inp.setAttribute('type', 'password')
+        inp.setAttribute('id', 'api_key')
+        inp.value = ""
+        app.appendChild(inp)
+
+        inp.addEventListener('keyup', function (evt) { // use change here. not neccessarily
+            if (this.value.match(alphaExp)) {
+                this.setAttribute('class', 'w3-input')
+                this.setAttribute('valid', 'true')
+                retrieveKeyInfo (this.value, (key_info) => {
+                  console.log ("api_key entered by user validated by LiveObjects .. memorize it");
+                  api_key = this.value
+                  localStorage.setItem("api_key", api_key);
+                  if (this.parentNode != null) {
+                    this.parentNode.removeChild(this);
+                  }
+                  onValidValue(api_key);
+                }, () => {
+                  console.log ("api_key entered bu user is not validated by LiveObjects");
+                })
+            } else {
+                this.setAttribute('class', 'w3-input w3-border w3-pale-blue')
+                this.setAttribute('valid', 'false')
+            }
+        }, false);
+
+
+      }
+
+      function apiKeyNotFoundInCredentials (app, f_onValidValue, f_onInvalidValue){
+        // Try to find it in Local Storage
+        api_key = localStorage.getItem("api_key");
+        if (api_key != null) {
+          retrieveKeyInfo (api_key, (key_info) => {
+            onValidValue(api_key);
+          }, () => {
+            console.log ("api_key from credentials not validated by LiveObjects")
+            apiKeyNotFoundOnLocalStorage (app, f_onValidValue, f_onInvalidValue);
+          })
+        } else {
+          apiKeyNotFoundOnLocalStorage (app, f_onValidValue, f_onInvalidValue);
+        }
+      }
+
+      let alphaExp = /^[0-9a-fA-F]{32}$/;
+
+      let api_key = null;
+
+      try {
+          api_key = myCredentials.liveobjects.password;
+          if (! api_key.match(alphaExp)) {
+            api_key = null;
+            console.log ("Erroneous api_key stored in credentials")
+          } else {
+            retrieveKeyInfo (api_key, (key_info) => {
+              onValidValue(api_key);
+            }, () => {
+              console.log ("api_key from credentials not validated by LiveObjects")
+              apiKeyNotFoundInCredentials (app, onValidValue, onInvalidValue);
+            })
+          }
+      } catch (e) {
+        if (e instanceof ReferenceError) {
+          console.log ("api_key not found in credentials")
+        } else {
+          console.log ("Unexpected Exception" + e)
+        }
+        api_key = null;
+        apiKeyNotFoundInCredentials (app, onValidValue, onInvalidValue);
+      }
+      affiche ("This is the text content")
+    }
+
+
+function Main(api_key) {
+  console.log("api key is " + api_key)
+}
+
+obtainApiKey (document.getElementById("root"), onValidValue= Main, onInvalidValue= (invkey)=>{})
+
+    </script>
+  </body>
+</html>
