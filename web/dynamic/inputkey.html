@@ -5,53 +5,62 @@
 
     <title>API Key </title>
     <link href="w3.css" rel="stylesheet" />
-    <script src="lo.js" type="text/javascript"></script>
-    <script src="gui_input.js" type="text/javascript"></script>
-  </head>
-
-  <body>
-    <div id="root">
-<div class="w3-left-align"><p id="le_texte_a_afficher">Left aligned text.</p></div>
-    </div>
     <script type="text/javascript">
 
+    function  retrieveKeyInfo (api_key, key_listener, key_error) {
+      let request = new XMLHttpRequest()
 
-//
-function affiche (txt) {
-  document.getElementById("le_texte_a_afficher").textContent=document.getElementById("le_texte_a_afficher").textContent + "\n" + txt;
-}
+      request.open('GET','https://liveobjects.orange-business.com/api/v0/apiKeys/current_key', true)
+      request.setRequestHeader("X-API-KEY",api_key)
+      request.setRequestHeader("Accept",'application/json')
 
-function  retrieveKeyInfo (api_key, key_listener, key_error) {
-
-  var url = 'https://liveobjects.orange-business.com/api/v0/apiKeys/current_key'
-  let request = new XMLHttpRequest()
-  // Open a new connection, using the GET request on the URL endpoint
-  request.open('GET',
-   url, true)
-  request.setRequestHeader("X-API-KEY",api_key)
-  request.setRequestHeader("Accept",'application/json')
-
-  console.log ("retrieveKeyInfo API Key " + api_key);
-  request.onload = function () {
-    console.log ("retrieveKeyInfo API Key onLoad");
-    var data = JSON.parse(this.response)
-    if (request.status == 200) {
-      key_listener(data)
-    } else {
-       if (request.status == 400) {
-         console.log('error 400')
-       } else if (request.status == 404){
-         console.log('error 404')
-       } else {
-         console.log('error '+ request.status)
-       }
-       key_error()
+      request.onload = function () {
+        var data = JSON.parse(this.response)
+        if (request.status == 200) {
+          key_listener(data)
+        } else {
+           if (request.status == 400) {
+             console.log('error 400')
+           } else if (request.status == 404){
+             console.log('error 404')
+           } else {
+             console.log('error '+ request.status)
+           }
+           key_error()
+        }
+      }
+      request.send()
     }
-  }
-  request.send()
-}
 
     function obtainApiKey (app, onValidValue, onInvalidValue){
+
+      let alphaExp = /^[0-9a-fA-F]{32}$/;
+
+      let api_key = null;
+
+      try {
+          api_key = myCredentials.liveobjects.password;
+          if (! api_key.match(alphaExp)) {
+            api_key = null;
+            console.log ("Erroneous api_key stored in credentials")
+          } else {
+            retrieveKeyInfo (api_key, (key_info) => {
+              onValidValue(api_key);
+            }, () => {
+              console.log ("api_key from credentials not validated by LiveObjects")
+              apiKeyNotFoundInCredentials (app, onValidValue, onInvalidValue);
+            })
+          }
+      } catch (e) {
+        if (e instanceof ReferenceError) {
+          console.log ("api_key not found in credentials")
+        } else {
+          console.log ("Unexpected Exception" + e)
+        }
+        api_key = null;
+        apiKeyNotFoundInCredentials (app, onValidValue, onInvalidValue);
+      }
+
 
       function apiKeyNotFoundOnLocalStorage (app, p_onValidValue, p_onInvalidValue){
         console.log ("api_key not found on local storage")
@@ -81,8 +90,6 @@ function  retrieveKeyInfo (api_key, key_listener, key_error) {
                 this.setAttribute('valid', 'false')
             }
         }, false);
-
-
       }
 
       function apiKeyNotFoundInCredentials (app, f_onValidValue, f_onInvalidValue){
@@ -99,39 +106,107 @@ function  retrieveKeyInfo (api_key, key_listener, key_error) {
           apiKeyNotFoundOnLocalStorage (app, f_onValidValue, f_onInvalidValue);
         }
       }
-
-      let alphaExp = /^[0-9a-fA-F]{32}$/;
-
-      let api_key = null;
-
-      try {
-          api_key = myCredentials.liveobjects.password;
-          if (! api_key.match(alphaExp)) {
-            api_key = null;
-            console.log ("Erroneous api_key stored in credentials")
-          } else {
-            retrieveKeyInfo (api_key, (key_info) => {
-              onValidValue(api_key);
-            }, () => {
-              console.log ("api_key from credentials not validated by LiveObjects")
-              apiKeyNotFoundInCredentials (app, onValidValue, onInvalidValue);
-            })
-          }
-      } catch (e) {
-        if (e instanceof ReferenceError) {
-          console.log ("api_key not found in credentials")
-        } else {
-          console.log ("Unexpected Exception" + e)
-        }
-        api_key = null;
-        apiKeyNotFoundInCredentials (app, onValidValue, onInvalidValue);
-      }
-      affiche ("This is the text content")
     }
+
+    function formatParams( params ){
+      return "?" + Object
+            .keys(params)
+            .map(function(key){
+              return key+"="+encodeURIComponent(params[key])
+            })
+            .join("&")
+    }
+    function retrieveDevices(api_key, device_listener){
+      var url = 'https://liveobjects.orange-business.com/api/v1/deviceMgt/devices' + formatParams({
+        "limit":2000,
+        "offset":0,
+        "sort": '["-creationTs", "urn"]'
+      })
+      // Create a request variable and assign a new XMLHttpRequest object to it.
+      //console.log (url)
+      var request = new XMLHttpRequest()
+      // Open a new connection, using the GET request on the URL endpoint
+      request.open('GET',
+       url, true)
+      request.setRequestHeader("X-API-KEY",api_key)
+      request.setRequestHeader("Accept",'application/json')
+      request.setRequestHeader("Content-type",'application/json')
+
+
+      request.onload = function () {
+        var data = JSON.parse(this.response)
+
+
+        if (request.status == 200 ) {
+          console.log(data)
+          //device_listener(data)
+          // // //data.totalCount =
+          // var url2 = 'https://liveobjects.orange-business.com/api/v0/topics/fifo' + formatParams({
+          //   "size":data.totalCount,
+          //   "page":0
+          // })
+          // console.log (url2)
+          // var request2 = new XMLHttpRequest()
+          // // Open a new connection, using the GET request on the URL endpoint
+          // request2.open('GET', url2, true)
+          // request2.setRequestHeader("X-API-KEY",api_key)
+          // request2.setRequestHeader("Accept",'application/json')
+          // request2.setRequestHeader("Content-type",'application/json')
+          // request2.onload = function () {
+          //   if (request.status == 200) {
+          //     let data2 = JSON.parse(this.response)
+          //     console.log (data2)
+          //     fifo_listener(data2.data)
+          //   } else {
+          //     console.log('error')
+          //   }
+          // }
+          // request2.send(null)
+        } else {
+          console.log('error')
+        }
+      }
+      request.send()
+
+    }
+
+function selection_changed (){
+  console.log("It has changed");
+  var select = document.getElementById("color4");
+
+  console.log(select.selectedOptions);
+}
+    </script>
+    <script src="gui_input.js" type="text/javascript"></script>
+  </head>
+
+  <body>
+    <div id="root">
+<div class="w3-left-align"><p id="le_texte_a_afficher">Left aligned text.</p></div>
+<select id="color4" size="3" multiple onclick="selection_changed()">
+<option value="white">White</option>
+<option value="red">Red</option>
+<option value="yellow">Yellow</option>
+<option value="blue">Blue</option>
+<option value="green">Green</option>
+</select>
+
+    </div>
+    <script type="text/javascript">
+
+function affiche (txt) {
+  document.getElementById("le_texte_a_afficher").textContent=document.getElementById("le_texte_a_afficher").textContent + "</br>\n" + txt;
+}
 
 
 function Main(api_key) {
   console.log("api key is " + api_key)
+
+  retrieveDevices(api_key, (devices) => {
+    console.log (devices)
+  })
+  affiche ("This is the text content")
+
 }
 
 obtainApiKey (document.getElementById("root"), onValidValue= Main, onInvalidValue= (invkey)=>{})
