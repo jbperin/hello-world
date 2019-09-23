@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Le titre du document</title>
+    <link rel="stylesheet" href="w3.css" />
+    <link rel="stylesheet" type="text/css" href="selectize.css" />
+  </head>
+  <body>
+    <!-- Une ou plusieurs balises HTML pour définir le contenu du document -->
+    <script src="jquery.js"></script>
+    <script type="text/javascript" src="selectize.js"></script>
+
+
+    <div class="sandbox">
+        <label for="select-devices">Devices:</label>
+        <select id="select-devices" name="state[]" multiple class="demo-default" style="width:70%" placeholder="Select devices ...">
+        </select>
+    </div>
+
+    <div class="sandbox">
+        <label for="select-streams">Streams:</label>
+        <select id="select-streams" name="state[]" multiple class="demo-default" style="width:70%" placeholder="Select streams ...">
+        </select>
+    </div>
+    <script class="show" type="text/javascript">
+    $('#select-streams').selectize({
+      maxItems: 3
+    });
+  </script>
+    <script src="credentials.js"></script>
+    <script type="text/javascript">
+
+
+function clearStreamList() {
+  let $select = $('#select-streams').selectize();
+  let control = $select[0].selectize;
+  control.clearOptions();
+  console.log("streams list cleared")
+  control.refreshOptions(() => {
+    console.log ("triggerDropdown")
+  })
+}
+function newStreamList(stream_id_list) {
+  console.log (stream_id_list)
+}
+function loadStreams(streams_list) {
+  //console.log (streams_list)
+  let $select = $('#select-streams').selectize();
+  let control = $select[0].selectize;
+  control.clearOptions();
+
+  streams_list.forEach (stream => {
+    console.log(stream.streamId)
+    //$('#select-streams').append (new Option (stream.streamId, stream.streamId))
+    control.addOption (new Option (stream.streamId, stream.streamId))
+  })
+  console.log("streams appendezd")
+  $('#select-streams').selectize({
+    maxItems: 3,
+    onChange: function(value) {
+      newStreamList(value);
+    }
+  });
+  control.refreshOptions(() => {
+    console.log ("triggerDropdown")
+  })
+
+}
+function newDevicesList (devices_id_list) {
+  console.log("=====")
+  clearStreamList();
+  devices_id_list.forEach(dev_id => {
+    //console.log(dev_id)
+    $.ajax({
+        type : 'GET',
+        url : 'https://liveobjects.orange-business.com/api/v1/deviceMgt/devices/'+encodeURIComponent(dev_id)+'/data/streams',
+        headers: {
+          "X-API-KEY":myCredentials.liveobjects.password,
+          "Accept":'application/json',
+          "Content-type":'application/json'
+        },
+        data : null,
+        success: (data,status,xhr) => {
+          loadStreams(data);
+        },
+        dataType: 'json'
+    });
+
+  })
+}
+
+
+function loadDevices (data) {
+  data.forEach (aDevice => {
+    $('#select-devices').append (new Option (aDevice.id.substring("urn:lo:nsid:".length) + ' ' +aDevice.name, aDevice.id))
+  })
+  $('#select-devices').selectize({
+    maxItems: 3,
+    onChange: function(value) {
+      newDevicesList(value);
+    }
+  });
+}
+
+$(document).ready(function() {
+  $.ajax({
+      type : 'GET',
+      url : 'https://liveobjects.orange-business.com/api/v1/deviceMgt/devices', // Le fichier cible côté serveur.
+      headers: {
+        "X-API-KEY":myCredentials.liveobjects.password,
+        "Accept":'application/json',
+        "Content-type":'application/json'
+      },
+      data : {"limit":2000,"offset":0,"sort": '["-creationTs", "urn"]'},
+      success: (data,status,xhr) => {
+        loadDevices(data);
+      },
+      dataType: 'json'
+  });
+  console.log("After Request");
+});
+
+    </script>
+  </body>
+
+</html>
