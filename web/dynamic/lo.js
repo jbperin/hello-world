@@ -275,7 +275,7 @@ function retrieveStreamContent (api_key, stream_id, stream_listener) {
     var data = JSON.parse(this.response)
     if (request.status >= 200 && request.status < 400) {
       console.log(data)
-      //stream_listener(data)
+      stream_listener(data)
     } else {
       console.log('error')
     }

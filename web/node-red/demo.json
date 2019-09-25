@@ -1,86 +1,52 @@
 [
     {
-        "id": "e7fb6aba.dfe3e8",
+        "id": "89e1833a.b3412",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "854f4293.7b9e38",
         "type": "mqtt in",
-        "z": "92962e21.6c2b6",
+        "z": "89e1833a.b3412",
         "name": "fifoSTIB",
         "topic": "fifo/test_cedric",
         "qos": "1",
         "datatype": "json",
-        "broker": "cdc9556.67e9628",
-        "x": 119.99998474121094,
-        "y": 206.40000915527344,
+        "broker": "1a4e0ac4.b300e5",
+        "x": 90,
+        "y": 100,
         "wires": [
             [
-                "e0f0378e.361ee8",
-                "ecb150c8.73f39"
+                "970ed566.4943a",
+                "1b0b83c2.e51cac"
             ]
         ]
     },
     {
-        "id": "ecb150c8.73f39",
-        "type": "switch",
-        "z": "92962e21.6c2b6",
-        "name": "obo vars",
-        "property": "payload.value.tag",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "regex",
-                "v": "obo_SST*",
-                "vt": "str",
-                "case": false
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 337,
-        "y": 247.80003356933594,
-        "wires": [
-            [
-                "bd049a7d.4aa39",
-                "6bc5662a.839ce8"
-            ]
-        ]
-    },
-    {
-        "id": "26235cec.d2d7d4",
+        "id": "95ab24db.1bf22",
         "type": "function",
-        "z": "92962e21.6c2b6",
-        "name": "Générateur",
-        "func": "const var_name_list = [\"var1\", \"var2\", \"var3\"];\nlet idx_rand = Math.floor(Math.random()*var_name_list.length);\nlet var_name = var_name_list[idx_rand]\nnmsg = {\n    payload : {\n        value: Math.floor(Math.random()*2), \n        timestamp: msg.payload,\n        variable: var_name\n    }\n    \n}\nreturn nmsg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 587.2000427246094,
-        "y": 397.20001220703125,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "dfe2ae38.ce0f78",
-        "type": "function",
-        "z": "92962e21.6c2b6",
+        "z": "89e1833a.b3412",
         "name": "Analyseur Logique Multi-Canal",
-        "func": "const MAX_SIZE_OF_BUFF =  100;\nvar nmsg=null;\nvar event_buffer=context.get('event_buffer') || undefined;\nif (event_buffer === undefined) {\n    context.set('event_buffer',[]);\n    context.get('event_buffer').push(msg);\n    nmsg = null;\n} else {\n    event_buffer.push (msg)// .sort()\n    while (event_buffer.length > MAX_SIZE_OF_BUFF) {\n        event_buffer.shift()\n    }\n    if (event_buffer.length >= 1) {\n        // prepare series = [\"A\", \"B\", \"C\"];\n        let series = event_buffer.map(e=>e.payload.variable).filter((value, index, self) =>  self.indexOf(value) === index ).sort()\n        //[\"A\", \"B\", \"C\"];\n        labels = event_buffer.map(e=>e.timestamp);\n        \n        let data=[];\n        series.forEach(e=>data.push([]))\n        event_buffer.forEach(event => {\n            data[series.indexOf(event.payload.variable)].push (\n                {\n                    \"x\":event.payload.timestamp, \n                    \"y\":event.payload.value + 2*series.indexOf(event.payload.variable)\n                }    \n            )\n        })\n        nmsg = {\"payload\":[{\"series\": series,\"data\": data,\"labels\": labels}]}\n        //nmsg = {\"payload\":[{}]}\n        //nmsg = {\"payload\":[{}]}        \n//event_buffer//.map((elem) => elem)\n    } else {\n        nmsg = null;\n    }\n}\nreturn nmsg;",
+        "func": "const MAX_SIZE_OF_BUFF =  1000;\nvar nmsg=null;\nvar event_buffer=context.get('event_buffer') || undefined;\nif (event_buffer === undefined) {\n    context.set('event_buffer',[]);\n    context.get('event_buffer').push(msg);\n    nmsg = null;\n} else {\n    event_buffer.push (msg)// .sort()\n    while (event_buffer.length > MAX_SIZE_OF_BUFF) {\n        event_buffer.shift()\n    }\n    if (event_buffer.length >= 1) {\n        // prepare series = [\"A\", \"B\", \"C\"];\n        let series = event_buffer.map(e=>e.payload.variable).filter((value, index, self) =>  self.indexOf(value) === index ).sort()\n        //[\"A\", \"B\", \"C\"];\n        //node.error(series)\n        let labels = [\"\"]; //event_buffer.map(e=>e.payload.timestamp.toFixed(4));\n        \n        let data=[];\n        series.forEach(e=>data.push([]))\n        event_buffer.forEach(event => {\n            d=new Date();\n            d.setTime(event.payload.timestamp*1000);\n            data[series.indexOf(event.payload.variable)].push (\n                {\n                    \"x\":d.toISOString(),//event.payload.timestamp, \n                    \"y\":event.payload.value + 2*series.indexOf(event.payload.variable)\n                }    \n            )\n        })\n        //node.error(data)\n        nmsg = {\"payload\":[{\"series\": series,\"data\": data,\"labels\": labels}]}\n        //nmsg = {\"payload\":[{}]}\n        //nmsg = {\"payload\":[{}]}        \n//event_buffer//.map((elem) => elem)\n    } else {\n        nmsg = null;\n    }\n}\nreturn nmsg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 960.2000122070312,
-        "y": 277.2000274658203,
+        "x": 610,
+        "y": 100,
         "wires": [
             [
-                "4250ada5.60888c",
-                "8cfae683.43659"
+                "ff7593fe.e11258",
+                "77d44b25.4b424c"
             ]
         ]
     },
     {
-        "id": "4250ada5.60888c",
+        "id": "ff7593fe.e11258",
         "type": "ui_chart",
-        "z": "92962e21.6c2b6",
+        "z": "89e1833a.b3412",
         "name": "",
-        "group": "cfb9e5f9.83bb8",
+        "group": "3a08aee1.dd9f42",
         "order": 1,
         "width": "0",
         "height": "0",
@@ -90,11 +56,11 @@
         "xformat": "HH:mm:ss",
         "interpolate": "step",
         "nodata": "",
-        "dot": true,
+        "dot": false,
         "ymin": "",
         "ymax": "",
         "removeOlder": 1,
-        "removeOlderPoints": "",
+        "removeOlderPoints": "1000",
         "removeOlderUnit": "3600",
         "cutout": 0,
         "useOneColor": false,
@@ -111,219 +77,101 @@
         ],
         "useOldStyle": false,
         "outputs": 1,
-        "x": 1240.2000122070312,
-        "y": 277.2000274658203,
+        "x": 1030,
+        "y": 100,
         "wires": [
             []
         ]
     },
     {
-        "id": "2d28715b.fd4b8e",
-        "type": "ui_button",
-        "z": "92962e21.6c2b6",
-        "name": "",
-        "group": "cfb9e5f9.83bb8",
-        "order": 3,
-        "width": 0,
-        "height": 0,
-        "passthru": false,
-        "label": "new event",
-        "tooltip": "",
-        "color": "",
-        "bgcolor": "",
-        "icon": "",
-        "payload": "",
-        "payloadType": "date",
-        "topic": "",
-        "x": 336.20001220703125,
-        "y": 402.20001220703125,
-        "wires": [
-            [
-                "26235cec.d2d7d4"
-            ]
-        ]
-    },
-    {
-        "id": "d8170263.4eeed8",
+        "id": "fd8335c4.4d6d9",
         "type": "function",
-        "z": "92962e21.6c2b6",
+        "z": "89e1833a.b3412",
         "name": "Détecteur Séquence",
         "func": "const sequence = [\n    {\"varName\": \"obo_SST_Vert_B_AE1\", \"value\": 1},\n    {\"varName\": \"obo_SST_R_AE\", \"value\": 1},\n    {\"varName\": \"obo_SST_STOP_AE1\", \"value\": 1},\n    //{\"varName\": \"var1\", \"value\": 0},\n    ];\nlet nmsg = null;    \nvar etat_courant=context.get('etat_courant') || 0;\n\nvar pile_contexte=context.get('pile_contexte') || undefined;\nif (pile_contexte === undefined) {\n    context.set('pile_contexte',[]);\n}\nif ((msg.payload.variable === sequence[etat_courant].varName) &&\n(msg.payload.value === sequence[etat_courant].value)) {\n        \n    //node.error(\"Something happened\");    \n    \n    etat_courant = (etat_courant+1)%sequence.length\n    context.set('etat_courant', etat_courant)\n    context.get('pile_contexte').push(msg);\n    \n    if (etat_courant === 0) {\n        // Got a sequence .. Log It\n        nmsg = []\n        start_time = context.get('pile_contexte').shift().payload.timestamp;\n        //node.error(start_time);    \n        while (context.get('pile_contexte').length !== 0) {\n            el = context.get('pile_contexte').shift()\n            //node.error(el);    \n            delta_time = el.payload.timestamp - start_time;\n            \n            nmsg.push({\"payload\" : {\n                \"variable\" :  \"t\"+(sequence.length - context.get('pile_contexte').length - 1),\n                \"value\" : delta_time,\n                \"timestamp\" : el.payload.timestamp,\n            }})\n            //node.error(nmsg); \n            start_time = el.payload.timestamp\n        }\n\n        //context.get('pile_contexte').map(e)\n        //nmsg.payload = {\"cont\" : context.get('pile_contexte'), \"etat_courant\":etat_courant};\n    \n        // Vider la mémoire\n        //while (pile_contexte.length !== 0) \n   } else {\n        // Sequence not yet finished \n    }\n} else {\n    // Sequence detection failed\n    // Vider la mémoire\n//    while (pile_contexte.length !== 0) pile_contexte.shift()\n    // Repartir à l'état initial\n//    context.set('etat_courant', 0)\n}\nif (nmsg != null) return [nmsg]\nreturn nmsg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 875.2000122070312,
-        "y": 375.20001220703125,
+        "x": 580,
+        "y": 160,
         "wires": [
             [
-                "291218be.974c68"
+                "11f0dcbe.90ca3b"
             ]
         ]
     },
     {
-        "id": "f5e29aaa.6d1bc",
-        "type": "inject",
-        "z": "92962e21.6c2b6",
-        "name": "",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "0.5",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 336,
-        "y": 470,
-        "wires": [
-            [
-                "26235cec.d2d7d4"
-            ]
-        ]
-    },
-    {
-        "id": "291218be.974c68",
+        "id": "11f0dcbe.90ca3b",
         "type": "function",
-        "z": "92962e21.6c2b6",
+        "z": "89e1833a.b3412",
         "name": "Tampon d'Affichage",
-        "func": "const MAX_SIZE_OF_BUFF =  20;\nvar nmsg=null;\nvar event_buffer=context.get('event_buffer') || undefined;\nif (event_buffer === undefined) {\n    context.set('event_buffer',[]);\n    context.get('event_buffer').push(msg);\n} else {\n    event_buffer.push (msg)// .sort()\n    while (event_buffer.length > MAX_SIZE_OF_BUFF) {\n        event_buffer.shift()\n    }\n    if (event_buffer.length >= 1) {\n        // prepare series = [\"A\", \"B\", \"C\"];\n        let series = event_buffer.map(e=>e.payload.variable).filter((value, index, self) =>  self.indexOf(value) === index ).sort()\n\n        let labels = [\"\"];\n        \n        let data=[];\n        series.forEach(e=>data.push([]))\n        event_buffer.forEach(event => {\n            data[series.indexOf(event.payload.variable)].push (\n                {\n                    \"x\":event.payload.timestamp, \n                    \"y\":event.payload.value,\n                }    \n            )\n        })\n        \n        nmsg = {\"payload\":[{\"series\": series,\"data\": data,\"labels\": labels}]}\n    } else {\n        nmsg = null;\n    }\n}\nreturn nmsg;",
+        "func": "const MAX_SIZE_OF_BUFF =  200;\nvar nmsg=null;\nvar event_buffer=context.get('event_buffer') || undefined;\nif (event_buffer === undefined) {\n    context.set('event_buffer',[]);\n    context.get('event_buffer').push(msg);\n} else {\n    event_buffer.push (msg)// .sort()\n    while (event_buffer.length > MAX_SIZE_OF_BUFF) {\n        event_buffer.shift()\n    }\n    if (event_buffer.length >= 1) {\n        // prepare series = [\"A\", \"B\", \"C\"];\n        let series = event_buffer.map(e=>e.payload.variable).filter((value, index, self) =>  self.indexOf(value) === index ).sort()\n\n        let labels = [\"\"];\n        \n        let data=[];\n        series.forEach(e=>data.push([]))\n        event_buffer.forEach(event => {\n            data[series.indexOf(event.payload.variable)].push (\n                {\n                    \"x\":event.payload.timestamp, \n                    \"y\":event.payload.value,\n                }    \n            )\n        })\n        \n        nmsg = {\"payload\":[{\"series\": series,\"data\": data,\"labels\": labels}]}\n    } else {\n        nmsg = null;\n    }\n}\nreturn nmsg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1122.1998901367188,
-        "y": 371.4000244140625,
+        "x": 820,
+        "y": 160,
         "wires": [
             [
-                "f40b19e5.4a04c"
+                "104ff304.4d9375"
             ]
         ]
     },
     {
-        "id": "e0f0378e.361ee8",
-        "type": "debug",
-        "z": "92962e21.6c2b6",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "x": 393,
-        "y": 116.20001220703125,
-        "wires": []
-    },
-    {
-        "id": "bd049a7d.4aa39",
+        "id": "970ed566.4943a",
         "type": "function",
-        "z": "92962e21.6c2b6",
+        "z": "89e1833a.b3412",
         "name": "Adaptateur de Payload",
-        "func": "let nmsg=null;\nnmsg = {payload : {\n    variable : msg.payload.value.tag,\n    timestamp: msg.payload.value.timemsec/28.296,\n    value : (msg.payload.value.value === 0)?0:1,\n    \n}}\nreturn nmsg;",
+        "func": "let nmsg=null;\nnmsg = {payload : {\n    variable : msg.payload.value.tag,\n    timestamp: msg.payload.value.timemsec/28.29049134,\n    value : (msg.payload.value.value === 0)?0:1,\n    \n}}\nreturn nmsg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 582.9999847412109,
-        "y": 277.5999755859375,
+        "x": 290,
+        "y": 100,
         "wires": [
             [
-                "dfe2ae38.ce0f78",
-                "d8170263.4eeed8",
-                "5d1d641.dea2d1c",
-                "f594e7cb.667b4"
+                "3fa3871c.f17ad8",
+                "5b458d6c.a3adb4",
+                "95265be3.4bc6a"
             ]
         ]
     },
     {
-        "id": "5d1d641.dea2d1c",
-        "type": "debug",
-        "z": "92962e21.6c2b6",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 945,
-        "y": 171.40000915527344,
-        "wires": []
-    },
-    {
-        "id": "8cfae683.43659",
-        "type": "debug",
-        "z": "92962e21.6c2b6",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 1173,
-        "y": 172.40000915527344,
-        "wires": []
-    },
-    {
-        "id": "6bc5662a.839ce8",
-        "type": "debug",
-        "z": "92962e21.6c2b6",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 604.9999847412109,
-        "y": 140.1999969482422,
-        "wires": []
-    },
-    {
-        "id": "a173bc8.7a033c",
-        "type": "debug",
-        "z": "92962e21.6c2b6",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 1226.9998779296875,
-        "y": 479.20001220703125,
-        "wires": []
-    },
-    {
-        "id": "f594e7cb.667b4",
+        "id": "bb569fa5.1a8098",
         "type": "function",
-        "z": "92962e21.6c2b6",
+        "z": "89e1833a.b3412",
         "name": "Mémoire dEtat",
         "func": "let nmsg = null;\n\nlist_of_var_value = context.get(\"list_of_var_value\") || {};\n\nlist_of_var_value[msg.payload.variable] = msg.payload.value\n\ncontext.set(\"list_of_var_value\", list_of_var_value)\nnmsg = {\"payload\": list_of_var_value}\nreturn nmsg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 813.9999847412109,
-        "y": 481.7999725341797,
+        "x": 560,
+        "y": 220,
         "wires": [
             [
-                "b0f35f67.b1cf7"
+                "625b8c2f.d3e59c"
             ]
         ]
     },
     {
-        "id": "b0f35f67.b1cf7",
+        "id": "625b8c2f.d3e59c",
         "type": "function",
-        "z": "92962e21.6c2b6",
-        "name": "",
+        "z": "89e1833a.b3412",
+        "name": "JSON obj TO payload array",
         "func": "let tab=Array();\nObject.keys(msg.payload).forEach (ke => tab.push({\n    \"topic\": ke,\n    \"payload\": msg.payload[ke]+2*Object.keys(msg.payload).indexOf(ke),\n}))\n\nreturn [tab];",
         "outputs": 1,
         "noerr": 0,
-        "x": 1035.9998779296875,
-        "y": 544.7999877929688,
+        "x": 800,
+        "y": 220,
         "wires": [
             [
-                "a173bc8.7a033c",
-                "f4e7d728.bb0ea"
+                "5b24f5a6.89e034",
+                "7a90c93d.c3a42"
             ]
         ]
     },
     {
-        "id": "f4e7d728.bb0ea",
+        "id": "5b24f5a6.89e034",
         "type": "ui_chart",
-        "z": "92962e21.6c2b6",
+        "z": "89e1833a.b3412",
         "name": "",
-        "group": "cfb9e5f9.83bb8",
+        "group": "3a08aee1.dd9f42",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -337,7 +185,7 @@
         "ymin": "",
         "ymax": "",
         "removeOlder": 1,
-        "removeOlderPoints": "20",
+        "removeOlderPoints": "100",
         "removeOlderUnit": "3600",
         "cutout": 0,
         "useOneColor": false,
@@ -354,23 +202,23 @@
         ],
         "useOldStyle": false,
         "outputs": 1,
-        "x": 1219.0000457763672,
-        "y": 551.1999969482422,
+        "x": 1030,
+        "y": 220,
         "wires": [
             []
         ]
     },
     {
-        "id": "f40b19e5.4a04c",
+        "id": "104ff304.4d9375",
         "type": "ui_chart",
-        "z": "92962e21.6c2b6",
+        "z": "89e1833a.b3412",
         "name": "",
-        "group": "cfb9e5f9.83bb8",
+        "group": "8f152a8f.4d867",
         "order": 3,
         "width": 0,
         "height": 0,
         "label": "times",
-        "chartType": "line",
+        "chartType": "bar",
         "legend": "true",
         "xformat": "HH:mm:ss",
         "interpolate": "step",
@@ -396,21 +244,245 @@
         ],
         "useOldStyle": false,
         "outputs": 1,
-        "x": 1293.0000457763672,
-        "y": 376.1999969482422,
+        "x": 1030,
+        "y": 160,
         "wires": [
             []
         ]
     },
     {
-        "id": "cdc9556.67e9628",
+        "id": "7a90c93d.c3a42",
+        "type": "debug",
+        "z": "89e1833a.b3412",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1010,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "5b458d6c.a3adb4",
+        "type": "debug",
+        "z": "89e1833a.b3412",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 330,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "2da190cd.896f2",
+        "type": "debug",
+        "z": "89e1833a.b3412",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 550,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "3fa3871c.f17ad8",
+        "type": "switch",
+        "z": "89e1833a.b3412",
+        "name": "",
+        "property": "payload.variable",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "obo",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 450,
+        "y": 40,
+        "wires": [
+            [
+                "95ab24db.1bf22",
+                "2da190cd.896f2",
+                "fd8335c4.4d6d9",
+                "bb569fa5.1a8098"
+            ]
+        ]
+    },
+    {
+        "id": "1b0b83c2.e51cac",
+        "type": "debug",
+        "z": "89e1833a.b3412",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 240,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "77d44b25.4b424c",
+        "type": "debug",
+        "z": "89e1833a.b3412",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 980,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "f928a33a.0a4c28",
+        "type": "http in",
+        "z": "89e1833a.b3412",
+        "name": "WaveDrom View",
+        "url": "/wave",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 560,
+        "wires": [
+            [
+                "ca94d5f.57532a8"
+            ]
+        ]
+    },
+    {
+        "id": "71f87a8e.52a23c",
+        "type": "template",
+        "z": "89e1833a.b3412",
+        "name": "WaveDromHTML",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n\n    <title>WaveDrom Chrono</title>\n    <script src=\"http://wavedrom.com/skins/default.js\" type=\"text/javascript\"></script>\n    <script src=\"http://wavedrom.com/wavedrom.min.js\" type=\"text/javascript\"></script>\n  </head>\n\n  <body onload=\"WaveDrom.ProcessAll()\">\n    <div id=\"root\"></div>\n<!--script type=\"WaveDrom\"-->\n{{payload}}\n<!--/script-->\n</body>\n</html>",
+        "output": "str",
+        "x": 690,
+        "y": 560,
+        "wires": [
+            [
+                "dbcecbc7.2df21",
+                "4bcebe1c.72d82"
+            ]
+        ]
+    },
+    {
+        "id": "dbcecbc7.2df21",
+        "type": "http response",
+        "z": "89e1833a.b3412",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 910,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "95265be3.4bc6a",
+        "type": "function",
+        "z": "89e1833a.b3412",
+        "name": "Historique d'Evènements",
+        "func": "NB_MAX_EVENT = 10\n\nlistOfEvent = flow.get(\"list_of_events\") || [];\n\nlistOfEvent.push(msg.payload);\n\nwhile (listOfEvent.length > NB_MAX_EVENT) {\n    listOfEvent.shift()\n}\n\nflow.set(\"list_of_events\", listOfEvent )\nreturn {payload: listOfEvent};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 420,
+        "wires": [
+            [
+                "3706b87c.445f1"
+            ]
+        ]
+    },
+    {
+        "id": "3706b87c.445f1",
+        "type": "debug",
+        "z": "89e1833a.b3412",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 770,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "ca94d5f.57532a8",
+        "type": "function",
+        "z": "89e1833a.b3412",
+        "name": "",
+        "func": "msg1={}\nmsg1[\"payload\"] = [\"coucou\"]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 410,
+        "y": 560,
+        "wires": [
+            [
+                "71f87a8e.52a23c",
+                "536660dd.a39bb8"
+            ]
+        ]
+    },
+    {
+        "id": "536660dd.a39bb8",
+        "type": "debug",
+        "z": "89e1833a.b3412",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 660,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "4bcebe1c.72d82",
+        "type": "debug",
+        "z": "89e1833a.b3412",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 920,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "1a4e0ac4.b300e5",
         "type": "mqtt-broker",
         "z": "",
-        "name": "JiBe_accede_a_LiveOject",
+        "name": "LiveObject",
         "broker": "liveobjects.orange-business.com",
-        "port": "1883",
+        "port": "8883",
+        "tls": "4558ad8d.57eeac",
         "clientid": "RANDOM_STRING_xip8230",
-        "usetls": false,
+        "usetls": true,
         "compatmode": true,
         "keepalive": "30",
         "cleansession": true,
@@ -425,20 +497,46 @@
         "willPayload": ""
     },
     {
-        "id": "cfb9e5f9.83bb8",
+        "id": "3a08aee1.dd9f42",
         "type": "ui_group",
         "z": "",
-        "name": "Chrono",
-        "tab": "f28fa894.87c04",
+        "name": "Chronogrammes",
+        "tab": "dc32e6fe.ae2ed",
+        "order": 1,
         "disp": true,
-        "width": "18",
+        "width": "16",
         "collapse": true
     },
     {
-        "id": "f28fa894.87c04",
+        "id": "8f152a8f.4d867",
+        "type": "ui_group",
+        "z": "",
+        "name": "Intermédiaires",
+        "tab": "dc32e6fe.ae2ed",
+        "order": 2,
+        "disp": true,
+        "width": "16",
+        "collapse": true
+    },
+    {
+        "id": "4558ad8d.57eeac",
+        "type": "tls-config",
+        "z": "",
+        "name": "Parametres TLS  MQTT",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "liveobject_mqtt.crt",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false
+    },
+    {
+        "id": "dc32e6fe.ae2ed",
         "type": "ui_tab",
         "z": "",
-        "name": "Demo",
+        "name": "Visualisation",
         "icon": "dashboard",
         "disabled": false,
         "hidden": false

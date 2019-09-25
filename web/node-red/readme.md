@@ -112,6 +112,22 @@ Ouvrir le Firewall Windows
 
 ## Exemple de script
 
+### Mémoire d'état
+
+
+```javascript
+let nmsg = null;
+
+list_of_var_value = context.get("list_of_var_value") || {};
+
+list_of_var_value[msg.payload.variable] = msg.payload.value
+
+context.set("list_of_var_value", list_of_var_value)
+nmsg = {"payload": list_of_var_value}
+return nmsg;
+```
+
+
 ```javascript
 var nmsg=null;
 var event_buffer=context.get('event_buffer') || undefined;
