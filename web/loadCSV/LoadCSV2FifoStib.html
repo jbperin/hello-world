@@ -1,0 +1,279 @@
+<html>
+   <head>
+     <meta charset="utf-8" />
+      <title>CSV Loader</title>
+	  <script src="credentials.js" type="text/javascript"></script>
+    <script src="lolite.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+    var LiveObjectAPIKey = undefined;
+    var FifoName = undefined;
+
+    var PUSH_PERIOD = 2000;
+
+    var client_id = "urn:lo:nsid:flexy205:0475410668"
+
+
+    const table_correspondance_nom_variable = {
+    "ibo_point_L1_AE1.381"                  :               "AE1.381_E/S_ibo_point_L1_AE1",
+    "ibo_point_L2_AE1.381"                  :               "AE1.381_E/S_ibo_point_L2_AE1",
+    "ibo_point_L3_AE1.381"                  :               "AE1.381_E/S_ibo_point_L3_AE1",
+    "ibo_point_R1_AE1.381"                  :               "AE1.381_E/S_ibo_point_R1_AE1",
+    "ibo_point_R2_AE1.381"                  :               "AE1.381_E/S_ibo_point_R2_AE1",
+    "ibo_point_R3_AE1.381"                  :               "AE1.381_E/S_ibo_point_R3_AE1",
+    "ibo_rel700_C_AE1.381"                  :               "AE1.381_E/S_ibo_rel700_C_AE1",
+    "ibo_rel700_L_AE1.381"                  :               "AE1.381_E/S_ibo_rel700_L_AE1",
+    "ibo_rel700_R_AE1.381"                  :               "AE1.381_E/S_ibo_rel700_R_AE1",
+    "ibo_relK100_default"                   :               "AE1.381_E/S_ibo_relK100_default",
+    "ibo_relK211_default"                   :               "AE1.381_E/S_ibo_relK211_default",
+    "ibo_relK221_default"                   :               "AE1.381_E/S_ibo_relK221_default",
+    "ibo_stick_NC_AE1.381"                  :               "AE1.381_E/S_ibo_stick_NC_AE1",
+    "ibo_stick_NO_AE1.381"                  :               "AE1.381_E/S_ibo_stick_NO_AE1",
+    "ibo_Zen_A1-A2_opto_L"                  :               "AE1.381_E/S_ibo_Zen_AE1_opto_L",
+    "ibo_Zen_A1-A2_opto_Lock"               :               "AE1.381_E/S_ibo_Zen_AE1_opto_Lock",
+    "ibo_Zen_A1-A2_opto_R"                  :               "AE1.381_E/S_ibo_Zen_AE1_opto_R",
+    "ibo_Zen_A1-A2_opto_S"                  :               "AE1.381_E/S_ibo_Zen_AE1_opto_S",
+    "ibo_Zen_A1-A2_rel_L"                   :               "AE1.381_E/S_ibo_Zen_AE1_rel_L",
+    "ibo_Zen_A1-A2_rel_R"                   :               "AE1.381_E/S_ibo_Zen_AE1_rel_R",
+    "obo_24V_COM_AE1.381"                   :               "AE1.381_E/S_obo_24V_COM_AE1",
+    "obo_24V_L_AE1.381"                     :               "AE1.381_E/S_obo_24V_L_AE1",
+    "obo_24V_R_AE1.381"                     :               "AE1.381_E/S_obo_24V_R_AE1",
+    "obo_700V_C_AE1.381"                    :               "AE1.381_E/S_obo_700V_C_AE1",
+    "obo_700V_L_AE1.381"                    :               "AE1.381_E/S_obo_700V_L_AE1",
+    "obo_700V_R_AE1.381"                    :               "AE1.381_E/S_obo_700V_R_AE1",
+    "obo_SST_L_AE1.381"                     :               "AE1.381_E/S_obo_SST_L_AE1",
+    "obo_SST_R_AE"                          :               "AE1.381_E/S_obo_SST_R_AE",
+    "obo_SST_STOP_AE1.381"                  :               "AE1.381_E/S_obo_SST_STOP_AE1",
+    "obo_SST_Vert_B_AE1.381"                :               "AE1.381_E/S_obo_SST_Vert_B_AE1",
+    };
+
+
+
+    function buildPayload (elem){
+      let variable_name = table_correspondance_nom_variable[elem.VarName] || undefined
+      payload = {
+            "model": "flexy205",
+            "streamId": "simul_InputsAndOutputs0_20181009_105730_HMI_Panel",
+            "timestamp": toIsoUtc(elem.TimeString),
+            "value": {
+
+                "timestamp":toIsoUtc(elem.TimeString),
+                "timemsec":parseFloat(elem.Time_ms.replace(',', '.')),
+                "description":"",
+                "isEvent":isEvent(variable_name),
+                "tag":nameOfVar(variable_name),
+                "fonction":fonctionOfVar(variable_name),
+                "lieu":placeOfVar(variable_name),
+                "value":parseInt(elem.VarValue),
+                "validity":1,
+            }
+        };
+        return payload
+    };
+
+
+    </script>
+  <style>
+  </style>
+
+   </head>
+    <body>
+   <h1>Charger un fichier CSV vers LiveObjects</h1>
+
+  <div id="root"></div>
+ 	<script>
+
+var spool = new Array();
+var spool_timer = undefined;
+
+var nbRecord2Send = 0;
+var nbSentRecord = 0;
+
+function spoolBulk (theBulk){
+	spool.push(theBulk)
+	if (spool_timer === undefined) {
+		spool_timer = setInterval (tache_periodique, PUSH_PERIOD)
+	}
+}
+function nextBulk (){
+	if (spool.length == 0) return undefined
+	return spool.shift()
+}
+
+
+function tache_periodique (){
+	if ((chunk = nextBulk ()) != undefined) {
+		publishFifo(LiveObjectAPIKey, FifoName , chunk)
+    nbSentRecord += 1;
+    let current_progress = Math.round(nbSentRecord / nbRecord2Send)
+    //document.getElementById("progress_bar").style.width = current_progress + '%';
+	} else {
+		clearInterval(spool_timer)
+		spool_timer = undefined
+	}
+}
+
+
+
+
+function workFileContent(readerEvent) {
+  let FIELD_SEPARATOR = ';'
+  var content = readerEvent.target.result; // this is the content!
+
+  let fields = content.replace(/\r/g, '').split('\n')[0].replace(/\"/g, '').split(FIELD_SEPARATOR)
+
+  let lines = content.replace(/\r/g, '').replace(/\"/g, '').split('\n').slice(1).map(elem => elem.split(FIELD_SEPARATOR))
+  let listOfLines = new Array()
+  for (li of lines){
+    let jsLine = {}
+    for (fi of fields) {
+      jsLine[fi]=li[fields.indexOf(fi)]
+    }
+    listOfLines.push(jsLine)
+  }
+  this.handler(listOfLines);//onValidFileLoaded(listOfLines)
+};
+
+function inputCSVFile(app, onValidFileLoaded) {
+
+	let container = document.createElement('div')
+	container.setAttribute('class', 'w3-container')
+	container.setAttribute('id', 'CSVFileSelector')
+
+	let para = document.createElement('p')
+	para.textContent = "Choisir un fichier CSV:"
+	container.appendChild(para)
+
+	let fileInput = document.createElement("input")
+	fileInput.setAttribute('id', 'csv_file_input')
+	fileInput.setAttribute('type', 'file')
+  container.appendChild(fileInput)
+
+  app.appendChild(container)
+
+  readFile = function () {
+      var reader = new FileReader();
+      reader.handler = onValidFileLoaded;
+      reader.onload = workFileContent;
+	    reader.readAsText(fileInput.files[0],'UTF-8');
+  };
+
+	fileInput.addEventListener('change', readFile);
+
+}
+
+function publishFifo (api_key, fifo_name, data) {
+
+	var request = new XMLHttpRequest ();
+
+	request.open('POST',
+	'https://liveobjects.orange-business.com/api/v0/topics/fifo/'+fifo_name, true
+	)
+	request.setRequestHeader("X-API-KEY",api_key)
+	request.setRequestHeader("Accept",'application/json')
+	request.setRequestHeader("Content-type",'application/json')
+
+	request.onLoad= (event) => {
+  	if (this.status === 202) {
+  		//console.log(this.responseText)
+  	} else {
+  		console.log("erreur")
+  	}
+  };
+	body = JSON.stringify(data)
+	request.send(body)
+}
+
+function toIsoUtc(timeString) {
+	aDate = timeString.substr(6,4)+'-'+timeString.substr(3,2)+'-'+timeString.substr(0,2)+ "T" + timeString.substr(11) + ".000Z";
+	return aDate
+}
+
+
+function isEvent(variable_name){
+    return true;
+}
+function fonctionOfVar(variable_name){
+    return variable_name.split('_')[1]
+}
+function placeOfVar(variable_name){
+    return variable_name.split('_')[0]
+}
+function nameOfVar(variable_name){
+    return variable_name.split('_').slice(2).join('_')
+}
+
+function csvBulkInject(fileContent){
+  nbRecord2Send = fileContent.length;
+	for (ii = 0; ii< fileContent.length; ii++) {
+    let elem = fileContent[ii]
+    let variable_name = table_correspondance_nom_variable[elem.VarName] || undefined
+    if (variable_name != undefined) {
+      let data = buildPayload (elem)
+        //let d = new Date(toIsoUtc(elem.TimeString)).getTime();
+        //let t = data.value.timemsec;
+        //let rapport = t/d;
+        //console.log(`${d} ${t} => ${rapport}`)
+  		spoolBulk (data)
+    }
+	}
+}
+
+function selectFifo (fifos) {
+
+    let container = document.createElement('div')
+
+    let para = document.createElement('p')
+  	para.textContent = "Choisir une Fifo:"
+  	container.appendChild(para)
+
+  	let selector  = document.createElement('select')
+    selector.setAttribute('id', 'FifoSelector')
+    fifos.forEach((fif) => {
+      let option = document.createElement("option");
+      option.text = fif.name
+      selector.add(option)
+    })
+
+  	container.appendChild(selector)
+    document.getElementById("root").appendChild(container)
+    selector.onchange = function(){
+
+      inputCSVFile(document.getElementById('root'), (fileContent) => {
+        document.getElementById("FifoSelector").disabled = true;
+      	csvBulkInject( fileContent)
+      })
+
+    };
+}
+
+
+
+function Main(api_key) {
+
+  LiveObjectAPIKey = api_key;
+
+  let para = document.createElement('p');
+  para.textContent = "Récupération des fifos. Veuillez patienter ...";
+  para.setAttribute('id', 'message_attente');
+  document.getElementById('root').appendChild(para);
+
+  retrieveFifos(api_key, (fifos) => {
+    document.getElementById('message_attente').parentNode.removeChild(document.getElementById("message_attente"))
+    selectFifo (fifos);
+  });
+
+  //retrieveDevices(api_key, (devices) => {
+  //  console.log (devices)
+  //})
+  //affiche ("This is the text content")
+}
+
+
+obtainApiKey (document.getElementById("root"), onValidValue= Main, onInvalidValue= (invkey)=>{})
+
+
+
+	</script>
+   </body>
+</html>
