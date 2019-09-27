@@ -9,10 +9,7 @@
     var LiveObjectAPIKey = undefined;
     var FifoName = undefined;
 
-    var PUSH_PERIOD = 2000;
-
-    var client_id = "urn:lo:nsid:flexy205:0475410668"
-
+    var client_id = "urn:lo:nsid:flexy205:0475410668";
 
     const table_correspondance_nom_variable = {
     "ibo_point_L1_AE1.381"                  :               "AE1.381_E/S_ibo_point_L1_AE1",
@@ -72,6 +69,19 @@
     };
 
 
+    function isEvent(variable_name){
+        return true;
+    }
+    function fonctionOfVar(variable_name){
+        return variable_name.split('_')[1]
+    }
+    function placeOfVar(variable_name){
+        return variable_name.split('_')[0]
+    }
+    function nameOfVar(variable_name){
+        return variable_name.split('_').slice(2).join('_')
+    }
+
     </script>
   <style>
   </style>
@@ -89,6 +99,9 @@ var spool_timer = undefined;
 var nbRecord2Send = 0;
 var nbSentRecord = 0;
 
+var PUSH_PERIOD = 2000;
+
+
 function spoolBulk (theBulk){
 	spool.push(theBulk)
 	if (spool_timer === undefined) {
@@ -99,17 +112,30 @@ function nextBulk (){
 	if (spool.length == 0) return undefined
 	return spool.shift()
 }
+function emptySpool (){
+	spool = [];
+}
 
-
+function refreshRate(new_period) {
+  clearInterval(spool_timer)
+  PUSH_PERIOD = new_period;
+  spool_timer = setInterval (tache_periodique, PUSH_PERIOD);
+  //console.log("new speed = " + PUSH_PERIOD);
+}
+function cancelInterval() {
+  clearInterval(spool_timer);
+  spool_timer = undefined;
+}
 function tache_periodique (){
 	if ((chunk = nextBulk ()) != undefined) {
 		publishFifo(LiveObjectAPIKey, FifoName , chunk)
     nbSentRecord += 1;
     let current_progress = Math.round(nbSentRecord / nbRecord2Send)
     //document.getElementById("progress_bar").style.width = current_progress + '%';
+    let progress_text = document.getElementById('progress_text');
+    progress_text.textContent = `Emission en cours ${nbSentRecord} / ${nbRecord2Send}`;
 	} else {
-		clearInterval(spool_timer)
-		spool_timer = undefined
+    cancelInterval();
 	}
 }
 
@@ -123,6 +149,7 @@ function workFileContent(readerEvent) {
   let fields = content.replace(/\r/g, '').split('\n')[0].replace(/\"/g, '').split(FIELD_SEPARATOR)
 
   let lines = content.replace(/\r/g, '').replace(/\"/g, '').split('\n').slice(1).map(elem => elem.split(FIELD_SEPARATOR))
+
   let listOfLines = new Array()
   for (li of lines){
     let jsLine = {}
@@ -131,8 +158,10 @@ function workFileContent(readerEvent) {
     }
     listOfLines.push(jsLine)
   }
-  this.handler(listOfLines);//onValidFileLoaded(listOfLines)
+  this.handler(listOfLines);
 };
+
+
 
 function inputCSVFile(app, onValidFileLoaded) {
 
@@ -150,7 +179,6 @@ function inputCSVFile(app, onValidFileLoaded) {
   container.appendChild(fileInput)
 
   app.appendChild(container)
-
   readFile = function () {
       var reader = new FileReader();
       reader.handler = onValidFileLoaded;
@@ -190,26 +218,14 @@ function toIsoUtc(timeString) {
 }
 
 
-function isEvent(variable_name){
-    return true;
-}
-function fonctionOfVar(variable_name){
-    return variable_name.split('_')[1]
-}
-function placeOfVar(variable_name){
-    return variable_name.split('_')[0]
-}
-function nameOfVar(variable_name){
-    return variable_name.split('_').slice(2).join('_')
-}
-
 function csvBulkInject(fileContent){
-  nbRecord2Send = fileContent.length;
+  //nbRecord2Send = fileContent.length;
 	for (ii = 0; ii< fileContent.length; ii++) {
     let elem = fileContent[ii]
     let variable_name = table_correspondance_nom_variable[elem.VarName] || undefined
     if (variable_name != undefined) {
       let data = buildPayload (elem)
+
         //let d = new Date(toIsoUtc(elem.TimeString)).getTime();
         //let t = data.value.timemsec;
         //let rapport = t/d;
@@ -241,9 +257,57 @@ function selectFifo (fifos) {
 
       inputCSVFile(document.getElementById('root'), (fileContent) => {
         document.getElementById("FifoSelector").disabled = true;
-      	csvBulkInject( fileContent)
-      })
 
+        nbSentRecord = 0;
+        nbRecord2Send = fileContent.length;
+
+        let progress_text = document.getElementById('progress_text') || document.createElement('p');
+        progress_text.setAttribute("id", "progress_text");
+      	progress_text.textContent = `0 / ${nbRecord2Send}`;
+      	document.getElementById('root').appendChild(progress_text);
+
+        let theButton = document.getElementById('theButton') || document.createElement('input');
+        theButton.setAttribute("id", "theButton");
+      	theButton.setAttribute('type', 'button');
+        theButton.setAttribute('value', 'Démarrer');
+        //theButton.textContent = `0 / ${nbRecord2Send}`;
+
+        theButton.addEventListener('click', function (){
+          action = theButton.getAttribute('value');
+
+          if (action === "Démarrer") {
+            theButton.setAttribute('value', 'Arrêter');
+            document.getElementById("FifoSelector").disabled = true;
+            document.getElementById("csv_file_input").disabled = true;
+
+            //<input type="range" min="1" max="100" value="50">
+            let theSlider = document.createElement('input');
+            theSlider.setAttribute("id", "theSlider");
+            theSlider.setAttribute('type', 'range');
+            theSlider.setAttribute('min', '1');
+            theSlider.setAttribute('max', '100');
+            theSlider.setAttribute('value', '50');
+            theSlider.oninput = function () {
+              refreshRate((101-this.value) * 40)
+            }
+            progress_text.after(theSlider);
+
+            csvBulkInject( fileContent);
+
+          } else {
+
+            cancelInterval();
+            emptySpool ();
+            if (document.getElementById('progress_text') != null) document.getElementById('progress_text').parentNode.removeChild(document.getElementById('progress_text'));
+            document.getElementById('theSlider').parentNode.removeChild(document.getElementById('theSlider'));
+            document.getElementById('theButton').parentNode.removeChild(document.getElementById('theButton'));
+            document.getElementById("csv_file_input").disabled = false;
+          }
+
+        });
+
+        document.getElementById('root').appendChild(theButton);
+      })
     };
 }
 
