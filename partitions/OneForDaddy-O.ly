@@ -24,21 +24,27 @@ r4  bes, des8. f16 g4 |
 bes aes f8 ees r des |
  r4 bes, des8. f16 g4 |
 
+aes8. f16 aes8. f16 f4 aes8. f16 |
+aes8. f16 f4 aes8. f16 a8 bes8 |
+r1 |
+r4 bes, des8. f16 g4 |
 
  \break
 }
 notes_basse = {
-
+r1 | 
+bes,4 c des c | c ges f c' | bes c' des' c' | bes aes g f | 
+ees des c des  | ees f g aes | bes f des f | f g aes bes |
+c' ges c ges | f ees des c | bes, c des c | c ges f c |  
 
  \break
 }
 
 grille_accord = \chordmode {
 
-r1 bes1:m7 c2:m7.5- f:7 bes1:m7 bes1:m7
-ees:m7 ees:7 bes1:m7 bes1:m7
-bes:m7 aes:7 ges:maj7 f:7
-c1:m7.5- f:7+9 bes1:m7 c2:m7.5- f:7 
+r1 bes1:m7 c2:m7.5- f:7 bes1:m7 bes1:7
+ees:m7 ees:m7 bes1:m7 bes1:m7
+c1:m7.5- f:7 bes1:m7 c2:m7.5- f:7+9
 
 }
 
@@ -58,7 +64,7 @@ c1:m7.5- f:7+9 bes1:m7 c2:m7.5- f:7
 		\clef treble
 		\set Staff.midiInstrument = #"tenor sax" 
 
-		\transpose c c'' \notes_theme 
+		\transpose c c' \notes_theme 
 		%\absolute \notes_theme 
 
     }
