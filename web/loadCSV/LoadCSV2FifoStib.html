@@ -254,7 +254,7 @@ function selectFifo (fifos) {
   	container.appendChild(selector)
     document.getElementById("root").appendChild(container)
     selector.onchange = function(){
-
+      FifoName = this.options[this.selectedIndex].text;
       inputCSVFile(document.getElementById('root'), (fileContent) => {
         document.getElementById("FifoSelector").disabled = true;
 
