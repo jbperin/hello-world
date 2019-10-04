@@ -1,0 +1,79 @@
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Chronogramme</title>
+    <script src="http://wavedrom.com/skins/default.js" type="text/javascript"></script>
+    <script src="http://wavedrom.com/wavedrom.min.js" type="text/javascript"></script>
+    <script src="credentials.js" type="text/javascript"></script>
+    <script src="lolite.js" type="text/javascript"></script>
+    <script src="chrono.js" type="text/javascript"></script>
+    <script type="text/javascript">
+stream_id = "simul_InputsAndOutputs0_20181009_105730_HMI_Panel";
+    </script>
+  </head>
+
+  <body onload="WaveDrom.ProcessAll()">
+    <h1>Tracer un chronogramme depuis un flux LiveObjects</h1>
+    <div id="root"></div>
+
+    <script type="text/javascript">
+
+var msgs = undefined;
+
+function newData(data) {
+  if (msgs == undefined) msgs = new Array();
+  data.map(e => msgs.push(e))
+}
+
+
+function unconvert(type) {
+  return (type == '1')?-1:0;
+}
+
+function runThrough (trigs) {
+
+  let idx = 0;
+  let oldelem = undefined;
+
+  msgs
+  .sort ((el1, el2)=>el1.value.timestamp2 > el2.value.timestamp2)
+  .slice (1,200)
+  .forEach(elem => {
+    if ((elem.value.variable == trigs[idx].v) && (elem.value.valeur == trigs[idx].t)) {
+
+      if (idx != 0) {
+        console.log ("BINGO " + elem.value.variable + " " + elem.value.valeur + " " + elem.value.timestamp2 )
+        console.log (elem)
+        console .log ("t"+idx + " = " + (elem.value.timestamp2 - oldelem.value.timestamp2))
+      }
+      oldelem = elem
+      idx = (idx + 1) % trigs.length;
+    }
+  })
+}
+
+function Main(api_key) {
+
+  LiveObjectAPIKey = api_key;
+
+  retrievePagedStreamContent (api_key, stream_id, newData
+    , onFinish = (nb_vals) => {
+
+      triggers = [
+        {'t':'0','v':'ibo_point_L3_AE1.381'},
+        {'t':'1', 'v':'ibo_point_L3_AE1.381'},
+        {'t':'1', 'v':'ibo_Zen_A1-A2_rel_R'},
+        {'t':'0', 'v':'ibo_Zen_A1-A2_rel_R'},
+      ];
+      displayTimeGraph(document.getElementById("root"), buildTimeGraph(msgs.slice (1,120), selected_variables = undefined, soughtSequence = JSON.stringify(triggers)))
+      runThrough(triggers.map( (el) => ({'t':unconvert(el.t), 'v':el.v})));
+  } );
+}
+
+obtainApiKey (document.getElementById("root"), onValidValue= Main, onInvalidValue= (invkey)=>{})
+
+    </script>
+  </body>
+</html>

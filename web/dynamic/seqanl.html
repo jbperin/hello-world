@@ -52,7 +52,7 @@ function buildTimeGraph(stored_messages, selected_variables = undefined, soughtS
 
 
   let description_time_graph = { signal: [], edge: [] }
-  //description_time_graph.edge.push()
+
   variables_to_display.forEach(varName => description_time_graph.signal.push ({
     name : varName,
     wave : 'x',
@@ -78,7 +78,6 @@ function buildTimeGraph(stored_messages, selected_variables = undefined, soughtS
     .sort ((msg1, msg2) => msg1.value.timestamp2 >= msg2.value.timestamp2)
 
   function isNextAwaitedEvent (variable, valeur){
-    //variable.startsWith('ibo_point')
     if ((tab_seq.length != 0) &&(tab_seq[0].v==variable) && (tab_seq[0].t == convert_value(valeur))) {
       tab_seq.shift()
       return true;

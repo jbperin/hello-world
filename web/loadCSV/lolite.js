@@ -369,7 +369,7 @@ function retrieveStreamContent (api_key, stream_id, stream_listener) {
   request.send()
 }
 
-function retrievePagedStreamContent (api_key, stream_id, stream_listener, nb_max_page = 2, bookmark_id, onFinishHandler) {
+function retrievePagedStreamContent (api_key, stream_id, stream_listener, onFinishHandler, nb_max_page = 2, bookmark_id = undefined) {
   if (nb_max_page != 0) {
     let record_per_page = 1000
     //curl -X GET  'https://liveobjects.orange-business.com/api/v0/data/streams/urn%3Alo%3Ansid%3Aibo_Steps_OK&#33;uplink?limit=100'
@@ -392,10 +392,7 @@ function retrievePagedStreamContent (api_key, stream_id, stream_listener, nb_max
     request.onload = function () {
       var data = JSON.parse(this.response)
       if (request.status >= 200 && request.status < 400) {
-        //console.log(data)
-        //console.log(data[data.length -1].id)
         if (data.length < record_per_page) {
-          console.log ("Reached the end of stream")
         } else {
           retrievePagedStreamContent (api_key, stream_id, stream_listener, nb_max_page - 1, data[data.length -1].id, onFinishHandler )
         }
@@ -409,5 +406,96 @@ function retrievePagedStreamContent (api_key, stream_id, stream_listener, nb_max
     }
     request.send()
   }
+
+}
+
+function publishFifo (api_key, fifo_name, data) {
+
+	var request = new XMLHttpRequest ();
+
+	request.open('POST',
+	'https://liveobjects.orange-business.com/api/v0/topics/fifo/'+fifo_name, true
+	)
+	request.setRequestHeader("X-API-KEY",api_key)
+	request.setRequestHeader("Accept",'application/json')
+	request.setRequestHeader("Content-type",'application/json')
+
+	request.onLoad= (event) => {
+  	if (this.status === 202) {
+  		//console.log(this.responseText)
+  	} else {
+  		console.log("erreur")
+  	}
+  };
+	body = JSON.stringify(data)
+	request.send(body)
+}
+
+function uploadBulk (api_key, data) {
+	var request = new XMLHttpRequest ();
+	request.open('POST',
+	'https://liveobjects.orange-business.com/api/v0/data/bulk', true
+	)
+	request.setRequestHeader("X-API-KEY",api_key)
+	request.setRequestHeader("Accept",'application/json')
+	request.setRequestHeader("Content-type",'application/json')
+
+	request.onLoad= (event) => {
+  	if (this.status === 202) {
+  		//console.log(this.responseText)
+  	} else {
+  		console.log("erreur")
+  	}
+  };
+  //console.log(data)
+	body = JSON.stringify(data)
+
+	request.send(body)
+}
+
+
+function workFileContent(readerEvent) {
+  let FIELD_SEPARATOR = ';'
+  var content = readerEvent.target.result; // this is the content!
+
+  let fields = content.replace(/\r/g, '').split('\n')[0].replace(/\"/g, '').split(FIELD_SEPARATOR)
+
+  let lines = content.replace(/\r/g, '').replace(/\"/g, '').split('\n').slice(1).map(elem => elem.split(FIELD_SEPARATOR))
+
+  let listOfLines = new Array()
+  for (li of lines){
+    let jsLine = {}
+    for (fi of fields) {
+      jsLine[fi]=li[fields.indexOf(fi)]
+    }
+    listOfLines.push(jsLine)
+  }
+  this.handler(listOfLines);
+};
+
+function inputCSVFile(app, onValidFileLoaded) {
+
+	let container = document.createElement('div')
+	container.setAttribute('class', 'w3-container')
+	container.setAttribute('id', 'CSVFileSelector')
+
+	let para = document.createElement('p')
+	para.textContent = "Choisir un fichier CSV:"
+	container.appendChild(para)
+
+	let fileInput = document.createElement("input")
+	fileInput.setAttribute('id', 'csv_file_input')
+	fileInput.setAttribute('type', 'file')
+  container.appendChild(fileInput)
+
+  app.appendChild(container)
+  readFile = function () {
+      var reader = new FileReader();
+      reader.handler = onValidFileLoaded;
+      reader.onload = workFileContent;
+	    reader.readAsText(fileInput.files[0],'UTF-8');
+  };
+
+	fileInput.addEventListener('change', readFile);
 
 }
