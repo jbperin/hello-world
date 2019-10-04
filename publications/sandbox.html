@@ -1,0 +1,61 @@
+<html>
+   <head>
+    <meta charset="utf-8" />
+    <title>Mon Appli LiveObjects</title>
+    <script src="scripts/LiveObjectsEventProcessing1.js" type="text/javascript"></script>
+    <script src="scripts/LiveObjectsEventProcessing2.js" type="text/javascript"></script>
+    <script src="scripts/LiveObjectsTrainingPublishPostmanCollection.js" type="text/javascript"></script>
+   </head>
+    <body>
+      <h1>Une page LiveObjects</h1>
+      <div id="root"></div>
+     	<script>
+      function affiche (texte) {
+        let para = document.createElement('p');
+        para.textContent = texte
+        document.getElementById('root').appendChild(para);
+      }
+
+//https://github.com/DatavenueLiveObjects/Postman-collections-for-Live-Objects/blob/master/Live%20Objects%20Training%20publish.postman_collection.json
+
+let request = new XMLHttpRequest()
+
+//request.open('GET','https://raw.githubusercontent.com/DatavenueLiveObjects/Postman-collections-for-Live-Objects/master/Live%20Objects%20Event%20Processing%20Example%201.postman_collection.json', true);
+//request.open('GET','https://raw.githubusercontent.com/DatavenueLiveObjects/Postman-collections-for-Live-Objects/master/Live%20Objects%20Event%20Processing%20Example%202.postman_collection.json', true);
+request.open('GET','https://raw.githubusercontent.com/DatavenueLiveObjects/Postman-collections-for-Live-Objects/master/Live%20Objects%20Training%20publish.postman_collection.json', true);
+
+request.onload = function () {
+  var data = JSON.parse(this.response)
+  if (request.status == 200) {
+    console.log(data)
+    LiveObjectsTrainingPublish = data
+  } else {
+     console.log('error '+ request.status)
+     if (key_error !== undefined) {key_error()}
+  }
+}
+request.send()
+
+
+affiche ("Coucou");
+//console.log(LiveObjectsTrainingPublish);
+//console.log(LiveObjectsEventProcessing1);
+//console.log(LiveObjectsEventProcessing2);
+LiveObjectsTrainingPublish.item.forEach((el) => {
+  affiche ("Coucou " + el.name)
+  el.item.forEach ((it) => {
+    if (it.request !== undefined) {
+      affiche ("it " + it.request.method + ' '  +it.request.url.raw.replace ('android357329073120059', ':streamId:'))
+    } else {
+      if (it.item !== undefined) {
+        it.item.forEach ((sit) =>{
+          affiche ("sit " + sit.request.method + ' '  +sit.request.url.raw.replace ('android357329073120059', ':streamId:'))
+        })
+      }
+    }
+  })
+})
+
+    	</script>
+   </body>
+</html>
