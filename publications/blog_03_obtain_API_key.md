@@ -205,7 +205,7 @@ Muni de cette fonction `obtainApiKey` que nous enregistrons dans le fichier `lol
    <head>
     <meta charset="utf-8" />
     <title>Mon Appli LiveObjects</title>
-    <script src="lolite.js" type="text/javascript"></script>
+    <script src="jblo.js" type="text/javascript"></script>
    </head>
     <body>
       <h1>Une page LiveObjects</h1>

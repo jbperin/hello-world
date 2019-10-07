@@ -1,0 +1,62 @@
+<html>
+   <head>
+    <meta charset="utf-8" />
+    <!--meta http-equiv="refresh" content="2"-->
+    <title>Device state</title>
+    <script src="scripts/jblo.js" type="text/javascript"></script>
+   </head>
+    <body>
+      <h1>Read Device State on Live Objects</h1>
+      <div id="root"></div>
+     	<script>
+
+const DEVICE_ID="urn:lo:nsid:flexy205:0475410668";
+const STREAM_ID="simul_InputsAndOutputs0_20181009_105730_HMI_Panel";
+
+function affiche (texte) {
+  let para = document.createElement('p');
+  para.textContent = texte
+  document.getElementById('root').appendChild(para);
+}
+
+
+function retrieveLastPublished (api_key, stream_id, onRead, onError = undefined) {
+
+  var url = 'https://liveobjects.orange-business.com/api/v0/data/streams/'+encodeURIComponent(stream_id) + formatParams({
+    "limit":1})
+
+  let request = new XMLHttpRequest()
+
+  request.open('GET', url, true)
+  request.setRequestHeader("X-API-KEY",api_key)
+  request.setRequestHeader("Accept",'application/json')
+  request.setRequestHeader("Content-type",'application/json')
+
+  request.onload = function () {
+    var data = JSON.parse(this.response)
+    if (request.status == 200) {
+      onRead(data[0]);
+    } else {
+      console.log('error ' + request.status)
+      if (onError !== undefined) onError ();
+    }
+  }
+  request.send()
+}
+
+function Main(api_key) {
+  readDevice(api_key, DEVICE_ID, onStateReceived= (deviceInfo) => {
+    console.log (deviceInfo)
+    deviceInfo.interfaces.filter(e => ((e.connector == "mqtt") &&(e.enabled))).forEach((itf) => {
+      affiche ("On interface "+ itf.nodeId +", device is declared : " + itf.status + "  since " + itf.lastContact);
+    })
+  retrieveLastPublished (api_key, STREAM_ID, onRead = (lastMessage) => {
+    console.log (lastMessage);
+    affiche ("Last published message is  "+ JSON.stringify(lastMessage.value) +", published on " + lastMessage.timestamp);
+  })
+  } )
+}
+obtainApiKey (document.getElementById("root"), onValidValue= Main, onInvalidValue= (invkey)=>{})
+    	</script>
+   </body>
+</html>
