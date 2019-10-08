@@ -534,3 +534,28 @@ function inputCSVFile(app, onValidFileLoaded) {
 	fileInput.addEventListener('change', readFile);
 
 }
+
+
+function registerCommand(api_key, device_EUI, command_obj, commandSent, onError = undefined) {
+
+  var request = new XMLHttpRequest()
+  let encodedDeviceEui = encodeURIComponent(device_EUI)
+  let url = 'https://liveobjects.orange-business.com/api/v1/deviceMgt/connectors/lora/nodes/'+encodedDeviceEui+'/downlinks'
+
+  request.open('POST', url, true);
+
+  request.setRequestHeader("X-API-KEY",api_key)
+  request.setRequestHeader("Accept",'application/json')
+  request.setRequestHeader("Content-type",'application/json')
+
+  request.onload = function (event) {
+    if (this.status === 200) {
+        commandSent(JSON.parse(this.responseText))
+    } else {
+        console.log("Echec lors de l'enregistrement' d'une commande %d (%s)", this.status, this.statusText);
+        if (onError !== undefined) onError();
+    }
+  };
+  body = JSON.stringify(command_obj)
+  request.send(body);
+}
