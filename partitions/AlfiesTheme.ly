@@ -49,15 +49,25 @@ fis,1*1|
 }
 notes_basse = {
  bes,4 des aes, c | ges, bes, f, c | bes, f aes ees | ges ees f aes | 
- bes a aes g | ges f f c | bes, b, c ees | f c bes c |
+ bes a aes g | ges f f c | bes, b, c ees8. e16 | f4 aes8. a16 bes4 f |
+ bes a aes g | ges f f c | bes, a, aes, g, | ges, f, f, c |
+ bes, ges, aes,  c | ges, des f, c | bes, b, c ees8. e16 | f4 aes8. a16 bes4 f4 |
  
- 
+ des4 f aes g | ges bes b c' | des' ces bes aes | ges bes, ees d | 
+ des4 d ees f | ges g aes c | des' aes des' aes | ges des aes a | 
 
+ bes4 a aes g | ges f f c | bes, a, aes, g, | ges, f, f, c |
+ bes, ges, aes,  c | ges, des f, c | bes, b, c ees8. e16 | f4 aes8. a16 bes4 f4 |
 
  \break
 }
 
 grille_accord = \chordmode {
+
+bes2:m7 aes:7 ges:maj7 f:7
+bes:m7 aes:7 ges:maj7 f:7
+bes:m7 aes:7 ges:maj7 f:7
+bes:m7 c:m7.5- f:7 bes:m7
 
 bes2:m7 aes:7 ges:maj7 f:7
 bes:m7 aes:7 ges:maj7 f:7
