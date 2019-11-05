@@ -1,6 +1,75 @@
 
 
+## Algo arithmétiques
 
+http://nparker.llx.com/a2/mult.html
+
+### Multiplication 8 bits
+```
+        LDA #0       ;Initialize RESULT to 0
+        LDX #8       ;There are 8 bits in NUM2
+L1      LSR NUM2     ;Get low bit of NUM2
+        BCC L2       ;0 or 1?
+        CLC          ;If 1, add NUM1
+        ADC NUM1
+L2      ROR A        ;"Stairstep" shift (catching carry from add)
+        ROR RESULT
+        DEX
+        BNE L1
+        STA RESULT+1
+```
+
+### Multiplication 16 bits
+```
+LDA #0       ;Initialize RESULT to 0
+        STA RESULT+2
+        LDX #16      ;There are 16 bits in NUM2
+L1      LSR NUM2+1   ;Get low bit of NUM2
+        ROR NUM2
+        BCC L2       ;0 or 1?
+        TAY          ;If 1, add NUM1 (hi byte of RESULT is in A)
+        CLC
+        LDA NUM1
+        ADC RESULT+2
+        STA RESULT+2
+        TYA
+        ADC NUM1+1
+L2      ROR A        ;"Stairstep" shift
+        ROR RESULT+2
+        ROR RESULT+1
+        ROR RESULT
+        DEX
+        BNE L1
+        STA RESULT+3
+```
+
+### Division de 2 nombres 16 bits
+
+```
+        LDA #0      ;Initialize REM to 0
+        STA REM
+        STA REM+1
+        LDX #16     ;There are 16 bits in NUM1
+L1      ASL NUM1    ;Shift hi bit of NUM1 into REM
+        ROL NUM1+1  ;(vacating the lo bit, which will be used for the quotient)
+        ROL REM
+        ROL REM+1
+        LDA REM
+        SEC         ;Trial subtraction
+        SBC NUM2
+        TAY
+        LDA REM+1
+        SBC NUM2+1
+        BCC L2      ;Did subtraction succeed?
+        STA REM+1   ;If yes, save it
+        STY REM
+        INC NUM1    ;and record a 1 in the quotient
+L2      DEX
+        BNE L1
+```
+
+
+## Algo de geometrie
 
 
 http://geomalgorithms.com/
