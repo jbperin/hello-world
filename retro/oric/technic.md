@@ -44,49 +44,49 @@ Une fois la construction effectuée, lancer la commande `osdk_execute.bat` pour 
 Pré-processing:
 
 ```
-%ODSK%\BIN\cpp.exe -lang-c++ -I %ODSK%\include -D
-__16BIT__ -D__NOFLOAT__ -DATMOS -DOSDKNAME_HWADVANCED -DOSDKVER=\"1.15\" -nostdinc main.c %ODSK%\TMP\main.c
+%OSDK%\BIN\cpp.exe -lang-c++ -I %OSDK%\include -D
+__16BIT__ -D__NOFLOAT__ -DATMOS -DOSDKNAME_HWADVANCED -DOSDKVER=\"1.15\" -nostdinc main.c %OSDK%\TMP\main.c
 ```
 Compile:
 
 ```
-%ODSK%\BIN\compiler.exe -Nmain -O3 %ODSK%\TMP\mai
-n.c  1>%ODSK%\TMP\main.c2
+%OSDK%\BIN\compiler.exe -Nmain -O3 %OSDK%\TMP\mai
+n.c  1>%OSDK%\TMP\main.c2
 ```
 
 Convert C to assembly code :
 ```bash
-%ODSK%\BIN\cpp.exe  \
+%OSDK%\BIN\cpp.exe  \
   -lang-c++         \
-  -imacros %ODSK%\macro\macros.h  \
+  -imacros %OSDK%\macro\macros.h  \
   -DXA -traditional \
-  -P %ODSK%\TMP\main.c2 %ODSK%\TMP\main.s
+  -P %OSDK%\TMP\main.c2 %OSDK%\TMP\main.s
 ```
 
 ???:
 ```
-%ODSK%\BIN\macrosplitter.exe %ODSK%\TMP\main.s %ODSK%\TMP\main
+%OSDK%\BIN\macrosplitter.exe %OSDK%\TMP\main.s %OSDK%\TMP\main
 ```
 
 Copie fichiers:
 ```
-XCOPY /Y /T print.S %ODSK%\TMP\
+XCOPY /Y /T print.S %OSDK%\TMP\
 
-COPY print.S %ODSK%\TMP\print.s /Y  1>NUL
+COPY print.S %OSDK%\TMP\print.s /Y  1>NUL
 ```
 
 Edition de liens:
 ```
-%ODSK%\BIN\link65.exe  \
-    -d %ODSK%\lib/ \
+%OSDK%\BIN\link65.exe  \
+    -d %OSDK%\lib/ \
     -o %OSDK%\TMP\linked.s \
-    -f -q  %ODSK%\TMP\main \
+    -f -q  %OSDK%\TMP\main \
     print.s
 ```
 
 Assemblage:
 ```
-%ODSK%\BIN\xa.exe -W -C %ODSK%\TMP\linked.s   \
+%OSDK%\BIN\xa.exe -W -C %OSDK%\TMP\linked.s   \
     -o build\final.out  \
     -e build\xaerr.txt \
     -l build\symbols \
@@ -97,11 +97,11 @@ Assemblage:
 
 Création fichier cassette:
 ```
-%ODSK%\BIN\header.exe  build\final.out build\HWADVANCED.tap $800
+%OSDK%\BIN\header.exe  build\final.out build\HWADVANCED.tap $800
 ```
 
 ```
-%ODSK%\BIN\taptap.exe ren build\HWADVANCED.tap OSDK 0
+%OSDK%\BIN\taptap.exe ren build\HWADVANCED.tap OSDK 0
 ```
 
 
@@ -109,11 +109,11 @@ Création fichier cassette:
 
 
 ```basic
-ECHO #file BomberZ.BAS  1>>%ODSK%\TMP\Bomber.bas
+ECHO #file BomberZ.BAS  1>>%OSDK%\TMP\Bomber.bas
 
-TYPE BomberZ.BAS  1>>%ODSK%\TMP\Bomber.bas
+TYPE BomberZ.BAS  1>>%OSDK%\TMP\Bomber.bas
 
-%ODSK%\BIN\Bas2Tap -b2t1 -color1 %ODSK%\TMP\Bomber.bas build\
+%OSDK%\BIN\Bas2Tap -b2t1 -color1 %OSDK%\TMP\Bomber.bas build\
 Bomber.tap
 ```
 
@@ -121,15 +121,15 @@ Bomber.tap
 
 
 ```bash
-COPY build\Bomber.TAP %ODSK%\Oricutron\OSDK.TAP  1>NUL
+COPY build\Bomber.TAP %OSDK%\Oricutron\OSDK.TAP  1>NUL
 
-COPY build\symbols %ODSK%\Oricutron\symbols  1>NUL
+COPY build\symbols %OSDK%\Oricutron\symbols  1>NUL
 
-PUSHD %ODSK%\Oricutron
+PUSHD %OSDK%\Oricutron
 
-%ODSK%\Oricutron>START oricutron.exe -t OSDK.TAP -s symbols
+%OSDK%\Oricutron>START oricutron.exe -t OSDK.TAP -s symbols
 
-%ODSK%\Oricutron>POPD
+%OSDK%\Oricutron>POPD
 ```
 
 

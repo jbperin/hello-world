@@ -21,7 +21,7 @@ L2      ROR A        ;"Stairstep" shift (catching carry from add)
 
 ### Multiplication 16 bits
 ```
-LDA #0       ;Initialize RESULT to 0
+        LDA #0       ;Initialize RESULT to 0
         STA RESULT+2
         LDX #16      ;There are 16 bits in NUM2
 L1      LSR NUM2+1   ;Get low bit of NUM2
