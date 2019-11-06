@@ -2,9 +2,7 @@
 
 Vous trouverez ici les exemples de code fournis dans le merveilleux ouvrage [ORIC-1 Basic Programming Language](http://www.defence-force.org/computing/oric/library/lib_manual_oric/files/oric1manual.pdf) de John Scriven.
 
-J'ai pu les tester grâce à l'outils [Oricutron](http://www.petergordon.org.uk/oricutron/) et plus spécifiquement 
-
-[la version 1.2 Oricutron pour Windows](http://www.petergordon.org.uk/oricutron/files/Oricutron_win32_v12.zip)
+J'ai pu les tester grâce à l'outils [Oricutron](http://www.petergordon.org.uk/oricutron/) et plus spécifiquement [la version 1.2 Oricutron pour Windows](http://www.petergordon.org.uk/oricutron/files/Oricutron_win32_v12.zip)
 
 Pour les utiliser sur l'émulateur:
 * sélectionne et copier les lignes par `Ctrl-C`
@@ -13,7 +11,7 @@ Pour les utiliser sur l'émulateur:
 
 
 
-page 28
+## Page 28
 
 ```basic
 50 INPUT "CHOOSE 1,2 OR 3";X
@@ -30,7 +28,7 @@ page 28
 40 NEXT
 ```
 
-page 29
+## Page 29
 ```basic
 10 REPEAT
 20 D = D + INT(RND(1)*6)+ 1
@@ -48,7 +46,7 @@ page 29
 ```
 
 
-page 33
+## Page 33
 
 
 ```basic
@@ -65,14 +63,14 @@ page 33
 100 NEXT I
 210 INK 7 : PAPER 4
 ```
-page 34
+## Page 34
 ```basic
 10 LORES 0
 20 PLOT 16,12,"HELLO"
 ```
 
 
-page 35
+## Page 35
 ```basic
 5 REM ** ALTERNATE CHARACTERS **
 10 FOR N = 32 TO 128
@@ -106,7 +104,7 @@ page 35
 
 
 
-page 36
+## Page 36
 ```basic
 5 REM ** TEXT IN LORES 1 **
 10 LORES 1
@@ -130,7 +128,7 @@ page 36
 80 CLS
 ```
 
-page 37
+## Page 37
 
 ```basic
 100 REM ** USE OF SCRN(X,Y) **
@@ -162,7 +160,7 @@ page 37
 110 CLS
 ```
 
-page 39
+## Page 39
 ```basic
 5 REM ** SQUARE **
 10 HIRES
@@ -173,7 +171,7 @@ page 39
 60 DRAW 0,-120,1
 ```
 
-page 40
+## Page 40
 ```basic
 5 REM ** MOIRE **
 10 HIRES
@@ -187,7 +185,7 @@ page 40
 ```
 
 
-page 41
+## Page 41
 ```basic
 5 REM ** SIDEPRINT **
 10 HIRES
@@ -198,7 +196,7 @@ page 41
 60 CURMOV 10,10,0
 70 NEXT A
 ```
-page 42
+## Page 42
 ```basic
 100 REM ** LACE CIRCLES **
 110 HIRES
@@ -210,7 +208,7 @@ page 42
 ```
 
 
-page 43
+## Page 43
 ```basic
 5 HIRES
 10 FOR N=0 TO 199
@@ -228,7 +226,7 @@ page 43
 160 UNTIL KEY$< > ""
 ```
 
-page 45
+## Page 45
 ```basic
 100 REM ** PENNY FOR YOUR THOUGHTS**
 110 HIRES
@@ -272,7 +270,7 @@ page 45
 530 DATA 84,79,32,87,79,82,75,33,33
 ```
 
-page 57
+## Page 57
 
 ```basic
 10 FORN=1TO5
@@ -283,7 +281,7 @@ page 57
 110 DATA 1,2,8,6,4
 ```
 
-page 64
+## Page 64
 
 ```basic
 5 REM *** ITERATIVE ROOTS ***
@@ -299,7 +297,7 @@ page 64
 ```
 
 
-page 65
+## Page 65
 ```basic
 5 REM *** SLOW PI ***
 10 CLS
@@ -310,7 +308,7 @@ page 65
 60 PRINT APPROX
 70 NEXT X
 ```
-page 66
+## Page 66
 
 ```basic
 5 REM *** DICE THROWER ***
@@ -322,7 +320,7 @@ page 66
 60 NEXT
 ```
 
-page 67
+## Page 67
 
 ```basic
 5 REM *** DAY CALCULATOR ***
@@ -348,7 +346,7 @@ page 67
 200 DATA SUNDAY ,MONDAY ,TUESDAY, WEDNESDAY ,THURSDAY ,FRIDAY ,SATURDAY
 ```
 
-page 74
+## Page 74
 ```basic
 5 REM *** SINE ***
 10 HIRES
@@ -382,7 +380,7 @@ page 74
 170 H = TAN(XR)*D
 180 PRINT H;
 ```
-page 81
+## Page 81
 ```basic
 10 FOR N = 32 TO 128
 20 PRINT "ASCII CODE" N "STANDS FOR"CHR$(N)
@@ -390,7 +388,7 @@ page 81
 40 NEXTN
 ```
 
-page 84
+## Page 84
 
 ```basic
 5 REM ***SORT***
@@ -417,7 +415,7 @@ page 84
 
 
 
-page 89
+## Page 89
 
 
 ```basic
@@ -432,7 +430,7 @@ page 89
 80 DATA 18,12,30,45,45,30,18,0
 ```
 
-page 89
+## Page 89
 ```basic
 5 REM *** CHARACTER GENERATOR ***
 10 CLS
@@ -497,7 +495,7 @@ page 89
 1040 DATA 18,12,30,45,45,30,18,0
 1050 RETURN
 ```
-page 98
+## Page 98
 ```basic
 5 REM ** MUSIC? **
 20 MUSIC 1,RND(1)*6,RND(1)*12+1, 7
@@ -516,7 +514,7 @@ page 98
 ```
 
 
-page 127
+## Page 127
 ```basic
 5 REM *** RAD/DEG CONSTANT ***
 10 FOR DISP=0TO11
@@ -534,7 +532,7 @@ RUN
 DEF USR = # 400
 PRINT USR(0)
 
-page 128
+## Page 128
 ```basic
 5 REM ***** PROGRAM FOR EXTENSION CMD FOR 'PRINT @ X,Y ;JJJJ'.
 10 REPEAT
