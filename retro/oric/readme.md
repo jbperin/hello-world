@@ -1,4 +1,4 @@
-
+# Listings Oric-1 Manual
 
 Vous trouverez ici les exemples de code fournis dans le merveilleux ouvrage [ORIC-1 Basic Programming Language](http://www.defence-force.org/computing/oric/library/lib_manual_oric/files/oric1manual.pdf) de John Scriven.
 
@@ -11,14 +11,7 @@ Pour les utiliser sur l'émulateur:
 * aller dans l'émulateur et coller par `F12` (ou clic bouton droit puis `Paste from clipbard`)
 
 
-```basic
-10 FORN=1TO5
-20 READ A
-30 S=S+A
-40 NEXT N
-100 PRINT "SUM ="S
-110 DATA 1,2,8,6,4
-```
+
 
 page 28
 
@@ -278,6 +271,18 @@ page 45
 520 DATA 79,82,73,67,32,82,73,68,69,83
 530 DATA 84,79,32,87,79,82,75,33,33
 ```
+
+page 57
+
+```basic
+10 FORN=1TO5
+20 READ A
+30 S=S+A
+40 NEXT N
+100 PRINT "SUM ="S
+110 DATA 1,2,8,6,4
+```
+
 page 64
 
 ```basic
