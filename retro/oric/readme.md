@@ -6,10 +6,12 @@ J'ai pu les tester grâce à l'outils [Oricutron](http://www.petergordon.org.uk/
 
 [la version 1.2 Oricutron pour Windows](http://www.petergordon.org.uk/oricutron/files/Oricutron_win32_v12.zip)
 
+Pour les utiliser sur l'émulateur:
+* sélectionne et copier les lignes par `Ctrl-C`
+* aller dans l'émulateur et coller par `F12` (ou clic bouton droit puis `Paste from clipbard`)
 
 
-
-```BASIC
+```basic
 10 FORN=1TO5
 20 READ A
 30 S=S+A
@@ -20,7 +22,7 @@ J'ai pu les tester grâce à l'outils [Oricutron](http://www.petergordon.org.uk/
 
 page 28
 
-```BASIC
+```basic
 50 INPUT "CHOOSE 1,2 OR 3";X
 60 ON X GOTO 100,200,300
 70 PRINT "UMBER NOT CHOSEN": STOP
@@ -28,7 +30,7 @@ page 28
 200 PRINT "2 CHOSEN": STOP
 300 PRINT "3 CHOSEN" : STOP
 ```
-```BASIC
+```basic
 10 FORX=1TO5
 20 INPUT A
 30 IF A > 10THENPRINT"TOO BIG"ELSEPRINT"0.K."
@@ -36,14 +38,14 @@ page 28
 ```
 
 page 29
-```BASIC
+```basic
 10 REPEAT
 20 D = D + INT(RND(1)*6)+ 1
 30 PRINT D
 40 UNTIL D > 20
 50 STOP
 ```
-```BASIC
+```basic
 10 REM COPYRIGHT F. BLOGGS
 20 FOR N = 1 TO 10 : REM COUNTS LOOP
 30 PRINT "FRED IS MAGIC"
@@ -56,7 +58,7 @@ page 29
 page 33
 
 
-```BASIC
+```basic
 5 REM COLOURS
 10 TEXT
 20 FORN=1TO25
@@ -71,14 +73,14 @@ page 33
 210 INK 7 : PAPER 4
 ```
 page 34
-```BASIC
+```basic
 10 LORES 0
 20 PLOT 16,12,"HELLO"
 ```
 
 
 page 35
-```BASIC
+```basic
 5 REM ** ALTERNATE CHARACTERS **
 10 FOR N = 32 TO 128
 20 PRINT N,CHR$(27);"I";CHR$(N)
@@ -89,7 +91,7 @@ page 35
 
 
 
-```BASIC
+```basic
 1 REM *** MONSTER ***
 2 REM *** LORES 0/l DEMO ***
 5 LORES 1
@@ -112,7 +114,7 @@ page 35
 
 
 page 36
-```BASIC
+```basic
 5 REM ** TEXT IN LORES 1 **
 10 LORES 1
 20 A$ = CHR$(8) + "HELLO" + CHR$(9)
@@ -123,7 +125,7 @@ page 36
 70 WAIT 500
 80 CLS
 ```
-```BASIC
+```basic
 5 REM ** ALT. CHARS IN LORES 0 **
 10 LORES 0
 20 A$ = CHR$(9) + "HELLO" + CHR$(8)
@@ -137,7 +139,7 @@ page 36
 
 page 37
 
-```BASIC
+```basic
 100 REM ** USE OF SCRN(X,Y) **
 110 CLS:INK 1:PAPER 4
 120 FOR N =20 TO 25
@@ -153,7 +155,7 @@ page 37
 220 UNTIL SCRN(A,P + 1) = 43
 230 EXPLODE
 ```
-```BASIC
+```basic
 10 REM **** LORES COLOUR PLOTTING ****
 20 LORES 0
 30 STP = 2*PI/50
@@ -168,7 +170,7 @@ page 37
 ```
 
 page 39
-```BASIC
+```basic
 5 REM ** SQUARE **
 10 HIRES
 20 CURSET 60,40,3
@@ -179,7 +181,7 @@ page 39
 ```
 
 page 40
-```BASIC
+```basic
 5 REM ** MOIRE **
 10 HIRES
 20 FORA = 0TO1
@@ -193,7 +195,7 @@ page 40
 
 
 page 41
-```BASIC
+```basic
 5 REM ** SIDEPRINT **
 10 HIRES
 20 CURSET 50,50,3
@@ -204,7 +206,7 @@ page 41
 70 NEXT A
 ```
 page 42
-```BASIC
+```basic
 100 REM ** LACE CIRCLES **
 110 HIRES
 120 CURSET 120,100,3
@@ -216,14 +218,14 @@ page 42
 
 
 page 43
-```BASIC
+```basic
 5 HIRES
 10 FOR N=0 TO 199
 20 X=RND(1)*8 + 16
 30 FILL 1,1,X
 40 NEXTN
 ```
-```BASIC
+```basic
 100 REM **FILL DEMO **
 110 HIRES
 120 REPEAT
@@ -234,7 +236,7 @@ page 43
 ```
 
 page 45
-```BASIC
+```basic
 100 REM ** PENNY FOR YOUR THOUGHTS**
 110 HIRES
 120 X = 100:Y = X
@@ -278,7 +280,7 @@ page 45
 ```
 page 64
 
-```BASIC
+```basic
 5 REM *** ITERATIVE ROOTS ***
 10 INPUT "THINK OF A NUMBER";S
 20 INPUT "GUESS THE ROOT";G
@@ -293,7 +295,7 @@ page 64
 
 
 page 65
-```BASIC
+```basic
 5 REM *** SLOW PI ***
 10 CLS
 20 DEF FNA(N)=(-1/N + 1/(N+2))
@@ -305,7 +307,7 @@ page 65
 ```
 page 66
 
-```BASIC
+```basic
 5 REM *** DICE THROWER ***
 10 FORN=1TO10
 20 PRINT "PRESS ANY KEY TO THROW DIE"
@@ -317,7 +319,7 @@ page 66
 
 page 67
 
-```BASIC
+```basic
 5 REM *** DAY CALCULATOR ***
 10 CLS
 20 PRINT "ENTER DATE, MONTH & YEAR"
@@ -342,7 +344,7 @@ page 67
 ```
 
 page 74
-```BASIC
+```basic
 5 REM *** SINE ***
 10 HIRES
 20 DRAW 0,199,1
@@ -353,7 +355,7 @@ page 74
 70 PRINT "SINE CURVE"
 80 GET A$
 ```
-```BASIC
+```basic
 5 REM *** TOWER ***
 10 HIRES
 20 CURSET 20,20,3
@@ -376,7 +378,7 @@ page 74
 180 PRINT H;
 ```
 page 81
-```BASIC
+```basic
 10 FOR N = 32 TO 128
 20 PRINT "ASCII CODE" N "STANDS FOR"CHR$(N)
 30 WAIT 20
@@ -385,7 +387,7 @@ page 81
 
 page 84
 
-```BASIC
+```basic
 5 REM ***SORT***
 10 INPUT "NO. OF WORDS";N
 15 DIM A$(N + 1)
@@ -413,7 +415,7 @@ page 84
 page 89
 
 
-```BASIC
+```basic
 5 REM *** ALIEN DOMINATION ***
 10 FOR X = 46344 TO 47088 STEP8
 20 FOR I=0 TO 7
@@ -426,7 +428,7 @@ page 89
 ```
 
 page 89
-```BASIC
+```basic
 5 REM *** CHARACTER GENERATOR ***
 10 CLS
 20 DIM X(8):DIM Y(8,8)
@@ -460,7 +462,7 @@ page 89
 ```
 
 
-```BASIC
+```basic
 5 REM **DROPPING ALIENS**
 10 GOSUB 1000:CLS
 20 FORM=1TO20
@@ -491,13 +493,13 @@ page 89
 1050 RETURN
 ```
 page 98
-```BASIC
+```basic
 5 REM ** MUSIC? **
 20 MUSIC 1,RND(1)*6,RND(1)*12+1, 7
 30 WAIT RND (1)*20+5
 40 GOTO 5
 ```
-```BASIC
+```basic
 5 REM ** KEYBOARD **
 20 GET A$
 30 A=VAL(A$)
@@ -510,7 +512,7 @@ page 98
 
 
 page 127
-```BASIC
+```basic
 5 REM *** RAD/DEG CONSTANT ***
 10 FOR DISP=0TO11
 20 READ DTA
@@ -528,7 +530,7 @@ DEF USR = # 400
 PRINT USR(0)
 
 page 128
-```BASIC
+```basic
 5 REM ***** PROGRAM FOR EXTENSION CMD FOR 'PRINT @ X,Y ;JJJJ'.
 10 REPEAT
 20 READ DTA
@@ -553,7 +555,7 @@ RUN
 
 !2,3;"ORIC"
 
-```BASIC
+```basic
 5 REM ** EXTENSION CMD VERT/CURS/POS
 10 FOR N = 0TO5
 20 READ DTA
