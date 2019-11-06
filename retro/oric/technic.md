@@ -4,9 +4,141 @@ Resources:
 [Listings Oric Micro 7](http://abandonlistings.free.fr/micro7/)
 
 
+
+# OSDK
+
+[le site de OSK](http://osdk.defence-force.org/index.php?page=main)
+
+configurer une variable d'environnement `OSK` pointant sur le répertoire contenant le répertoire BIN de votre installation.
+`set OSDK=PATH\TO\OSDK\DIR`
+
+Pour essayer la construction placez vous dans un des répertoire d'exemple fournit avec le SDK.
+
+|répertoire|description|
+|--|--|
+| `%OSDK%\assembly\demo_256_bytes`         ||
+| `%OSDK%\assembly\game_4kkong`            ||
+| `%OSDK%\assembly\hello_world_assembly`   ||
+| `%OSDK%\basic\charset_reconf`            ||
+| `%OSDK%\basic\game`                      ||
+| `%OSDK%\basic\hello_world`               ||
+| `%OSDK%\basic\hires_demo`                ||
+| `%OSDK%\basic\labels`                    ||
+| `%OSDK%\basic\tap2dsk-GameMusics`        ||
+| `%OSDK%\basic\tap2dsk-GameMusics\data`   ||
+| `%OSDK%\c\compression_test`              ||
+| `%OSDK%\c\hello_world_advanced`          ||
+| `%OSDK%\c\hello_world_simple`            ||
+| `%OSDK%\c\hires_draw`                    ||
+| `%OSDK%\c\hires_picture`                 ||
+| `%OSDK%\floppybuilder`                   ||
+| `%OSDK%\mixed\hello_world_mixed`         ||
+| `%OSDK%\mixed\inline_assembler`          ||
+
+Lancer la commande `osdk_build.bat` pour contruire le projet.
+
+Une fois la construction effectuée, lancer la commande `osdk_execute.bat` pour lancer le programme dans l'émulateur `oricutron`.
+
+### Construction d'un programme mixant C et ASM
+
+Pré-processing:
+
+```
+%ODSK%\BIN\cpp.exe -lang-c++ -I %ODSK%\include -D
+__16BIT__ -D__NOFLOAT__ -DATMOS -DOSDKNAME_HWADVANCED -DOSDKVER=\"1.15\" -nostdinc main.c %ODSK%\TMP\main.c
+```
+Compile:
+
+```
+%ODSK%\BIN\compiler.exe -Nmain -O3 %ODSK%\TMP\mai
+n.c  1>%ODSK%\TMP\main.c2
+```
+
+Convert C to assembly code :
+```bash
+%ODSK%\BIN\cpp.exe  \
+  -lang-c++         \
+  -imacros %ODSK%\macro\macros.h  \
+  -DXA -traditional \
+  -P %ODSK%\TMP\main.c2 %ODSK%\TMP\main.s
+```
+
+???:
+```
+%ODSK%\BIN\macrosplitter.exe %ODSK%\TMP\main.s %ODSK%\TMP\main
+```
+
+Copie fichiers:
+```
+XCOPY /Y /T print.S %ODSK%\TMP\
+
+COPY print.S %ODSK%\TMP\print.s /Y  1>NUL
+```
+
+Edition de liens:
+```
+%ODSK%\BIN\link65.exe  \
+    -d %ODSK%\lib/ \
+    -o %OSDK%\TMP\linked.s \
+    -f -q  %ODSK%\TMP\main \
+    print.s
+```
+
+Assemblage:
+```
+%ODSK%\BIN\xa.exe -W -C %ODSK%\TMP\linked.s   \
+    -o build\final.out  \
+    -e build\xaerr.txt \
+    -l build\symbols \
+    -bt $800 \
+    -DASSEMBLER=XA  \
+    -DOSDKNAME_HWADVANCED
+```
+
+Création fichier cassette:
+```
+%ODSK%\BIN\header.exe  build\final.out build\HWADVANCED.tap $800
+```
+
+```
+%ODSK%\BIN\taptap.exe ren build\HWADVANCED.tap OSDK 0
+```
+
+
+### Construction d'un programme écrit en Basic
+
+
+```basic
+ECHO #file BomberZ.BAS  1>>%ODSK%\TMP\Bomber.bas
+
+TYPE BomberZ.BAS  1>>%ODSK%\TMP\Bomber.bas
+
+%ODSK%\BIN\Bas2Tap -b2t1 -color1 %ODSK%\TMP\Bomber.bas build\
+Bomber.tap
+```
+
+### Execution du programme stocké sur une cassette
+
+
+```bash
+COPY build\Bomber.TAP %ODSK%\Oricutron\OSDK.TAP  1>NUL
+
+COPY build\symbols %ODSK%\Oricutron\symbols  1>NUL
+
+PUSHD %ODSK%\Oricutron
+
+%ODSK%\Oricutron>START oricutron.exe -t OSDK.TAP -s symbols
+
+%ODSK%\Oricutron>POPD
+```
+
+
+
 # Assembly
 
 [ASSEMBLEUR 6502](https://www.masswerk.at/6502/assembler.html)
+
+[EASY 6502 ](http://skilldrick.github.io/easy6502/)
 
 
 ## Etudier les opérations 8 bits
