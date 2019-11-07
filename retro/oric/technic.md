@@ -360,6 +360,24 @@ Ready
 POKE 48042, 83
 ```
 
+## Connaître l'adresse d'une variable
+Page 114 du livre Clefs pour L'Oric
+
+
+```Basic
+500 FOR I=#400 TO #427
+510 READ X
+520 POKE I,X
+530 NEXT I : RETURN
+540 DATA 165, 156, 164, 157, 133, 12, 132, 13, 160, 0, 177, 12, 205, 48, 4, 240, 15, 24, 32, 41
+550 DATA 4, 144, 241, 230, 13, 165, 159, 197, 13, 16, 233, 96, 200, 177, 12, 205, 49, 4, 208
+560 DATA 233, 96, 165, 12, 105, 7, 133, 12, 96
+```
+Pour l'utiliser, "poker" les deux premiers caractères du nom de la variable aux adresses #430 et #431 et appeller la routine par
+
+```Basic
+CALL #400: PRINT DEEK(#0C)`
+```
 
 # Screen and Display
 

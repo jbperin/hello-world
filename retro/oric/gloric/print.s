@@ -51,7 +51,7 @@ _SimplePrint
 	ldx #0
 SimplePrint_loop_char
 
-	; Read the character, exit if it's a 0
+	; Read the character, exit if it is a 0
 SimplePrint_read
 	lda $0123,x
 	beq SimplePrint_end_loop_char
@@ -181,7 +181,7 @@ _AdvancedPrint
 	ldx #0
 AdvancedPrint_loop_char
 
-	; Read the character, exit if it's a 0
+	; Read the character, exit if it is a 0
 AdvancedPrint_read
 	lda $0123,x
 	beq AdvancedPrint_end_loop_char
