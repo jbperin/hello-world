@@ -6,3 +6,4 @@ launch.bat
 *.mid
 *.keystore
 .idea
+*.tap
