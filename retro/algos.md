@@ -68,6 +68,14 @@ L2      DEX
         BNE L1
 ```
 
+## Algo de dessin
+
+### Tracé de Segment
+
+[Algo de  Bresenham](https://fr.wikipedia.org/wiki/Algorithme_de_trac%C3%A9_de_segment_de_Bresenham)
+
+
+
 
 ## Algo de geometrie
 
