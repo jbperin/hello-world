@@ -91,10 +91,10 @@ POPD
 
 ::COPY build\%OSDKNAME%.tap %OSDK%\Oricutron\OSDK.TAP  1>NUL
 
-COPY build\symbols %OSDK%\Oricutron\symbols  1>NUL
+::COPY build\symbols %OSDK%\Oricutron\symbols  1>NUL
 
-PUSHD %OSDK%\Oricutron
+::PUSHD %OSDK%\Oricutron
 
-.\oricutron.exe -t OSDK.TAP -s symbols
+::.\oricutron.exe -t OSDK.TAP -s symbols
 
-POPD
+::POPD

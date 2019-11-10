@@ -3,20 +3,30 @@ ScreenXIndex:		.byt 0
 
 ; 16 bits multiplication by 8 bits multiplier 
 ; from https://github.com/oric-software/CBM-Editor/blob/master/Generic.s
+;
+;
+;
+; Exemple d usage: Result(16 b) = Operand (16 b) * Multiplier(8b)
+;	lda Multiplier
+;	ldx OperandLo
+;	ldy #00 ; OperandHi
+;	jsr Mult16Bit
+;	stx ResultLo
+;	sty ResultHi
 
 ;Input
-;A multiplier
-;X Value Low
-;Y Value High
+;   A multiplier
+;   X Value Low
+;   Y Value High
 ;Output
-;X Value Low
-;Y Value High
+;   X Value Low
+;   Y Value High
 ;Corrupts
-;AXY
+;   AXY
 
 *=$6500                             ; Actual start address
-.(
 Mult16Bit:
+.(
 
 	stx vector1+1
 	sty vector2+1

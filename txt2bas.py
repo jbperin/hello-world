@@ -1,7 +1,7 @@
 
 import re
 
-dest_file = "C:\\Users\\tbpk7658\\Documents\\Projets\\hello-world\\retro\\oric\\gloric\\main.bas"
+dest_file = "C:\\Users\\Public\\Git\\hello-world\\retro\\oric\\gloric\\main.bas"
 
 scr_content=r"""
     LET ADRBASE = # 800
@@ -19,7 +19,7 @@ scr_content=r"""
     PRINT "V1 = ";V1;", V2 = ";V2;", V3 = ";V3
 
     ' Mes donnees
-    DATA 3, 0, -2, 0, 2, 0
+    DATA 3, 0, #FE, 0, 2, 0
 """
 
 
@@ -119,7 +119,7 @@ def main():
         ficout.write(thescript.toStr())
     os.chdir(os.path.dirname(os.path.abspath(dest_file)))
     #C:\Users\tbpk7658\Documents\Projets\hello-world\retro\oric\gloric\
-    subprocess.call([r'bbuild.bat'])
+    subprocess.call([r'build.bat'])
 
 
 if __name__ == '__main__':
