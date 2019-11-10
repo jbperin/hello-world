@@ -1,8 +1,15 @@
+[TOC]
+
+
+
+http://6502.org/source/
 
 
 ## Algo arithmétiques
 
 http://nparker.llx.com/a2/mult.html
+
+https://github.com/oric-software/CBM-Editor/blob/master/Generic.s
 
 ### Multiplication 8 bits
 ```
@@ -72,9 +79,28 @@ L2      DEX
 
 ### Tracé de Segment
 
-[Algo de  Bresenham](https://fr.wikipedia.org/wiki/Algorithme_de_trac%C3%A9_de_segment_de_Bresenham)
+[Algo de  Bresenham](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm)
 
-
+```
+plotLine(int x0, int y0, int x1, int y1)
+    dx =  abs(x1-x0);
+    sx = x0<x1 ? 1 : -1;
+    dy = -abs(y1-y0);
+    sy = y0<y1 ? 1 : -1;
+    err = dx+dy;  /* error value e_xy */
+    while (true)   /* loop */
+        if (x0==x1 && y0==y1) break;
+        e2 = 2*err;
+        if (e2 >= dy)
+            err += dy; /* e_xy+e_x > 0 */
+            x0 += sx;
+        end if
+        if (e2 <= dx) /* e_xy+e_y < 0 */
+            err += dx;
+            y0 += sy;
+        end if
+    end while
+```
 
 
 ## Algo de geometrie

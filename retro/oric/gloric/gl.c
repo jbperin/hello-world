@@ -65,9 +65,18 @@ void draw_circles()
 	// Declare the assembly code function
 void SimplePrint(const char *ptr_message);
 void AdvancedPrint(char x_pos,char y_pos,const char *ptr_message);
-
+void sub (char *v1, char *v2, char *res) {
+	*res = *v1 - *v2;
+	//return res;
+}
+char v3;
 void main()
 {
+	char v1=3, v2=12;
+	sub(&v1, &v2, &v3);
+	//cls();
+	//printf ("%d", v3);
+	AdvancedPrint(10,1,"Hello World !");
 	/*
 	SimplePrint("Hello World !");
 	
@@ -76,13 +85,13 @@ void main()
 	AdvancedPrint(12,3,"Hello World !");
 	*/
 	
-	{
+	/*{
 		hires();
 		draw_rectangles();
 		draw_circles();
 
-	}
-	asm("nop");
+	}*/
+	//asm("nop");
 	/*asm("nop");
 	SimplePrint("Hello World !");
 

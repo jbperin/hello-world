@@ -1,4 +1,4 @@
-
+[TOC]
 Resources:
 [Oric Atmos sur hebdogiciel](http://www.hebdogiciel.free.fr/oric.htm)
 [Listings Oric Micro 7](http://abandonlistings.free.fr/micro7/)
@@ -38,6 +38,16 @@ Pour essayer la construction placez vous dans un des répertoire d'exemple fourn
 Lancer la commande `osdk_build.bat` pour contruire le projet.
 
 Une fois la construction effectuée, lancer la commande `osdk_execute.bat` pour lancer le programme dans l'émulateur `oricutron`.
+
+
+### Construction d'un programme en ASM
+
+```
+%OSDK%\BIN\link65.exe -B -d %OSDK%\lib/ -o %OSDK%\TMP\linked.s -f -q  main.s
+%OSDK%\BIN\xa.exe -W -C %OSDK%\TMP\linked.s -o build\final.out -e build\xaerr.txt -l build\symbols -bt $600 -DASSEMBLER=XA  -DOSDKNAME_D
+%OSDK%\BIN\header.exe -S1 build\final.out build\D.tap $600
+%OSDK%\BIN\taptap.exe ren build\D.tap OSDK 0
+```
 
 ### Construction d'un programme mixant C et ASM
 
@@ -117,7 +127,63 @@ TYPE BomberZ.BAS  1>>%OSDK%\TMP\Bomber.bas
 Bomber.tap
 ```
 
-### Execution du programme stocké sur une cassette
+
+### Construction d'un programme mixant assembleur et basique
+
+Préparation du basic
+```bash
+ECHO #file MAIN.BAS  1>>%OSDK%\TMP\glOricTest.bas
+TYPE MAIN.BAS  1>>%OSDK%\TMP\glOricTest.bas
+
+%OSDK%\BIN\Bas2Tap -b2t1 -color1 %OSDK%\TMP\glOricTest.bas build\glOricTest.tap
+
+```
+
+Assemblage des routines assembleurs
+```bash
+%OSDK%\bin\xa glOric.s -o build\glOric.o
+
+%OSDK%\bin\header -h1 -a0 build\glOric.o build\glOric.tap $6500
+
+```
+
+Si on veut mettre du son
+```bash
+%OSDK%\bin\ym2mym -t0 data\musique.ym data\musique.mym
+%OSDK%\bin\header -h1 -a0 data\musique.mym build\musique.tap $7600
+
+```
+
+Production de la disquette à partir des TAPs
+
+```bash
+%OSDK%\bin\taptap ren build\glOricTest.tap "Test" 0
+
+%OSDK%\bin\taptap ren build\glOric.tap "glOric" 0
+
+%OSDK%\bin\taptap ren build\musique.tap "Music1" 0
+
+%OSDK%\bin\tap2dsk -iCLS:TEST build\glOricTest.TAP build\glOric.tap build\musique.tap build\glOricTest.dsk
+
+%OSDK%\bin\old2mfm build\glOricTest.dsk
+
+```
+
+### Execution du programme stocké sur une disquette DSK
+
+```bash
+
+COPY build\glOricTest.TAP %OSDK%\Oricutron\OSDK.TAP  1>NUL
+COPY build\glOricTest.DSK %OSDK%\Oricutron\OSDK.DSK  1>NUL
+COPY build\symbols %OSDK%\Oricutron\symbols  1>NUL
+
+PUSHD %OSDK%\Oricutron
+START oricutron.exe -d OSDK.DSK -s symbols
+POPD
+```
+
+
+### Execution du programme stocké sur une cassette TAP
 
 
 ```bash
