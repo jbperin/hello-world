@@ -1,100 +1,41 @@
-
 del /Q BUILD\*.*
 del /Q %OSDK%\TMP\*.*
 del /Q %OSDK%\Oricutron\OSDK.TAP
-::
-:: Set the build paremeters
-::
-SET OSDKADDR=$800
-SET OSDKNAME=GLORIC
-SET OSDKFILE=gl main print
 
-REM :=========================: 
-REM BASIC 
-REM :=========================: 
-ECHO #file MAIN.BAS  1>>%OSDK%\TMP\glOricTest.bas
-TYPE MAIN.BAS  1>>%OSDK%\TMP\glOricTest.bas
 
-%OSDK%\BIN\Bas2Tap -b2t1 -color1 %OSDK%\TMP\glOricTest.bas build\glOricTest.tap
+:: ECHO #file MAIN.BAS  1>>%OSDK%\TMP\mainOricTest.bas
+:: TYPE MAIN.BAS  1>>%OSDK%\TMP\mainOricTest.bas
+:: %OSDK%\BIN\Bas2Tap -b2t1 -color1 %OSDK%\TMP\mainOricTest.bas build\mainOricTest.tap
 
-REM :=========================: 
-REM C 
-REM :=========================: 
+SET OSDKADDR=$550
+SET OSDKNAME=glOric
+SET OSDKFILE=glOric main
 
 REM Preproc
-%OSDK%\BIN\cpp.exe -lang-c++ -I %OSDK%\include -D__16BIT__ -D__NOFLOAT__ -DATMOS -DOSDKNAME_HWADVANCED -DOSDKVER=\"1.15\" -nostdinc gl.c %OSDK%\TMP\gl.c
-
+%OSDK%\BIN\cpp.exe -lang-c++ -I %OSDK%\include -D__16BIT__ -D__NOFLOAT__ -DATMOS -DOSDKNAME_HWADVANCED -DOSDKVER=\"1.15\" -nostdinc main.c %OSDK%\TMP\main.c
 REM compile
-%OSDK%\BIN\compiler.exe -Nmain -O3 %OSDK%\TMP\gl.c  1>%OSDK%\TMP\gl.c2
-
+%OSDK%\BIN\compiler.exe -Nmain -O3 %OSDK%\TMP\main.c  1>%OSDK%\TMP\main.c2
 REM Convert C to assembly code :
+%OSDK%\BIN\cpp.exe  -lang-c++  -imacros %OSDK%\macro\macros.h  -DXA -traditional  -P %OSDK%\TMP\main.c2 %OSDK%\TMP\main.s
+%OSDK%\BIN\macrosplitter.exe %OSDK%\TMP\main.s %OSDK%\TMP\main
 
-%OSDK%\BIN\cpp.exe  -lang-c++  -imacros %OSDK%\macro\macros.h  -DXA -traditional  -P %OSDK%\TMP\gl.c2 %OSDK%\TMP\gl.s
+:: %OSDK%\bin\xa glOric.s -o build\glOric.o
+:: %OSDK%\bin\header -h1 -a0 build\glOric.o build\glOric.tap $6500
 
-%OSDK%\BIN\macrosplitter.exe %OSDK%\TMP\gl.s %OSDK%\TMP\gl
 
-REM :=========================: 
-REM ASSEMBLY 
-REM :=========================: 
-
-XCOPY /Y /T print.S %OSDK%\TMP\
-
-COPY print.S %OSDK%\TMP\print.s /Y  1>NUL
-
-::XCOPY /Y /T glOric.s %OSDK%\TMP\
-
-::COPY glOric.s %OSDK%\TMP\glOric.s /Y  1>NUL
-%OSDK%\bin\xa glOric.s -o build\glOric.o
-
-%OSDK%\bin\header -h1 -a0 build\glOric.o build\glOric.tap $6500
-
-REM :=========================: 
-REM LINK
-REM :=========================: 
-
-XCOPY /Y /T print.S %OSDK%\TMP\
-
-%OSDK%\BIN\link65.exe  -d %OSDK%\lib/ -o %OSDK%\TMP\linked.s  -f -q  %OSDK%\TMP\gl  print.s glOric.s
-
+%OSDK%\BIN\link65.exe  -d %OSDK%\lib/ -o %OSDK%\TMP\linked.s  -f -q  %OSDK%\TMP\main glOric.s
 %OSDK%\BIN\xa.exe -W -C %OSDK%\TMP\linked.s -o build\final.out -e build\xaerr.txt -l build\symbols -bt %OSDKADDR% -DASSEMBLER=XA -DOSDKNAME_HWADVANCED
-
-%OSDK%\bin\taptap ren build\glOricTest.tap "Test" 0
-
-%OSDK%\bin\taptap ren build\glOric.tap "glOric" 0
-
-
 
 %OSDK%\BIN\header.exe  build\final.out build\%OSDKNAME%.tap %OSDKADDR%
 
-%OSDK%\bin\tap2dsk -iCLS:TEST build\glOricTest.TAP build\glOric.tap build\glOricTest.dsk
 
-%OSDK%\bin\old2mfm build\glOricTest.dsk
+%OSDK%\bin\taptap ren build\glOric.tap "glOric" 0
 
-%OSDK%\BIN\taptap.exe ren build\%OSDKNAME%.tap %OSDKNAME% 0
+%OSDK%\BIN\header.exe  build\final.out build\%OSDKNAME%.tap %OSDKADDR%
 
+COPY build\%OSDKNAME%.tap %OSDK%\Oricutron\OSDK.TAP  1>NUL
 
-::ECHO #file main.bas  1>>%OSDK%\TMP\main.bas
-
-::TYPE main.bas  1>>%OSDK%\TMP\main.bas
-
-::%OSDK%\BIN\Bas2Tap -b2t1 -color1 %OSDK%\TMP\main.bas build\%OSDKNAME%.tap
-REM :=========================: 
-REM RUN 
-REM :=========================: 
-
-COPY build\glOricTest.DSK %OSDK%\Oricutron\OSDK.DSK  1>NUL
 COPY build\symbols %OSDK%\Oricutron\symbols  1>NUL
-
 PUSHD %OSDK%\Oricutron
-START oricutron.exe -d OSDK.DSK -s symbols
+.\oricutron.exe -t OSDK.TAP -s symbols
 POPD
-
-::COPY build\%OSDKNAME%.tap %OSDK%\Oricutron\OSDK.TAP  1>NUL
-
-::COPY build\symbols %OSDK%\Oricutron\symbols  1>NUL
-
-::PUSHD %OSDK%\Oricutron
-
-::.\oricutron.exe -t OSDK.TAP -s symbols
-
-::POPD
