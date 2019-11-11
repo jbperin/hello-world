@@ -1,25 +1,6 @@
+; http://nparker.llx.com/a2/mult.html
 
- // Camera Position
-_CamPosX:		.word $0000
-_CamPosY:		.word $0000
-_CamPosZ:		.word $0000
 
- // Camera Orientation
-_CamRotZ:		.byt 0			// -128 -> -127 unit : 2PI/(2^8 - 1)
-_CamRotX:		.byt 0
-
- // Point 3D Coordinates  
-_PointX:		.word $0000
-_PointY:		.word $0000
-_PointZ:		.word $0000
-
- // Point 2D Projected Coordinates 
-_ResX:			.byt 0			// -128 -> -127
-_ResY:			.byt 0			// -128 -> -127
-
- // Intermediary Computation
-_DeltaX:		.word $0000		
-_DeltaY:		.word $0000	
 
 _project:
 .(
@@ -27,77 +8,80 @@ _project:
     pha:txa:pha:tya:pha
 	
 	// DeltaX = CamPosX - PointX
+	// Divisor = DeltaX
 	sec
 	lda _PointX
 	sbc _CamPosX
 	sta _DeltaX
+	sta _Divisor
 	lda _PointX+1
 	sbc _CamPosX+1
 	sta _DeltaX+1
+	sta _Divisor+1
 
 	// DeltaY = CamPosY - PointY
+	// Quotient = DeltaY
 	sec
 	lda _PointY
 	sbc _CamPosY
 	sta _DeltaY
+	sta _Quotient
 	lda _PointY+1
 	sbc _CamPosY+1
 	sta _DeltaY+1
+	sta _Quotient+1
 
-	
+	// Quotient, Remainder = Quotient / Divisor
+	lda #0      ;Initialize _Remainder to 0
+	sta _Remainder
+	sta _Remainder+1
+	ldx #16     ;There are 16 bits in _Quotient
+L1  asl _Quotient    ;Shift hi bit of _Quotient into _Remainder
+	rol _Quotient+1  ;(vacating the lo bit, which will be used for the quotient)
+	rol _Remainder
+	rol _Remainder+1
+	lda _Remainder
+	sec         ;Trial subtraction
+	sbc _Divisor
+	tay
+	lda _Remainder+1
+	sbc _Divisor+1
+	bcc L2      ;Did subtraction succeed?
+	sta _Remainder+1   ;If yes, save it
+	sty _Remainder
+	inc _Quotient    ;and record a 1 in the quotient
+L2  dex
+	bne L1
+
 	// retreive context
 	pla:tay:pla:tax:pla
 .)
 	rts
 
-; 16 bits multiplication by 8 bits multiplier 
-; from https://github.com/oric-software/CBM-Editor/blob/master/Generic.s
-;
-;
-;
-; Exemple d usage: Result(16 b) = Operand (16 b) * Multiplier(8b)
-;	lda Multiplier
-;	ldx OperandLo
-;	ldy #00 ; OperandHi
-;	jsr Mult16Bit
-;	stx ResultLo
-;	sty ResultHi
 
-;Input
-;   A multiplier
-;   X Value Low
-;   Y Value High
-;Output
-;   X Value Low
-;   Y Value High
-;Corrupts
-;   AXY
+ // Camera Position
+_CamPosX:		.dsb 2
+_CamPosY:		.dsb 2
+_CamPosZ:		.dsb 2
 
+ // Camera Orientation
+_CamRotZ:		.dsb 1			// -128 -> -127 unit : 2PI/(2^8 - 1)
+_CamRotX:		.dsb 1
 
-Mult16Bit:
-.(
+ // Point 3D Coordinates  
+_PointX:		.dsb 2
+_PointY:		.dsb 2
+_PointZ:		.dsb 2
 
-	stx vector1+1
-	sty vector2+1
-	ldx #00
-	stx vector3+1
-	stx vector4+1
-	
-	tax
-	beq skip1
-	clc
-	
-vector3:	lda #00
-vector1:	adc #00
-	sta vector3+1
-vector4:	lda #00
-vector2:	adc #00
-	sta vector4+1
-	
-	dex
-	bne vector3
-	
-skip1:	ldx vector3+1
-	ldy vector4+1
-.)
-	rts
+ // Point 2D Projected Coordinates 
+_ResX:			.dsb 1			// -128 -> -127
+_ResY:			.dsb 1			// -128 -> -127
+
+ // Intermediary Computation
+_DeltaX:		.dsb 2		
+_DeltaY:		.dsb 2	
+
+_Quotient:		.dsb 2
+_Divisor:		.dsb 2
+_Remainder :	.dsb 2
+

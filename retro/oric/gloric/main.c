@@ -22,24 +22,29 @@ extern char ResY;
 extern int DeltaX;		
 extern int DeltaY;	
 
+extern int Quotient;
+extern int Remainder;
+
 void main()
 {
     //cls();
 	text();
 
-	CamPosX = 3;
+	CamPosX = 0;
 	CamPosY = 0;
 	CamPosY = 1;	
 	CamRotZ = 0;
 	CamRotX = 0;
-	PointX = 1;
-	PointY = 1;
+	PointX = 2;
+	PointY = 6;
 	PointZ = 0;
 	
 	printf("PointX %d - %d CamX\n", PointX, CamPosX);
+	printf("PointY %d - %d CamY\n", PointY, CamPosY);
 	
 	project();
-	printf("DeltaX = %d\n", DeltaX);
+	printf("DeltaX = %d, %d =DeltaY\n", DeltaX, DeltaY);
+	printf("Quotient = %d, %d =Rem\n", Quotient, Remainder);
 
 }
 
