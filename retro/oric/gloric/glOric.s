@@ -1,6 +1,6 @@
 
  // Camera Position
-_CamPosX:		.word $1234
+_CamPosX:		.word $0000
 _CamPosY:		.word $0000
 _CamPosZ:		.word $0000
 
@@ -17,11 +17,36 @@ _PointZ:		.word $0000
 _ResX:			.byt 0			// -128 -> -127
 _ResY:			.byt 0			// -128 -> -127
 
+ // Intermediary Computation
+_DeltaX:		.word $0000		
+_DeltaY:		.word $0000	
 
 _project:
 .(
-	lda #56
-	sta _CamPosX
+	// save context
+    pha:txa:pha:tya:pha
+	
+	// DeltaX = CamPosX - PointX
+	sec
+	lda _PointX
+	sbc _CamPosX
+	sta _DeltaX
+	lda _PointX+1
+	sbc _CamPosX+1
+	sta _DeltaX+1
+
+	// DeltaY = CamPosY - PointY
+	sec
+	lda _PointY
+	sbc _CamPosY
+	sta _DeltaY
+	lda _PointY+1
+	sbc _CamPosY+1
+	sta _DeltaY+1
+
+	
+	// retreive context
+	pla:tay:pla:tax:pla
 .)
 	rts
 

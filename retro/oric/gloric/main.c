@@ -18,16 +18,28 @@ extern int PointZ;
 extern char ResX;			// -128 -> -127
 extern char ResY;
 
+ // Intermediary Computation
+extern int DeltaX;		
+extern int DeltaY;	
+
 void main()
 {
     //cls();
 	text();
 
-	CamPosX = 34;
-	printf("%d\n", CamPosX);
+	CamPosX = 3;
+	CamPosY = 0;
+	CamPosY = 1;	
+	CamRotZ = 0;
+	CamRotX = 0;
+	PointX = 1;
+	PointY = 1;
+	PointZ = 0;
+	
+	printf("PointX %d - %d CamX\n", PointX, CamPosX);
 	
 	project();
-	printf("%d\n", CamPosX);
+	printf("DeltaX = %d\n", DeltaX);
 
 }
 
