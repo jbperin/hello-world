@@ -22,12 +22,22 @@ extern char ResY;
 extern int DeltaX;		
 extern int DeltaY;	
 
+extern char DeltaXSquare;		
+extern char DeltaYSquare;	
+
 extern int Quotient;
 extern int Remainder;
 
 extern int square;
 extern int thesqrt;
 
+extern char Numberl;
+extern char Numberh;
+
+extern char Square1;
+extern char Square2;
+extern char Square3;
+extern char Square4;
 void main()
 {
     //cls();
@@ -51,8 +61,23 @@ void main()
 	square = 16;
 	sqrt24();
 	printf("square root of  = %d is %d \n", square, thesqrt);
+	//multiply16();
+	/*printf("root of  = %d is %d %d %d %d\n", 
+		DeltaX, 
+		((char *)&DeltaXSquare)[0],
+		((char *)&DeltaXSquare)[1],
+		((char *)&DeltaXSquare)[2],
+		((char *)&DeltaXSquare)[3]
+	);*/
 	
-}
-
-
-
+	Numberl = 4;
+	Numberh = 2;
+    
+    Square1 = 0;
+    Square2 = 0;
+    Square3 = 0;
+    Square4 = 0;
+	
+	Square16 ();
+	printf("square of  = %d is %d  %d %d %d\n", Numberh *256  + Numberl, Square1, Square2, Square3, Square4);
+}   
