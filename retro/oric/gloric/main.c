@@ -25,6 +25,9 @@ extern int DeltaY;
 extern int Quotient;
 extern int Remainder;
 
+extern int square;
+extern int thesqrt;
+
 void main()
 {
     //cls();
@@ -45,7 +48,10 @@ void main()
 	project();
 	printf("DeltaX = %d, %d =DeltaY\n", DeltaX, DeltaY);
 	printf("Quotient = %d, %d =Rem\n", Quotient, Remainder);
-
+	square = 16;
+	sqrt24();
+	printf("square root of  = %d is %d \n", square, thesqrt);
+	
 }
 
 
