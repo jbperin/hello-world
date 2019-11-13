@@ -153,6 +153,11 @@ nomore
 ;
 ; Destroys all registers
 
+_Numberl             ; number to square low byte
+_Numberh	= _Numberl+1 ; number to square high byte
+    .word $FFFF
+
+
 _Square1  .byte $00 ; square low bytes
 _Square2  .byte $00
 _Square3  .byte $00 ; square high bytes
