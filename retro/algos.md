@@ -4,6 +4,7 @@
 
 http://6502.org/source/
 
+https://codebase64.org/doku.php?id=base:6502_6510_maths
 
 ## Algo arithmétiques
 
@@ -74,7 +75,57 @@ L1      ASL NUM1    ;Shift hi bit of NUM1 into REM
 L2      DEX
         BNE L1
 ```
+## Algo trigonométriques
 
+### Arctangente
+
+```basic
+IF DeltaX = 0 THEN
+
+  IF DeltaY > 0 THEN
+    RETURN PI/2
+  ELSE
+    RETURN -PI/2
+  END
+ELSE
+  IF DeltaY = 0 THEN
+    IF DeltaX > 0 THEN
+      RETURN 0
+    ELSE
+      RETURN PI or -PI
+    END
+  ELSE
+    REM DeltaX DeltaY both different of 0  
+    IF DeltaX > 0 THEN
+      IF DeltaY > 0 THEN
+        REM Q1 NE Angle is in [0 .. PI/2]
+        RETURN ATAN (DeltaY / DeltaX)
+      ELSE
+        REM Q4 SE Angle is in [0 .. -PI/2]
+        RETURN -ATAN (-DeltaY / DeltaX)
+      END
+    ELSE
+      IF DeltaY > 0 THEN
+        REM Q1 NO Angle is in [PI/2 .. PI]
+        RETURN PI - ATAN (DeltaY / -DeltaX)
+      ELSE
+        REM Q4 SO Angle is in [-PI/2 .. -PI]
+        RETURN -PI + ATAN (DeltaY / DeltaX)
+      END
+    END
+  END
+
+```
+
+[arctan.asm](https://github.com/dustmop/arctan24/blob/master/arctan.asm) avec les explications [ici](http://www.dustmop.io/blog/2015/07/22/discrete-arctan-in-6502/)
+
+ou bien
+
+[atan2 en 6502 par la méthode CORDIC](https://atariage.com/forums/blogs/entry/3385-atan2-in-6502/)
+
+ou encore
+
+[8bit_atan2](https://codebase64.org/doku.php?id=base:8bit_atan2_8-bit_angle)
 ## Algo de dessin
 
 ### Tracé de Segment
