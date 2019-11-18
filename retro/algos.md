@@ -77,6 +77,9 @@ L2      DEX
 ```
 ## Algo trigonométriques
 
+
+https://geekshavefeelings.com/posts/fixed-point-atan2
+
 ### Arctangente
 
 ```basic
