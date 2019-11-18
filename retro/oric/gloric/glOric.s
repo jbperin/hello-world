@@ -90,11 +90,15 @@ L2  dex
 
 ;http://www.6502.org/source/integers/ummodfix/ummodfix.htm
 ; +-----|-----+-----|-----+-----|-----+-----|------+
-; |  DIVISOR  |    D I V I D E N D    |temp storage|
-; |           |  hi cell     lo cell  |of carry bit|
+; |  DIVISOR  |    D I V I D E N D    |SCRAT|      |
+; |           |  hi cell     lo cell  |CHPAD| CARRY|
 ; |  N    N+1 | N+2   N+3 | N+4   N+5 | N+6   N+7  |
 ; +-----|-----+-----|-----+-----|-----+-----|------+
-
+; |           | REMAINDER | QUOTIENT  |            |
+; +-----|-----+-----|-----+-----|-----+-----|------+
+; Both divisor and dividend must be positive numbers
+; We must have Dividend Hi Cell < Divisor
+; If not, QUOTIENT=FF, REMAINDER=FF is returned
 _N    .dsb 7
 CARRY .dsb 1
 
