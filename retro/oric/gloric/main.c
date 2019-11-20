@@ -41,6 +41,10 @@ extern char Square4;
 
 extern char N;
 
+extern char ArcTang;
+extern char Angle;
+extern char Index;
+
 void main()
 {
 
@@ -50,7 +54,7 @@ void main()
 
 	CamPosX = 0;
 	CamPosY = 0;
-	CamPosY = 1;
+	CamPosZ = 1;
 	CamRotZ = 0;
 	CamRotX = 0;
 	PointX = 2;
@@ -95,5 +99,11 @@ void main()
 	printf("[%d, %d, %d, %d] divided by [%d,  %d]", *(adrN+3), *(adrN+2), *(adrN+5), *(adrN+4), *(adrN+1), *(adrN+0));
 	div32by16();
 	printf(" is [%d, %d] remaining [%d, %d]\n", *(adrN+5), *(adrN+4), *(adrN+3), *(adrN+2));
+
+    // TEST OF ATAN
+    ArcTang = 10;
+    Angle = 0;
+    atan();
+    printf(" %d, index = %d,  angle =  %d\n", ArcTang, Index, Angle);
 
 }

@@ -11,8 +11,11 @@
 import math
 def main():
 
-    for x in range (256):
-        print (x, round(math.atan(x) * (127/(math.pi / 2.0))))
+    for x in range (0, 2**5):
+        frac_part = x*(1.0/2**5);
+        angle = math.atan(frac_part) * ((2**5) / (math.pi/4.0))
+        #print ("%02x"%(x), frac_part, ".byt %d"%(round(angle)))
+        print ("    .byt %d"%(round(angle)))
 
 if __name__ == '__main__':
     main()

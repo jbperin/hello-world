@@ -319,3 +319,61 @@ NoSqadd:
 	BNE	Nextr2bit   ; go do next bit
 .)
 	RTS
+
+
+; By Jean-Baptiste PERIN (jbperin)
+; calculate the atan of a Q0.5 value stored in 
+; five least significant bits of _ArcTang
+; The result is always in the range 0 to 2^5-1 and is held in
+; _Angle
+;
+; Destroys all registers
+
+_ArcTang .dsb 1
+_Angle .dsb 1
+_Index .dsb 1
+
+_atan:
+.(
+    lda _ArcTang
+    and #$1F        ; keep only 5 bits
+    tax
+    sta _Index
+    lda atan_table, x
+    sta _Angle 
+.)
+	RTS
+
+atan_table:
+    .byt 0
+    .byt 1
+    .byt 3
+    .byt 4
+    .byt 5
+    .byt 6
+    .byt 8
+    .byt 9
+    .byt 10
+    .byt 11
+    .byt 12
+    .byt 13
+    .byt 15
+    .byt 16
+    .byt 17
+    .byt 18
+    .byt 19
+    .byt 20
+    .byt 21
+    .byt 22
+    .byt 23
+    .byt 24
+    .byt 25
+    .byt 25
+    .byt 26
+    .byt 27
+    .byt 28
+    .byt 29
+    .byt 29
+    .byt 30
+    .byt 31
+    .byt 31
