@@ -102,19 +102,42 @@ ELSE
     REM DeltaX DeltaY both different of 0  
     IF TanX > 0 THEN
       IF TanY > 0 THEN
-        REM Q1 NE Angle is in [0 .. PI/2]
-        RETURN ATAN (DeltaY / DeltaX)
+        IF TanX > TanY THEN
+          REM Octant1 Angle is in [0 .. PI/4]
+          RETURN ATAN (TanY / TanX)
+        ELSE
+          REM Octant2 Angle is in [PI/4 .. PI/2]
+          RETURN -ATAN (TanX / TanY) + PI / 2
+        END IF
       ELSE
-        REM Q4 SE Angle is in [0 .. -PI/2]
-        RETURN -ATAN (-DeltaY / DeltaX)
+        TmpY = abs (TanY)
+        IF TanX > TmpY THEN
+          REM Octant8 Angle is in [7PI/4 .. 2PI]
+          RETURN -ATAN (TmpY / TanX) + 2*PI
+        ELSE
+          REM Octant7 Angle is in [3PI/2 .. 7PI/4]
+          RETURN ATAN (TanX / TmpY) + 3*PI / 2
+        END IF
       END
     ELSE
-      IF DeltaY > 0 THEN
-        REM Q1 NO Angle is in [PI/2 .. PI]
-        RETURN PI - ATAN (DeltaY / -DeltaX)
+      TmpX = abs(TanX)
+      IF TanY > 0 THEN
+        IF TmpX > TanY THEN
+          REM Octant4 Angle is in [3PI/4 .. PI]
+          RETURN -ATAN (TanY / TmpX) + PI
+        ELSE
+          REM Octant3 Angle is in [PI/2 .. 3PI/4]
+          RETURN ATAN (TmpX / TanY) + PI / 2
+        END IF
       ELSE
-        REM Q4 SO Angle is in [-PI/2 .. -PI]
-        RETURN -PI + ATAN (DeltaY / DeltaX)
+        TmpY = abs (TanY)
+        IF TmpX > TmpY THEN
+          REM Octant5 Angle is in [PI .. 5PI/4]
+          RETURN ATAN (TmpY / TmpX) + PI
+        ELSE
+          REM Octant6 Angle is in [5PI/4 .. 3PI/2]
+          RETURN -ATAN (TmpX / TmpY) + 3*PI / 2
+        END IF
       END
     END
   END
