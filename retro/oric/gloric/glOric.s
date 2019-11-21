@@ -322,7 +322,7 @@ NoSqadd:
 
 
 ; By Jean-Baptiste PERIN (jbperin)
-; calculate the atan2 of two value coordinates  
+; calculate the atan2 of two value coordinates
 ; five least significant bits of _ArcTang
 ; The result is always in the range 0 to 2^5-1 and is held in
 ; Arctan8
@@ -346,10 +346,10 @@ _atan2:
     lda     _TanX+1
     bne     TanXNotNull1
 //      IF TanY = 0 THEN
-        lda     _TanY
+        lda     _TanY+1
         bmi     TanYNegative1
         bne     TanYNotNull1
-        lda     _TanY+1
+        lda     _TanY
         bne     TanYNotNull1
 //          RETURN 0
             lda #$00 // TODO : Error Case
@@ -376,32 +376,38 @@ TanXNotNull1:
         lda     _TanY+1
         bne     TanYNotNull2
 //      IF TanX > 0 THEN
-            lda     _TanX
+            lda     _TanX+1
             bmi     TanXNegative2
 //        RETURN 0
                 lda #$00
                 sta _Arctan8
-                beq done                
+                beq done
 //      ELSE
 TanXNegative2:
 //        RETURN PI
                 lda #$80
                 sta _Arctan8
-                bne done                
+                bne done
 //      END
 //    ELSE
 TanYNotNull2:
-//      REM DeltaX DeltaY both different of 0  
+//      REM DeltaX DeltaY both different of 0
 //      IF TanX > 0 THEN
+            lda     _TanX+1
+            bmi     TanXNegative3
 //        IF TanY > 0 THEN
+				lda     _TanY+1
+				bmi     TanYNegative3
 //          REM Q1 NE Angle is in [0 .. PI/2]
 //          RETURN ATAN (DeltaY / DeltaX)
 //        ELSE
+TanYNegative3:
 //          REM Q4 SE Angle is in [0 .. -PI/2]
 //          RETURN -ATAN (-DeltaY / DeltaX)
 //        END
 //      ELSE
-//        IF DeltaY > 0 THEN
+TanXNegative3:
+//        IF TanY > 0 THEN
 //          REM Q1 NO Angle is in [PI/2 .. PI]
 //          RETURN PI - ATAN (DeltaY / -DeltaX)
 //        ELSE
@@ -411,13 +417,13 @@ TanYNotNull2:
 //      END
 //    END
 //  END
-done:    
+done:
 .)
     RTS
 
 
 ; By Jean-Baptiste PERIN (jbperin)
-; calculate the atan of a Q0.5 value stored in 
+; calculate the atan of a Q0.5 value stored in
 ; five least significant bits of _ArcTang
 ; The result is always in the range 0 to 2^5-1 and is held in
 ; _Angle
@@ -435,7 +441,7 @@ _atan:
     tax
     sta _Index
     lda atan_table, x
-    sta _Angle 
+    sta _Angle
 .)
 	RTS
 
