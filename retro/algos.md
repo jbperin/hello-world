@@ -83,24 +83,25 @@ https://geekshavefeelings.com/posts/fixed-point-atan2
 ### Arctangente
 
 ```basic
-IF DeltaX = 0 THEN
-
-  IF DeltaY > 0 THEN
+IF TanX = 0 THEN
+  IF TanY = 0 THEN
+    RETURN 0
+  ELSE IF TanY > 0 THEN
     RETURN PI/2
   ELSE
-    RETURN -PI/2
+    RETURN 3*PI/2
   END
 ELSE
-  IF DeltaY = 0 THEN
-    IF DeltaX > 0 THEN
+  IF TanY = 0 THEN
+    IF TanX > 0 THEN
       RETURN 0
     ELSE
       RETURN PI or -PI
     END
   ELSE
     REM DeltaX DeltaY both different of 0  
-    IF DeltaX > 0 THEN
-      IF DeltaY > 0 THEN
+    IF TanX > 0 THEN
+      IF TanY > 0 THEN
         REM Q1 NE Angle is in [0 .. PI/2]
         RETURN ATAN (DeltaY / DeltaX)
       ELSE
@@ -117,7 +118,7 @@ ELSE
       END
     END
   END
-
+END
 ```
 
 [arctan.asm](https://github.com/dustmop/arctan24/blob/master/arctan.asm) avec les explications [ici](http://www.dustmop.io/blog/2015/07/22/discrete-arctan-in-6502/)

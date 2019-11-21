@@ -322,6 +322,101 @@ NoSqadd:
 
 
 ; By Jean-Baptiste PERIN (jbperin)
+; calculate the atan2 of two value coordinates  
+; five least significant bits of _ArcTang
+; The result is always in the range 0 to 2^5-1 and is held in
+; Arctan8
+;
+; Destroys all registers
+
+
+_TanX .dsb 2
+_TanY .dsb 2
+
+_Arctan8 .dsb 1
+
+_TmpX .dsb 2
+_TmpY .dsb 2
+
+_atan2:
+.(
+//  IF TanX = 0 THEN
+    lda     _TanX
+    bne     TanXNotNull1
+    lda     _TanX+1
+    bne     TanXNotNull1
+//      IF TanY = 0 THEN
+        lda     _TanY
+        bmi     TanYNegative1
+        bne     TanYNotNull1
+        lda     _TanY+1
+        bne     TanYNotNull1
+//          RETURN 0
+            lda #$00 // TODO : Error Case
+            sta _Arctan8
+            beq done
+TanYNotNull1:
+//    ELSE IF TanY > 0 THEN
+//      RETURN PI/2
+            lda #$40
+            sta _Arctan8
+            bne done
+//    ELSE
+TanYNegative1:
+//      RETURN 3*PI/2
+            lda #$C0
+            sta _Arctan8
+            bne done
+//    END
+//  ELSE
+TanXNotNull1:
+//    IF TanY = 0 THEN
+        lda     _TanY
+        bne     TanYNotNull2
+        lda     _TanY+1
+        bne     TanYNotNull2
+//      IF TanX > 0 THEN
+            lda     _TanX
+            bmi     TanXNegative2
+//        RETURN 0
+                lda #$00
+                sta _Arctan8
+                beq done                
+//      ELSE
+TanXNegative2:
+//        RETURN PI
+                lda #$80
+                sta _Arctan8
+                bne done                
+//      END
+//    ELSE
+TanYNotNull2:
+//      REM DeltaX DeltaY both different of 0  
+//      IF TanX > 0 THEN
+//        IF TanY > 0 THEN
+//          REM Q1 NE Angle is in [0 .. PI/2]
+//          RETURN ATAN (DeltaY / DeltaX)
+//        ELSE
+//          REM Q4 SE Angle is in [0 .. -PI/2]
+//          RETURN -ATAN (-DeltaY / DeltaX)
+//        END
+//      ELSE
+//        IF DeltaY > 0 THEN
+//          REM Q1 NO Angle is in [PI/2 .. PI]
+//          RETURN PI - ATAN (DeltaY / -DeltaX)
+//        ELSE
+//          REM Q4 SO Angle is in [-PI/2 .. -PI]
+//          RETURN -PI + ATAN (DeltaY / DeltaX)
+//        END
+//      END
+//    END
+//  END
+done:    
+.)
+    RTS
+
+
+; By Jean-Baptiste PERIN (jbperin)
 ; calculate the atan of a Q0.5 value stored in 
 ; five least significant bits of _ArcTang
 ; The result is always in the range 0 to 2^5-1 and is held in

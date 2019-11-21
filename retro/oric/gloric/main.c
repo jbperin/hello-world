@@ -41,9 +41,18 @@ extern char Square4;
 
 extern char N;
 
+// ATAN on 1 octant
 extern char ArcTang;
 extern char Angle;
 extern char Index;
+
+// ATAN2
+extern int TanX;
+extern int TanY;
+extern char Arctan8;
+extern int TmpX;
+extern int TmpY;
+
 
 void main()
 {
@@ -51,6 +60,9 @@ void main()
 	char * adrN;
     //cls();
 	text();
+
+/*
+    // TEST OF PROJECT
 
 	CamPosX = 0;
 	CamPosY = 0;
@@ -61,24 +73,22 @@ void main()
 	PointY = 6;
 	PointZ = 0;
 
+
 	printf("PointX %d - %d CamX\n", PointX, CamPosX);
 	printf("PointY %d - %d CamY\n", PointY, CamPosY);
+
 
 	project();
 	printf("DeltaX = %d, %d =DeltaY\n", DeltaX, DeltaY);
 	printf("Quotient = %d, %d =Rem\n", Quotient, Remainder);
+    
+    // TEST OF SQUARE 24
+    
 	square = 16;
 	sqrt24();
 	printf("square root of  = %d is %d \n", square, thesqrt);
-	//multiply16();
-	/*printf("root of  = %d is %d %d %d %d\n",
-		DeltaX,
-		((char *)&DeltaXSquare)[0],
-		((char *)&DeltaXSquare)[1],
-		((char *)&DeltaXSquare)[2],
-		((char *)&DeltaXSquare)[3]
-	);*/
 
+    // TEST OF SQUARE 16
 	Numberl = 4;
 	Numberh = 2;
 
@@ -89,6 +99,9 @@ void main()
 
 	Square16 ();
 	printf("square of  = %d is %d  %d %d %d\n", Numberh *256  + Numberl, Square1, Square2, Square3, Square4);
+    
+    
+    // TEST OF DIV 32 BYT 16
 	adrN = &N;
 	*(adrN+0) = 4; // Divisor LO
 	*(adrN+1) = 0; // Divisor HI
@@ -105,5 +118,27 @@ void main()
     Angle = 0;
     atan();
     printf(" %d, index = %d,  angle =  %d\n", ArcTang, Index, Angle);
+*/
+    // TEST OF ATAN2
+    TanX = 0x0000; TanY = 0x0000; Arctan8 = 0; TmpX = 0; TmpY = 0;
+    atan2 ();
+    printf(" atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
+
+    TanX = 1; TanY = 0; Arctan8 = 0; TmpX = 0; TmpY = 0;
+    atan2 ();
+    printf(" atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
+
+    TanX = -1; TanY = 0; Arctan8 = 0; TmpX = 0; TmpY = 0;
+    atan2 ();
+    printf(" atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
+
+    TanX = 0; TanY = 1; Arctan8 = 0; TmpX = 0; TmpY = 0;
+    atan2 ();
+    printf(" atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
+
+    TanX = 0; TanY = -1; Arctan8 = 0; TmpX = 0; TmpY = 0;
+    atan2 ();
+    printf(" atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
+
 
 }
