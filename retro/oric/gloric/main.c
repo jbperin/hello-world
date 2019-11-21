@@ -81,9 +81,9 @@ void main()
 	project();
 	printf("DeltaX = %d, %d =DeltaY\n", DeltaX, DeltaY);
 	printf("Quotient = %d, %d =Rem\n", Quotient, Remainder);
-    
+
     // TEST OF SQUARE 24
-    
+
 	square = 16;
 	sqrt24();
 	printf("square root of  = %d is %d \n", square, thesqrt);
@@ -99,8 +99,8 @@ void main()
 
 	Square16 ();
 	printf("square of  = %d is %d  %d %d %d\n", Numberh *256  + Numberl, Square1, Square2, Square3, Square4);
-    
-    
+
+
     // TEST OF DIV 32 BYT 16
 	adrN = &N;
 	*(adrN+0) = 4; // Divisor LO
@@ -137,6 +137,10 @@ void main()
     printf(" atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
 
     TanX = 0; TanY = -1; Arctan8 = 0; TmpX = 0; TmpY = 0;
+    atan2 ();
+    printf(" atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
+
+		TanX = 0x00FF; TanY = 0; Arctan8 = 0; TmpX = 0; TmpY = 0;
     atan2 ();
     printf(" atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
 
