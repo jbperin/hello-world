@@ -7,3 +7,6 @@ launch.bat
 *.keystore
 .idea
 *.tap
+final.out
+symbols
+xaerr.txt
