@@ -354,19 +354,19 @@ _atan2:
 //          RETURN 0
             lda #$00 // TODO : Error Case
             sta _Arctan8
-            beq done
+            jmp done
 TanYNotNull1:
 //    ELSE IF TanY > 0 THEN
 //      RETURN PI/2
             lda #$40
             sta _Arctan8
-            bne done
+            jmp done
 //    ELSE
 TanYNegative1:
 //      RETURN 3*PI/2
             lda #$C0
             sta _Arctan8
-            bne done
+            jmp done
 //    END
 //  ELSE
 TanXNotNull1:
@@ -381,40 +381,143 @@ TanXNotNull1:
 //        RETURN 0
                 lda #$00
                 sta _Arctan8
-                beq done
+                jmp done
 //      ELSE
 TanXNegative2:
 //        RETURN PI
                 lda #$80
                 sta _Arctan8
-                bne done
+                jmp done
 //      END
 //    ELSE
 TanYNotNull2:
-//      REM DeltaX DeltaY both different of 0
+//      REM DeltaX DeltaY both different of 0  
 //      IF TanX > 0 THEN
-            lda     _TanX+1
-            bmi     TanXNegative3
+        lda     _TanX+1
+        bmi     TanXNegative3
 //        IF TanY > 0 THEN
-				lda     _TanY+1
-				bmi     TanYNegative3
-//          REM Q1 NE Angle is in [0 .. PI/2]
-//          RETURN ATAN (DeltaY / DeltaX)
+			lda     _TanY+1
+			bmi     TanYNegative3
+//          IF TanX > TanY THEN
+				sec
+				lda 	_TanY
+				sbc		_TanX
+				lda		_TanY+1
+				sbc		_TanX+1
+				bcs		TYoverTX 
+//            REM Octant1 Angle is in [0 .. PI/4]
+//            RETURN ATAN (TanY / TanX)
+				lda # $78
+				sta _Arctan8
+				clv
+				bvc EndIf3
+//          ELSE
+TYoverTX:
+//            REM Octant2 Angle is in [PI/4 .. PI/2]
+//            RETURN -ATAN (TanX / TanY) + PI / 2
+				lda # $45
+				sta _Arctan8
+				;clv
+				;bvc EndIf3
+//          END IF
+EndIf3:
+			clv
+			bvc EndIf4
 //        ELSE
 TanYNegative3:
-//          REM Q4 SE Angle is in [0 .. -PI/2]
-//          RETURN -ATAN (-DeltaY / DeltaX)
-//        END
+//          TmpY = -TanY
+			lda	_TanY     ; get number low byte
+			ldx	_TanY+1     ; get number high  byte
+
+			eor	#$FF        ; invert
+			sec	            ; +1
+			adc	#$00        ; and add it
+			sta _TmpY
+
+			txa				; A <- HiPart (Number)
+			eor	#$FF        ; invert
+			adc #$00		; Propagate carry
+			sta _TmpY+1
+			
+//          IF TanX > TmpY THEN
+			sec
+			lda 	_TmpY
+			sbc		_TanX
+			lda		_TmpY+1
+			sbc		_TanX+1
+			bcs		AbsTYoverTX 
+//            REM Octant8 Angle is in [7PI/4 .. 2PI]
+//            RETURN -ATAN (TmpY / TanX) + 2*PI
+				lda # $23
+				sta _Arctan8
+				clv
+				bvc EndIf4
+//          ELSE
+AbsTYoverTX:
+//            REM Octant7 Angle is in [3PI/2 .. 7PI/4]
+//            RETURN ATAN (TanX / TmpY) + 3*PI / 2
+				lda # $34
+				sta _Arctan8
+//          END IF
+//        END IF 
+EndIf4:
+		clv
+		bvc EndIf5
 //      ELSE
 TanXNegative3:
+//        TmpX = - TanX
+			lda	_TanX     ; get number low byte
+			ldx	_TanX+1     ; get number high  byte
+
+			eor	#$FF        ; invert
+			sec	            ; +1
+			adc	#$00        ; and add it
+			sta _TmpX
+
+			txa				; A <- HiPart (Number)
+			eor	#$FF        ; invert
+			adc #$00		; Propagate carry
+			sta _TmpX+1
 //        IF TanY > 0 THEN
-//          REM Q1 NO Angle is in [PI/2 .. PI]
-//          RETURN PI - ATAN (DeltaY / -DeltaX)
+			lda     _TanY+1
+			bmi     TanYNegative6
+//          IF TmpX > TanY THEN
+				sec
+				lda 	_TanY
+				sbc		_TmpX
+				lda		_TanY+1
+				sbc		_TmpX+1
+				bcs		TYoverAbsTX 
+//            REM Octant4 Angle is in [3PI/4 .. PI]
+//            RETURN -ATAN (TanY / TmpX) + PI
+					lda # $63
+					sta _Arctan8
+					clv
+					bvc EndIf7
+//          ELSE
+TYoverAbsTX:
+//            REM Octant3 Angle is in [PI/2 .. 3PI/4]
+//            RETURN ATAN (TmpX / TanY) + PI / 2
+					lda # $26
+					sta _Arctan8
+//          END IF
+EndIf7:
+			clv
+			bvc EndIf5
+
 //        ELSE
-//          REM Q4 SO Angle is in [-PI/2 .. -PI]
-//          RETURN -PI + ATAN (DeltaY / DeltaX)
+TanYNegative6:
+//          TmpY = abs (TanY)
+//          IF TmpX > TmpY THEN
+//            REM Octant5 Angle is in [PI .. 5PI/4]
+//            RETURN ATAN (TmpY / TmpX) + PI
+//          ELSE
+//            REM Octant6 Angle is in [5PI/4 .. 3PI/2]
+//            RETURN -ATAN (TmpX / TmpY) + 3*PI / 2
+//          END IF
 //        END
 //      END
+EndIf5:
 //    END
 //  END
 done:

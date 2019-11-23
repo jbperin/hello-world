@@ -140,9 +140,24 @@ void main()
     atan2 ();
     printf(" atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
 
-		TanX = 0x00FF; TanY = 0; Arctan8 = 0; TmpX = 0; TmpY = 0;
+	TanX = 0x00FF; TanY = 0; Arctan8 = 0; TmpX = 0; TmpY = 0;
     atan2 ();
     printf(" atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
 
+	TanX = 2; TanY = -1; Arctan8 = 0; TmpX = 0; TmpY = 0;
+    atan2 ();
+    printf(" atan2 (%d, %d) = %d tmpY=%d\n", TanX, TanY, Arctan8, TmpY);
+
+	TanX = 2; TanY = -4; Arctan8 = 0; TmpX = 0; TmpY = 0;
+    atan2 ();
+    printf(" atan2 (%d, %d) = %d tmpY=%d\n", TanX, TanY, Arctan8, TmpY);
+
+	TanX = -2; TanY = 4; Arctan8 = 0; TmpX = 0; TmpY = 0;
+    atan2 ();
+    printf(" atan2 (%d, %d) = %d tmpX=%d\n", TanX, TanY, Arctan8, TmpX);
+
+	TanX = -2; TanY = 1; Arctan8 = 0; TmpX = 0; TmpY = 0;
+    atan2 ();
+    printf(" atan2 (%d, %d) = %d tmpX=%d\n", TanX, TanY, Arctan8, TmpX);
 
 }
