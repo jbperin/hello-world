@@ -130,7 +130,7 @@ ELSE
           RETURN ATAN (TmpX / TanY) + PI / 2
         END IF
       ELSE
-        TmpY = abs (TanY)
+        TmpY = - TanY
         IF TmpX > TmpY THEN
           REM Octant5 Angle is in [PI .. 5PI/4]
           RETURN ATAN (TmpY / TmpX) + PI

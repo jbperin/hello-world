@@ -507,13 +507,39 @@ EndIf7:
 
 //        ELSE
 TanYNegative6:
-//          TmpY = abs (TanY)
+//          TmpY = - TanY
+			lda	_TanY     ; get number low byte
+			ldx	_TanY+1     ; get number high  byte
+
+			eor	#$FF        ; invert
+			sec	            ; +1
+			adc	#$00        ; and add it
+			sta _TmpY
+
+			txa				; A <- HiPart (Number)
+			eor	#$FF        ; invert
+			adc #$00		; Propagate carry
+			sta _TmpY+1
 //          IF TmpX > TmpY THEN
+			sec
+			lda 	_TmpY
+			sbc		_TmpX
+			lda		_TmpY+1
+			sbc		_TmpX+1
+			bcs		AbsTYoverAbsTX 
 //            REM Octant5 Angle is in [PI .. 5PI/4]
 //            RETURN ATAN (TmpY / TmpX) + PI
+				lda # $19
+				sta _Arctan8
+				clv
+				bvc EndIf5
+
 //          ELSE
+AbsTYoverAbsTX:
 //            REM Octant6 Angle is in [5PI/4 .. 3PI/2]
 //            RETURN -ATAN (TmpX / TmpY) + 3*PI / 2
+				lda # $91
+				sta _Arctan8
 //          END IF
 //        END
 //      END
