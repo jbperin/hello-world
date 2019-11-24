@@ -338,8 +338,16 @@ _Arctan8 .dsb 1
 _TmpX .dsb 2
 _TmpY .dsb 2
 
+_Octant .dsb 1
+_NegIt .dsb 1
+
 _atan2:
 .(
+// INIT
+	lda #$00
+	sta _NegIt
+	sta _Octant
+
 //  IF TanX = 0 THEN
     lda     _TanX
     bne     TanXNotNull1
@@ -548,71 +556,205 @@ EndIf5:
 //  END
 
 
+; |  DIVISOR  |    D I V I D E N D    |SCRAT|      |
+; |           |  hi cell     lo cell  |CHPAD| CARRY|
+; |  N    N+1 | N+2   N+3 | N+4   N+5 | N+6   N+7  |
 
 
 octant1:
 // REM Octant1 Angle is in [0 .. PI/4]
 // RETURN ATAN (TanY / TanX)
-	lda # $78
-	sta _Arctan8
-	clv
-	bvc computeratio
+	lda _TanY
+	sta _N+3
+	lda _TanY+1
+	sta _N+2
+	
+	lda _TanX
+	sta _N+1
+	lda _TanX+1
+	sta _N+0
+
+	lda # $00
+	sta _N+4
+	sta _N+5
+	
+	;clv
+	;bvc computeratio
+	jmp computeratio
 
 octant2:
 // REM Octant2 Angle is in [PI/4 .. PI/2]
 // RETURN -ATAN (TanX / TanY) + PI / 2
-	lda # $45
-	sta _Arctan8
-	clv
-	bvc computeratio
+	lda _TanX
+	sta _N+3
+	lda _TanX+1
+	sta _N+2
+	
+	lda _TanY
+	sta _N+1
+	lda _TanY+1
+	sta _N+0
+
+
+
+	lda # $40	; PI / 2
+	sta _Octant
+	lda # $01
+	sta _NegIt
+	;clv
+	;bvc computeratio
+	jmp computeratio
+
 octant3:
 // REM Octant3 Angle is in [PI/2 .. 3PI/4]
 // RETURN ATAN (TmpX / TanY) + PI / 2
-	lda # $26
-	sta _Arctan8
-	clv
-	bvc computeratio
+	lda _TmpX
+	sta _N+3
+	lda _TmpX+1
+	sta _N+2
+	
+	lda _TanY
+	sta _N+1
+	lda _TanY+1
+	sta _N+0
+
+
+
+	lda # $40	; PI / 2
+	sta _Octant
+	;clv
+	;bvc computeratio
+	jmp computeratio
+
 octant4:
 // REM Octant4 Angle is in [3PI/4 .. PI]
 // RETURN -ATAN (TanY / TmpX) + PI
-	lda # $63
-	sta _Arctan8
-	clv
-	bvc computeratio
+	lda _TanY
+	sta _N+3
+	lda _TanY+1
+	sta _N+2
+	
+	lda _TmpX
+	sta _N+1
+	lda _TmpX+1
+	sta _N+0
+
+
+
+	lda # $80	; PI
+	sta _Octant
+	lda # $01
+	sta _NegIt
+	;clv
+	;bvc computeratio
+	jmp computeratio
+	
 octant5:
 // REM Octant5 Angle is in [PI .. 5PI/4]
 // RETURN ATAN (TmpY / TmpX) + PI
-	lda # $19
-	sta _Arctan8
+	lda _TmpY
+	sta _N+3
+	lda _TmpY+1
+	sta _N+2
+	
+	lda _TmpX
+	sta _N+1
+	lda _TmpX+1
+	sta _N+0
+
+
+
+	lda # $80	; PI
+	sta _Octant
 	clv
 	bvc computeratio
+	
 octant6:
 // REM Octant6 Angle is in [5PI/4 .. 3PI/2]
 // RETURN -ATAN (TmpX / TmpY) + 3*PI / 2
-	lda # $91
-	sta _Arctan8
+	lda _TmpX
+	sta _N+3
+	lda _TmpX+1
+	sta _N+2
+	
+	lda _TmpY
+	sta _N+1
+	lda _TmpY+1
+	sta _N+0
+
+
+	lda # $C0	; 3*PI/2
+	sta _Octant
+	lda # $01
+	sta _NegIt
 	clv
 	bvc computeratio
+
 octant7:
 // REM Octant7 Angle is in [3PI/2 .. 7PI/4]
 // RETURN ATAN (TanX / TmpY) + 3*PI / 2
-	lda # $34
-	sta _Arctan8
+	lda _TanX
+	sta _N+3
+	lda _TanX+1
+	sta _N+2
+	
+	lda _TmpY
+	sta _N+1
+	lda _TmpY+1
+	sta _N+0
+
+
+	lda # $C0	; 3*PI/2
+	sta _Octant
 	clv
 	bvc computeratio
 octant8:
 // REM Octant8 Angle is in [7PI/4 .. 2PI]
 // RETURN -ATAN (TmpY / TanX) + 2*PI
-	lda # $23
-	sta _Arctan8
+	lda _TmpY
+	sta _N+3
+	lda _TmpY+1
+	sta _N+2
+	
+	lda _TanX
+	sta _N+1
+	lda _TanX+1
+	sta _N+0
+
+	lda # $00	; 2*PI
+	sta _Octant
+
+	lda # $01
+	sta _NegIt
 
 computeratio:
-
+	jsr _div32by16
+	lda _N+5
+	lsr 		; keep only 5 higher bits of ratio
+	lsr
+	lsr
+	and #$1F 		
+	sta _ArcTang
+	jsr _atan
+	ldx _Angle
+	lda _NegIt
+	beq dontNegIt
+	txa 
+	sec
+	eor #$FF
+	adc #$00
+	//and #$1F ; keep only 5 lower bits
+	tax
+dontNegIt:
+	txa
+	clc
+	adc _Octant ; add octant part
+	sta _Arctan8
 done:
 .)
     RTS
-
-
+	
+	
 ; By Jean-Baptiste PERIN (jbperin)
 ; calculate the atan of a Q0.5 value stored in
 ; five least significant bits of _ArcTang

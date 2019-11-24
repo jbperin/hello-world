@@ -52,7 +52,16 @@ extern int TanY;
 extern char Arctan8;
 extern int TmpX;
 extern int TmpY;
+extern char Octant;
+extern char NegIt;
 
+
+void test_atan2() {
+	        
+//#include "output.txt"          
+           
+             
+}
 
 void main()
 {
@@ -120,53 +129,63 @@ void main()
     printf(" %d, index = %d,  angle =  %d\n", ArcTang, Index, Angle);
 */
     // TEST OF ATAN2
-    TanX = 0x0000; TanY = 0x0000; Arctan8 = 0; TmpX = 0; TmpY = 0;
+    TanX = 0x0000; TanY = 0x0000; Arctan8 = 1; TmpX = 0; TmpY = 0;
     atan2 ();
-    printf(" atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
+    if (Arctan8!=0) printf("ERR atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
 
-    TanX = 1; TanY = 0; Arctan8 = 0; TmpX = 0; TmpY = 0;
+    TanX = 1; TanY = 0; Arctan8 = 1; TmpX = 0; TmpY = 0;
     atan2 ();
-    printf(" atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
+    if (Arctan8!=0) printf("ERR atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
 
     TanX = -1; TanY = 0; Arctan8 = 0; TmpX = 0; TmpY = 0;
     atan2 ();
-    printf(" atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
+    if (Arctan8!=-128) printf("ERR atan2 (%d, %d) = %02d\n", TanX, TanY, Arctan8);
 
     TanX = 0; TanY = 1; Arctan8 = 0; TmpX = 0; TmpY = 0;
     atan2 ();
-    printf(" atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
+    if (Arctan8!=64) printf("ERR atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
 
     TanX = 0; TanY = -1; Arctan8 = 0; TmpX = 0; TmpY = 0;
     atan2 ();
-    printf(" atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
+    if (Arctan8!=-64) printf("ERR atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
 
-	TanX = 0x00FF; TanY = 0; Arctan8 = 0; TmpX = 0; TmpY = 0;
+	TanX = 0x00FF; TanY = 0; Arctan8 = 1; TmpX = 0; TmpY = 0;
     atan2 ();
-    printf(" atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
+    if (Arctan8!=0) printf("ERR atan2 (%d, %d) = %d\n", TanX, TanY, Arctan8);
+
+	// python code to generate expected value:
+	// print (round(math.atan2(TanY,TanX)*(128.0/math.pi)))
+	TanX = 2; TanY = 1; Arctan8 = 2; TmpX = 0; TmpY = 0;
+    atan2 ();
+    if (Arctan8!=19) printf("ERR atan2 (%d, %d) = %d tmpY=%d\n", TanX, TanY, Arctan8, TmpY);
 
 	TanX = 2; TanY = -1; Arctan8 = 0; TmpX = 0; TmpY = 0;
     atan2 ();
-    printf(" atan2 (%d, %d) = %d tmpY=%d\n", TanX, TanY, Arctan8, TmpY);
+    if (Arctan8!=-19) printf("ERR atan2 (%d, %d) = %d exp %d\n", TanX, TanY, Arctan8, -19);
 
 	TanX = 2; TanY = -4; Arctan8 = 0; TmpX = 0; TmpY = 0;
     atan2 ();
-    printf(" atan2 (%d, %d) = %d tmpY=%d\n", TanX, TanY, Arctan8, TmpY);
+    if (Arctan8!=-45) printf("ERR atan2 (%d, %d) = %d tmpY=%d\n", TanX, TanY, Arctan8, TmpY);
 
 	TanX = -2; TanY = 4; Arctan8 = 0; TmpX = 0; TmpY = 0;
     atan2 ();
-    printf(" atan2 (%d, %d) = %d tmpX=%d\n", TanX, TanY, Arctan8, TmpX);
+    if (Arctan8!=83) printf("ERR atan2 (%d, %d) = %d tmpX=%d\n", TanX, TanY, Arctan8, TmpX);
 
 	TanX = -2; TanY = 1; Arctan8 = 0; TmpX = 0; TmpY = 0;
     atan2 ();
-    printf(" atan2 (%d, %d) = %d tmpX=%d\n", TanX, TanY, Arctan8, TmpX);
+    if (Arctan8!=109) printf("ERR atan2 (%d, %d) = %d Octant = %d ArcTang=%d angle=%d\n", TanX, TanY, Arctan8,Octant, ArcTang, Angle);
 
 	TanX = -2; TanY = -1; Arctan8 = 0; TmpX = 0; TmpY = 0;
     atan2 ();
-    printf(" atan2 (%d, %d) = %d tmpX=%d tmpY=%d\n", TanX, TanY, Arctan8, TmpX, TmpY);
+    if (Arctan8!=-109) printf("ERR atan2 (%d, %d) = %d tmpX=%d tmpY=%d\n", TanX, TanY, Arctan8, TmpX, TmpY);
 
 	TanX = -2; TanY = -4; Arctan8 = 0; TmpX = 0; TmpY = 0;
     atan2 ();
-    printf(" atan2 (%d, %d) = %d tmpX=%d tmpY=%d\n", TanX, TanY, Arctan8, TmpX, TmpY);
+    if (Arctan8!=-83) printf("ERR atan2 (%d, %d) = %d tmpX=%d tmpY=%d\n", TanX, TanY, Arctan8, TmpX, TmpY);
 
+	TanX = 1; TanY = 1; Arctan8 = 0; TmpX = 0; TmpY = 0;
+    atan2 ();
+    if (Arctan8!=32) printf("ERR atan2 (%d, %d) = %d exp = 32 \n", TanX, TanY, Arctan8);
 
+	test_atan2 ();
 }
