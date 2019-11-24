@@ -407,18 +407,17 @@ TanYNotNull2:
 				bcs		TYoverTX 
 //            REM Octant1 Angle is in [0 .. PI/4]
 //            RETURN ATAN (TanY / TanX)
-				lda # $78
-				sta _Arctan8
-				clv
-				bvc EndIf3
+				;clv
+				;bvc EndIf3
+				jmp octant1
 //          ELSE
 TYoverTX:
 //            REM Octant2 Angle is in [PI/4 .. PI/2]
 //            RETURN -ATAN (TanX / TanY) + PI / 2
-				lda # $45
-				sta _Arctan8
 				;clv
 				;bvc EndIf3
+				;clv
+				jmp octant2
 //          END IF
 EndIf3:
 			clv
@@ -448,16 +447,17 @@ TanYNegative3:
 			bcs		AbsTYoverTX 
 //            REM Octant8 Angle is in [7PI/4 .. 2PI]
 //            RETURN -ATAN (TmpY / TanX) + 2*PI
-				lda # $23
-				sta _Arctan8
-				clv
-				bvc EndIf4
+				;clv
+				;bvc EndIf4
+				;clv
+				jmp octant8
+
 //          ELSE
 AbsTYoverTX:
 //            REM Octant7 Angle is in [3PI/2 .. 7PI/4]
 //            RETURN ATAN (TanX / TmpY) + 3*PI / 2
-				lda # $34
-				sta _Arctan8
+				;clv
+				jmp octant7
 //          END IF
 //        END IF 
 EndIf4:
@@ -490,16 +490,16 @@ TanXNegative3:
 				bcs		TYoverAbsTX 
 //            REM Octant4 Angle is in [3PI/4 .. PI]
 //            RETURN -ATAN (TanY / TmpX) + PI
-					lda # $63
-					sta _Arctan8
-					clv
-					bvc EndIf7
+					;clv
+					;bvc EndIf7
+					;clv
+					jmp octant4
 //          ELSE
 TYoverAbsTX:
 //            REM Octant3 Angle is in [PI/2 .. 3PI/4]
 //            RETURN ATAN (TmpX / TanY) + PI / 2
-					lda # $26
-					sta _Arctan8
+					;clv
+					jmp octant3
 //          END IF
 EndIf7:
 			clv
@@ -529,23 +529,85 @@ TanYNegative6:
 			bcs		AbsTYoverAbsTX 
 //            REM Octant5 Angle is in [PI .. 5PI/4]
 //            RETURN ATAN (TmpY / TmpX) + PI
-				lda # $19
-				sta _Arctan8
-				clv
-				bvc EndIf5
+				;clv
+				;bvc EndIf5
+				;clv
+				jmp octant5
 
 //          ELSE
 AbsTYoverAbsTX:
 //            REM Octant6 Angle is in [5PI/4 .. 3PI/2]
 //            RETURN -ATAN (TmpX / TmpY) + 3*PI / 2
-				lda # $91
-				sta _Arctan8
+				;clv
+				jmp octant6
 //          END IF
 //        END
 //      END
 EndIf5:
 //    END
 //  END
+
+
+
+
+octant1:
+// REM Octant1 Angle is in [0 .. PI/4]
+// RETURN ATAN (TanY / TanX)
+	lda # $78
+	sta _Arctan8
+	clv
+	bvc computeratio
+
+octant2:
+// REM Octant2 Angle is in [PI/4 .. PI/2]
+// RETURN -ATAN (TanX / TanY) + PI / 2
+	lda # $45
+	sta _Arctan8
+	clv
+	bvc computeratio
+octant3:
+// REM Octant3 Angle is in [PI/2 .. 3PI/4]
+// RETURN ATAN (TmpX / TanY) + PI / 2
+	lda # $26
+	sta _Arctan8
+	clv
+	bvc computeratio
+octant4:
+// REM Octant4 Angle is in [3PI/4 .. PI]
+// RETURN -ATAN (TanY / TmpX) + PI
+	lda # $63
+	sta _Arctan8
+	clv
+	bvc computeratio
+octant5:
+// REM Octant5 Angle is in [PI .. 5PI/4]
+// RETURN ATAN (TmpY / TmpX) + PI
+	lda # $19
+	sta _Arctan8
+	clv
+	bvc computeratio
+octant6:
+// REM Octant6 Angle is in [5PI/4 .. 3PI/2]
+// RETURN -ATAN (TmpX / TmpY) + 3*PI / 2
+	lda # $91
+	sta _Arctan8
+	clv
+	bvc computeratio
+octant7:
+// REM Octant7 Angle is in [3PI/2 .. 7PI/4]
+// RETURN ATAN (TanX / TmpY) + 3*PI / 2
+	lda # $34
+	sta _Arctan8
+	clv
+	bvc computeratio
+octant8:
+// REM Octant8 Angle is in [7PI/4 .. 2PI]
+// RETURN -ATAN (TmpY / TanX) + 2*PI
+	lda # $23
+	sta _Arctan8
+
+computeratio:
+
 done:
 .)
     RTS
