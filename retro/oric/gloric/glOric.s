@@ -322,10 +322,10 @@ NoSqadd:
 
 
 ; By Jean-Baptiste PERIN (jbperin)
-; calculate the atan2 of two value coordinates
-; five least significant bits of _ArcTang
-; The result is always in the range 0 to 2^5-1 and is held in
-; Arctan8
+; calculates the atan2 of two 16-bits value coordinates [TanX, Tany]
+; provides 8-bits result in Arctan8
+; The result is always in the range [0 .. 2^8[ 
+; corresponding to angle in the range [0 .. 2*PI[
 ;
 ; Destroys all registers
 
