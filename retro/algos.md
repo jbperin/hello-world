@@ -75,6 +75,12 @@ L1      ASL NUM1    ;Shift hi bit of NUM1 into REM
 L2      DEX
         BNE L1
 ```
+
+### Racine carrée
+
+[Square Root](http://6502org.wikidot.com/software-math-sqrt)
+[16 bits square root](http://6502.org/source/integers/root.htm)
+[24 bits square root](https://www.codebase64.org/doku.php?id=base:16bit_and_24bit_sqrt)
 ## Algo trigonométriques
 
 
