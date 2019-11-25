@@ -67,8 +67,10 @@ void main()
 {
 
 	char * adrN;
+    int i;
     //cls();
 	text();
+    
 
 /*
     // TEST OF PROJECT
@@ -203,6 +205,13 @@ void main()
     atan2 ();
     if (Arctan8!=32) printf("ERR atan2 (%d, %d) = %d exp = -32 \n", TanX, TanY, Arctan8);
 
+    printf ("Get ready \n");
+    get();
+    TanX = -5; TanY = -2; Arctan8 = 0; // Worst computationnal case
+    for (i=0; i<10000; i++) {
+        atan2();
+    }
+    printf ("Stop measure !!!");
 	/*TanX = 6; TanY = 1; Arctan8 = 0; TmpX = 0; TmpY = 0;
     atan2 ();
     printf("ERR atan2 (%d, %d) = %d Angle = %d, ArcTang = %d, Index = %d, Ration = %d\n", TanX, TanY, Arctan8, Angle, ArcTang, Index, Ratio);
