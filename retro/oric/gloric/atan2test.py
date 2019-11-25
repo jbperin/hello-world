@@ -1,5 +1,5 @@
 import math
-N=5
+N=8
 
 with open('output.txt', 'w') as file:  # Use file to refer to the file object
 

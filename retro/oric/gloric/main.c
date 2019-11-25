@@ -54,6 +54,7 @@ extern int TmpX;
 extern int TmpY;
 extern char Octant;
 extern char NegIt;
+extern char Ratio;
 
 
 void test_atan2() {
@@ -198,6 +199,17 @@ void main()
     atan2 ();
     if (Arctan8!=96) printf("ERR atan2 (%d, %d) = %d exp = -32 \n", TanX, TanY, Arctan8);
 
+	TanX = 123; TanY = 124; Arctan8 = 0; TmpX = 0; TmpY = 0;
+    atan2 ();
+    if (Arctan8!=32) printf("ERR atan2 (%d, %d) = %d exp = -32 \n", TanX, TanY, Arctan8);
+
+	/*TanX = 6; TanY = 1; Arctan8 = 0; TmpX = 0; TmpY = 0;
+    atan2 ();
+    printf("ERR atan2 (%d, %d) = %d Angle = %d, ArcTang = %d, Index = %d, Ration = %d\n", TanX, TanY, Arctan8, Angle, ArcTang, Index, Ratio);
+
+	TanX = 5; TanY = 2; Arctan8 = 0; TmpX = 0; TmpY = 0;
+    atan2 ();
+    printf("ERR atan2 (%d, %d) = %d Angle = %d, ArcTang = %d, Index = %d, Ration = %d\n", TanX, TanY, Arctan8, Angle, ArcTang, Index, Ratio);*/
 
 	test_atan2 ();
 }

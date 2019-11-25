@@ -340,6 +340,7 @@ _TmpY .dsb 2
 
 _Octant .dsb 1
 _NegIt .dsb 1
+_Ratio .dsb 1
 
 _atan2:
 .(
@@ -779,10 +780,10 @@ octant8:
 computeratio:
 	jsr _div32by16
 	lda _N+5
-	lsr 		; keep only 5 higher bits of ratio
+    sta _Ratio
+	lsr 		; keep only 6 higher bits of ratio
 	lsr
-	lsr
-	and #$1F 		
+	and #$3F 		
 	sta _ArcTang
 	jsr _atan
 	ldx _Angle
@@ -805,8 +806,8 @@ done:
 	
 	
 ; By Jean-Baptiste PERIN (jbperin)
-; calculate the atan of a Q0.5 value stored in
-; five least significant bits of _ArcTang
+; calculate the atan of a Q0.6 value stored in
+; six least significant bits of _ArcTang
 ; The result is always in the range 0 to 2^5-1 and is held in
 ; _Angle
 ;
@@ -819,7 +820,7 @@ _Index .dsb 1
 _atan:
 .(
     lda _ArcTang
-    and #$1F        ; keep only 5 bits
+    and #$3F        ; keep only 6 bits
     tax
     sta _Index
     lda atan_table, x
@@ -830,33 +831,65 @@ _atan:
 atan_table:
     .byt 0
     .byt 1
+    .byt 1
+    .byt 2
     .byt 3
+    .byt 3
+    .byt 4
     .byt 4
     .byt 5
     .byt 6
+    .byt 7 ; was 6
+    .byt 7
     .byt 8
+    .byt 8
+    .byt 9
     .byt 9
     .byt 10
     .byt 11
+    .byt 11
+    .byt 12
     .byt 12
     .byt 13
+    .byt 13
+    .byt 14
     .byt 15
+    .byt 16 ; was 15
+    .byt 16
     .byt 16
     .byt 17
+    .byt 17
+    .byt 18
     .byt 18
     .byt 19
+    .byt 19
+    .byt 20
     .byt 20
     .byt 21
+    .byt 21
+    .byt 22
     .byt 22
     .byt 23
+    .byt 23
+    .byt 24
     .byt 24
     .byt 25
     .byt 25
+    .byt 25
+    .byt 26
     .byt 26
     .byt 27
+    .byt 27
+    .byt 27
+    .byt 28
     .byt 28
     .byt 29
     .byt 29
+    .byt 29
+    .byt 30
+    .byt 30
     .byt 30
     .byt 31
     .byt 31
+    .byt 31
+    .byt 32
