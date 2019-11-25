@@ -406,7 +406,19 @@ TanYNotNull2:
 //        IF TanY > 0 THEN
 			lda     _TanY+1
 			bmi     TanYNegative3
-//          IF TanX > TanY THEN
+//          IF TanX = TanY THEN
+                ldy _TanX
+                lda _TanX+1
+                cpy _TanY  ; compare low bytes
+                bne NotEqual1
+                cmp _TanY+1  ; compare high bytes
+                bne NotEqual1
+//              RETURN PI/4                 
+                    lda #$20
+                    sta _Arctan8
+                    jmp done  
+//          ELSE IF TanX > TanY THEN
+NotEqual1:
 				sec
 				lda 	_TanY
 				sbc		_TanX
@@ -446,7 +458,19 @@ TanYNegative3:
 			adc #$00		; Propagate carry
 			sta _TmpY+1
 			
-//          IF TanX > TmpY THEN
+//          IF TanX = TmpY THEN
+                ldy _TanX
+                lda _TanX+1
+                cpy _TmpY  ; compare low bytes
+                bne NotEqual2
+                cmp _TmpY+1  ; compare high bytes
+                bne NotEqual2
+//              RETURN -PI/4                 
+                    lda #$E0
+                    sta _Arctan8
+                    jmp done  
+//          ELSE IF TanX > TmpY THEN
+NotEqual2:
 			sec
 			lda 	_TmpY
 			sbc		_TanX
@@ -469,8 +493,9 @@ AbsTYoverTX:
 //          END IF
 //        END IF 
 EndIf4:
-		clv
-		bvc EndIf5
+		;clv
+		;bvc EndIf5
+        jmp EndIf5
 //      ELSE
 TanXNegative3:
 //        TmpX = - TanX
@@ -489,7 +514,19 @@ TanXNegative3:
 //        IF TanY > 0 THEN
 			lda     _TanY+1
 			bmi     TanYNegative6
-//          IF TmpX > TanY THEN
+//          IF TmpX = TanY THEN
+                ldy _TmpX
+                lda _TmpX+1
+                cpy _TanY  ; compare low bytes
+                bne NotEqual3
+                cmp _TanY+1  ; compare high bytes
+                bne NotEqual3
+//              RETURN 3PI/4                 
+                    lda #$60
+                    sta _Arctan8
+                    jmp done  
+//          ELSE IF TmpX > TanY THEN
+NotEqual3:
 				sec
 				lda 	_TanY
 				sbc		_TmpX
@@ -528,7 +565,19 @@ TanYNegative6:
 			eor	#$FF        ; invert
 			adc #$00		; Propagate carry
 			sta _TmpY+1
-//          IF TmpX > TmpY THEN
+//          IF TmpX = TmpY THEN
+            ldy _TmpX
+            lda _TmpX+1
+            cpy _TmpY  ; compare low bytes
+            bne NotEqual4
+            cmp _TmpY+1  ; compare high bytes
+            bne NotEqual4
+//            RETURN 5*PI/4                 
+                lda #$A0
+                sta _Arctan8
+                jmp done  
+//          ELSE IF TmpX > TmpY THEN
+NotEqual4:
 			sec
 			lda 	_TmpY
 			sbc		_TmpX

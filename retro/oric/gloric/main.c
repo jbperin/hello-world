@@ -58,8 +58,7 @@ extern char NegIt;
 
 void test_atan2() {
 	        
-//#include "output.txt"          
-           
+//#include "output.txt"                 
              
 }
 
@@ -186,6 +185,19 @@ void main()
 	TanX = 1; TanY = 1; Arctan8 = 0; TmpX = 0; TmpY = 0;
     atan2 ();
     if (Arctan8!=32) printf("ERR atan2 (%d, %d) = %d exp = 32 \n", TanX, TanY, Arctan8);
+
+	TanX = 1; TanY = -1; Arctan8 = 0; TmpX = 0; TmpY = 0;
+    atan2 ();
+    if (Arctan8!=-32) printf("ERR atan2 (%d, %d) = %d exp = -32 \n", TanX, TanY, Arctan8);
+
+	TanX = -1; TanY = -1; Arctan8 = 0; TmpX = 0; TmpY = 0;
+    atan2 ();
+    if (Arctan8!=-96) printf("ERR atan2 (%d, %d) = %d exp = -32 \n", TanX, TanY, Arctan8);
+
+	TanX = -1; TanY = 1; Arctan8 = 0; TmpX = 0; TmpY = 0;
+    atan2 ();
+    if (Arctan8!=96) printf("ERR atan2 (%d, %d) = %d exp = -32 \n", TanX, TanY, Arctan8);
+
 
 	test_atan2 ();
 }
