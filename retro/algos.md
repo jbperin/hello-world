@@ -108,7 +108,9 @@ ELSE
     REM TanX TanY both different of 0  
     IF TanX > 0 THEN
       IF TanY > 0 THEN
-        IF TanX > TanY THEN
+        IF TanX = TanY Then
+          RETURN PI/4
+        ELSE IF TanX > TanY THEN
           REM Octant1 Angle is in [0 .. PI/4]
           RETURN ATAN (TanY / TanX)
         ELSE
@@ -117,7 +119,9 @@ ELSE
         END IF
       ELSE
         TmpY = -TanY
-        IF TanX > TmpY THEN
+        IF TanX = TmpY Then
+          RETURN PI/4
+        ELSE IF TanX > TmpY THEN
           REM Octant8 Angle is in [7PI/4 .. 2PI]
           RETURN -ATAN (TmpY / TanX) + 2*PI
         ELSE

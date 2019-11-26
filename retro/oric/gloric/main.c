@@ -56,6 +56,19 @@ extern char Octant;
 extern char NegIt;
 extern char Ratio;
 
+// ATAN2_8
+extern char octant8;
+extern char x1;
+extern char x2;
+extern char y1;
+extern char y2;
+extern char atanres;
+
+// My ATAN2_8
+
+extern char tx;
+extern char ty;
+extern char res;
 
 void test_atan2() {
 	        
@@ -129,7 +142,7 @@ void main()
     Angle = 0;
     atan();
     printf(" %d, index = %d,  angle =  %d\n", ArcTang, Index, Angle);
-*/
+
     // TEST OF ATAN2
     TanX = 0x0000; TanY = 0x0000; Arctan8 = 1; TmpX = 0; TmpY = 0;
     atan2 ();
@@ -212,6 +225,7 @@ void main()
         atan2();
     }
     printf ("Stop measure !!!");
+    */
 	/*TanX = 6; TanY = 1; Arctan8 = 0; TmpX = 0; TmpY = 0;
     atan2 ();
     printf("ERR atan2 (%d, %d) = %d Angle = %d, ArcTang = %d, Index = %d, Ration = %d\n", TanX, TanY, Arctan8, Angle, ArcTang, Index, Ratio);
@@ -220,5 +234,24 @@ void main()
     atan2 ();
     printf("ERR atan2 (%d, %d) = %d Angle = %d, ArcTang = %d, Index = %d, Ration = %d\n", TanX, TanY, Arctan8, Angle, ArcTang, Index, Ratio);*/
 
-	test_atan2 ();
+	//test_atan2 ();
+    //octant8;
+    /*
+    x1=0; y1=0; x2=1; y2=0 ; atanres=0; atan2_8();printf("atan(%d, %d)= %d\n",x2,y2,atanres);
+    x1=0; y1=0; x2=0; y2=1 ; atanres=0; atan2_8();printf("atan(%d, %d)= %d\n",x2,y2,atanres);
+    x1=0; y1=0; x2=0; y2=3 ; atanres=0; atan2_8();printf("atan(%d, %d)= %d\n",x2,y2,atanres);
+    x1=0; y1=0; x2=1; y2=1 ; atanres=0; atan2_8();printf("atan(%d, %d)= %d\n",x2,y2,atanres);
+    x1=0; y1=0; x2=1; y2=2 ; atanres=0; atan2_8();printf("atan(%d, %d)= %d\n",x2,y2,atanres);
+    x1=0; y1=0; x2=1; y2=3 ; atanres=0; atan2_8();printf("atan(%d, %d)= %d\n",x2,y2,atanres);
+    x1=0; y1=0; x2=1; y2=10; atanres=0; atan2_8();printf("atan(%d, %d)= %d\n",x2,y2,atanres);
+    x1=0; y1=0; x2=-1; y2=-1; atanres=0; atan2_8();printf("atan(%d, %d)= %d\n",x2,y2,atanres);
+    x1=0; y1=0; x2=-2; y2=-1; atanres=0; atan2_8();printf("atan(%d, %d)= %d\n",x2,y2,atanres);
+    */
+    get();
+    tx=1; ty=2; res=0; atan2_8();printf("atan(%d, %d)= %d\n",tx,ty,res);
+    tx=1; ty=3; res=0; atan2_8();printf("atan(%d, %d)= %d\n",tx,ty,res);
+    tx=1; ty=4; res=0; atan2_8();printf("atan(%d, %d)= %d\n",tx,ty,res);
+    tx=1; ty=5; res=0; atan2_8();printf("atan(%d, %d)= %d\n",tx,ty,res);
+    tx=1; ty=6; res=0; atan2_8();printf("atan(%d, %d)= %d\n",tx,ty,res);
+    tx=3; ty=12; res=0; atan2_8();printf("atan(%d, %d)= %d\n",tx,ty,res);
 }
