@@ -84,6 +84,97 @@ L2      DEX
 ## Algo trigonométriques
 
 
+```
+ZERO        #$00
+PI_OVER_4   #$20
+PI_OVER_2   #$40
+3_PI_OVER_4 #$60
+PI          #$80
+5_PI_OVER_4 #$A0
+3_PI_OVER_2 #$C0
+7_PI_OVER_4 #$E0
+
+
+IF TanX = 0 THEN
+    IF TanY = 0 THEN
+        RETURN 0
+    ELSE IF TanY > 0 THEN
+        RETURN PI/2
+    ELSE
+        RETURN 3*PI/2
+    END
+ELSE (TanX != 0)
+    IF TanX > 0 THEN
+        TmpX = TanX
+        IF TanY = 0 THEN
+            RETURN 0
+        ELSE IF TanY > 0 THEN
+            TmpY = TanY
+            IF TmpY = TmpX THEN
+                RETURN PI/4
+            ELSE IF TmpX < TmpY Then
+                SWAP (TmpY, TmpX)
+                Octant = 2 ; PI / 2 ; Angle is in [PI/4 .. PI/2]
+                NegIt = 1
+            ELSE (TmpX > TmpY)
+                Octant = 1 ; 0 ; Angle is in [0 .. PI/4]
+            END IF
+
+        ELSE (TanY < 0)
+            TmpY = -TanY
+            IF TmpY = TmpX THEN
+                RETURN 7*PI/4
+            ELSE IF TmpX < TmpY Then
+                SWAP (TmpY, TmpX)
+                Octant = 7; 3*PI / 2  Angle is in [3PI/2 .. 7PI/4]
+            ELSE (TmpX > TmpY)
+                Octant = 8; 2*PI Angle is in [7PI/4 .. 2PI]
+                 NegIt = 1
+           END IF
+
+        END IF
+    ELSE (TanX < 0)
+        TmpX = -TanX
+        IF TanY = 0 THEN
+            RETURN PI
+        ELSE IF TanY > 0 THEN
+            TmpY = TanY
+            IF TmpY = TmpX THEN
+                RETURN 3*PI/4
+            ELSE IF TmpX < TmpY Then
+                SWAP (TmpY, TmpX)
+                Octant = 3 ;  PI / 2 Angle is in [PI/2 .. 3PI/4]
+            ELSE (TmpX > TmpY)
+                NegIt = 1
+                Octant = 4 ; PI Angle is in [3PI/4 .. PI]
+            END IF
+
+        ELSE (TanY < 0)
+            TmpY = -TanY
+            IF TmpY = TmpX THEN
+                RETURN 5*PI/4
+            ELSE IF TmpX < TmpY Then
+                SWAP (TmpY, TmpX)
+                NegIt = 1
+                Octant = 6 ; 3_PI_OVER_2 #$C0 Angle is in [5PI/4 .. 3PI/2]
+            ELSE (TmpX > TmpY)
+                Octant = 5 ; PI #$80 Angle is in [PI .. 5PI/4]
+            END IF
+
+        END IF
+    END IF
+END
+
+Ratio = TmpY / TmpX
+Angle = ATAN [Ratio]
+IF NegIt THEN
+    Angle = -Angle
+
+RES = Angle + Octant
+
+```
+
+
 https://geekshavefeelings.com/posts/fixed-point-atan2
 
 ### Arctangente
