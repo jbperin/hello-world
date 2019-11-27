@@ -248,6 +248,9 @@ void main()
     x1=0; y1=0; x2=-2; y2=-1; atanres=0; atan2_8();printf("atan(%d, %d)= %d\n",x2,y2,atanres);
     */
     get();
+    tx=0; ty=0; res=0; atan2_8();if (res!=0) printf("ERR atan(%d, %d)= %d\n",tx,ty,res);
+    tx=0; ty=1; res=0; atan2_8();if (res!=64) printf("ERR atan(%d, %d)= %d\n",tx,ty,res);
+    tx=0; ty=-1; res=0; atan2_8();if (res!=-64) printf("ERR atan(%d, %d)= %d\n",tx,ty,res);
     tx=1; ty=2; res=0; atan2_8();printf("atan(%d, %d)= %d\n",tx,ty,res);
     tx=1; ty=3; res=0; atan2_8();printf("atan(%d, %d)= %d\n",tx,ty,res);
     tx=1; ty=4; res=0; atan2_8();printf("atan(%d, %d)= %d\n",tx,ty,res);

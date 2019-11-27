@@ -1,39 +1,148 @@
  
+#define A_ZERO        #$00
+#define A_PI_OVER_4   #$20
+#define A_PI_OVER_2   #$40	
+#define A_3_PI_OVER_4 #$60
+#define A_PI          #$80
+#define A_5_PI_OVER_4 #$A0
+#define A_3_PI_OVER_2 #$C0
+#define A_7_PI_OVER_4 #$E0
 
+.zero
+FC .byt 00    			;
+FD .byt 00    			;
+FE .byt 00    			;
+octant .byt 00          ;
 
-
+.text
 _tx .dsb 1
 _ty .dsb 1
 _res .dsb 1
 
+.dsb 256-(*&255)
+
 _atan2_8
 .(
+//  INIT
     lda #$00
     sta _res
 
+//  IF TanX = 0 THEN
     lda _tx
-    sta $FD
+    bne TanXNotNull_01
+//      IF TanY = 0 THEN
+        lda _ty
+        beq atdone
+//          RETURN 0
+//      ELSE IF TanY > 0 THEN
+        bmi TanYNegative_01
+//          RETURN PI/2
+            lda A_PI_OVER_2
+            sta _res
+            jmp atdone
+//      ELSE
+TanYNegative_01:
+//          RETURN 3*PI/2
+            lda A_3_PI_OVER_2
+            sta _res
+            jmp atdone
+//      END
+//  ELSE (TanX != 0)
+TanXNotNull_01:
+//      IF TanX > 0 THEN
+        bmi TanXNegative_01
+//          TmpX = TanX
+            tax
+//          IF TanY = 0 THEN
+            lda _ty
+            beq atdone
+//              RETURN 0
+//          ELSE IF TanY > 0 THEN
+            bmi TanYNegative_02
+//              TmpY = TanY
+                tay
+//              IF TmpY = TmpX THEN 
+                cmp _tx
+//                  RETURN PI/4
+//              ELSE IF TmpX < TmpY Then
+//                  SWAP (TmpY, TmpX)
+//                  Octant = 2 ; PI / 2 ; Angle is in [PI/4 .. PI/2]
+//                  NegIt = 1
+//              ELSE (TmpX > TmpY)
+//                  Octant = 1 ; 0 ; Angle is in [0 .. PI/4]
+//              END IF
+//  
+//          ELSE (TanY < 0)
+TanYNegative_02:
+//              TmpY = -TanY
+//              IF TmpY = TmpX THEN 
+//                  RETURN 7*PI/4
+//              ELSE IF TmpX < TmpY Then
+//                  SWAP (TmpY, TmpX)
+//                  Octant = 7; 3*PI / 2  Angle is in [3PI/2 .. 7PI/4]
+//              ELSE (TmpX > TmpY)
+//                  Octant = 8; 2*PI Angle is in [7PI/4 .. 2PI]
+//                   NegIt = 1
+//             END IF
+//  
+//          END IF
+//      ELSE (TanX < 0)
+TanXNegative_01:
+//          TmpX = -TanX
+//          IF TanY = 0 THEN
+//              RETURN PI
+//          ELSE IF TanY > 0 THEN
+//              TmpY = TanY
+//              IF TmpY = TmpX THEN 
+//                  RETURN 3*PI/4
+//              ELSE IF TmpX < TmpY Then
+//                  SWAP (TmpY, TmpX)
+//                  Octant = 3 ;  PI / 2 Angle is in [PI/2 .. 3PI/4]
+//              ELSE (TmpX > TmpY)
+//                  NegIt = 1
+//                  Octant = 4 ; PI Angle is in [3PI/4 .. PI]
+//              END IF
+//  
+//          ELSE (TanY < 0)
+//              TmpY = -TanY
+//              IF TmpY = TmpX THEN 
+//                  RETURN 5*PI/4
+//              ELSE IF TmpX < TmpY Then
+//                  SWAP (TmpY, TmpX)
+//                  NegIt = 1
+//                  Octant = 6 ; 3_PI_OVER_2 #$C0 Angle is in [5PI/4 .. 3PI/2]
+//              ELSE (TmpX > TmpY)
+//                  Octant = 5 ; PI #$80 Angle is in [PI .. 5PI/4]
+//              END IF
+//  
+//          END IF
+//      END IF
+//  END
+
+
+    lda _tx
+    sta FD
     
     lda _ty
-    sta $FC
+    sta FC
     
 
 ;6 bits division
-    asl $FD
-    lda $FD
+    lda FD
+    asl
     ldx #$06
 loop2
-    cmp $FC
+    cmp FC
     bcc *+4
-    sbc $FC
-    rol $FE
+    sbc FC
+    rol FE
     asl
     dex
     bne loop2
         
         
         
-    lda $FE
+    lda FE
     and #$3F
     
     tax
