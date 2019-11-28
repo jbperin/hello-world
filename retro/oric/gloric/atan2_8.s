@@ -26,7 +26,8 @@ _atan2_8
 //  INIT
     lda #$00
     sta _res
-
+    ldy #0       ;NegIt = False
+    
 //  IF TanX = 0 THEN
     lda _tx
     bne TanXNotNull_01
@@ -76,8 +77,14 @@ TanYNotNull_03:
 TanxDiffTanY_01:
                 bcc TanXOverTanY_01
 //                  SWAP (TmpY, TmpX)
+                    ldx FD ; A contains FC 
+                    sta FD
+                    stx FC
 //                  Octant = 2 ; PI / 2 ; Angle is in [PI/4 .. PI/2]
+                    lda A_PI_OVER_2
+                    sta octant 
 //                  NegIt = 1
+                    ldy #1
                     jmp compratio
 //              ELSE (TmpX > TmpY)
 TanXOverTanY_01:
@@ -183,36 +190,55 @@ TanXOverTanY_04:
 //      END IF
 //  END
 
-compratio:
     ;lda _tx
     ;sta FD
     
     ;lda _ty
     ;sta FC
+
+compratio:
+//  Ratio = TmpY / TmpX
     
-// divide FD by FC and store res in FE
+// divide FC (tanY) by FD( tanX) and store res in FE
 ;6 bits division
-    lda FD
+    lda FC
     asl
     ldx #$06
 loop2
-    cmp FC
+    cmp FD
     bcc *+4
-    sbc FC
+    sbc FD
     rol FE
     asl
     dex
     bne loop2
         
         
-        
+//  Angle = 
+
     lda FE
     and #$3F
     
     tax
-    sta _Index
-    lda atan_table, x
-    
+    ;sta _Index
+
+//  IF NegIt THEN
+    tya 
+    beq DontNegIt
+//      Angle = -ATAN [Ratio]
+        lda atan_table, x
+        eor #$FF
+        sec
+        adc #$00
+        jmp SumPart
+DontNegIt:
+        lda atan_table, x
+//  
+SumPart:    
+//  RES = Angle + Octant
+    clc
+    adc octant 
+
     sta _res
     
 

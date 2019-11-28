@@ -166,11 +166,14 @@ ELSE (TanX != 0)
 END
 
 Ratio = TmpY / TmpX
-Angle = ATAN [Ratio]
+
 IF NegIt THEN
-    Angle = -Angle
+    Angle = -ATAN [Ratio]
+ELSE
+    Angle = ATAN [Ratio]
 
 RES = Angle + Octant
+
 
 ```
 
