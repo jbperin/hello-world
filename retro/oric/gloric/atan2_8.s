@@ -32,8 +32,10 @@ _atan2_8
     bne TanXNotNull_01
 //      IF TanY = 0 THEN
         lda _ty
-        beq atdone
+        bne TanYNotNull_02
 //          RETURN 0
+            jmp atdone 
+TanYNotNull_02:
 //      ELSE IF TanY > 0 THEN
         bmi TanYNegative_01
 //          RETURN PI/2
@@ -52,81 +54,143 @@ TanXNotNull_01:
 //      IF TanX > 0 THEN
         bmi TanXNegative_01
 //          TmpX = TanX
-            tax
+            sta FD
 //          IF TanY = 0 THEN
             lda _ty
-            beq atdone
+            bne TanYNotNull_03
 //              RETURN 0
+                jmp atdone
+TanYNotNull_03:
 //          ELSE IF TanY > 0 THEN
             bmi TanYNegative_02
 //              TmpY = TanY
-                tay
+                sta FC
 //              IF TmpY = TmpX THEN 
-                cmp _tx
+                cmp FD
+                bne TanxDiffTanY_01
 //                  RETURN PI/4
+                    lda A_PI_OVER_4
+                    sta _res
+                    jmp atdone
 //              ELSE IF TmpX < TmpY Then
+TanxDiffTanY_01:
+                bcc TanXOverTanY_01
 //                  SWAP (TmpY, TmpX)
 //                  Octant = 2 ; PI / 2 ; Angle is in [PI/4 .. PI/2]
 //                  NegIt = 1
+                    jmp compratio
 //              ELSE (TmpX > TmpY)
+TanXOverTanY_01:
 //                  Octant = 1 ; 0 ; Angle is in [0 .. PI/4]
+                    jmp compratio
 //              END IF
 //  
 //          ELSE (TanY < 0)
 TanYNegative_02:
 //              TmpY = -TanY
+                eor #$FF
+                sec
+                adc #$00
+                sta FC
 //              IF TmpY = TmpX THEN 
+                cmp FD
+                bne TanxDiffTanY_02
 //                  RETURN 7*PI/4
+                    lda A_7_PI_OVER_4
+                    sta _res
+                    jmp atdone
+TanxDiffTanY_02:
 //              ELSE IF TmpX < TmpY Then
+                bcc TanXOverTanY_02
 //                  SWAP (TmpY, TmpX)
 //                  Octant = 7; 3*PI / 2  Angle is in [3PI/2 .. 7PI/4]
+                    jmp compratio
 //              ELSE (TmpX > TmpY)
+TanXOverTanY_02:
 //                  Octant = 8; 2*PI Angle is in [7PI/4 .. 2PI]
 //                   NegIt = 1
+                    jmp compratio
 //             END IF
 //  
 //          END IF
 //      ELSE (TanX < 0)
 TanXNegative_01:
 //          TmpX = -TanX
+            eor #$FF
+            sec
+            adc #$00
+            sta FD
 //          IF TanY = 0 THEN
+            lda _ty
+            bne TanYNotNull_01
 //              RETURN PI
+                lda A_PI
+                sta _res
+                jmp atdone
+TanYNotNull_01:
 //          ELSE IF TanY > 0 THEN
+            bmi TanYNegative_03
 //              TmpY = TanY
+                sta FC
 //              IF TmpY = TmpX THEN 
+                cmp FD
+                bne TanxDiffTanY_03
 //                  RETURN 3*PI/4
+                    lda A_3_PI_OVER_4
+                    sta _res
+                    jmp atdone
+TanxDiffTanY_03:
 //              ELSE IF TmpX < TmpY Then
+                bcc TanXOverTanY_03
 //                  SWAP (TmpY, TmpX)
 //                  Octant = 3 ;  PI / 2 Angle is in [PI/2 .. 3PI/4]
+                    jmp compratio
 //              ELSE (TmpX > TmpY)
+TanXOverTanY_03:
 //                  NegIt = 1
 //                  Octant = 4 ; PI Angle is in [3PI/4 .. PI]
+                    jmp compratio
 //              END IF
 //  
 //          ELSE (TanY < 0)
+TanYNegative_03:
 //              TmpY = -TanY
+                eor #$FF
+                sec
+                adc #$00
+                sta FC
 //              IF TmpY = TmpX THEN 
+                cmp FD
+                bne TanxDiffTanY_04
 //                  RETURN 5*PI/4
+                    lda A_5_PI_OVER_4
+                    sta _res
+                    jmp atdone
+TanxDiffTanY_04:
 //              ELSE IF TmpX < TmpY Then
+                bcc TanXOverTanY_04
 //                  SWAP (TmpY, TmpX)
 //                  NegIt = 1
 //                  Octant = 6 ; 3_PI_OVER_2 #$C0 Angle is in [5PI/4 .. 3PI/2]
+                    jmp compratio
 //              ELSE (TmpX > TmpY)
+TanXOverTanY_04:
 //                  Octant = 5 ; PI #$80 Angle is in [PI .. 5PI/4]
+                    jmp compratio
 //              END IF
 //  
 //          END IF
 //      END IF
 //  END
 
-
-    lda _tx
-    sta FD
+compratio:
+    ;lda _tx
+    ;sta FD
     
-    lda _ty
-    sta FC
+    ;lda _ty
+    ;sta FC
     
-
+// divide FD by FC and store res in FE
 ;6 bits division
     lda FD
     asl
