@@ -9,10 +9,14 @@
 #define A_7_PI_OVER_4 #$E0
 
 .zero
+
+; Used by atan2 
+
 FC .byt 00    			;
 FD .byt 00    			;
 FE .byt 00    			;
 octant .byt 00          ;
+
 
 .text
 _tx .dsb 1

@@ -1,17 +1,10 @@
 
 
 
-; By Jean-Baptiste PERIN (jbperin)
-; extension of routine by Lee Davison at http://www.6502.org/source/integers/square.htm
-; Calculates the 32 bits unsigned integer square of the signed 16 bit integer in
-; Numberl/Numberh.  The result is always in the range 0 to ‭4294836225‬ and is held in
-; Square1/Square2/Square3/Square4
-;
-; Destroys all registers
 
-_Numberl             ; number to square low byte
-_Numberh	= _Numberl+1 ; number to square high byte
-    .word $FFFF
+_Numberl  .byte $FF            ; number to square low byte
+_Numberh  .byte $FF ; number to square high byte
+
 
 
 _Square1  .byte $00 ; square low bytes
@@ -29,6 +22,62 @@ Accu1:
     .byte $00
 Accu2:
     .byte $00
+
+
+_Squarel             ; square low byte
+_Squareh	= _Squarel+1 ; square high byte
+    .word $FFFF
+
+Tempsq:                     ; temp byte for intermediate result
+    .byte $00
+
+;http://www.6502.org/source/integers/square.htm
+_Square8:
+.(
+    LDA #$00        ; clear A
+    STA _Squarel     ; clear square low byte
+                    ; (no need to clear the high byte, it gets shifted out)
+    LDA	_Numberl     ; get number low byte
+	LDX	_Numberh     ; get number high  byte
+	BPL	NoNneg      ; if +ve don't negate it
+                            ; else do a two's complement
+	EOR	#$FF        ; invert
+    SEC	            ; +1
+	ADC	#$00        ; and add it
+
+NoNneg:
+	STA	Tempsq      ; save ABS(number)
+	LDX	#$08        ; set bit count
+
+Nextr2bit:
+	ASL	_Squarel     ; low byte *2
+	ROL	_Squareh     ; high byte *2+carry from low
+	ASL	            ; shift number byte
+	BCC	NoSqadd     ; don't do add if C = 0
+	TAY                 ; save A
+	CLC                 ; clear carry for add
+	LDA	Tempsq      ; get number
+	ADC	_Squarel     ; add number^2 low byte
+	STA	_Squarel     ; save number^2 low byte
+	LDA	#$00        ; clear A
+	ADC	_Squareh     ; add number^2 high byte
+	STA	_Squareh     ; save number^2 high byte
+	TYA                 ; get A back
+
+NoSqadd:
+	DEX                 ; decrement bit count
+	BNE	Nextr2bit   ; go do next bit
+.)
+	RTS
+
+
+; By Jean-Baptiste PERIN (jbperin)
+; extension of routine by Lee Davison at http://www.6502.org/source/integers/square.htm
+; Calculates the 32 bits unsigned integer square of the signed 16 bit integer in
+; Numberl/Numberh.  The result is always in the range 0 to ‭4294836225‬ and is held in
+; Square1/Square2/Square3/Square4
+;
+; Destroys all registers
 
 _Square16:
 .(

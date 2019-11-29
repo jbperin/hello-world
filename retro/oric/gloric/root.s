@@ -1,4 +1,40 @@
 
+NUM:
+_square    .byt 0,0,0     ; input number
+storage   .byt 0,0,0     ; temporary data
+ROOT:
+_thesqrt      .byt 0,0       ; result
+REM:
+remainder .byt 0,0       ; result remainder
+
+;http://6502org.wikidot.com/software-math-sqrt
+
+_sqrt_16:
+.(
+   LDA #0
+   STA ROOT
+   STA REM
+   LDX #8
+L1 SEC
+   LDA NUM+1 ; NUMH
+   SBC #$40
+   TAY
+   LDA REM
+   SBC ROOT
+   BCC L2
+   STY NUM+1 ; NUMH
+   STA REM
+L2 ROL ROOT
+   ASL NUM
+   ROL NUM+1 ; NUMH
+   ROL REM
+   ASL NUM
+   ROL NUM+1 ; NUMH
+   ROL REM
+   DEX
+   BNE L1
+.)
+  RTS
 
 
 
@@ -13,10 +49,6 @@
 ;  16bit result in  sqrt & remainder
 ;-----------------------------------
 
-_square    .byt 0,0,0     ; input number
-storage   .byt 0,0,0     ; temporary data
-_thesqrt      .byt 0,0       ; result
-remainder .byt 0,0       ; result remainder
 
 _sqrt24:
 .(
