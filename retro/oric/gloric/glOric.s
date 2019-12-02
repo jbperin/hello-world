@@ -116,8 +116,24 @@ _project:
     sbc _CamRotX
     sta AnglePV
 
-    clc
-    lda ScreenWidth/2
+    
+	// Quick Disgusting Hack 
+	lda AnglePH
+	cmp #$80
+	ror
+	clc
+    adc ScreenWidth/2
+	sta _ResX
+	
+	lda AnglePV
+	cmp #$80
+	ror
+	eor #$FF
+	sec
+	adc #$00
+	clc
+    adc ScreenHeight/2
+	sta _ResY
 
     
 //  ; http://nparker.llx.com/a2/mult.html

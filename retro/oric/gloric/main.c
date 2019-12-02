@@ -92,7 +92,7 @@ void main()
 {
 
 	char * adrN, *adrSquare;
-    int i;
+    int i, j;
     //cls();
 	text();
     
@@ -103,14 +103,16 @@ void main()
 	CamPosX = 0;
 	CamPosY = 0;
 	CamPosZ = 1;
+	
 	CamRotZ = 0;
 	CamRotX = 0;
-	PointX = 1;
-	PointY = 1;
+	
+	PointX = 4;
+	PointY = -2;
 	PointZ = 0;
 
 
-	printf("PointX %d - %d CamX\n", PointX, CamPosX);
+	/* printf("PointX %d - %d CamX\n", PointX, CamPosX);
 	printf("PointY %d - %d CamY\n", PointY, CamPosY);
 	printf("PointZ %d - %d CamZ\n", PointZ, CamPosZ);
 
@@ -118,7 +120,38 @@ void main()
 	project();
 	printf("DeltaX = %d, %d =DeltaY\n", DeltaX, DeltaY);
 	printf(" AngleH = %d, Norm = %d, AngleV =%d\n", AngleH, Norm, AngleV);
+	printf(" ResX = %d, ResY = %d\n", ResX, ResY);*/
+	while (1==1) {
+		for (i=-10; i<= 10; i+=2) {
+			for (j=-10; j<=10; j+=2) {
+				PointY = j;
+				PointX = i;
+				project();
+				if ((ResX>0) && (ResX <40) && (ResY >6) && (ResY< 26)) {
+					AdvancedPrint(ResX, ResY,"*");
+				}
+			}
+		}
+		switch (get())	// key
+		{
+		case 8:	// gauche => tourne gauche
+			CamRotZ -= 4;
+			break;
 
+		case 9:	// droite => tourne droite
+			CamRotZ += 4;
+			break;
+
+		case 10: // bas => recule
+			CamPosX++;
+			break;
+
+		case 11: // haut => avance
+			CamPosX--;
+			break;
+		}
+		cls();
+	}
  /*   
     // TEST OF SQUARE 8
 	Numberl = 0x04;
