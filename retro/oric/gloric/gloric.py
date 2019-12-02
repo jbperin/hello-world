@@ -21,7 +21,7 @@ screen = [[' ' for i in range(LE+1)] for j in range(HE+1)]
 #Variables intermédiaires
 points2 = []
 
-
+# from https://en.wikipedia.org/wiki/Bresenham's_line_algorithm#All_cases
 def drawLine( x0,  y0,  x1,  y1):
     points2d = []
 
