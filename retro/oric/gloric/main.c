@@ -73,6 +73,11 @@ extern char tx;
 extern char ty;
 extern char res;
 
+// LINE
+extern char Point1X;
+extern char Point1Y;
+extern int PosPrint;
+
 void test_atan2() {
 
 tx=0; ty=0; res=0; atan2_8();if (res!=0) printf("ERR atan(%d, %d)= %d\n",tx,ty,res);
@@ -87,41 +92,9 @@ tx=-1; ty=-1; res=0; atan2_8();if (res!=-96) printf("ERR atan(%d, %d)= %d\n",tx,
 //#include "output.txt"                 
              
 }
-
-void main()
-{
-
-	char * adrN, *adrSquare;
+void testUser() {
     int i, j;
-    //cls();
-	text();
-    
-    get();
-
-    // TEST OF PROJECT
-
-	CamPosX = 0;
-	CamPosY = 0;
-	CamPosZ = 1;
-	
-	CamRotZ = 0;
-	CamRotX = 0;
-	
-	PointX = 4;
-	PointY = -2;
-	PointZ = 0;
-
-
-	/* printf("PointX %d - %d CamX\n", PointX, CamPosX);
-	printf("PointY %d - %d CamY\n", PointY, CamPosY);
-	printf("PointZ %d - %d CamZ\n", PointZ, CamPosZ);
-
-
-	project();
-	printf("DeltaX = %d, %d =DeltaY\n", DeltaX, DeltaY);
-	printf(" AngleH = %d, Norm = %d, AngleV =%d\n", AngleH, Norm, AngleV);
-	printf(" ResX = %d, ResY = %d\n", ResX, ResY);*/
-	while (1==1) {
+    	while (1==1) {
 		for (i=-10; i<= 10; i+=2) {
 			for (j=-10; j<=10; j+=2) {
 				PointY = j;
@@ -152,6 +125,47 @@ void main()
 		}
 		cls();
 	}
+
+}
+void main()
+{
+
+	char * adrN, *adrSquare;
+    int i, j;
+    //cls();
+	text();
+    
+    get();
+    Point1X = 20;
+    Point1Y = 13;
+    drawLine ();
+    printf ("PosPrint = %d\n",PosPrint);
+    // TEST OF PROJECT
+
+	/* CamPosX = 0;
+	CamPosY = 0;
+	CamPosZ = 1;
+	
+	CamRotZ = 0;
+	CamRotX = 0;
+	
+	PointX = 4;
+	PointY = -2;
+	PointZ = 0;
+
+
+	printf("PointX %d - %d CamX\n", PointX, CamPosX);
+	printf("PointY %d - %d CamY\n", PointY, CamPosY);
+	printf("PointZ %d - %d CamZ\n", PointZ, CamPosZ);
+
+
+	project();
+	printf("DeltaX = %d, %d =DeltaY\n", DeltaX, DeltaY);
+	printf(" AngleH = %d, Norm = %d, AngleV =%d\n", AngleH, Norm, AngleV);
+	printf(" ResX = %d, ResY = %d\n", ResX, ResY);
+    */
+    
+    
  /*   
     // TEST OF SQUARE 8
 	Numberl = 0x04;
