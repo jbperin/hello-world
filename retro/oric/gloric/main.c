@@ -76,6 +76,8 @@ extern char res;
 // LINE
 extern char Point1X;
 extern char Point1Y;
+extern char Point2X;
+extern char Point2Y;
 extern int PosPrint;
 
 void test_atan2() {
@@ -136,10 +138,14 @@ void main()
 	text();
     
     get();
-    Point1X = 20;
-    Point1Y = 13;
+    
+    // TEST OF DRAWLINE
+    Point1X = 10;
+    Point1Y = 10;
+    Point2X = 30;
+    Point2Y = 20;
     drawLine ();
-    printf ("PosPrint = %d\n",PosPrint);
+    
     // TEST OF PROJECT
 
 	/* CamPosX = 0;
