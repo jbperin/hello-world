@@ -136,7 +136,7 @@ void main()
     int i, j;
     //cls();
 	text();
-    
+    glOricInit();
     get();
     
     // TEST OF DRAWLINE

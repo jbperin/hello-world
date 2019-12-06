@@ -517,6 +517,27 @@ c'est équivalent à `POKE # BB80 + 40*Y + X, ASC("0")`
 
 ```
 
+# Interrupts
+
+|Interrupt|Vector|Oric-1|Atmos||
+|--|--|--|--|--|--|
+|IRQ|#FFFE #FFFF|#0228 -> #EC03 |#0244 -> #EE22||
+|POWER ON|#FFFC #FFFD|#F42B|#F88F ||
+|NMI|#FFFA #FFFB|#022B -> #F430|#0247 -> #F8B2||
+
+Sur Oric-1 les interruptions ne provenant pas du timer-1 sont redirigées vers #230 qui contient un RTI.
+Sur Oric-Atmos le fin d'interruption est à #24A .
+
+
+# Timer
+
+|||||
+|--|--|--|--|--|
+|Clavier |#272 #273 | réinit à 3 |
+|Curseur |#274 #275 | |
+|Autre |#276 #277 ||
+
+
 # ROM addresses
 
 to call a routine, JSR its adress
