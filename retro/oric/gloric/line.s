@@ -1,4 +1,5 @@
-
+#define SCREEN_WIDTH #40
+#define SCREEN_HEIGHT #26
 
 .zero
 _PosPrint .dsb 2
@@ -46,13 +47,20 @@ stepY .dsb 1
 plotOrNot:
 .(
     lda _Point1X
+	bmi plotdone
+	cmp SCREEN_WIDTH
+	bpl plotdone
     sta _PrintX
     lda _Point1Y
+	bmi plotdone
+	cmp SCREEN_HEIGHT
+	bpl plotdone
     sta _PrintY
     jsr _computePosPrint
     lda #65
     ldy #00
     sta (_PosPrint),y
+plotdone:
 .)
     rts
 

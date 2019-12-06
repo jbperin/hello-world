@@ -140,8 +140,8 @@ void main()
     get();
     
     // TEST OF DRAWLINE
-    Point1X = 10;
-    Point1Y = 10;
+    Point1X = -10;
+    Point1Y = -10;
     Point2X = 30;
     Point2Y = 20;
     drawLine ();
