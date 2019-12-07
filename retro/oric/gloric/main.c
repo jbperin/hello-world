@@ -1,4 +1,6 @@
-#include    "lib.h"
+#include "lib.h"
+#include "externs.c"
+#include "alphabet.c"
 
  // Camera Position
 extern int CamPosX;
@@ -9,77 +11,59 @@ extern int CamPosZ;
 extern char CamRotZ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
 extern char CamRotX;
 
- // Point 3D Coordinates
-extern int PointX;
-extern int PointY;
-extern int PointZ;
 
- // Point 2D Projected Coordinates
-extern char ResX;			// -128 -> -127
-extern char ResY;
+#define NB_MAX_POINTS 100
+#define SIZEOF_3DPOINT 4
+char points3d[NB_MAX_POINTS*SIZEOF_3DPOINT];
+unsigned char nbPoints=0;
 
- // Intermediary Computation
-extern int DeltaX;
-extern int DeltaY;
+#define NB_MAX_SEGMENTS 50
+#define SIZEOF_SEGMENT 2
+char segments[NB_MAX_SEGMENTS*SIZEOF_SEGMENT];
+unsigned char nbSegments=0;
 
+#define SIZEOF_2DPOINT 2
+char points2d [NB_MAX_POINTS*SIZEOF_2DPOINT];
 
-extern char Norm;
-extern char AngleH;
-extern char AngleV;
+const char sentence[] = "MERCI RENE";
 
+void addData(const char *tPoint, unsigned char nPoint, const char *tSeg, unsigned char nSeg, char offsetPos){
+	unsigned char jj;
+	for (jj=0; jj < nPoint; jj++){
+		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 0] = tPoint[jj*SIZEOF_3DPOINT + 0] + offsetPos*8;
+		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 1] = tPoint[jj*SIZEOF_3DPOINT + 1];
+		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 2] = tPoint[jj*SIZEOF_3DPOINT + 2];
+	}
+	for (jj=0; jj < nSeg; jj++){
+		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 0] = tSeg[jj*SIZEOF_SEGMENT + 0]+nbPoints;
+		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 1] = tSeg[jj*SIZEOF_SEGMENT + 1]+nbPoints;
+	}
+	nbPoints += nPoint; 
+	nbSegments += nSeg;
 
-extern int square;
-extern int thesqrt;
+}
 
-extern char Numberl;
-extern char Numberh;
+void initBuffers(){
+	unsigned char ii, jj;
+	char c;
+	unsigned char nPoint, nSeg;
+	const char *tPoint, *tSeg;
+	while((c=sentence[ii]) != 0) {
+		
+		switch (c) {
+			case 'M':addData(ptsM, NB_POINTS_M, segM, NB_SEGMENTS_M, ii);break;
+			case 'C':addData(ptsC, NB_POINTS_C, segC, NB_SEGMENTS_C, ii);break;
+			case 'I':addData(ptsI, NB_POINTS_I, segI, NB_SEGMENTS_I, ii);break;
+			case 'R':addData(ptsR, NB_POINTS_R, segR, NB_SEGMENTS_R, ii);break;
+			case 'E':addData(ptsE, NB_POINTS_E, segE, NB_SEGMENTS_E, ii);break;
+			case 'N':addData(ptsN, NB_POINTS_N, segN, NB_SEGMENTS_N, ii);break;
+			default:
+				break;
+		}
 
-extern char Squarel;
-extern char Squareh;
-
-extern char Square1;
-extern char Square2;
-extern char Square3;
-extern char Square4;
-
-extern char N;
-
-// ATAN on 1 octant
-extern char ArcTang;
-extern char Angle;
-extern char Index;
-
-// ATAN2
-extern int TanX;
-extern int TanY;
-extern char Arctan8;
-extern int TmpX;
-extern int TmpY;
-extern char Octant;
-extern char NegIt;
-extern char Ratio;
-
-// ATAN2_8
-extern char octant8;
-extern char x1;
-extern char x2;
-extern char y1;
-extern char y2;
-extern char atanres;
-
-// My ATAN2_8
-
-extern char tx;
-extern char ty;
-extern char res;
-
-// LINE
-extern char Point1X;
-extern char Point1Y;
-extern char Point2X;
-extern char Point2Y;
-extern int PosPrint;
-
+		ii++;
+	}
+}
 void test_atan2() {
 
 tx=0; ty=0; res=0; atan2_8();if (res!=0) printf("ERR atan(%d, %d)= %d\n",tx,ty,res);
@@ -94,41 +78,65 @@ tx=-1; ty=-1; res=0; atan2_8();if (res!=-96) printf("ERR atan(%d, %d)= %d\n",tx,
 //#include "output.txt"                 
              
 }
-void testUser() {
-    int i, j;
-    	while (1==1) {
-		for (i=-10; i<= 10; i+=2) {
-			for (j=-10; j<=10; j+=2) {
-				PointY = j;
-				PointX = i;
-				project();
-				if ((ResX>0) && (ResX <40) && (ResY >6) && (ResY< 26)) {
-					AdvancedPrint(ResX, ResY,"*");
-				}
-			}
-		}
-		switch (get())	// key
+
+void doProjection(){
+	unsigned char ii = 0;
+	for (ii = 0; ii< nbPoints; ii++){
+		PointX = points3d[ii*SIZEOF_3DPOINT + 0];
+		PointY = points3d[ii*SIZEOF_3DPOINT + 1];
+		PointZ = points3d[ii*SIZEOF_3DPOINT + 2];
+		project();
+		points2d[ii*SIZEOF_2DPOINT + 0] = ResX;
+		points2d[ii*SIZEOF_2DPOINT + 1] = ResY;
+	}
+}
+
+void drawSegments(){
+	unsigned char ii = 0;
+	unsigned char idxPt1, idxPt2;
+	for (ii = 0; ii< nbSegments; ii++){
+		idxPt1 = segments[ii*SIZEOF_SEGMENT + 0];
+		idxPt2 = segments[ii*SIZEOF_SEGMENT + 1];
+		
+		Point1X = points2d[idxPt1*SIZEOF_2DPOINT + 0];
+		Point1Y = points2d[idxPt1*SIZEOF_2DPOINT + 1];
+		Point2X = points2d[idxPt2*SIZEOF_2DPOINT + 0];
+		Point2Y = points2d[idxPt2*SIZEOF_2DPOINT + 1];
+		drawLine ();
+	}
+}
+
+void gameLoop() {
+
+	char key;
+	
+	doProjection();
+
+    while (1==1) {
+		cls();
+		drawSegments();
+		key=get();
+		switch (key)	// key
 		{
 		case 8:	// gauche => tourne gauche
+			CamRotZ += 4;
+			break;
+		case 9:	// droite => tourne droite
 			CamRotZ -= 4;
 			break;
 
-		case 9:	// droite => tourne droite
-			CamRotZ += 4;
-			break;
-
 		case 10: // bas => recule
-			CamPosX++;
+			CamPosX--;
 			break;
 
 		case 11: // haut => avance
-			CamPosX--;
+			CamPosX++;
 			break;
 		}
-		cls();
+		doProjection();
 	}
-
 }
+
 void main()
 {
 
@@ -136,16 +144,31 @@ void main()
     int i, j;
     //cls();
 	text();
-    glOricInit();
-    get();
+    kernelInit();
+	initBuffers();
+
+ // Camera Position
+	CamPosX = -3;
+	CamPosY = -5;
+	CamPosZ = 2;
+
+ // Camera Orientation
+	CamRotZ = 0 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
+	CamRotX = 10;
+	
+	gameLoop();
     
+	
+	
     // TEST OF DRAWLINE
-    Point1X = -10;
+    /*
+	get();
+	Point1X = -10;
     Point1Y = -10;
     Point2X = 30;
     Point2Y = 20;
     drawLine ();
-    
+    */
     // TEST OF PROJECT
 
 	/* CamPosX = 0;

@@ -51,46 +51,6 @@ AnglePH .dsb 1 ; horizontal angle of point from player pov
 AnglePV .dsb 1 ; vertical angle of point from player pov
 
 
-irq_handler:
-
-	pha
-	txa
-	pha
-	tya
-	pha
-
-	; This handler runs at 100hz 
-
-	;jsr _MyRoutine
-
-	pla
-	tay
-	pla
-	tax
-	pla
-
-jmp_old_handler
-	jmp 0000
-
-
-
-_glOricInit:
-.(
-	; Save the old handler value
-	lda $245
-	sta jmp_old_handler+1
-	lda $246
-	sta jmp_old_handler+2
-
-	; Install our own handler
-	lda #<irq_handler
-	sta $245
-	lda #>irq_handler
-	sta $246
-    
-.)
-    rts
-
 _project:
 .(
 	// save context
@@ -160,6 +120,9 @@ _project:
     
 	// Quick Disgusting Hack 
 	lda AnglePH
+	eor #$FF
+	sec
+	adc #$00
 	cmp #$80
 	ror
 	clc
@@ -167,11 +130,11 @@ _project:
 	sta _ResX
 	
 	lda AnglePV
-	cmp #$80
-	ror
 	eor #$FF
 	sec
 	adc #$00
+	cmp #$80
+	ror
 	clc
     adc ScreenHeight/2
 	sta _ResY

@@ -48,16 +48,18 @@ plotOrNot:
 .(
     lda _Point1X
 	bmi plotdone
+	beq plotdone
 	cmp SCREEN_WIDTH
 	bpl plotdone
     sta _PrintX
     lda _Point1Y
 	bmi plotdone
+	beq plotdone
 	cmp SCREEN_HEIGHT
 	bpl plotdone
     sta _PrintY
     jsr _computePosPrint
-    lda #65
+    lda #42
     ldy #00
     sta (_PosPrint),y
 plotdone:

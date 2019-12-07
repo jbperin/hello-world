@@ -23,7 +23,7 @@ REM Convert C to assembly code :
 :: %OSDK%\bin\header -h1 -a0 build\glOric.o build\glOric.tap $6500
 
 
-%OSDK%\BIN\link65.exe  -d %OSDK%\lib/ -o %OSDK%\TMP\linked.s  -f -q  %OSDK%\TMP\main glOric.s atan2.s div.s root.s square.s norm.s print.s line.s
+%OSDK%\BIN\link65.exe  -d %OSDK%\lib/ -o %OSDK%\TMP\linked.s  -f -q  %OSDK%\TMP\main glOric.s atan2.s div.s root.s square.s norm.s print.s line.s kernel.s
 %OSDK%\BIN\xa.exe -W -C %OSDK%\TMP\linked.s -o build\final.out -e build\xaerr.txt -l build\symbols -bt %OSDKADDR% -DASSEMBLER=XA -DOSDKNAME_HWADVANCED
 
 %OSDK%\BIN\header.exe  build\final.out build\%OSDKNAME%.tap %OSDKADDR%
