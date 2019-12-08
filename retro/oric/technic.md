@@ -3,7 +3,12 @@ Resources:
 [Oric Atmos sur hebdogiciel](http://www.hebdogiciel.free.fr/oric.htm)
 [Listings Oric Micro 7](http://abandonlistings.free.fr/micro7/)
 
+# Real ORIC
 
+## Connection
+https://www.youtube.com/watch?v=9HTE_Dg1W4w
+https://www.ebay.co.uk/itm/251137727260
+https://www.ebay.co.uk/itm/ORIC-1-ORIC-ATMOS-CASSETTE-TAPE-RECORDER-CABLE-LEADS/321775032876?hash=item4aeb495a2c:g:LQAAAOSwstxU~C-d
 
 # OSDK
 

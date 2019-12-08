@@ -148,13 +148,13 @@ void main()
 	initBuffers();
 
  // Camera Position
-	CamPosX = -3;
+	CamPosX = -5;
 	CamPosY = -5;
 	CamPosZ = 2;
 
  // Camera Orientation
-	CamRotZ = 0 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
-	CamRotX = 10;
+	CamRotZ = 24 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
+	CamRotX = 16;
 	
 	gameLoop();
     
