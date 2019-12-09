@@ -68,3 +68,4 @@ extern char Point1Y;
 extern char Point2X;
 extern char Point2Y;
 extern int PosPrint;
+extern char char2Display;

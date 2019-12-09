@@ -3,6 +3,7 @@
 
 .zero
 _PosPrint .dsb 2
+
 .text
 
 _PrintX .dsb 1
@@ -38,6 +39,7 @@ _Point1X .dsb 1
 _Point1Y .dsb 1
 _Point2X .dsb 1
 _Point2Y .dsb 1
+_char2Display .dsb 1
 
 dX .dsb 1
 dY .dsb 1
@@ -59,7 +61,7 @@ plotOrNot:
 	bpl plotdone
     sta _PrintY
     jsr _computePosPrint
-    lda #42
+    lda _char2Display ;#42
     ldy #00
     sta (_PosPrint),y
 plotdone:

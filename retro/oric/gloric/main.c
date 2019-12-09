@@ -18,7 +18,7 @@ char points3d[NB_MAX_POINTS*SIZEOF_3DPOINT];
 unsigned char nbPoints=0;
 
 #define NB_MAX_SEGMENTS 50
-#define SIZEOF_SEGMENT 2
+#define SIZEOF_SEGMENT 4
 char segments[NB_MAX_SEGMENTS*SIZEOF_SEGMENT];
 unsigned char nbSegments=0;
 
@@ -30,13 +30,14 @@ const char sentence[] = "MERCI RENE";
 void addData(const char *tPoint, unsigned char nPoint, const char *tSeg, unsigned char nSeg, char offsetPos){
 	unsigned char jj;
 	for (jj=0; jj < nPoint; jj++){
-		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 0] = tPoint[jj*SIZEOF_3DPOINT + 0] + offsetPos*8;
-		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 1] = tPoint[jj*SIZEOF_3DPOINT + 1];
-		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 2] = tPoint[jj*SIZEOF_3DPOINT + 2];
+		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 0] = tPoint[jj*SIZEOF_3DPOINT + 0] + offsetPos*8;  // X coord
+		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 1] = tPoint[jj*SIZEOF_3DPOINT + 1];                // Y coord
+		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 2] = tPoint[jj*SIZEOF_3DPOINT + 2];                // Z coord
 	}
 	for (jj=0; jj < nSeg; jj++){
-		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 0] = tSeg[jj*SIZEOF_SEGMENT + 0]+nbPoints;
-		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 1] = tSeg[jj*SIZEOF_SEGMENT + 1]+nbPoints;
+		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 0] = tSeg[jj*SIZEOF_SEGMENT + 0]+nbPoints; // Index Point 1 
+		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 1] = tSeg[jj*SIZEOF_SEGMENT + 1]+nbPoints; // Index Point 2
+		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 2] = tSeg[jj*SIZEOF_SEGMENT + 2]; // Character
 	}
 	nbPoints += nPoint; 
 	nbSegments += nSeg;
@@ -95,13 +96,16 @@ void drawSegments(){
 	unsigned char ii = 0;
 	unsigned char idxPt1, idxPt2;
 	for (ii = 0; ii< nbSegments; ii++){
-		idxPt1 = segments[ii*SIZEOF_SEGMENT + 0];
-		idxPt2 = segments[ii*SIZEOF_SEGMENT + 1];
-		
+
+		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
+		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
+		char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
+        
 		Point1X = points2d[idxPt1*SIZEOF_2DPOINT + 0];
 		Point1Y = points2d[idxPt1*SIZEOF_2DPOINT + 1];
 		Point2X = points2d[idxPt2*SIZEOF_2DPOINT + 0];
 		Point2Y = points2d[idxPt2*SIZEOF_2DPOINT + 1];
+         
 		drawLine ();
 	}
 }
@@ -109,7 +113,7 @@ void drawSegments(){
 void gameLoop() {
 
 	char key;
-	
+	key=get();
 	doProjection();
 
     while (1==1) {

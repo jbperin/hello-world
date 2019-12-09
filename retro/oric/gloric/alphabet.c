@@ -10,10 +10,10 @@ const char ptsM[]={
 	,4, 0, 1, 0 // P4
 };
 const char segM[]={
-	  0, 1
-	, 1, 2
-	, 2, 3
-	, 3, 4
+	  0, 1, 77, 0
+	, 1, 2, 77, 0
+	, 2, 3, 77, 0
+	, 3, 4, 77, 0
 };
 #define NB_POINTS_C		8
 #define NB_SEGMENTS_C	7
@@ -28,13 +28,13 @@ const char ptsC[]={
 	,4, 0, 6, 0 // P7	
 };
 const char segC[]={
-	  0, 1
-	, 1, 2
-	, 2, 3
-	, 3, 4
-	, 4, 5
-	, 5, 6
-	, 6, 7	
+	  0, 1, 67, 0
+	, 1, 2, 67, 0
+	, 2, 3, 67, 0
+	, 3, 4, 67, 0
+	, 4, 5, 67, 0
+	, 5, 6, 67, 0
+	, 6, 7, 67, 0
 };
 #define NB_POINTS_I		6
 #define NB_SEGMENTS_I 	3
@@ -48,9 +48,9 @@ const char ptsI[]={
 
 };
 const char segI[]={
-	  0, 1
-	, 2, 3
-	, 4, 5
+	  0, 1, 73, 0
+	, 2, 3, 73, 0
+	, 4, 5, 73, 0
 };
 #define NB_POINTS_R		9
 #define NB_SEGMENTS_R 	7
@@ -66,13 +66,13 @@ const char ptsR[]={
 	,4, 0, 1, 0 // P8
 };
 const char segR[]={
-	  0, 1
-	, 1, 2
-	, 2, 3
-	, 3, 4
-	, 4, 5
-	, 5, 6
-	, 7, 8	
+	  0, 1, 82, 0
+	, 1, 2, 82, 0
+	, 2, 3, 82, 0
+	, 3, 4, 82, 0
+	, 4, 5, 82, 0
+	, 5, 6, 82, 0
+	, 7, 8, 82, 0	
 };
 #define NB_POINTS_E		6
 #define NB_SEGMENTS_E 	4
@@ -85,10 +85,10 @@ const char ptsE[]={
 	,0, 0, 4, 0 // P5
 };
 const char segE[]={	  
-	  0, 1
-	, 0, 2
-	, 2, 3
-	, 5, 4
+	  0, 1, 69, 0
+	, 0, 2, 69, 0
+	, 2, 3, 69, 0
+	, 5, 4, 69, 0
 };
 #define NB_POINTS_N		4
 #define NB_SEGMENTS_N 	3
@@ -100,7 +100,7 @@ const char ptsN[]={
 	
 };
 const char segN[]={
-	  0, 1
-	, 1, 2
-	, 2, 3
+	  0, 1, 78, 0
+	, 1, 2, 78, 0
+	, 2, 3, 78, 0
 };
