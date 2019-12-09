@@ -1,6 +1,8 @@
 
 
 
+#include "config.h"
+#include "glOric.h"
 
 
 .text
@@ -15,7 +17,19 @@ _CamPosZ:		.dsb 2
 _CamRotZ:		.dsb 1			// -128 -> -127 unit : 2PI/(2^8 - 1)
 _CamRotX:		.dsb 1
 
-#include "config.h"
+
+//char points3d[NB_MAX_POINTS*SIZEOF_3DPOINT];
+//unsigned char nbPoints=0;
+_nbPoints       .dsb 1
+_points3d       .dsb NB_MAX_POINTS*SIZEOF_3DPOINT
+
+//char segments[NB_MAX_SEGMENTS*SIZEOF_SEGMENT];
+//unsigned char nbSegments=0;
+_nbSegments     .dsb 1
+_segments       .dsb NB_MAX_SEGMENTS*SIZEOF_SEGMENT
+
+//char points2d [NB_MAX_POINTS*SIZEOF_2DPOINT];
+_points2d       .dsb NB_MAX_POINTS*SIZEOF_2DPOINT
 
  // Point 3D Coordinates
 _PointX:		.dsb 2

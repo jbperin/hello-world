@@ -1,5 +1,8 @@
 #include "lib.h"
 
+#include "config.h"
+#include "glOric.h"
+
 #include "externs.c"
 #include "alphabet.c"
 
@@ -13,18 +16,15 @@ extern char CamRotZ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
 extern char CamRotX;
 
 
-#define NB_MAX_POINTS 100
-#define SIZEOF_3DPOINT 4
-char points3d[NB_MAX_POINTS*SIZEOF_3DPOINT];
-unsigned char nbPoints=0;
+ // GEOMETRY BUFFERS
+extern char points3d[];
+extern unsigned char nbPoints;
 
-#define NB_MAX_SEGMENTS 50
-#define SIZEOF_SEGMENT 4
-char segments[NB_MAX_SEGMENTS*SIZEOF_SEGMENT];
-unsigned char nbSegments=0;
+extern char segments[];
+extern unsigned char nbSegments;
 
-#define SIZEOF_2DPOINT 2
-char points2d [NB_MAX_POINTS*SIZEOF_2DPOINT];
+extern char points2d[];
+
 
 const char sentence[] = "MERCI RENE";
 
