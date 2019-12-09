@@ -50,7 +50,7 @@ plotOrNot:
     lda _Point1X
 	bmi plotdone
 	beq plotdone
-	cmp SCREEN_WIDTH
+	cmp #SCREEN_WIDTH
 	bpl plotdone
     sta _PrintX
     lda _Point1Y
@@ -69,6 +69,8 @@ plotdone:
 
 _drawLine:
 .(
+	// save context
+    pha:txa:pha:tya:pha
 
 
     ;lda _Point1X
@@ -221,6 +223,10 @@ e2overdx:
 //  end while
 ;endloop:
 endloop:
+
+	// restore context
+	pla:tay:pla:tax:pla
+
 .)
     rts
 

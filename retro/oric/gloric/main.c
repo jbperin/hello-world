@@ -80,7 +80,7 @@ tx=-1; ty=-1; res=0; atan2_8();if (res!=-96) printf("ERR atan(%d, %d)= %d\n",tx,
 //#include "output.txt"                 
              
 }
-
+/*
 void doProjection(){
 	unsigned char ii = 0;
 	for (ii = 0; ii< nbPoints; ii++){
@@ -92,7 +92,8 @@ void doProjection(){
 		points2d[ii*SIZEOF_2DPOINT + 1] = ResY;
 	}
 }
-
+*/
+/*
 void drawSegments(){
 	unsigned char ii = 0;
 	unsigned char idxPt1, idxPt2;
@@ -110,7 +111,7 @@ void drawSegments(){
 		drawLine ();
 	}
 }
-
+*/
 void gameLoop() {
 
 	char key;
@@ -118,7 +119,7 @@ void gameLoop() {
 	doProjection();
 
     while (1==1) {
-		cls();
+		cls(); //clearScreen();
 		drawSegments();
 		key=get();
 		switch (key)	// key
@@ -149,7 +150,7 @@ void main()
     int i, j;
     //cls();
 	text();
-    kernelInit();
+    //kernelInit();
 	initBuffers();
 
  // Camera Position
@@ -160,8 +161,24 @@ void main()
  // Camera Orientation
 	CamRotZ = 24 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
 	CamRotX = 16;
-	
-	gameLoop();
+	get ();
+    clearScreen();
+
+    for (i=0;i<80;i++,CamPosX++) {
+        
+        doProjection();             // 25  s
+        cls (); // clearScreen();   //  1.51 s
+		drawSegments();             // 11.5 s
+   }
+    
+    for (i=0;i<80;i++,CamPosX--) {
+        
+        //cls();
+        doProjection();
+        cls() ; //clearScreen();
+		drawSegments();
+   }
+ 	//gameLoop();
     
 	
 	

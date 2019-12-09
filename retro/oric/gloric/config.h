@@ -5,8 +5,8 @@
  *  SCREEN DIMENSION
  */
 
-#define SCREEN_WIDTH #40
-#define SCREEN_HEIGHT #26
+#define SCREEN_WIDTH 40
+#define SCREEN_HEIGHT 26
 
 
 /*
@@ -16,5 +16,10 @@
 #define NB_MAX_POINTS 100
 #define NB_MAX_SEGMENTS 50
 
+/*
+ *  SCREEN BUFFER
+ */
+#define ADR_BASE_SCREEN 48041//BB80
 
+ 
 #endif
