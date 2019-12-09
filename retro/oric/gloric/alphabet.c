@@ -10,10 +10,10 @@ const char ptsM[]={
 	,4, 0, 1, 0 // P4
 };
 const char segM[]={
-	  0, 1, 77, 0
-	, 1, 2, 77, 0
-	, 2, 3, 77, 0
-	, 3, 4, 77, 0
+	  0, 1, 124, 0
+	, 1, 2, 92, 0
+	, 2, 3, 47, 0
+	, 3, 4, 124, 0
 };
 #define NB_POINTS_C		8
 #define NB_SEGMENTS_C	7

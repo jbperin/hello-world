@@ -1,5 +1,4 @@
-#define SCREEN_WIDTH #40
-#define SCREEN_HEIGHT #26
+#include "config.h"
 
 .zero
 _PosPrint .dsb 2

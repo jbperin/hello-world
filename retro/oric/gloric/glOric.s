@@ -15,15 +15,14 @@ _CamPosZ:		.dsb 2
 _CamRotZ:		.dsb 1			// -128 -> -127 unit : 2PI/(2^8 - 1)
 _CamRotX:		.dsb 1
 
+#include "config.h"
+
  // Point 3D Coordinates
 _PointX:		.dsb 2
 _PointY:		.dsb 2
 _PointZ:		.dsb 2
 
 
- // Screen Dimension
-#define ScreenWidth     #40
-#define ScreenHeight    #26
 
 
  // Point 2D Projected Coordinates
@@ -126,7 +125,7 @@ _project:
 	cmp #$80
 	ror
 	clc
-    adc ScreenWidth/2
+    adc SCREEN_WIDTH/2
 	sta _ResX
 	
 	lda AnglePV
@@ -136,7 +135,7 @@ _project:
 	cmp #$80
 	ror
 	clc
-    adc ScreenHeight/2
+    adc SCREEN_HEIGHT/2
 	sta _ResY
 
     
