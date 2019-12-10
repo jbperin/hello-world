@@ -142,7 +142,23 @@ void gameLoop() {
 		doProjection();
 	}
 }
+void intro (){
+    int i;
+    for (i=0;i<80;i++,CamPosX++) {
+        
+        doProjection();             // 25  s => 20s
+        cls (); // clearScreen();   //  1.51 s => 23s (3s)
+		drawSegments();             // 11.5 s  => 34s (11s)
+   }
+    
+    for (i=0;i<80;i++,CamPosX--) {
 
+        doProjection();
+        cls() ; 
+		drawSegments();
+   }
+
+}
 void main()
 {
 
@@ -163,25 +179,16 @@ void main()
 	CamRotX = 16;
 	get ();
     clearScreen();
-
-    for (i=0;i<80;i++,CamPosX++) {
-        
-        doProjection();             // 25  s
-        cls (); // clearScreen();   //  1.51 s
-		drawSegments();             // 11.5 s
-   }
     
-    for (i=0;i<80;i++,CamPosX--) {
-        
-        //cls();
-        doProjection();
-        cls() ; //clearScreen();
-		drawSegments();
-   }
+    intro ();
+   
  	//gameLoop();
     
 	
-	
+    // TEST OF FAST ATAN2
+	/*
+	tx=-16; ty=-1; res=0; fastatan2(); printf("ERR atan(%d, %d)= %d\n",tx,ty,res);
+*/
     // TEST OF DRAWLINE
     /*
 	get();

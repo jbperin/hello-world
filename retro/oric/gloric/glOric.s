@@ -170,7 +170,7 @@ _project:
     sta _ty
     lda _DeltaX
     sta _tx
-    jsr _atan2_8
+    jsr _fastatan2 ; _atan2_8
     lda _res
     sta _AngleH
 
@@ -191,7 +191,7 @@ _project:
     sta _ty
     lda _Norm
     sta _tx
-    jsr _atan2_8
+    jsr _fastatan2 ; _atan2_8
     lda _res
     sta _AngleV
 
