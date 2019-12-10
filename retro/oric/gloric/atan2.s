@@ -23,7 +23,7 @@ _tx .dsb 1
 _ty .dsb 1
 _res .dsb 1
 
-.dsb 256-(*&255)
+
 
 _atan2_8
 .(

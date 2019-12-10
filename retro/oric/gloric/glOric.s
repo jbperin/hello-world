@@ -21,14 +21,17 @@ _CamRotX:		.dsb 1
 //char points3d[NB_MAX_POINTS*SIZEOF_3DPOINT];
 //unsigned char nbPoints=0;
 _nbPoints       .dsb 1
+.dsb 256-(*&255)
 _points3d       .dsb NB_MAX_POINTS*SIZEOF_3DPOINT
 
 //char segments[NB_MAX_SEGMENTS*SIZEOF_SEGMENT];
 //unsigned char nbSegments=0;
 _nbSegments     .dsb 1
+.dsb 256-(*&255)
 _segments       .dsb NB_MAX_SEGMENTS*SIZEOF_SEGMENT
 
 //char points2d [NB_MAX_POINTS*SIZEOF_2DPOINT];
+.dsb 256-(*&255)
 _points2d       .dsb NB_MAX_POINTS*SIZEOF_2DPOINT
 
 .zero
