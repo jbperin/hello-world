@@ -10,7 +10,7 @@
 
 .zero
 
-; Used by atan2 
+; Used by atan2
 
 FC .byt 00    			;
 FD .byt 00    			;
@@ -854,6 +854,7 @@ atan_table:
 
 .text
 
+;https://codebase64.org/doku.php?id=base:8bit_atan2_8-bit_angle
 _fastatan2:
 .(
 
@@ -865,7 +866,7 @@ _fastatan2:
 Xpositiv:
     tax
     rol octant
- 
+
     lda _ty
     clc
     bpl Ypositiv
@@ -881,7 +882,7 @@ Ypositiv:
     bcc *+4
     eor #$ff
     tax
-    
+
     lda octant
     rol
     and #$07
@@ -892,8 +893,8 @@ Ypositiv:
     sta _res
 .)
     rts
-    
-    
+
+
 octant_adjust	.byt %00111111		;; x+,y+,|x|>|y|
 		.byt %00000000		;; x+,y+,|x|<|y|
 		.byt %11000000		;; x+,y-,|x|>|y|
@@ -974,7 +975,3 @@ log2_tab	.byt $00,$00,$20,$32,$40,$4a,$52,$59
 		.byt $fb,$fb,$fb,$fc,$fc,$fc,$fc,$fc
 		.byt $fd,$fd,$fd,$fd,$fd,$fd,$fe,$fe
 		.byt $fe,$fe,$fe,$ff,$ff,$ff,$ff,$ff
-
-    
-    
-

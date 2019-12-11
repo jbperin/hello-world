@@ -1,4 +1,4 @@
-
+.zero
 NUM:
 _square    .byt 0,0,0     ; input number
 storage   .byt 0,0,0     ; temporary data
@@ -6,6 +6,8 @@ ROOT:
 _thesqrt      .byt 0,0       ; result
 REM:
 remainder .byt 0,0       ; result remainder
+
+.text
 
 ;http://6502org.wikidot.com/software-math-sqrt
 

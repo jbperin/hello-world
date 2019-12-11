@@ -13,7 +13,7 @@
  *  BUFFERS DIMENSION
  */
 
-#define NB_MAX_POINTS 100
+#define NB_MAX_POINTS 64
 #define NB_MAX_SEGMENTS 50
 
 /*

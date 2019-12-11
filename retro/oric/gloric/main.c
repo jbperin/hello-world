@@ -130,7 +130,6 @@ void gameLoop() {
 		case 9:	// droite => tourne droite
 			CamRotZ -= 4;
 			break;
-
 		case 10: // bas => recule
 			CamPosX--;
 			break;
