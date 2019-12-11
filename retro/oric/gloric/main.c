@@ -144,20 +144,21 @@ void gameLoop() {
 }
 void intro (){
     int i;
+    enterSC();
     for (i=0;i<80;i++,CamPosX++) {
         
-        doProjection();             // 25  s => 20s
+        doFastProjection();             // 25  s => 20s         => 15s
         cls (); // clearScreen();   //  1.51 s => 23s (3s)
 		drawSegments();             // 11.5 s  => 34s (11s)
    }
     
     for (i=0;i<80;i++,CamPosX--) {
 
-        doProjection();
+        doFastProjection();
         cls() ; 
 		drawSegments();
    }
-
+    leaveSC();
 }
 void main()
 {

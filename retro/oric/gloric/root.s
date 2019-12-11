@@ -36,6 +36,163 @@ L2 ROL ROOT
 .)
   RTS
 
+_fastsqrt_16:
+.(
+   LDA #0
+   STA ROOT
+   STA REM
+   ;LDX #8
+   
+   ; X = 8
+       SEC
+       LDA NUM+1 ; NUMH
+       SBC #$40
+       TAY
+       LDA REM
+       SBC ROOT
+       BCC L21
+       STY NUM+1 ; NUMH
+       STA REM
+L21     ROL ROOT
+       ASL NUM
+       ROL NUM+1 ; NUMH
+       ROL REM
+       ASL NUM
+       ROL NUM+1 ; NUMH
+       ROL REM
+
+   ; X = 7
+       SEC
+       LDA NUM+1 ; NUMH
+       SBC #$40
+       TAY
+       LDA REM
+       SBC ROOT
+       BCC L22
+       STY NUM+1 ; NUMH
+       STA REM
+L22    ROL ROOT
+       ASL NUM
+       ROL NUM+1 ; NUMH
+       ROL REM
+       ASL NUM
+       ROL NUM+1 ; NUMH
+       ROL REM
+
+   ; X = 6
+       SEC
+       LDA NUM+1 ; NUMH
+       SBC #$40
+       TAY
+       LDA REM
+       SBC ROOT
+       BCC L23
+       STY NUM+1 ; NUMH
+       STA REM
+L23    ROL ROOT
+       ASL NUM
+       ROL NUM+1 ; NUMH
+       ROL REM
+       ASL NUM
+       ROL NUM+1 ; NUMH
+       ROL REM
+
+   ; X = 5
+       SEC
+       LDA NUM+1 ; NUMH
+       SBC #$40
+       TAY
+       LDA REM
+       SBC ROOT
+       BCC L24
+       STY NUM+1 ; NUMH
+       STA REM
+L24    ROL ROOT
+       ASL NUM
+       ROL NUM+1 ; NUMH
+       ROL REM
+       ASL NUM
+       ROL NUM+1 ; NUMH
+       ROL REM
+
+   ; X = 4
+       SEC
+       LDA NUM+1 ; NUMH
+       SBC #$40
+       TAY
+       LDA REM
+       SBC ROOT
+       BCC L25
+       STY NUM+1 ; NUMH
+       STA REM
+L25    ROL ROOT
+       ASL NUM
+       ROL NUM+1 ; NUMH
+       ROL REM
+       ASL NUM
+       ROL NUM+1 ; NUMH
+       ROL REM
+
+   ; X = 3
+       SEC
+       LDA NUM+1 ; NUMH
+       SBC #$40
+       TAY
+       LDA REM
+       SBC ROOT
+       BCC L26
+       STY NUM+1 ; NUMH
+       STA REM
+L26    ROL ROOT
+       ASL NUM
+       ROL NUM+1 ; NUMH
+       ROL REM
+       ASL NUM
+       ROL NUM+1 ; NUMH
+       ROL REM
+
+   ; X = 2
+       SEC
+       LDA NUM+1 ; NUMH
+       SBC #$40
+       TAY
+       LDA REM
+       SBC ROOT
+       BCC L27
+       STY NUM+1 ; NUMH
+       STA REM
+L27    ROL ROOT
+       ASL NUM
+       ROL NUM+1 ; NUMH
+       ROL REM
+       ASL NUM
+       ROL NUM+1 ; NUMH
+       ROL REM
+
+   ; X = 1
+       SEC
+       LDA NUM+1 ; NUMH
+       SBC #$40
+       TAY
+       LDA REM
+       SBC ROOT
+       BCC L28
+       STY NUM+1 ; NUMH
+       STA REM
+L28    ROL ROOT
+       ASL NUM
+       ROL NUM+1 ; NUMH
+       ROL REM
+       ASL NUM
+       ROL NUM+1 ; NUMH
+       ROL REM
+
+   ;DEX
+   ;BNE L1
+
+
+.)
+  RTS
 
 
 ;https://codebase64.org/doku.php?id=base:16bit_and_24bit_sqrt

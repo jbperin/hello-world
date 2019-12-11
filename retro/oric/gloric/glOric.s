@@ -111,6 +111,81 @@ doprojdone:
     rts
 
 
+//  void doProjection(){
+_doFastProjection:
+.(
+//  	unsigned char ii = 0;
+//  	for (ii = nbPoints-1; ii< 0; ii--){
+    ;; TODO : move this in an init function to save instruction
+    lda #>_points3d
+    sta ptrpt3H
+    lda #<_points3d  ;; TODO : use 0 instead if table is aligned on page
+    sta ptrpt3L
+    lda #<_points2d
+    sta ptrpt2L
+    lda #>_points2d
+    sta ptrpt2H
+
+    ldx _nbPoints
+    dex
+    txa ; ii = nbPoints - 1
+    asl
+    asl ; ii * SIZEOF_3DPOINT (4)
+    clc
+    adc #$03
+    tay
+    
+    ldx _nbPoints
+    dex
+    txa ; ii = nbPoints - 1
+    asl ; ii * SIZEOF_2DPOINT (2)
+    clc
+    adc #$01
+    tax
+    
+doprojloop:
+//          Status = points3d[ii*SIZEOF_3DPOINT + 3]
+        dey
+//  		PointZ = points3d[ii*SIZEOF_3DPOINT + 2];
+        lda (ptrpt3),y
+        sta _PointZ
+        dey
+//  		PointY = points3d[ii*SIZEOF_3DPOINT + 1];
+        lda (ptrpt3),y
+        sta _PointY
+        dey
+//  		PointX = points3d[ii*SIZEOF_3DPOINT + 0];
+        lda (ptrpt3),y
+        sta _PointX
+        dey
+
+//  		project();
+        jsr _project
+        
+//  		points2d[ii*SIZEOF_2DPOINT + 1] = ResY;
+        tya
+        pha
+        txa
+        tay
+        lda _ResY
+        sta (ptrpt2), y
+//  		points2d[ii*SIZEOF_2DPOINT + 0] = ResX;
+        dey
+        lda _ResX
+        sta (ptrpt2), y
+        tya
+        tax
+        pla
+        tay
+//  	}
+    dex
+    bpl doprojloop   ;; FIXME : does not allows more than 127 points
+doprojdone:
+//  }
+.)
+    rts
+
+
  // Point 3D Coordinates
 _PointX:		.dsb 2
 _PointY:		.dsb 2
@@ -178,7 +253,7 @@ _project:
     sta _AngleH
 
     // Norm = norm (DeltaX, DeltaY)
-    jsr norm
+    jsr fastnorm
 
    	// DeltaZ = CamPosZ - PointZ
 	sec

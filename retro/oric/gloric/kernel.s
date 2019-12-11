@@ -22,6 +22,26 @@ jmp_old_handler
 
 
 
+_enterSC:
+.(
+    pha
+    lda #64
+    sta $030E
+    pla
+.)
+    rts
+    
+_leaveSC:
+.(
+    pha
+    lda #192
+    sta $030E
+    pla
+.)
+    rts
+    
+    
+    
 _kernelInit:
 .(
 	; Save the old handler value
