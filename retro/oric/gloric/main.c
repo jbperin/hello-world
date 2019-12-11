@@ -112,6 +112,93 @@ void drawSegments(){
 	}
 }
 */
+
+void forward() {
+	if (-112 >= CamRotZ) {
+		CamPosX--; 
+	} else if ((-112 < CamRotZ) && (-80 >= CamRotZ)){
+		CamPosX--; CamPosY--;
+	} else if (( -80 < CamRotZ) && (-48 >= CamRotZ)){
+		CamPosY--;
+	} else if (( -48 < CamRotZ) && (-16 >= CamRotZ)){
+		CamPosX++; CamPosY--;
+	} else if (( -16 < CamRotZ) && ( 16 >= CamRotZ)){		
+		CamPosX++; 
+	} else if ((  16 < CamRotZ) && ( 48 >= CamRotZ)){
+		CamPosX++; CamPosY++;
+	} else if ((  48 < CamRotZ) && ( 80 >= CamRotZ)){
+		CamPosY++;
+	} else if ((  80 < CamRotZ) && (112 >= CamRotZ)){
+		CamPosX--; CamPosY++;
+	} else {
+		CamPosX--;
+	}
+}
+void backward() {
+	if (-112 >= CamRotZ) {
+		CamPosX++; 
+	} else if ((-112 < CamRotZ) && (-80 >= CamRotZ)){
+		CamPosX++; CamPosY++;
+	} else if (( -80 < CamRotZ) && (-48 >= CamRotZ)){
+		CamPosY++;
+	} else if (( -48 < CamRotZ) && (-16 >= CamRotZ)){
+		CamPosX--; CamPosY++;
+	} else if (( -16 < CamRotZ) && ( 16 >= CamRotZ)){		
+		CamPosX--; 
+	} else if ((  16 < CamRotZ) && ( 48 >= CamRotZ)){
+		CamPosX--; CamPosY--;
+	} else if ((  48 < CamRotZ) && ( 80 >= CamRotZ)){
+		CamPosY--;
+	} else if ((  80 < CamRotZ) && (112 >= CamRotZ)){
+		CamPosX++; CamPosY--;
+	} else {
+		CamPosX++; 
+	}
+	
+}
+void shiftLeft() {
+	if (-112 >= CamRotZ) {
+		CamPosY--; 
+	} else if ((-112 < CamRotZ) && (-80 >= CamRotZ)){
+		CamPosX++; CamPosY--;
+	} else if (( -80 < CamRotZ) && (-48 >= CamRotZ)){
+		CamPosX--;
+	} else if (( -48 < CamRotZ) && (-16 >= CamRotZ)){
+		CamPosX++; CamPosY++;
+	} else if (( -16 < CamRotZ) && ( 16 >= CamRotZ)){		
+		CamPosY++; 
+	} else if ((  16 < CamRotZ) && ( 48 >= CamRotZ)){
+		CamPosX--; CamPosY++;
+	} else if ((  48 < CamRotZ) && ( 80 >= CamRotZ)){
+		CamPosX--;
+	} else if ((  80 < CamRotZ) && (112 >= CamRotZ)){
+		CamPosX--; CamPosY--;
+	} else {
+		CamPosY--;
+	}
+}
+void shiftRight() {
+	if (-112 >= CamRotZ) {
+		CamPosY++; 
+	} else if ((-112 < CamRotZ) && (-80 >= CamRotZ)){
+		CamPosX--; CamPosY++;
+	} else if (( -80 < CamRotZ) && (-48 >= CamRotZ)){
+		CamPosX++;
+	} else if (( -48 < CamRotZ) && (-16 >= CamRotZ)){
+		CamPosX--; CamPosY--;
+	} else if (( -16 < CamRotZ) && ( 16 >= CamRotZ)){		
+		CamPosY--; 
+	} else if ((  16 < CamRotZ) && ( 48 >= CamRotZ)){
+		CamPosX++; CamPosY--;
+	} else if ((  48 < CamRotZ) && ( 80 >= CamRotZ)){
+		CamPosX++;
+	} else if ((  80 < CamRotZ) && (112 >= CamRotZ)){
+		CamPosX++; CamPosY++;
+	} else {
+		CamPosX++; 
+	}
+	
+}
 void gameLoop() {
 
 	char key;
@@ -131,11 +218,17 @@ void gameLoop() {
 			CamRotZ -= 4;
 			break;
 		case 10: // bas => recule
-			CamPosX--;
+			backward();
 			break;
 
 		case 11: // haut => avance
-			CamPosX++;
+			forward();
+			break;
+		case 90: // Z
+			shiftLeft();
+			break;
+		case 88: // X
+			shiftRight();
 			break;
 		}
 		doProjection();
@@ -151,12 +244,16 @@ void intro (){
 		drawSegments();             // 11.5 s  => 34s (11s)
    }
     
-    for (i=0;i<80;i++,CamPosX--) {
+    for (i=0;i<40;i++,CamPosX=(i%4==0)?CamPosX-1:CamPosX, CamRotX=(i%4==0)?CamRotX-1:CamRotX , CamPosY=(i%4==0)?CamPosY-1:CamPosY,  CamRotZ++) {
 
         doFastProjection();
         cls() ; 
 		drawSegments();
    }
+   forward ();
+        doFastProjection();
+        cls() ; 
+		drawSegments();
     leaveSC();
 }
 void main()
@@ -182,7 +279,7 @@ void main()
     
     intro ();
    
- 	//gameLoop();
+ 	gameLoop();
     
 	
     // TEST OF FAST ATAN2
