@@ -27,7 +27,7 @@ extern char points2d[];
 
 
 const char sentence[] = "MERCI RENE";
-
+;
 void addData(const char *tPoint, unsigned char nPoint, const char *tSeg, unsigned char nSeg, char offsetPos){
 	unsigned char jj;
 	for (jj=0; jj < nPoint; jj++){
@@ -206,8 +206,10 @@ void gameLoop() {
 	doProjection();
 
     while (1==1) {
-		cls(); //clearScreen();
+		cls(); gotoxy(26, 40);//clearScreen();
 		drawSegments();
+		dispInfo();
+
 		key=get();
 		switch (key)	// key
 		{
@@ -224,6 +226,18 @@ void gameLoop() {
 		case 11: // haut => avance
 			forward();
 			break;
+		case 80: // P
+			CamPosZ += 1;
+			break;
+		case 59: // ;
+			CamPosZ -= 1;
+			break;
+		case 81: // Q
+			CamRotX += 2;
+			break;
+		case 65: // A
+			CamRotX -= 2;
+			break;
 		case 90: // Z
 			shiftLeft();
 			break;
@@ -234,28 +248,91 @@ void gameLoop() {
 		doProjection();
 	}
 }
+
+char status_string[50];
+void dispInfo(){
+		sprintf(status_string,"(x=%d y=%d z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+		AdvancedPrint(2,1,status_string);
+
+}
+
 void intro (){
     int i;
+	
     enterSC();
-    for (i=0;i<80;i++,CamPosX++) {
+
+
+	CamPosX = -15;
+	CamPosY = -85;
+	CamPosZ = 2;
+
+ 	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
+	CamRotX = -4;
+
+    for (i=0;i<40;i++,
+			CamPosX=(i%4==0)?CamPosX+1:CamPosX, 
+			CamPosY+=2,
+			CamRotZ-=1,
+			CamRotX=(i%2==0)?CamRotX+1:CamRotX
+		) {
+
+        doFastProjection();
+        cls() ; //gotoxy(26, 40);
+		drawSegments();
+ 		//dispInfo();
+    }
+	
+	CamPosX = -5;
+	CamPosY = -5;
+	CamPosZ = 2;
+	CamRotZ = 24 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
+	CamRotX = 16;
+	
+    for (i=0;i<72;i++,CamPosX++) {
         
         doFastProjection();             // 25  s => 20s         => 15s
-        cls (); // clearScreen();   //  1.51 s => 23s (3s)
+        cls (); // gotoxy(26, 40);// clearScreen();   //  1.51 s => 23s (3s)
 		drawSegments();             // 11.5 s  => 34s (11s)
-   }
+		//dispInfo();
+    }
     
     for (i=0;i<40;i++,CamPosX=(i%4==0)?CamPosX-1:CamPosX, CamRotX=(i%4==0)?CamRotX-1:CamRotX , CamPosY=(i%4==0)?CamPosY-1:CamPosY,  CamRotZ++) {
 
         doFastProjection();
-        cls() ; 
+        cls() ; //gotoxy(26, 40);
 		drawSegments();
-   }
-   forward ();
+ 		//dispInfo();
+    }
+    forward ();
+	doFastProjection();
+	cls() ; //gotoxy(26, 40);
+	drawSegments();
+	// dispInfo();
+
+
+    for (i=0;i<25;i++, CamPosX-=2) {
+		
         doFastProjection();
-        cls() ; 
+        cls() ; //gotoxy(26, 40);
 		drawSegments();
+ 		//dispInfo();
+    }
+	CamRotZ-=1;
+    for (i=0;i<11;i++, CamPosY-=2, CamRotZ-=3) {
+		
+        doFastProjection();
+        cls() ; //gotoxy(26, 40);
+		drawSegments();
+ 		// dispInfo();
+    }
+	CamRotZ-=3;
+	doFastProjection();
+	cls() ; // gotoxy(26, 40);
+	drawSegments();
+	//dispInfo();
     leaveSC();
 }
+
 void main()
 {
 
@@ -265,18 +342,24 @@ void main()
 	text();
     //kernelInit();
 	initBuffers();
-
+	
  // Camera Position
-	CamPosX = -5;
-	CamPosY = -5;
+	CamPosX = -14;
+	CamPosY = -87;
 	CamPosZ = 2;
 
  // Camera Orientation
-	CamRotZ = 24 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
-	CamRotX = 16;
-	get ();
+	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
+	CamRotX = 0;
+	
+	//get ();
+	
     clearScreen();
-    
+    //curset(36, 40, 0);
+	gotoxy(26, 40);
+	
+	
+
     intro ();
    
  	gameLoop();
