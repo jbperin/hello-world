@@ -180,7 +180,7 @@ doprojloop:
 //  	}
     dex
     bpl doprojloop   ;; FIXME : does not allows more than 127 points
-doprojdone:
+dofastprojdone:
 //  }
 .)
     rts
