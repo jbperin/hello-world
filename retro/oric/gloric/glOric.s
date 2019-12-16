@@ -168,7 +168,13 @@ dofastprojloop:
         pha
         txa
         tay
-        dey ; jump over 2 bytes of distance
+        
+        lda _Norm+1
+        sta (ptrpt2), y
+        dey 
+
+        lda _Norm
+        sta (ptrpt2), y
         dey
 
         lda _ResY
@@ -177,6 +183,7 @@ dofastprojloop:
         dey
         lda _ResX
         sta (ptrpt2), y
+
         tya
         tax
         pla
@@ -212,7 +219,7 @@ _DeltaZ:		.dsb 2
 _DeltaXSquare:	.dsb 4
 _DeltaYSquare:	.dsb 4
 
-_Norm:          .dsb 1
+_Norm:          .dsb 2
 _AngleH:        .dsb 1
 _AngleV:        .dsb 1
 
@@ -259,7 +266,7 @@ _project:
     sta _AngleH
 
     // Norm = norm (DeltaX, DeltaY)
-    jsr ultrafastnorm ;fastnorm
+    jsr ultrafastnorm ; fastnorm; 
 
    	// DeltaZ = CamPosZ - PointZ
 	sec

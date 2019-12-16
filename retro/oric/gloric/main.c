@@ -219,7 +219,7 @@ void gameLoop() {
 
 	char key;
 	key=get();
-	doProjection();
+	doFastProjection();
 
     while (1==1) {
 		cls(); gotoxy(26, 40);//clearScreen();
@@ -261,7 +261,7 @@ void gameLoop() {
 			shiftRight();
 			break;
 		}
-		doProjection();
+		doFastProjection();
 	}
 }
 
