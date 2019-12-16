@@ -21,5 +21,5 @@
  */
 #define ADR_BASE_SCREEN 48041//BB80
 
- 
+#define TEXTMODE 
 #endif

@@ -138,12 +138,13 @@ _doFastProjection:
     ldx _nbPoints
     dex
     txa ; ii = nbPoints - 1
-    asl ; ii * SIZEOF_2DPOINT (2)
+    asl
+    asl ; ii * SIZEOF_2DPOINT (4)
     clc
-    adc #$01
+    adc #$03
     tax
     
-doprojloop:
+dofastprojloop:
 //          Status = points3d[ii*SIZEOF_3DPOINT + 3]
         dey
 //  		PointZ = points3d[ii*SIZEOF_3DPOINT + 2];
@@ -167,6 +168,9 @@ doprojloop:
         pha
         txa
         tay
+        dey ; jump over 2 bytes of distance
+        dey
+
         lda _ResY
         sta (ptrpt2), y
 //  		points2d[ii*SIZEOF_2DPOINT + 0] = ResX;
@@ -179,7 +183,9 @@ doprojloop:
         tay
 //  	}
     dex
-    bpl doprojloop   ;; FIXME : does not allows more than 127 points
+    txa
+    cmp #$FF
+    bne dofastprojloop   ;; FIXME : does not allows more than 127 points
 dofastprojdone:
 //  }
 .)
@@ -413,6 +419,7 @@ drwloop:
 //  		Point1X = points2d[idxPt1*SIZEOF_2DPOINT + 0];
         lda idxPt1  ; 
         asl         ; idxPt1 * SIZEOF_2DPOINT
+        asl
         sta ptrpt2L
         lda #<_points2d
         clc
@@ -433,7 +440,8 @@ drwloop:
        
 //  		Point2X = points2d[idxPt2*SIZEOF_2DPOINT + 0];
         lda idxPt2  ; 
-        asl         ; idxPt1 * SIZEOF_2DPOINT
+        asl         ; idxPt2 * SIZEOF_2DPOINT
+        asl
         sta ptrpt2L
         lda #<_points2d
         clc
@@ -456,7 +464,9 @@ drwloop:
         jsr _drawLine
 //  	}
     dex
-    bpl drwloop
+    txa
+    cmp #$FF
+    bne drwloop
 drwsgdone
 //  }
 	// restore context
@@ -514,6 +524,7 @@ drwloop:
 //  		Point1X = points2d[idxPt1*SIZEOF_2DPOINT + 0];
         lda idxPt1  ; 
         asl         ; idxPt1 * SIZEOF_2DPOINT
+        asl
         sta ptrpt2L
         lda #<_points2d
         clc
@@ -535,6 +546,7 @@ drwloop:
 //  		Point2X = points2d[idxPt2*SIZEOF_2DPOINT + 0];
         lda idxPt2  ; 
         asl         ; idxPt1 * SIZEOF_2DPOINT
+        asl
         sta ptrpt2L
         lda #<_points2d
         clc

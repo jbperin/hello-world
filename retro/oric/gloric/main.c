@@ -278,6 +278,11 @@ void intro (){
 
  	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
 	CamRotX = -4;
+    
+    
+    doFastProjection();
+    cls() ; //gotoxy(26, 40);
+    drawSegments();
 
     for (i=0;i<40;i++,
 			CamPosX=(i%4==0)?CamPosX+1:CamPosX, 
@@ -365,7 +370,7 @@ void textDemo(){
 	gotoxy(26, 40);
 	
 	
-
+    get ();
     intro ();
    
  	gameLoop();
@@ -472,11 +477,11 @@ void main()
 	char * adrN, *adrSquare;
     int i, j;
 
-	//textDemo();
+	textDemo();
 	//hiresDemo();
 
-	i=12;
-	j= proto(i, tab1, tab2);
+	//i=12;
+	//j= proto(i, tab1, tab2);
 	
 	
 	
