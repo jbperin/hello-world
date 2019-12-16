@@ -476,10 +476,11 @@ void main()
 
 	char * adrN, *adrSquare;
     int i, j;
-
+#ifdef TEXTMODE
 	textDemo();
-	//hiresDemo();
-
+#else
+	hiresDemo();
+#endif
 	//i=12;
 	//j= proto(i, tab1, tab2);
 	
