@@ -49,7 +49,7 @@ Subject: %s
 
 # Create a secure SSL context
 context = ssl.create_default_context()
-port = 485
+port = 587
 smtp_server = "smtp.gmail.com"
 
 with smtplib.SMTP_SSL(smtp_server, port, context=context) as server: #
