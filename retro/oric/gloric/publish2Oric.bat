@@ -33,3 +33,5 @@ COPY square.s %DSTDIR%\src\math
 COPY buffer.s %DSTDIR%\src\raster
 COPY display.s %DSTDIR%\src\raster
 COPY line8.s %DSTDIR%\src\raster
+
+COPY ..\..\algos.md %DSTDIR%\docs\
