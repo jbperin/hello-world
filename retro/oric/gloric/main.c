@@ -341,7 +341,7 @@ void txtIntro (){
 void txtGameLoop() {
 
 	char key;
-	key=get();
+	//key=get();
 	doFastProjection();
 
     while (1==1) {
@@ -389,6 +389,7 @@ void txtGameLoop() {
 
 
 void textDemo(){
+	
 	text();
     //kernelInit();
 	initBuffers();
@@ -402,14 +403,10 @@ void textDemo(){
 	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
 	CamRotX = 0;
 
-	//get ();
-
     clearScreen();
-    //curset(36, 40, 0);
 	gotoxy(26, 40);
 
 
-    get ();
     txtIntro ();
 
  	txtGameLoop();
@@ -465,6 +462,16 @@ void hiresGameLoop() {
 			if (i == 0) i=192-3;
 			i = (i-3);
 			break;
+		case 80: // P
+			if (CamPosZ < 5) {
+				CamPosZ += 1;
+			}
+			break;
+		case 59: // ;
+			if (CamPosZ > 0) {
+				CamPosZ -= 1;
+			}
+			break;
 		}
 		CamPosX = traj[i+0];
 		CamPosY = traj[i+1];
@@ -482,40 +489,142 @@ void hiresGameLoop() {
 
 void hiresDemo(){
 	GenerateTables();
-	nbPoints =0 ;
 
     hires(); 
 
-
+	nbPoints =0 ;
 	nbSegments =0 ;
 	addCube(-4, -4, 2);
 	addCube(4, 4, 10);
-//	for (jj=0; jj < NB_POINTS_CUBE; jj++){
-//		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 0] = ptsCube[jj*SIZEOF_3DPOINT + 0] + X;  				// X coord
-//		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 1] = ptsCube[jj*SIZEOF_3DPOINT + 1] + Y;                // Y coord
-//		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 2] = ptsCube[jj*SIZEOF_3DPOINT + 2] + Z;                // Z coord
-//	}
-//	for (jj=0; jj < NB_SEGMENTS_CUBE; jj++){
-//		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 0] = segCube[jj*SIZEOF_SEGMENT + 0]+nbPoints; // Index Point 1
-//		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 1] = segCube[jj*SIZEOF_SEGMENT + 1]+nbPoints; // Index Point 2
-//		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 2] = segCube[jj*SIZEOF_SEGMENT + 2]; // Character
-//	}
-//	nbPoints += NB_POINTS_CUBE;
-//	nbSegments += NB_SEGMENTS_CUBE;
-//}
-
-
+	
 	hiresIntro();
+	
+	nbPoints =0 ;
+	nbSegments =0 ;
+	addCube(0, 0, 2);
+	
+//	for (jj=0; jj < NB_POINTS_CUBE; jj++){
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = 0;  				// X coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = 6;                // Z coord
+	nbPoints ++;
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = -3;  				// X coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = 7;                // Z coord
+	nbPoints ++;
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = -1;  				// X coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = 9;                // Z coord
+	nbPoints ++;
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-3; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-2; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
+	nbSegments ++;
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-2; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-1; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
+	nbSegments ++;
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-1; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-3; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
+	nbSegments ++;
 
-	CamPosX = -20;
-	CamPosY = -20;
-	CamPosZ = 2;
-	CamRotZ = 32 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
-	CamRotX = 3;
-	shiftRight();
-	shiftRight();
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = 3;  				// X coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = 7;                // Z coord
+	nbPoints ++;
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = 1;  				// X coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = 9;                // Z coord
+	nbPoints ++;
+
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-5; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-2; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
+	nbSegments ++;
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-2; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-1; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
+	nbSegments ++;
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-1; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-5; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
+	nbSegments ++;
+
+
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = -4;  				// X coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = 6;                // Z coord
+	nbPoints ++;
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = 4;  				// X coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = 6;                // Z coord
+	nbPoints ++;
+
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = 4;  				// X coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = -2;                // Z coord
+	nbPoints ++;
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = -4;  				// X coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = -2;                // Z coord
+	nbPoints ++;
+
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-4; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-3; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
+	nbSegments ++;
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-3; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-2; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
+	nbSegments ++;
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-2; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-1; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
+	nbSegments ++;
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-1; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-4; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
+	nbSegments ++;
+
+
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = 0;  				// X coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = -4;                // Y coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = 6;                // Z coord
+	nbPoints ++;
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = 0;  				// X coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 4;                // Y coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = 6;                // Z coord
+	nbPoints ++;
+
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = 0;  				// X coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 4;                // Y coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = -2;                // Z coord
+	nbPoints ++;
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = 0;  				// X coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = -4;                // Y coord
+	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = -2;                // Z coord
+	nbPoints ++;
+
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-4; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-3; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
+	nbSegments ++;
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-3; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-2; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
+	nbSegments ++;
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-2; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-1; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
+	nbSegments ++;
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-1; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-4; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
+	nbSegments ++;
+	
+
 	doFastProjection();
-	//hires(); //memset de 8000 octets en a000 avec la valeur 64
 	memset ( 0xa000, 64, 8000);
 	hrDrawSegments();
 
@@ -528,19 +637,13 @@ int proto (unsigned char nbPoints, char *tabpoint3D, char *tabpoint2D){
 
 	return local_var;
 }
-char tab1[]={1, 2};
 
-char tab2[]={3, 4};
+// char tab1[]={1, 2};
+
+// char tab2[]={3, 4};
 
 void main()
 {
-
-	char * adrN, *adrSquare;
-    int i, j;
-	
-	get ();
-	
-	
 	
 #ifdef TEXTMODE
 	textDemo();
@@ -548,107 +651,7 @@ void main()
 	hiresDemo();
 #endif
 
-	i=12;
-	j= proto(i, tab1, tab2);
+	// i=12;
+	// j= proto(i, tab1, tab2);
 
-
-	//DeltaX = 3;	DeltaY = 4;	hyperfastnorm();
-	//if (Norm != 5) printf ("norm (%d, %d) = %d ",DeltaX, DeltaY, Norm);
-	//DeltaX = 4;	DeltaY = 4;	hyperfastnorm();
-	//if (Norm != 16) printf ("norm (%d, %d) = %d ",DeltaX, DeltaY, Norm);
-	
-
-    // TEST OF FAST ATAN2
-	/*
-	tx=-16; ty=-1; res=0; fastatan2(); printf("ERR atan(%d, %d)= %d\n",tx,ty,res);
-*/
-    // TEST OF DRAWLINE
-    /*
-	get();
-	Point1X = -10;
-    Point1Y = -10;
-    Point2X = 30;
-    Point2Y = 20;
-    drawLine ();
-    */
-    // TEST OF PROJECT
-
-	/* CamPosX = 0;
-	CamPosY = 0;
-	CamPosZ = 1;
-
-	CamRotZ = 0;
-	CamRotX = 0;
-
-	PointX = 4;
-	PointY = -2;
-	PointZ = 0;
-
-
-	printf("PointX %d - %d CamX\n", PointX, CamPosX);
-	printf("PointY %d - %d CamY\n", PointY, CamPosY);
-	printf("PointZ %d - %d CamZ\n", PointZ, CamPosZ);
-
-
-	project();
-	printf("DeltaX = %d, %d =DeltaY\n", DeltaX, DeltaY);
-	printf(" AngleH = %d, Norm = %d, AngleV =%d\n", AngleH, Norm, AngleV);
-	printf(" ResX = %d, ResY = %d\n", ResX, ResY);
-    */
-
-
- /*
-    // TEST OF SQUARE 8
-	Numberl = 0x04;
-	Numberh = 0x00;
-
-    Squarel = 0;
-    Squareh = 0;
-
-	Square8 ();
-	printf("square of  = %d is %d \n", Numberh *256  + Numberl, Squareh*256 +Squarel);
-
-    adrSquare = (char*)&square;
-
-    *(adrSquare+0) = Squarel;
-    *(adrSquare+1) = Squareh;
-    sqrt_16 ();
-
-	printf("root of  %d is %d \n", square, thesqrt);
-*/
-
-
-/*
-    // TEST OF SQUARE ROOT 24
-
-	square = 16;
-	sqrt24();
-	printf("square root of  = %d is %d \n", square, thesqrt);
-
-    // TEST OF SQUARE 16
-	Numberl = 4;
-	Numberh = 2;
-
-    Square1 = 0;
-    Square2 = 0;
-    Square3 = 0;
-    Square4 = 0;
-
-	Square16 ();
-	printf("square of  = %d is %d  %d %d %d\n", Numberh *256  + Numberl, Square1, Square2, Square3, Square4);
-
-
-    // TEST OF DIV 32 BY 16
-	adrN = &N;
-	*(adrN+0) = 4; // Divisor LO
-	*(adrN+1) = 0; // Divisor HI
-	*(adrN+2) = 1; // Dividend HIL ==> REMAINDER LO
-	*(adrN+3) = 0; // Divisor HIH ==> REMAINDER HI
-	*(adrN+4) = 0; // Divisor LOL ==> QUOTIENT LO
-	*(adrN+5) = 0; // Divisor LOH ==> QUOTIENT HI
-	printf("[%d, %d, %d, %d] divided by [%d,  %d]", *(adrN+3), *(adrN+2), *(adrN+5), *(adrN+4), *(adrN+1), *(adrN+0));
-	div32by16();
-	printf(" is [%d, %d] remaining [%d, %d]\n", *(adrN+5), *(adrN+4), *(adrN+3), *(adrN+2));
-
-    */
 }
