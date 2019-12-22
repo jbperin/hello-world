@@ -256,64 +256,7 @@ void hrDrawSegments(){
 		}
 	}
 }
-
-void gameLoop() {
-
-	char key;
-	key=get();
-	doFastProjection();
-
-    while (1==1) {
-#ifdef TEXTMODE
-		cls(); gotoxy(26, 40);//clearScreen();
-		drawSegments();
-		dispInfo();
-#else
-		hires(); // memset de 8000 octets en a000 avec la valeur 64
-		hrDrawSegments();
-#endif
-
-		key=get();
-		switch (key)	// key
-		{
-		case 8:	// gauche => tourne gauche
-			CamRotZ += 4;
-			break;
-		case 9:	// droite => tourne droite
-			CamRotZ -= 4;
-			break;
-		case 10: // bas => recule
-			backward();
-			break;
-
-		case 11: // haut => avance
-			forward();
-			break;
-		case 80: // P
-			CamPosZ += 1;
-			break;
-		case 59: // ;
-			CamPosZ -= 1;
-			break;
-		case 81: // Q
-			CamRotX += 2;
-			break;
-		case 65: // A
-			CamRotX -= 2;
-			break;
-		case 90: // Z
-			shiftLeft();
-			break;
-		case 88: // X
-			shiftRight();
-			break;
-		}
-		doFastProjection();
-	}
-}
-
-
-void intro (){
+void txtIntro (){
     int i;
 
     enterSC();
@@ -395,6 +338,55 @@ void intro (){
     leaveSC();
 }
 
+void txtGameLoop() {
+
+	char key;
+	key=get();
+	doFastProjection();
+
+    while (1==1) {
+		cls(); gotoxy(26, 40);//clearScreen();
+		drawSegments();
+		dispInfo();
+		key=get();
+		switch (key)	// key
+		{
+		case 8:	// gauche => tourne gauche
+			CamRotZ += 4;
+			break;
+		case 9:	// droite => tourne droite
+			CamRotZ -= 4;
+			break;
+		case 10: // bas => recule
+			backward();
+			break;
+
+		case 11: // haut => avance
+			forward();
+			break;
+		case 80: // P
+			CamPosZ += 1;
+			break;
+		case 59: // ;
+			CamPosZ -= 1;
+			break;
+		case 81: // Q
+			CamRotX += 2;
+			break;
+		case 65: // A
+			CamRotX -= 2;
+			break;
+		case 90: // Z
+			shiftLeft();
+			break;
+		case 88: // X
+			shiftRight();
+			break;
+		}
+		doFastProjection();
+	}
+}
+
 
 void textDemo(){
 	text();
@@ -418,16 +410,15 @@ void textDemo(){
 
 
     get ();
-    intro ();
+    txtIntro ();
 
- 	gameLoop();
+ 	txtGameLoop();
 
 
 }
 
 
-
-void hrIntro (){
+void hiresIntro (){
     int i;
 
     enterSC();
@@ -446,28 +437,75 @@ void hrIntro (){
 		CamRotZ = traj[i++];
 		i = i % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
         doFastProjection();
-        hires(); //memset de 8000 octets en a000 avec la valeur 64
+        memset ( 0xa000, 64, 8000); // clear screen
 		hrDrawSegments();
  		//dispInfo();
     }
 
-
-
 	leaveSC();
 
 }
+void hiresGameLoop() {
+
+	char key;
+	unsigned char i=0;
+	key=get();
+	doFastProjection();
+
+    while (1==1) {
+		memset ( 0xa000, 64, 8000); // clear screen
+		hrDrawSegments();
+		key=get();
+		switch (key)	// key
+		{
+		case 8:	// gauche => tourne gauche
+			i = (i+3)%(192);
+			break;
+		case 9:	// droite => tourne droite
+			if (i == 0) i=192-3;
+			i = (i-3);
+			break;
+		}
+		CamPosX = traj[i+0];
+		CamPosY = traj[i+1];
+		CamRotZ = traj[i+2];
+
+		doFastProjection();
+	}
+}
+
+
+
+
+
+
+
 void hiresDemo(){
 	GenerateTables();
 	nbPoints =0 ;
 
-    hires(); // memset de 8000 octets en a000 avec la valeur 64
+    hires(); 
 
 
 	nbSegments =0 ;
 	addCube(-4, -4, 2);
 	addCube(4, 4, 10);
+//	for (jj=0; jj < NB_POINTS_CUBE; jj++){
+//		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 0] = ptsCube[jj*SIZEOF_3DPOINT + 0] + X;  				// X coord
+//		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 1] = ptsCube[jj*SIZEOF_3DPOINT + 1] + Y;                // Y coord
+//		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 2] = ptsCube[jj*SIZEOF_3DPOINT + 2] + Z;                // Z coord
+//	}
+//	for (jj=0; jj < NB_SEGMENTS_CUBE; jj++){
+//		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 0] = segCube[jj*SIZEOF_SEGMENT + 0]+nbPoints; // Index Point 1
+//		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 1] = segCube[jj*SIZEOF_SEGMENT + 1]+nbPoints; // Index Point 2
+//		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 2] = segCube[jj*SIZEOF_SEGMENT + 2]; // Character
+//	}
+//	nbPoints += NB_POINTS_CUBE;
+//	nbSegments += NB_SEGMENTS_CUBE;
+//}
 
-	hrIntro();
+
+	hiresIntro();
 
 	CamPosX = -20;
 	CamPosY = -20;
@@ -477,10 +515,11 @@ void hiresDemo(){
 	shiftRight();
 	shiftRight();
 	doFastProjection();
-	hires(); //memset de 8000 octets en a000 avec la valeur 64
+	//hires(); //memset de 8000 octets en a000 avec la valeur 64
+	memset ( 0xa000, 64, 8000);
 	hrDrawSegments();
 
-	gameLoop();
+	hiresGameLoop();
 }
 
 int proto (unsigned char nbPoints, char *tabpoint3D, char *tabpoint2D){
@@ -509,8 +548,8 @@ void main()
 	hiresDemo();
 #endif
 
-	//i=12;
-	//j= proto(i, tab1, tab2);
+	i=12;
+	j= proto(i, tab1, tab2);
 
 
 	//DeltaX = 3;	DeltaY = 4;	hyperfastnorm();
