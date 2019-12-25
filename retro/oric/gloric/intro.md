@@ -54,13 +54,6 @@ glProject (points2D, points3D, NB_POINTS_CUBE);
 
 after the call to `glProject` array `points2D` contains 2D coordinates of points in `points3D`
 
-```
-CameraPosition = [Xc, Yc, Zc]	// 3D cartesian coordinates of viewer
-CameraOrientation = [Rz, Rx]	// Yaw, Pitch (no Roll for now)
-ScreenGeometry = [W, H]			// Width  and heigth of display
-For up to 64 points DO
-	Point[L, C, D] = project3D (X, Y, Y) // Compute Line And Column of points
-```
 
 
 Provided you have a function drawLine (X1, Y1, X2, Y2) that draws a segment between points [X1, Y1] and [X2, Y2], it is possible to draw the cube with following instructions:
@@ -94,6 +87,14 @@ lineBetweenPoints (3, 7);
 ```
 
 
+```
+CameraPosition = [Xc, Yc, Zc]	// 3D cartesian coordinates of viewer
+CameraOrientation = [Rz, Rx]	// Yaw, Pitch (no Roll for now)
+ScreenGeometry = [W, H]			// Width  and heigth of display
+For up to 64 points DO
+	Point[L, C, D] = project3D (X, Y, Y) // Compute Line And Column of points
+```
+
 the 2d-coordinates thus obtained can either be used to simply display points on screen, draw lines and faces between them, or be used as base coordinates for drawing tiles. It's up to you.
 
 Unfortunately, even though this function is already available on the glOric repository at Oric Software, there's no program actually using it at the moment. And then, there's no way to experience it in real context.
@@ -105,16 +106,25 @@ But for now I can only show a little teaser i had released at an earlier develop
 
 In this teaser app, i use a home-made ascii art rasterizing routine to display the result of 3D projection on a 2D Text Mode screen.
 
-This teaser app consists in:
+These sample demo consists in:
 - an intro in which the camera position and orientation is animated
-- followed by an interactive phase where you can manually move the camera with the following keyboard commands:
+- followed by an interactive phase where you can manually move the camera in order to test real time interactive mode.
+
+In text mode sample demo,the camera is moved with the following keyboard commands:
 
 
-    Arrow (up / down) to go ( forward / backward )
-    W / X  to shift (left / right)
-    Arrow (left / right )  to rotate the camera
-    Q / A    to pitch (up / down)
-    P / ;    to go (up / down)
+* Arrow (up / down) to go ( forward / backward )
+* W / X  to shift (left / right)
+* Arrow (left / right )  to rotate the camera
+* Q / A    to pitch (up / down)
+* P / ;    to go (up / down)
+
+In hires mode sample demo,the camera is moved with the following keyboard commands:
+
+* Arrow (left / right )  to rotate around the object
+* Q / A  to go (up / down)		
+
+
 
 
 You have to be warned that:
@@ -125,5 +135,3 @@ You have to be warned that:
 If, in spite of the low quality of this demo, you perceive to potential of this function an that you're interested in its forthcoming evolution, stay tuned on this thread, i'll post here some news when noticable steps are performed.
 
 Questions, comments, remarks and constructive criticism are more than welcome.
-
-For those interested in the magic behind this "Hyper Fast Projection Function", here are the
