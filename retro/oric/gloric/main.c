@@ -269,31 +269,6 @@ void shiftRight() {
 	}
 }
 
-void hrDrawSegments(){
-	unsigned char ii = 0;
-	unsigned char idxPt1, idxPt2;
-	for (ii = 0; ii< nbSegments; ii++){
-
-		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
-		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
-		char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
-
-        OtherPixelX=points2d[idxPt1*SIZEOF_2DPOINT + 0];
-        OtherPixelY=points2d[idxPt1*SIZEOF_2DPOINT + 1];
-        CurrentPixelX=points2d[idxPt2*SIZEOF_2DPOINT + 0];
-        CurrentPixelY=points2d[idxPt2*SIZEOF_2DPOINT + 1];
-		if ((OtherPixelX >0 ) && (OtherPixelX <240 ) && (CurrentPixelY>0) && (CurrentPixelY<200)) {
-			DrawLine8();
-		}
-	}
-}
-void hrDrawFace(char p2d[], unsigned char idxPt1, unsigned char idxPt2, unsigned char idxPt3, unsigned char pattern){
-	AddTriangle(
-		p2d[idxPt1*SIZEOF_2DPOINT + 0],p2d[idxPt1*SIZEOF_2DPOINT + 1],
-		p2d[idxPt2*SIZEOF_2DPOINT + 0],p2d[idxPt2*SIZEOF_2DPOINT + 1],
-		p2d[idxPt3*SIZEOF_2DPOINT + 0],p2d[idxPt3*SIZEOF_2DPOINT + 1],
-		(pattern&3));
-}
 
 void txtIntro (){
     int i;
@@ -436,6 +411,32 @@ void textDemo(){
     txtIntro ();
 
  	txtGameLoop();
+}
+
+void hrDrawSegments(){
+	unsigned char ii = 0;
+	unsigned char idxPt1, idxPt2;
+	for (ii = 0; ii< nbSegments; ii++){
+
+		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
+		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
+		char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
+
+        OtherPixelX=points2d[idxPt1*SIZEOF_2DPOINT + 0];
+        OtherPixelY=points2d[idxPt1*SIZEOF_2DPOINT + 1];
+        CurrentPixelX=points2d[idxPt2*SIZEOF_2DPOINT + 0];
+        CurrentPixelY=points2d[idxPt2*SIZEOF_2DPOINT + 1];
+		if ((OtherPixelX >0 ) && (OtherPixelX <240 ) && (CurrentPixelY>0) && (CurrentPixelY<200)) {
+			DrawLine8();
+		}
+	}
+}
+void hrDrawFace(char p2d[], unsigned char idxPt1, unsigned char idxPt2, unsigned char idxPt3, unsigned char pattern){
+	AddTriangle(
+		p2d[idxPt1*SIZEOF_2DPOINT + 0],p2d[idxPt1*SIZEOF_2DPOINT + 1],
+		p2d[idxPt2*SIZEOF_2DPOINT + 0],p2d[idxPt2*SIZEOF_2DPOINT + 1],
+		p2d[idxPt3*SIZEOF_2DPOINT + 0],p2d[idxPt3*SIZEOF_2DPOINT + 1],
+		(pattern&3));
 }
 
 void hrDrawFaces(){

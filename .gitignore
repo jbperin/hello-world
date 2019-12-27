@@ -10,3 +10,4 @@ launch.bat
 final.out
 symbols
 xaerr.txt
+*.o
