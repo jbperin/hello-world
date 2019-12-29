@@ -22,11 +22,13 @@ COPY glOric.h %DSTDIR%\src
 COPY gloric.py %DSTDIR%\tools
 COPY glOric.s %DSTDIR%\src
 COPY glOric.asm %DSTDIR%\src
+COPY caBuild.bat %DSTDIR%\src
 COPY kernel.s %DSTDIR%\src
 COPY line.s %DSTDIR%\src\raster
 COPY filler.s %DSTDIR%\src\raster
 COPY main.c %DSTDIR%\src
 COPY demo.c %DSTDIR%\src
+COPY linker.cfg %DSTDIR%\src
 COPY norm.s %DSTDIR%\src\math
 COPY print.s %DSTDIR%\src\util
 COPY root.s %DSTDIR%\src\math
