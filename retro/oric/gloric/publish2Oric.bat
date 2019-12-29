@@ -28,7 +28,6 @@ COPY line.s %DSTDIR%\src\raster
 COPY filler.s %DSTDIR%\src\raster
 COPY main.c %DSTDIR%\src
 COPY demo.c %DSTDIR%\src
-COPY linker.cfg %DSTDIR%\src
 COPY norm.s %DSTDIR%\src\math
 COPY print.s %DSTDIR%\src\util
 COPY root.s %DSTDIR%\src\math

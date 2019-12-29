@@ -11,3 +11,6 @@ final.out
 symbols
 xaerr.txt
 *.o
+*.map
+*.lst
+*.vice
