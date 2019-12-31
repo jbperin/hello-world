@@ -222,7 +222,48 @@ dofastprojdone:
     sbc _CamRotX
     sta AnglePV
 	
-	
+;; #ifdef TEXTMODE
+;; 	// Quick Disgusting Hack
+;; 	lda AnglePH
+;; 	eor #$FF
+;; 	sec
+;; 	adc #$00
+;; 	cmp #$80
+;; 	ror
+;; 	clc
+;;     adc #SCREEN_WIDTH/2
+;; 	sta _ResX
+;; 
+;; 	lda AnglePV
+;; 	eor #$FF
+;; 	sec
+;; 	adc #$00
+;; 	cmp #$80
+;; 	ror
+;; 	clc
+;;     adc #SCREEN_HEIGHT/2
+;; 	sta _ResY
+;; #else
+;; 	lda AnglePH
+;; 	eor #$FF
+;; 	sec
+;; 	adc #$00
+;; 	asl
+;; 	asl
+;; 	clc
+;;     adc #120 ; 240/2 = WIDTH/2
+;; 	sta _ResX
+;; 
+;; 	lda AnglePV
+;; 	eor #$FF
+;; 	sec
+;; 	adc #$00
+;; 	asl
+;; 	asl
+;; 	adc #100 ; = 200 /2 SCREEN_HEIGHT/2
+;; 	sta _ResY
+;; 
+;; #endif	
 	
 	;; restore context
 	pla

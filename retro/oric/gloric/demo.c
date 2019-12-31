@@ -29,11 +29,11 @@ int main ()
 
 	/*
 	blit_picture(1,1,william_pic[0]/6,william_pic[1], william_pic);
-
+*/
 	tgi_outtextxy (50,50,"hello");
 	tgi_setpixel(200,100);
-	tgi_line(1,1,100,100);
-	*/
+	tgi_line(-10,-10,100,100);
+	
 	CamPosX = -24;
 	CamPosY = 0;
 	CamPosZ = 3;
@@ -43,7 +43,7 @@ int main ()
 
 	val = une_fonction();
 	glProject (points2d, points3d, 1, 0);
-	printf("Press a key to return to basic %d\n", val);
+	printf("Value returned by function: %d\n", val);
 	cgetc();
 
 	tgi_done();
