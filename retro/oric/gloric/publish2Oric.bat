@@ -18,6 +18,7 @@ COPY fastatan.py %DSTDIR%\tools
 COPY fastnorm.py %DSTDIR%\tools
 COPY fastnorm2.py %DSTDIR%\tools
 COPY optimizeLookUp.py %DSTDIR%\tools
+COPY fillclip.py %DSTDIR%\tools
 COPY glOric.h %DSTDIR%\src
 COPY gloric.py %DSTDIR%\tools
 COPY glOric.s %DSTDIR%\src
@@ -27,6 +28,8 @@ COPY kernel.s %DSTDIR%\src
 COPY line.s %DSTDIR%\src\raster
 COPY filler.s %DSTDIR%\src\raster
 COPY main.c %DSTDIR%\src
+COPY hrsDemo.c %DSTDIR%\src
+COPY txtDemo.c %DSTDIR%\src
 COPY demo.c %DSTDIR%\src
 COPY norm.s %DSTDIR%\src\math
 COPY print.s %DSTDIR%\src\util
