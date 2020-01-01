@@ -10,6 +10,6 @@ cl65 -v -vm -m demo.map -Ln demo.vice -g -t%PLATFORM% demo.o glOric.lib  -o demo
 copy demoGlOric.tap %PATH_TO_ORICUTRON%\tapes
 copy demoGlOric.tap %PATH_TO_ORICUTRON%\usbdrive\bin\d
 
-PUSHD %PATH_TO_ORICUTRON%
-START .\oricutron.exe
-POPD
+REM PUSHD %PATH_TO_ORICUTRON%
+REM START .\oricutron.exe
+REM POPD
