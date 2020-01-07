@@ -17,7 +17,7 @@ extern unsigned char OtherPixelX;               // Coordinate X of other edited 
 extern unsigned char OtherPixelY;               // Coordinate Y of other edited pixel/byte
 
 
-// 
+//
 // ====== Filler.s ==========
 
 unsigned int	CurrentPattern=0;
@@ -126,7 +126,7 @@ void hrDrawSegments2(){
 		OtherPixelX=((int *)points2d)[idxPt1*2];
         //OtherPixelY= (int)points2d[idxPt1*SIZEOF_2DPOINT + 2];
 		OtherPixelY=((int *)points2d)[idxPt1*2+1];
-		
+
         //CurrentPixelX=(int)points2d[idxPt2*SIZEOF_2DPOINT + 0];
 		CurrentPixelX=((int *)points2d)[idxPt2*2];
         //CurrentPixelY=(int)points2d[idxPt2*SIZEOF_2DPOINT + 2];
@@ -147,7 +147,7 @@ void debugHiresIntro (){
 	CamPosY = 0;
 	CamPosZ = 3;
 
- 	CamRotZ = 64 ;			
+ 	CamRotZ = 64 ;
 	CamRotX = 2;
 
     for (i=0;i<2;) {
@@ -165,16 +165,33 @@ void debugHiresIntro (){
 
 }
 
+#define abs(x) (((x)<0)?-(x):(x))
+
+#include "fill8.c"
 
 void main()
 {
-    
-    nbPts =0 ;
+
+  nbPts =0 ;
 	nbSegments =0 ;
-	addCube(-4, -4, 2);
-    debugHiresIntro();
+	//addCube(-4, -4, 2);
+  //  debugHiresIntro();
+	Point1X = 4;
+	Point1Y = 10;
+	Point2X = 18;
+	Point2Y = 10;
+	char2Display = 42;
+	get();
+
+	drawLine ();
+	fill8(7,3,3,1,1,5);
+		//printf ("----------\n");
+		//fill8(1,5,6,5,5,1);
+		//printf ("----------\n");
+		//fill8(-1,3,2,-1,5,5);
+
 /*	int i=0;
-	
+
 	CamPosX = -24;
 	CamPosY = 0;
 	CamPosZ = 3;
@@ -189,17 +206,17 @@ void main()
 	glProject (points2d, points3d, nbPts);
 
 	for (i=0; i< 12; i+=4) {
-		printf ("%d %d %d %d =>", 
-			points3d[i+0], 
-			points3d[i+1], 
-			points3d[i+2], 
-			points3d[i+3] 
+		printf ("%d %d %d %d =>",
+			points3d[i+0],
+			points3d[i+1],
+			points3d[i+2],
+			points3d[i+3]
 		);
-		printf ("%d %d %d %d\n", 
-			points2d[i+0], 
-			points2d[i+1], 
-			points2d[i+2], 
-			points2d[i+3] 
+		printf ("%d %d %d %d\n",
+			points2d[i+0],
+			points2d[i+1],
+			points2d[i+2],
+			points2d[i+3]
 		);
 	}
 */
@@ -208,7 +225,8 @@ void main()
 	printf("Value returned by glProject: %d %d %d %d \n", points2d[0], points2d[1], points2d[2], points2d[3]);
 	printf("Value returned by glProject: %d %d %d %d \n", points2d[1]<<8+points2d[0], points2d[3]<<8+points2d[2], points2d[5]<<8+points2d[4], points2d[7]<<8+points2d[6]);
 	*/
-/*#ifdef TEXTMODE
+/*
+#ifdef TEXTMODE
 	textDemo();
 #else
 	hiresDemo();
