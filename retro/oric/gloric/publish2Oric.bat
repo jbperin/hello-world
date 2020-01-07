@@ -28,6 +28,7 @@ COPY kernel.s %DSTDIR%\src
 COPY line.s %DSTDIR%\src\raster
 COPY line.asm %DSTDIR%\src\raster
 COPY filler.s %DSTDIR%\src\raster
+COPY fill.c %DSTDIR%\src
 COPY main.c %DSTDIR%\src
 COPY hrsDemo.c %DSTDIR%\src
 COPY txtDemo.c %DSTDIR%\src

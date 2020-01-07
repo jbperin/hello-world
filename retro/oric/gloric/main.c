@@ -113,10 +113,66 @@ void dispInfo(){
 
 #include "hrsDemo.c"
 
+void hrDrawSegments2(){
+	unsigned char ii = 0;
+	unsigned char idxPt1, idxPt2;
+	int OtherPixelX, OtherPixelY, CurrentPixelX, CurrentPixelY;
+	for (ii = 0; ii< nbSegments; ii++){
+
+		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
+		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
+
+        //OtherPixelX= (int)points2d[idxPt1*SIZEOF_2DPOINT + 0];
+		OtherPixelX=((int *)points2d)[idxPt1*2];
+        //OtherPixelY= (int)points2d[idxPt1*SIZEOF_2DPOINT + 2];
+		OtherPixelY=((int *)points2d)[idxPt1*2+1];
+		
+        //CurrentPixelX=(int)points2d[idxPt2*SIZEOF_2DPOINT + 0];
+		CurrentPixelX=((int *)points2d)[idxPt2*2];
+        //CurrentPixelY=(int)points2d[idxPt2*SIZEOF_2DPOINT + 2];
+		CurrentPixelY=((int *)points2d)[idxPt2*2+1];
+		printf("%d %d %d %d \n",
+		OtherPixelX, OtherPixelY, CurrentPixelX, CurrentPixelY);
+		//cgetc();
+		//tgi_line(OtherPixelX,OtherPixelY,CurrentPixelX,CurrentPixelY);
+	}
+}
+
+
+void debugHiresIntro (){
+    int i;
+    //hires();
+
+	CamPosX = -24;
+	CamPosY = 0;
+	CamPosZ = 3;
+
+ 	CamRotZ = 64 ;			
+	CamRotX = 2;
+
+    for (i=0;i<2;) {
+		CamPosX = traj[i++];
+		CamPosY = traj[i++];
+		CamRotZ = traj[i++];
+		i = i % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
+        glProject (points2d, points3d, nbPts);
+        //memset ( 0xa000, 64, 8000); // clear screen
+		hrDrawSegments2();
+		//hrDrawFaces();
+    }
+
+	//leaveSC();
+
+}
 
 
 void main()
 {
+    
+    nbPts =0 ;
+	nbSegments =0 ;
+	addCube(-4, -4, 2);
+    debugHiresIntro();
 /*	int i=0;
 	
 	CamPosX = -24;
@@ -152,10 +208,10 @@ void main()
 	printf("Value returned by glProject: %d %d %d %d \n", points2d[0], points2d[1], points2d[2], points2d[3]);
 	printf("Value returned by glProject: %d %d %d %d \n", points2d[1]<<8+points2d[0], points2d[3]<<8+points2d[2], points2d[5]<<8+points2d[4], points2d[7]<<8+points2d[6]);
 	*/
-#ifdef TEXTMODE
+/*#ifdef TEXTMODE
 	textDemo();
 #else
 	hiresDemo();
 #endif
-
+*/
 }

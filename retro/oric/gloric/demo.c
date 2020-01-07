@@ -41,31 +41,28 @@ void addCube(char X, char Y, char Z){
 
 
 void hrDrawSegments(){
+
 	unsigned char ii = 0;
 	unsigned char idxPt1, idxPt2;
-	char OtherPixelX, OtherPixelY, CurrentPixelX, CurrentPixelY;
+	int OtherPixelX, OtherPixelY, CurrentPixelX, CurrentPixelY;
 	for (ii = 0; ii< nbSegments; ii++){
 
 		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
 		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
-		//char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
 
-        OtherPixelX=points2d[idxPt1*SIZEOF_2DPOINT + 0];
-		//OtherPixelX=((int *)points2d)[idxPt1*2];
-        OtherPixelY=points2d[idxPt1*SIZEOF_2DPOINT + 2];
-		//OtherPixelX=((int *)points2d)[idxPt1*2+1];
+        //OtherPixelX= (int)points2d[idxPt1*SIZEOF_2DPOINT + 0];
+		OtherPixelX=((int *)points2d)[idxPt1*2];
+        //OtherPixelY= (int)points2d[idxPt1*SIZEOF_2DPOINT + 2];
+		OtherPixelY=((int *)points2d)[idxPt1*2+1];
 		
-        CurrentPixelX=points2d[idxPt2*SIZEOF_2DPOINT + 0];
-		//CurrentPixelX=((int *)points2d)[idxPt2*2];
-        CurrentPixelY=points2d[idxPt2*SIZEOF_2DPOINT + 2];
-		//CurrentPixelY=((int *)points2d)[idxPt2*2+1];
+        //CurrentPixelX=(int)points2d[idxPt2*SIZEOF_2DPOINT + 0];
+		CurrentPixelX=((int *)points2d)[idxPt2*2];
+        //CurrentPixelY=(int)points2d[idxPt2*SIZEOF_2DPOINT + 2];
+		CurrentPixelY=((int *)points2d)[idxPt2*2+1];
 		printf("%d %d %d %d \n",
 		OtherPixelX, OtherPixelY, CurrentPixelX, CurrentPixelY);
 		cgetc();
-		tgi_line((int)OtherPixelX,(int)OtherPixelY,(int)CurrentPixelX,(int)CurrentPixelY);
-		/*if ((OtherPixelX >0 ) && (OtherPixelX <240 ) && (CurrentPixelY>0) && (CurrentPixelY<200)) {
-			DrawLine8();
-		}*/
+		tgi_line(OtherPixelX,OtherPixelY,CurrentPixelX,CurrentPixelY);
 	}
 }
 
@@ -77,10 +74,10 @@ void hiresIntro (){
 	CamPosY = 0;
 	CamPosZ = 3;
 
- 	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
+ 	CamRotZ = 64 ;			
 	CamRotX = 2;
 
-    for (i=0;i<120;) {
+    for (i=0;i<2;) {
 		CamPosX = traj[i++];
 		CamPosY = traj[i++];
 		CamRotZ = traj[i++];
