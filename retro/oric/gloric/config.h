@@ -20,7 +20,8 @@
  */
 
 #define NB_MAX_POINTS 64
-#define NB_MAX_SEGMENTS 50
+#define NB_MAX_SEGMENTS 64
+#define NB_MAX_FACES 64
 
 /*
  *  SCREEN BUFFER
