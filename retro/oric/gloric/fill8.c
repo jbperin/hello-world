@@ -73,7 +73,8 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
 	drawLine ();*/
     signed char dx, fx;
     signed char ii;
-    if ((py < 0) || (py>=SCREEN_HEIGHT)) return;
+    if ((py <= 0) || (py>=SCREEN_HEIGHT)) return;
+	
     if (p1x < p2x) {
         dx = p1x;
         fx = p2x;
@@ -81,9 +82,14 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
         dx = p2x;
         fx = p1x;
     }
+	//printf ("%d [%d -> %d] %d \n", py, dx, fx, dist);
     for (ii=dx; ii<=fx; ii++ ) {
         if ((ii >= 2) && (ii<=SCREEN_WIDTH)) {
-            
+            if (dist < zbuffer[py*SCREEN_WIDTH+ii]){
+				//printf ("[%d, %d] <- %d (%d) \n", ii, py, char2disp, dist);
+				zbuffer[py*SCREEN_WIDTH+ii] = dist;
+				fbuffer[py*SCREEN_WIDTH+ii] = char2disp;
+			}
         }
     }
 
@@ -96,7 +102,7 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 	signed char  pArr2X;
 	signed char  pArr2Y;
 
-	printf ("filling [%d %d] [%d %d] [%d %d]\n", p1x, p1y, p2x, p2y, p3x, p3y);
+	//printf ("fill [%d %d] [%d %d] [%d %d] %d %d\n", p1x, p1y, p2x, p2y, p3x, p3y, dist, char2disp);
 
 
 	if (p1y <= p2y) {
@@ -174,7 +180,7 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 		A2sY=(A2Y<A2destY)?1:-1;
 		A2arrived=((A2X == A2destX) && ( A2Y == A2destY))?1:0;
 
-		printf ("0 [%d %d] [%d %d] \n", A1X, A1Y, A2X, A2Y);
+		//printf ("0 [%d %d] [%d %d] \n", A1X, A1Y, A2X, A2Y);
 		hfill8 (A1X, A2X, A1Y, dist, char2disp);
         //while (not (a1.arrived)):
         //    print (a1.stepY(), a2.stepY())
@@ -182,7 +188,7 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 
 			A1stepY();
 			A2stepY();
-			printf ("1 [%d %d] [%d %d] \n", A1X, A1Y, A2X, A2Y);
+			//printf ("1 [%d %d] [%d %d] \n", A1X, A1Y, A2X, A2Y);
 			hfill8 (A1X, A2X, A1Y, dist, char2disp);
 
 		}
@@ -203,7 +209,7 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 		while ((A1arrived == 0) && (A2arrived == 0)){
 			A1stepY();
 			A2stepY();
-			printf ("2 [%d %d] [%d %d] \n", A1X, A1Y, A2X, A2Y);
+			//printf ("2 [%d %d] [%d %d] \n", A1X, A1Y, A2X, A2Y);
 			hfill8 (A1X, A2X, A1Y, dist, char2disp);
 
 		}
@@ -236,7 +242,7 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 
 
         // print ([a1.X, a1.Y], [a2.X, a2.Y])
-		printf ("3 [%d %d] [%d %d] \n", A1X, A1Y, A2X, A2Y);
+		//printf ("3 [%d %d] [%d %d] \n", A1X, A1Y, A2X, A2Y);
 		hfill8 (A1X, A2X, A1Y, dist, char2disp);
 
         // while (not (a1.arrived and a2.arrived)):
@@ -244,7 +250,7 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 		while ((A1arrived == 0) && (A2arrived == 0)){
 			A1stepY();
 			A2stepY();
-			printf ("3 [%d %d] [%d %d] \n", A1X, A1Y, A2X, A2Y);
+			//printf ("3 [%d %d] [%d %d] \n", A1X, A1Y, A2X, A2Y);
 			hfill8 (A1X, A2X, A1Y, dist, char2disp);
 		}
 	}

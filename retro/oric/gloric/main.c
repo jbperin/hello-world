@@ -46,18 +46,25 @@ unsigned char nbPts=0;
 extern char segments[];
 extern unsigned char nbSegments;
 
-char faces[NB_MAX_FACES*SIZEOF_FACES];
-unsigned char nbFaces=0;
-unsigned char distFaces[NB_MAX_FACES];
 
 //extern char points2d[];
 char points2d [NB_MAX_POINTS*SIZEOF_2DPOINT];
 
+#ifdef TEXTMODE
+char faces[NB_MAX_FACES*SIZEOF_FACES];
+unsigned char nbFaces=0;
+unsigned char distFaces[NB_MAX_FACES];
+
 // TEXT SCREEN TEMPORARY BUFFERS
-
-char zbuffer [SCREEN_WIDTH*SCREEN_HEIGHT];
-
+// z-depth buffer
+unsigned char zbuffer [SCREEN_WIDTH*SCREEN_HEIGHT];
+// frame buffer
 char fbuffer [SCREEN_WIDTH*SCREEN_HEIGHT];
+
+void initScreenBuffers(){
+	memset (zbuffer, 0xFF, SCREEN_WIDTH*SCREEN_HEIGHT);
+	memset (fbuffer, 0x20, SCREEN_WIDTH*SCREEN_HEIGHT); // Space
+}
 
 
 void addCube3(char X, char Y, char Z){
@@ -83,7 +90,7 @@ void addCube3(char X, char Y, char Z){
 	nbSegments += NB_SEGMENTS_CUBE;
 	nbFaces += NB_FACES_CUBE;
 }
-
+#endif
 void test_atan2() {
 
 tx=0; ty=0; res=0; atan2_8();if (res!=0) printf("ERR atan(%d, %d)= %d\n",tx,ty,res);
@@ -142,9 +149,11 @@ void dispInfo(){
 #endif
 }
 
+#ifdef TEXTMODE
 #include "txtDemo.c"
-
+#else
 #include "hrsDemo.c"
+#endif
 
 void hrDrawSegments2(){
 	unsigned char ii = 0;
@@ -198,50 +207,46 @@ void debugHiresIntro (){
 
 }
 
+#ifdef TEXTMODE
+
 #define abs(x) (((x)<0)?-(x):(x))
 
 #include "fill8.c"
 
-void main()
-{
+void buffer2screen(){
+	int ii, jj;
+	clearScreen(); 
+	for (ii=0;ii<SCREEN_HEIGHT; ii++){
+		for (jj=2; jj < SCREEN_WIDTH; jj++){
+			PutChar(jj,ii,fbuffer[ii*SCREEN_WIDTH+jj]);
+		}
+	}
+}
+// extern void PutChar(char x_pos,char y_pos,char ch2disp);
+
+
+void fillFaces() {
+
     int ii=0;
     int d1, d2, d3;
     int dmoy;
     unsigned char idxPt1, idxPt2, idxPt3;
-    
-    nbPts =0 ;
-	nbSegments =0 ;
-    nbFaces =0 ;
-	//addCube(-4, -4, 2);
-    addCube3(0, 0, 0);
-    printf ("nbPoints = %d, nbSegments = %d, nbFaces = %d\n",nbPts, nbSegments, nbFaces);
-    
-    CamPosX = -24;
-	CamPosY = 0;
-	CamPosZ = 3;
 
- 	CamRotZ = 64 ;
-	CamRotX = 2;
-
-    glProject (points2d, points3d, nbPts);
-    
-    
-    printf ("points2d[0] = %d, %d, %d, %d\n",points2d[0],points2d[1],points2d[2],points2d[3]);
-    printf ("dist = %d\n", d1);
-    for (ii=0; ii< nbFaces; ii++) {
+	for (ii=0; ii< nbFaces; ii++) {
         idxPt1 = faces[ii*SIZEOF_FACES+0];
         idxPt2 = faces[ii*SIZEOF_FACES+1];
         idxPt3 = faces[ii*SIZEOF_FACES+2];
+		
         d1 = points2d [idxPt1*SIZEOF_2DPOINT+3]*256 + points2d [idxPt1*SIZEOF_2DPOINT+2];
         d2 = points2d [idxPt2*SIZEOF_2DPOINT+3]*256 + points2d [idxPt2*SIZEOF_2DPOINT+2];
         d3 = points2d [idxPt3*SIZEOF_2DPOINT+3]*256 + points2d [idxPt3*SIZEOF_2DPOINT+2];
         dmoy = (d1+d2+d3)/3;
         if (dmoy >= 256) {
             distFaces[ii] = 256;
-        } else {
+        } else {			
             distFaces[ii] = dmoy;
         }
-        printf ("face %d: %d, %d, %d => %d\n", ii, faces[ii*SIZEOF_FACES+0], faces[ii*SIZEOF_FACES+1], faces[ii*SIZEOF_FACES+2], distFaces[ii]);
+        //printf ("face %d: %d, %d, %d => %d\n", ii, faces[ii*SIZEOF_FACES+0], faces[ii*SIZEOF_FACES+1], faces[ii*SIZEOF_FACES+2], distFaces[ii]);
         
         fill8(points2d [idxPt1*SIZEOF_2DPOINT+0], points2d [idxPt1*SIZEOF_2DPOINT+1], 
             points2d [idxPt2*SIZEOF_2DPOINT+0], points2d [idxPt2*SIZEOF_2DPOINT+1], 
@@ -249,62 +254,88 @@ void main()
             distFaces[ii], faces[ii*SIZEOF_FACES+3]);
     }
 
-  //  debugHiresIntro();
-	/*Point1X = 4;
-	Point1Y = 10;
-	Point2X = 18;
-	Point2Y = 10;
-	char2Display = 42;
-	get();
+}
+void txtGameLoop2() {
 
-	drawLine ();*/
-	/*fill8(7,3,3,1,1,5);*/
-    
-		//printf ("----------\n");
-		//fill8(1,5,6,5,5,1);
-		//printf ("----------\n");
-		//fill8(-1,3,2,-1,5,5);
+	char key;
+	//key=get();
+	glProject (points2d, points3d, nbPts);
+	initScreenBuffers();
+	fillFaces();
+    while (1==1) {
+		//clearScreen();
+		//drawSegments();
+		buffer2screen();
+		dispInfo();
+		key=get();
+		switch (key)	// key
+		{
+		case 8:	// gauche => tourne gauche
+			CamRotZ += 4;
+			break;
+		case 9:	// droite => tourne droite
+			CamRotZ -= 4;
+			break;
+		case 10: // bas => recule
+			backward();
+			break;
+		case 11: // haut => avance
+			forward();
+			break;
+		case 80: // P
+			CamPosZ += 1;
+			break;
+		case 59: // ;
+			CamPosZ -= 1;
+			break;
+		case 81: // Q
+			CamRotX += 2;
+			break;
+		case 65: // A
+			CamRotX -= 2;
+			break;
+		case 90: // Z
+			shiftLeft();
+			break;
+		case 88: // X
+			shiftRight();
+			break;
+		}
+		glProject (points2d, points3d, nbPts);
+		initScreenBuffers();
+		fillFaces();
+	}
+}
 
-/*	int i=0;
-
-	CamPosX = -24;
+void faceDemo(){
+	nbPts =0 ;
+	nbSegments =0 ;
+    nbFaces =0 ;
+	//addCube(-4, -4, 2);
+    addCube3(0, 0, 0);
+    //printf ("nbPoints = %d, nbSegments = %d, nbFaces = %d\n",nbPts, nbSegments, nbFaces);
+	lores0();
+	
+    CamPosX = -24;
 	CamPosY = 0;
 	CamPosZ = 3;
 
- 	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
+ 	CamRotZ = 20 ;
 	CamRotX = 2;
-	get();
-	nbPts =0 ;
-	nbSegments =0 ;
-	addCube(-4, -4, 2);
-	//addCube(4, 4, 10);
-	glProject (points2d, points3d, nbPts);
 
-	for (i=0; i< 12; i+=4) {
-		printf ("%d %d %d %d =>",
-			points3d[i+0],
-			points3d[i+1],
-			points3d[i+2],
-			points3d[i+3]
-		);
-		printf ("%d %d %d %d\n",
-			points2d[i+0],
-			points2d[i+1],
-			points2d[i+2],
-			points2d[i+3]
-		);
-	}
-*/
-	/* printf("Value before	glProject: %d %d %d %d \n", points2d[1]<<8+points2d[0], points2d[3]<<8+points2d[2], points2d[5]<<8+points2d[4], points2d[7]<<8+points2d[6]);
-	glProject (points2d, points3d, nbPts);
-	printf("Value returned by glProject: %d %d %d %d \n", points2d[0], points2d[1], points2d[2], points2d[3]);
-	printf("Value returned by glProject: %d %d %d %d \n", points2d[1]<<8+points2d[0], points2d[3]<<8+points2d[2], points2d[5]<<8+points2d[4], points2d[7]<<8+points2d[6]);
-	*/
-/*
+	txtGameLoop2();
+
+}
+#endif
+
+void main()
+{
+    
+	//faceDemo();
 #ifdef TEXTMODE
 	textDemo();
 #else
 	hiresDemo();
 #endif
-*/
+
 }
