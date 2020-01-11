@@ -1,27 +1,28 @@
 
 
-signed char  A1X=0;
-signed char  A1Y=0;
-signed char  A1destX=0;
-signed char  A1destY=0;
-signed char  A1dX=0;
-signed char  A1dY=0;
-signed char  A1err=0;
-signed char A1sX=0;
-signed char A1sY=0;
-char A1arrived=0;
+extern signed char  A1X;
+extern signed char  A1Y;
+extern signed char  A1destX;
+extern signed char  A1destY;
+extern signed char  A1dX;
+extern signed char  A1dY;
+extern signed char  A1err;
+extern signed char A1sX;
+extern signed char A1sY;
+extern char A1arrived;
 
-signed char  A2X=0;
-signed char  A2Y=0;
-signed char  A2destX=0;
-signed char  A2destY=0;
-signed char  A2dX=0;
-signed char  A2dY=0;
-signed char  A2err=0;
-signed char A2sX=0;
-signed char A2sY=0;
-char A2arrived=0;
+extern signed char  A2X;
+extern signed char  A2Y;
+extern signed char  A2destX;
+extern signed char  A2destY;
+extern signed char  A2dX;
+extern signed char  A2dY;
+extern signed char  A2err;
+extern signed char A2sX;
+extern signed char A2sY;
+extern char A2arrived;
 
+/*
 void A1stepY(){
 	signed char  nxtY, e2;
 	nxtY = A1Y+A1sY;
@@ -58,8 +59,8 @@ void A2stepY(){
 		e2 = A2err << 1; // 2*A2err;
 	}
 }
-
-void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dist, char char2disp){
+*/
+/*void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dist, char char2disp){
 
     signed char dx, fx;
     signed char ii;
@@ -84,6 +85,8 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
         }
     }
 }
+*/
+
 
 void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, signed char  p3x, signed char  p3y, unsigned char dist, char char2disp){
 	signed char  pDepX;
