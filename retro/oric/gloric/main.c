@@ -378,12 +378,12 @@ void faceDemo(){
 void main()
 {
     
-	//faceDemo();
-    
+	faceDemo();
+    /*
 #ifdef TEXTMODE
 	textDemo();
 #else
 	hiresDemo();
 #endif
-    
+    */
 }
