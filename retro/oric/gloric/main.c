@@ -305,7 +305,8 @@ void faceIntro() {
 void txtGameLoop2() {
 
 	char key;
-	//key=get();
+    unsigned char ii;    
+	key=get();
 	glProject (points2d, points3d, nbPts);
 	initScreenBuffers();
 	fillFaces();
@@ -349,6 +350,16 @@ void txtGameLoop2() {
 			break;
 		}
 		glProject (points2d, points3d, nbPts);
+        /*
+        printf ("(x=%d y=%d z=%d) [%d %d]\n", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+        for (ii=0; ii< nbPts; ii++){
+            printf ("[%d %d %d] => [%d %d] %d \n"
+            , points3d [ii*SIZEOF_3DPOINT+0], points3d[ii*SIZEOF_3DPOINT+1], points3d[ii*SIZEOF_3DPOINT+2]
+            , points2d [ii*SIZEOF_2DPOINT+0], points2d [ii*SIZEOF_2DPOINT+1], points2d[ii*SIZEOF_2DPOINT+2]
+            );
+        }
+        get();
+        */
 		initScreenBuffers();
 		fillFaces();
 	}
@@ -362,9 +373,9 @@ void faceDemo(){
     addCube3(0, 0, 0);
     //printf ("nbPoints = %d, nbSegments = %d, nbFaces = %d\n",nbPts, nbSegments, nbFaces);
 	lores0();
-	faceIntro();
-    CamPosX = -9;
-	CamPosY = 10;
+	//faceIntro();
+    CamPosX = -4;
+	CamPosY = 4;
 	CamPosZ = 1;
 
  	CamRotZ = -32 ;
@@ -378,12 +389,12 @@ void faceDemo(){
 void main()
 {
     
-	faceDemo();
-    /*
+	//faceDemo();
+    
 #ifdef TEXTMODE
 	textDemo();
 #else
 	hiresDemo();
 #endif
-    */
+    
 }

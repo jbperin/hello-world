@@ -22,6 +22,8 @@ extern signed char A2sX;
 extern signed char A2sY;
 extern char A2arrived;
 
+#define max(a,b)            (((a) > (b)) ? (a) : (b))
+#define min(a,b)            (((a) < (b)) ? (a) : (b))
 /*
 void A1stepY(){
 	signed char  nxtY, e2;
@@ -60,6 +62,7 @@ void A2stepY(){
 	}
 }
 */
+
 void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dist, char char2disp){
 
     signed char dx, fx;
@@ -85,8 +88,36 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
         }
     }
 }
+/*
+void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dist, char char2disp){
 
+    signed char dx, fx;
+    signed char ii;
+    int  offset;
+    char *ptrFbuf;
+    unsigned char *ptrZbuf;
+    signed char nbpoints;
+    
+    if ((py <= 0) || (py>=SCREEN_HEIGHT)) return;
+	dx = max(0, p1x);
+    fx = min(p2x, SCREEN_WIDTH);
 
+    nbpoints = fx - dx;
+    if (nbpoints <0) return;
+   
+    offset = py*SCREEN_WIDTH+dx;
+    ptrZbuf = zbuffer+offset;
+    ptrFbuf = fbuffer+offset;
+    while (nbpoints >=0){
+        if (dist < ptrZbuf[nbpoints] ){
+            ptrFbuf [nbpoints] = char2disp;
+            ptrZbuf [nbpoints] = dist;
+        }
+        nbpoints --;
+    }
+    
+}
+*/
 
 void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, signed char  p3x, signed char  p3y, unsigned char dist, char char2disp){
 	signed char  pDepX;
@@ -179,14 +210,14 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 			ptrPtRightX = &A1X;
 		}
 
-		//hfill8 (A1X, A2X, A1Y, dist, char2disp);
-		hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
+		hfill8 (A1X, A2X, A1Y, dist, char2disp);
+		//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
 		while (A1arrived == 0){
 
 			A1stepY();
 			A2stepY();
-			hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
-			//hfill8 (A1X, A2X, A1Y, dist, char2disp);
+			//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
+			hfill8 (A1X, A2X, A1Y, dist, char2disp);
 		}
 
 		A1X = pArr1X;
@@ -203,8 +234,8 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 		while ((A1arrived == 0) && (A2arrived == 0)){
 			A1stepY();
 			A2stepY();
-			//hfill8 (A1X, A2X, A1Y, dist, char2disp);
-			hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
+			hfill8 (A1X, A2X, A1Y, dist, char2disp);
+			//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
 		}
 	} else {
         // a1 = bres_agent(pDep[0],pDep[1],pArr2[0],pArr2[1])
@@ -240,14 +271,14 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 			ptrPtRightX = &A1X;
 		}
 
-		//hfill8 (A1X, A2X, A1Y, dist, char2disp);
-		hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
+		hfill8 (A1X, A2X, A1Y, dist, char2disp);
+		//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
 		
 		while ((A1arrived == 0) && (A2arrived == 0)){
 			A1stepY();
 			A2stepY();
-			//hfill8 (A1X, A2X, A1Y, dist, char2disp);
-			hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
+			hfill8 (A1X, A2X, A1Y, dist, char2disp);
+			//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
 		}
 	}
 }
