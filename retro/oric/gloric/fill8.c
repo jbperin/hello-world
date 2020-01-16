@@ -78,7 +78,7 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
     }
     
     for (ii=dx; ii<=fx; ii++ ) {
-        if ((ii >= 2) && (ii<=SCREEN_WIDTH)) {
+        if ((ii >= 1) && (ii<SCREEN_WIDTH)) {
             offset = py*SCREEN_WIDTH+ii;
             if (dist < zbuffer[offset]){
 				zbuffer[offset] = dist;
@@ -178,6 +178,8 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 	}
 
 	if (pDepY != pArr1Y) {
+        //printf ("ici1 \n");
+
         //a1 = bres_agent(pDep[0],pDep[1],pArr1[0],pArr1[1])
 		A1X = pDepX;
 		A1Y = pDepY;
@@ -213,14 +215,14 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 			ptrPtRightX = &A1X;
 		}
 
-		hfill8 (A1X, A2X, A1Y, dist, char2disp);
-		//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
+		//hfill8 (A1X, A2X, A1Y, dist, char2disp);
+		hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
 		while (A1arrived == 0){
 
 			A1stepY();
 			A2stepY();
-			//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
-			hfill8 (A1X, A2X, A1Y, dist, char2disp);
+			hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
+			//hfill8 (A1X, A2X, A1Y, dist, char2disp);
 		}
 
 		A1X = pArr1X;
@@ -237,10 +239,11 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 		while ((A1arrived == 0) && (A2arrived == 0)){
 			A1stepY();
 			A2stepY();
-			hfill8 (A1X, A2X, A1Y, dist, char2disp);
-			//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
+			//hfill8 (A1X, A2X, A1Y, dist, char2disp);
+			hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
 		}
 	} else {
+        
         // a1 = bres_agent(pDep[0],pDep[1],pArr2[0],pArr2[1])
 		A1X = pDepX;
 		A1Y = pDepY;
@@ -253,7 +256,7 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 		A1sX=(A1X<A1destX)?1:-1;
 		A1sY=(A1Y<A1destY)?1:-1;
 		A1arrived=((A1X == A1destX) && ( A1Y == A1destY))?1:0;
-
+        //printf ("vals= \n%d %d %d %d \n", A1destX, A1X, A1destY, A1Y);
         // a2 = bres_agent(pArr1[0],pArr1[1],pArr2[0],pArr2[1])
 		A2X = pArr1X;
 		A2Y = pArr1Y;
@@ -275,14 +278,16 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 			ptrPtLeftX = &A2X;
 			ptrPtRightX = &A1X;
 		}
-		hfill8 (A1X, A2X, A1Y, dist, char2disp);
-		//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
+        //printf ("ici2 \n%d %d %d  \n", A1X, A2X, A1Y);
+		//hfill8 (A1X, A2X, A1Y, dist, char2disp);
+		hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
 		
 		while ((A1arrived == 0) && (A2arrived == 0)){
+            //printf ("ici2 \n%d %d %d  \n", A1X, A2X, A1Y);
 			A1stepY();
 			A2stepY();
-			hfill8 (A1X, A2X, A1Y, dist, char2disp);
-			//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
+			//hfill8 (A1X, A2X, A1Y, dist, char2disp);
+			hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
 		}
 	}
 }

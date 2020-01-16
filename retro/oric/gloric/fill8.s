@@ -63,7 +63,10 @@ A1stepY_loop:
 	bne A1stepYdone
 	
 	lda _A1dX 		;; (e2>A1dX)
-	cmp reg0
+    sec
+	sbc reg0
+    bvc *+4
+    eor #$80
 	bmi A1stepY_doloop
 
 	lda reg1 		;; (A1Y!=nxtY)
@@ -75,7 +78,10 @@ A1stepY_doloop:
 	
 		;; if (e2 >= A1dY){
 		lda reg0 ; e2
-		cmp _A1dY
+        sec
+        sbc _A1dY
+        bvc *+4
+        eor #$80
 		bmi A1stepY_A1Xdone
 		;; 	A1err += A1dY;
 			clc
@@ -91,7 +97,10 @@ A1stepY_doloop:
 A1stepY_A1Xdone:
 		;; if (e2 <= A1dX){
 		lda _A1dX
-		cmp reg0
+        sec
+		sbc reg0
+        bvc *+4
+        eor #$80
 		bmi A1stepY_A1Ydone
 		;; 	A1err += A1dX;
 			clc
@@ -162,7 +171,10 @@ A2stepY_loop:
 	bne A2stepYdone
 	
 	lda _A2dX 		;; (e2>A2dX)
-	cmp reg0
+    sec
+    sbc reg0
+    bvc *+4
+    eor #$80
 	bmi A2stepY_doloop
 
 	lda reg1 		;; (A2Y!=nxtY)
@@ -174,7 +186,10 @@ A2stepY_doloop:
 	
 		;; if (e2 >= A2dY){
 		lda reg0 ; e2
-		cmp _A2dY
+        sec
+        sbc _A2dY
+        bvc *+4
+        eor #$80
 		bmi A2stepY_A2Xdone
 		;; 	A2err += A2dY;
 			clc
@@ -190,7 +205,10 @@ A2stepY_doloop:
 A2stepY_A2Xdone:
 		;; if (e2 <= A2dX){
 		lda _A2dX
-		cmp reg0
+        sec
+        sbc reg0
+        bvc *+4
+        eor #$80
 		bmi A2stepY_A2Ydone
 		;; 	A2err += A2dX;
 			clc

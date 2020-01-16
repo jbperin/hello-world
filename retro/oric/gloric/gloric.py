@@ -15,8 +15,8 @@ nbfaces = 2
 nbpoints = 4
 faces = [[3, 2, 6]]
 points = [[4,4,4],[4,4,-4], [-4, 4, -4],[-4, 4, 4],[4,-4,4],[4,-4,-4],[-4,-4,-4],[-4,-4,4]]
-campos=[0, 0, 1]
-camori=[-32, 0] # rotation Z puis X en degre
+campos=[0, -3, 1]
+camori=[64, 0] # rotation Z puis X en 127ème de Pi radian
 
 #system
 screen = [[' ' for i in range(LE+1)] for j in range(HE+1)]
@@ -276,11 +276,11 @@ def project ():
 
     points2 = []
     for p in points:
-        ang1 = math.atan2((p[1]-campos[1]),(p[0]-campos[0])) - math.radians(camori[0])
+        ang1 = math.atan2((p[1]-campos[1]),(p[0]-campos[0])) - camori[0]*(math.pi/128)
         dist = math.sqrt ((p[1]-campos[1])**2+(p[0]-campos[0])**2)
-        ang2 = math.atan2((p[2]-campos[2]),dist) - math.radians(camori[1])
+        ang2 = math.atan2((p[2]-campos[2]),dist) - camori[1]*(math.pi/128)
 
-        X = ((ang1 * LV) / math.radians(EAH)) + LV
+        X = ((-ang1 * LV) / math.radians(EAH)) + LV #(ang1 * (127 / math.pi)) / 2 + (LE / 2) #
         Y = ((-ang2 * HV) / math.radians(EAV)) + HV
         p2d = [int(round(X)), int(round(Y))]
         print (str (p), str(p2d), ang1, dist, ang2)
@@ -358,11 +358,11 @@ def printScreen ():
 def main():
 
     initScreen ()
-    # project ()
+    project ()
 
     intProject ()
-    print (points2[2], points2[3], points2[6])
-    fillclip(points2[2], points2[3], points2[6])
+    print (points2[7], points2[6], points2[5])
+    fillclip(points2[7], points2[6], points2[5])
     #print (fastAtan (-3, 3))
 
     #for [pA, pB, pC, fst] in faces:

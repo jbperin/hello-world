@@ -232,7 +232,8 @@ void fillFaces() {
     int dmoy;
     unsigned char idxPt1, idxPt2, idxPt3, distface;
     unsigned char offPt1, offPt2, offPt3;
-    
+    signed char P1X, P1Y, P2X, P2Y, P3X, P3Y;
+
 	for (ii=0; ii< nbFaces; ii++) {
         jj = ii << 2;
         /*idxPt1 = faces[ii*SIZEOF_FACES+0];
@@ -268,13 +269,21 @@ void fillFaces() {
             distFaces[ii] = dmoy;
         }*/
         distface = (unsigned char)(dmoy & 0x00FF);
-        //printf ("face %d: %d, %d, %d => %d\n", ii, faces[ii*SIZEOF_FACES+0], faces[ii*SIZEOF_FACES+1], faces[ii*SIZEOF_FACES+2], distFaces[ii]);
-        
-        fill8(points2d [offPt1+0], points2d [offPt1+1], 
-            points2d [offPt2+0], points2d [offPt2+1], 
-            points2d [offPt3+0], points2d [offPt3+1],
+
+        P1X=points2d [offPt1+0];
+        P1Y=points2d [offPt1+1];
+        P2X=points2d [offPt2+0];
+        P2Y=points2d [offPt2+1];
+        P3X=points2d [offPt3+0];
+        P3Y=points2d [offPt3+1];
+        //printf ("[%d, %d], [%d, %d], [%d, %d]\n", P1X, P1Y, P2X, P2Y, P3X, P3Y);
+        //get();
+        fill8(P1X, P1Y, 
+            P2X, P2Y, 
+            P3X, P3Y,
             distface, faces[jj]);
     }
+
 }
 void faceIntro() {
     int i;
@@ -308,6 +317,16 @@ void txtGameLoop2() {
     unsigned char ii;    
 	key=get();
 	glProject (points2d, points3d, nbPts);
+    
+    /*printf ("(x=%d y=%d z=%d) [%d %d]\n", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+        for (ii=0; ii< nbPts; ii++){
+            printf ("[%d %d %d] => [%d %d] %d \n"
+            , points3d [ii*SIZEOF_3DPOINT+0], points3d[ii*SIZEOF_3DPOINT+1], points3d[ii*SIZEOF_3DPOINT+2]
+            , points2d [ii*SIZEOF_2DPOINT+0], points2d [ii*SIZEOF_2DPOINT+1], points2d[ii*SIZEOF_2DPOINT+2]
+            );
+        }
+        get();
+    */
 	initScreenBuffers();
 	fillFaces();
     while (1==1) {
@@ -350,16 +369,6 @@ void txtGameLoop2() {
 			break;
 		}
 		glProject (points2d, points3d, nbPts);
-        /*
-        printf ("(x=%d y=%d z=%d) [%d %d]\n", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
-        for (ii=0; ii< nbPts; ii++){
-            printf ("[%d %d %d] => [%d %d] %d \n"
-            , points3d [ii*SIZEOF_3DPOINT+0], points3d[ii*SIZEOF_3DPOINT+1], points3d[ii*SIZEOF_3DPOINT+2]
-            , points2d [ii*SIZEOF_2DPOINT+0], points2d [ii*SIZEOF_2DPOINT+1], points2d[ii*SIZEOF_2DPOINT+2]
-            );
-        }
-        get();
-        */
 		initScreenBuffers();
 		fillFaces();
 	}
@@ -381,6 +390,14 @@ void faceDemo(){
  	CamRotZ = -32 ;
 	CamRotX = 0;
 
+    CamPosX = 0;
+	CamPosY = -3;
+	CamPosZ = 1;
+
+ 	CamRotZ = 64 ;
+	CamRotX = 0;
+
+
 	txtGameLoop2();
 
 }
@@ -396,5 +413,5 @@ void main()
 #else
 	hiresDemo();
 #endif
-    
+   
 }
