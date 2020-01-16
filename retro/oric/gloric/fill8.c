@@ -69,7 +69,6 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
     signed char ii;
     int offset;
     if ((py <= 0) || (py>=SCREEN_HEIGHT)) return;
-	
     if (p1x < p2x) {
         dx = p1x;
         fx = p2x;
@@ -77,7 +76,7 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
         dx = p2x;
         fx = p1x;
     }
-
+    
     for (ii=dx; ii<=fx; ii++ ) {
         if ((ii >= 2) && (ii<=SCREEN_WIDTH)) {
             offset = py*SCREEN_WIDTH+ii;
@@ -177,6 +176,7 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 			}
 		}
 	}
+
 	if (pDepY != pArr1Y) {
         //a1 = bres_agent(pDep[0],pDep[1],pArr1[0],pArr1[1])
 		A1X = pDepX;
@@ -186,6 +186,7 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 		A1dX=abs(A1destX-A1X);
 		A1dY=-abs(A1destY-A1Y);
 		A1err=A1dX+A1dY;
+        if ((A1err > 64) ||(A1err < -63)) return;
 		A1sX=(A1X<A1destX)?1:-1;
 		A1sY=(A1Y<A1destY)?1:-1;
 		A1arrived=((A1X == A1destX) && ( A1Y == A1destY))?1:0;
@@ -198,6 +199,8 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 		A2dX=abs(A2destX-A2X);
 		A2dY=-abs(A2destY-A2Y);
 		A2err=A2dX+A2dY;
+        if ((A2err > 64) ||(A2err < -63)) return;
+
 		A2sX=(A2X<A2destX)?1:-1;
 		A2sY=(A2Y<A2destY)?1:-1;
 		A2arrived=((A2X == A2destX) && ( A2Y == A2destY))?1:0;
@@ -246,6 +249,7 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 		A1dX=abs(A1destX-A1X);
 		A1dY=-abs(A1destY-A1Y);
 		A1err=A1dX+A1dY;
+        if ((A1err > 64) ||(A1err < -63)) return;
 		A1sX=(A1X<A1destX)?1:-1;
 		A1sY=(A1Y<A1destY)?1:-1;
 		A1arrived=((A1X == A1destX) && ( A1Y == A1destY))?1:0;
@@ -258,6 +262,7 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 		A2dX=abs(A2destX-A2X);
 		A2dY=-abs(A2destY-A2Y);
 		A2err=A2dX+A2dY;
+        if ((A2err > 64) ||(A2err < -63)) return;
 		A2sX=(A2X<A2destX)?1:-1;
 		A2sY=(A2Y<A2destY)?1:-1;
 		A2arrived=((A2X == A2destX) && ( A2Y == A2destY))?1:0;
@@ -270,7 +275,6 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 			ptrPtLeftX = &A2X;
 			ptrPtRightX = &A1X;
 		}
-
 		hfill8 (A1X, A2X, A1Y, dist, char2disp);
 		//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
 		

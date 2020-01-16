@@ -1,5 +1,8 @@
 
 import math
+import fillclip
+from fillclip import fillclip
+
 
 # parametres configuration
 LE = 40   # largeur ecran
@@ -10,9 +13,9 @@ EAV = 40  # demi-excursion angulaire Verticale en degre
 # donnees entree
 nbfaces = 2
 nbpoints = 4
-faces = [[0, 1, 2, 0], [2, 3, 0, 0]]
+faces = [[3, 2, 6]]
 points = [[4,4,4],[4,4,-4], [-4, 4, -4],[-4, 4, 4],[4,-4,4],[4,-4,-4],[-4,-4,-4],[-4,-4,4]]
-campos=[-4, 4, 1]
+campos=[0, 0, 1]
 camori=[-32, 0] # rotation Z puis X en degre
 
 #system
@@ -214,12 +217,8 @@ def fastNorm (px,py):
     else:
         x, y = ay, ax
     if y > x/2 :
-        # N = (math.sqrt(5)-math.sqrt(2))*x + (2*math.sqrt(2) - math.sqrt(5))*y
-        #N = tabmult_sqrt5_m_sqrt2 [x] + tabmult_2sqrt2_m_sqrt5[y]
         N = tabmult_C [x] + tabmult_D[y]
     else:
-        # N = x+(math.sqrt(5)/2 - 1)*y
-        #N = x + tabmult_sqrt5_m2 [y]
         N = tabmult_A [x] + tabmult_B[y]
     return N
 
@@ -362,7 +361,8 @@ def main():
     # project ()
 
     intProject ()
-
+    print (points2[2], points2[3], points2[6])
+    fillclip(points2[2], points2[3], points2[6])
     #print (fastAtan (-3, 3))
 
     #for [pA, pB, pC, fst] in faces:
