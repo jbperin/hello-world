@@ -62,10 +62,12 @@ void A2stepY(){
 	}
 }
 */
+/*
+
 void A1stepY(){
 	signed char  nxtY, e2;
 	nxtY = A1Y+A1sY;
-	
+	printf ("nxtY = %d\n", nxtY);
 	e2 = (A1err < 0) ? (
 			((A1err & 0x40) == 0)?(
 				0x80
@@ -79,15 +81,19 @@ void A1stepY(){
 				A1err << 1
 			)
 		);
-	
+	printf ("e2 = %d\n", e2);
 	while ((A1arrived == 0) && ((e2>A1dX) || (A1Y!=nxtY))){
 		if (e2 >= A1dY){
 			A1err += A1dY;
+			printf ("A1err = %d\n", A1err);
 			A1X += A1sX;
+			printf ("A1X = %d\n", A1X);
 		}
 		if (e2 <= A1dX){
 			A1err += A1dX;
+			printf ("A1err = %d\n", A1err);
 			A1Y += A1sY;
+			printf ("A1Y = %d\n", A1Y);
 		}
 		A1arrived=((A1X == A1destX) && ( A1Y == A1destY))?1:0;
 		e2 = (A1err < 0) ? (
@@ -103,6 +109,8 @@ void A1stepY(){
 					A1err << 1
 				)
 			);
+		printf ("e2 = %d\n", e2);
+
 		}
 }
 
@@ -147,6 +155,7 @@ void A2stepY(){
 			);
 	}
 }
+*/
 
 void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dist, char char2disp){
 
@@ -172,6 +181,7 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
         }
     }
 }
+
 /*
 void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dist, char char2disp){
 
@@ -301,11 +311,15 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 		}
 
 		//hfill8 (A1X, A2X, A1Y, dist, char2disp);
+		//printf ("ici1: %d %d %d  \n", A1X, A2X, A1Y);
 		hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
 		while (A1arrived == 0){
 
 			A1stepY();
 			A2stepY();
+			//printf ("A1 ={%d %d %d %d %d %d } \n", A1X, A1Y, A1err, A1sX, A1dX, A1dY);
+			//printf ("ici2: %d %d %d  \n", A1X, A2X, A1Y);
+			//get();
 			hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
 			//hfill8 (A1X, A2X, A1Y, dist, char2disp);
 		}

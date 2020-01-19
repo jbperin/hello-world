@@ -39,7 +39,8 @@ _A2sY
 _A2arrived
 	.byt 0
 	
-/*	
+
+
 _A1stepY
 .(
 	// save context
@@ -54,14 +55,26 @@ _A1stepY
 	
 	;; e2 = A1err << 1; // 2*A1err;
 	lda _A1err
+	bpl A1stepY_errpositiv_01
 	asl
+	bmi A1stepY_errdone_01
+	lda #$80
+	jmp A1stepY_errdone_01
+	
+A1stepY_errpositiv_01:	
+	asl
+	bpl A1stepY_errdone_01
+	lda #$7F
+A1stepY_errdone_01:	
 	sta reg0
 	
 	;; while ((A1arrived == 0) && ((e2>A1dX) || (A1Y!=nxtY))){
 A1stepY_loop:
 	lda _A1arrived ;; (A1arrived == 0)
-	bne A1stepYdone
-	
+	beq A1stepY_notarrived
+	jmp A1stepYdone
+
+A1stepY_notarrived:	
 	lda _A1dX 		;; (e2>A1dX)
     sec
 	sbc reg0
@@ -87,6 +100,10 @@ A1stepY_doloop:
 			clc
 			lda _A1err
 			adc _A1dY
+			bvc debug_moi_la
+erroverflow:
+			jmp A1stepYdone
+debug_moi_la:
 			sta _A1err
 		;; 	A1X += A1sX;
 			clc
@@ -133,7 +150,17 @@ A1stepY_A1Ydone:
 A1stepY_computeE2:
 		;; e2 = A1err << 1; // 2*A1err;
 		lda _A1err
+		bpl A1stepY_errpositiv_02
 		asl
+		bmi A1stepY_errdone_02
+		lda #$80
+		jmp A1stepY_errdone_02
+		
+A1stepY_errpositiv_02:	
+		asl
+		bpl A1stepY_errdone_02
+		lda #$7F
+A1stepY_errdone_02:	
 		sta reg0
 	
 	jmp A1stepY_loop
@@ -146,7 +173,6 @@ A1stepYdone:
 .)
 	rts
 
-	
 _A2stepY
 .(
 	// save context
@@ -161,14 +187,26 @@ _A2stepY
 	
 	;; e2 = A2err << 1; // 2*A2err;
 	lda _A2err
+	bpl A2stepY_errpositiv_01
 	asl
+	bmi A2stepY_errdone_01
+	lda #$80
+	jmp A2stepY_errdone_01
+	
+A2stepY_errpositiv_01:	
+	asl
+	bpl A2stepY_errdone_01
+	lda #$7F
+A2stepY_errdone_01:	
 	sta reg0
 	
 	;; while ((A2arrived == 0) && ((e2>A2dX) || (A2Y!=nxtY))){
 A2stepY_loop:
 	lda _A2arrived ;; (A2arrived == 0)
-	bne A2stepYdone
-	
+	beq A2stepY_notarrived
+	jmp A2stepYdone
+
+A2stepY_notarrived:	
 	lda _A2dX 		;; (e2>A2dX)
     sec
     sbc reg0
@@ -240,7 +278,17 @@ A2stepY_A2Ydone:
 A2stepY_computeE2:
 		;; e2 = A2err << 1; // 2*A2err;
 		lda _A2err
+		bpl A2stepY_errpositiv_02
 		asl
+		bmi A2stepY_errdone_02
+		lda #$80
+		jmp A2stepY_errdone_02
+		
+A2stepY_errpositiv_02:	
+		asl
+		bpl A2stepY_errdone_02
+		lda #$7F
+A2stepY_errdone_02:	
 		sta reg0
 	
 	jmp A2stepY_loop
@@ -252,6 +300,7 @@ A2stepYdone:
 
 .)
 	rts
+/*
 */
 	
 

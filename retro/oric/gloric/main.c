@@ -282,6 +282,7 @@ void fillFaces() {
             P2X, P2Y, 
             P3X, P3Y,
             distface, faces[jj]);
+		
     }
 
 }
@@ -314,13 +315,14 @@ void faceIntro() {
 
  	CamRotZ = -32 ;
 	CamRotX = 0;
-	for (i= 0; i< 8; i++) {
+	for (i= 0; i< 10; i++) {
 		forward();
         glProject (points2d, points3d, nbPts);
         initScreenBuffers();
         fillFaces();
         buffer2screen();
 	}
+
 	leaveSC();
 
 }
@@ -396,8 +398,8 @@ void faceDemo(){
     //printf ("nbPoints = %d, nbSegments = %d, nbFaces = %d\n",nbPts, nbSegments, nbFaces);
 	lores0();
 	faceIntro();
-    CamPosX = -4;
-	CamPosY = 4;
+/*    CamPosX = -3;
+	CamPosY = 3;
 	CamPosZ = 1;
 
  	CamRotZ = -32 ;
@@ -409,7 +411,7 @@ void faceDemo(){
 
  	CamRotZ = -64 ;
 	CamRotX = 0;
-
+*/
 
 	txtGameLoop2();
 
