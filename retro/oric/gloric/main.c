@@ -297,7 +297,7 @@ void faceIntro() {
  	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
 	CamRotX = 2;
 
-    for (i=0;i<120;) {
+    for (i=0;i<60;) {
 		CamPosX = traj[i++];
 		CamPosY = traj[i++];
 		CamRotZ = traj[i++];
@@ -308,6 +308,19 @@ void faceIntro() {
         buffer2screen();
     }
 
+	CamPosX = -8;
+	CamPosY = 8;
+	CamPosZ = 1;
+
+ 	CamRotZ = -32 ;
+	CamRotX = 0;
+	for (i= 0; i< 8; i++) {
+		forward();
+        glProject (points2d, points3d, nbPts);
+        initScreenBuffers();
+        fillFaces();
+        buffer2screen();
+	}
 	leaveSC();
 
 }
@@ -382,7 +395,7 @@ void faceDemo(){
     addCube3(0, 0, 0);
     //printf ("nbPoints = %d, nbSegments = %d, nbFaces = %d\n",nbPts, nbSegments, nbFaces);
 	lores0();
-	//faceIntro();
+	faceIntro();
     CamPosX = -4;
 	CamPosY = 4;
 	CamPosZ = 1;
@@ -391,10 +404,10 @@ void faceDemo(){
 	CamRotX = 0;
 
     CamPosX = 0;
-	CamPosY = -3;
+	CamPosY = -4;
 	CamPosZ = 1;
 
- 	CamRotZ = 64 ;
+ 	CamRotZ = -64 ;
 	CamRotX = 0;
 
 
@@ -406,12 +419,12 @@ void faceDemo(){
 void main()
 {
     
-	//faceDemo();
-    
+	faceDemo();
+/*    
 #ifdef TEXTMODE
 	textDemo();
 #else
 	hiresDemo();
 #endif
-   
+*/  
 }

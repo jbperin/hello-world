@@ -24,8 +24,8 @@ extern char A2arrived;
 
 #define max(a,b)            (((a) > (b)) ? (a) : (b))
 #define min(a,b)            (((a) < (b)) ? (a) : (b))
-/*
-void A1stepY(){
+
+/*void A1stepY(){
 	signed char  nxtY, e2;
 	nxtY = A1Y+A1sY;
 	e2 = A1err << 1; // 2*A1err;
@@ -62,6 +62,91 @@ void A2stepY(){
 	}
 }
 */
+void A1stepY(){
+	signed char  nxtY, e2;
+	nxtY = A1Y+A1sY;
+	
+	e2 = (A1err < 0) ? (
+			((A1err & 0x40) == 0)?(
+				0x80
+			):(
+				A1err << 1
+			)
+		):(
+			((A1err & 0x40) != 0)?(
+				0x7F
+			):(
+				A1err << 1
+			)
+		);
+	
+	while ((A1arrived == 0) && ((e2>A1dX) || (A1Y!=nxtY))){
+		if (e2 >= A1dY){
+			A1err += A1dY;
+			A1X += A1sX;
+		}
+		if (e2 <= A1dX){
+			A1err += A1dX;
+			A1Y += A1sY;
+		}
+		A1arrived=((A1X == A1destX) && ( A1Y == A1destY))?1:0;
+		e2 = (A1err < 0) ? (
+				((A1err & 0x40) == 0)?(
+					0x80
+				):(
+					A1err << 1
+				)
+			):(
+				((A1err & 0x40) != 0)?(
+					0x7F
+				):(
+					A1err << 1
+				)
+			);
+		}
+}
+
+void A2stepY(){
+	signed char  nxtY, e2;
+	nxtY = A2Y+A2sY	;
+	e2 = (A2err < 0) ? (
+			((A2err & 0x40) == 0)?(
+				0x80
+			):(
+				A2err << 1
+			)
+		):(
+			((A2err & 0x40) != 0)?(
+				0x7F
+			):(
+				A2err << 1
+			)
+		);
+	while ((A2arrived == 0) && ((e2>A2dX) || (A2Y!=nxtY))){
+		if (e2 >= A2dY){
+			A2err += A2dY;
+			A2X += A2sX;
+		}
+		if (e2 <= A2dX){
+			A2err += A2dX;
+			A2Y += A2sY;
+		}
+		A2arrived=((A2X == A2destX) && ( A2Y == A2destY))?1:0;
+		e2 = (A2err < 0) ? (
+				((A2err & 0x40) == 0)?(
+					0x80
+				):(
+					A2err << 1
+				)
+			):(
+				((A2err & 0x40) != 0)?(
+					0x7F
+				):(
+					A2err << 1
+				)
+			);
+	}
+}
 
 void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dist, char char2disp){
 

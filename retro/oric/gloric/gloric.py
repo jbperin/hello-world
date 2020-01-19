@@ -15,8 +15,8 @@ nbfaces = 2
 nbpoints = 4
 faces = [[3, 2, 6]]
 points = [[4,4,4],[4,4,-4], [-4, 4, -4],[-4, 4, 4],[4,-4,4],[4,-4,-4],[-4,-4,-4],[-4,-4,4]]
-campos=[0, -3, 1]
-camori=[64, 0] # rotation Z puis X en 127ème de Pi radian
+campos=[0, -4, 1]
+camori=[-64, 0] # rotation Z puis X en 127ème de Pi radian
 
 #system
 screen = [[' ' for i in range(LE+1)] for j in range(HE+1)]
@@ -246,10 +246,13 @@ def drawLine( x0,  y0,  x1,  y1):
         sy = -1
 
     err = dx+dy;  # error value e_xy */
+    print ("0. dx=%d sx=%d dy=%d sy=%d err=%d"%(dx, sx, dy, sy, err))
     while (True):   # loop */
         points2d.append([x0 , y0])
+        print (x0, y0)
         if ((x0==x1) and (y0==y1)): break
         e2 = 2*err;
+        if (e2 >=127) or (e2 <= -128): print (e2)
         if (e2 >= dy):
             err += dy; # e_xy+e_x > 0 */
             x0 += sx;
@@ -358,11 +361,14 @@ def printScreen ():
 def main():
 
     initScreen ()
-    project ()
+    #project ()
 
-    intProject ()
-    print (points2[7], points2[6], points2[5])
-    fillclip(points2[7], points2[6], points2[5])
+    #intProject ()
+    #print (points2[7], points2[6], points2[5])
+    #fillclip(points2[7], points2[6], points2[5])
+    fillclip([59, 1], [-16, 29], [-16,1])
+    #drawLine( -16, 29,  59, 1)
+    #drawLine(59, 1, -16, 29)
     #print (fastAtan (-3, 3))
 
     #for [pA, pB, pC, fst] in faces:

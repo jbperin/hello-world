@@ -39,7 +39,7 @@ _A2sY
 _A2arrived
 	.byt 0
 	
-	
+/*	
 _A1stepY
 .(
 	// save context
@@ -145,7 +145,6 @@ A1stepYdone:
 
 .)
 	rts
-
 
 	
 _A2stepY
@@ -253,6 +252,7 @@ A2stepYdone:
 
 .)
 	rts
+*/
 	
 
 /*
