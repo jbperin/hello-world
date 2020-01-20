@@ -90,6 +90,39 @@ void addCube3(char X, char Y, char Z){
 	nbSegments += NB_SEGMENTS_CUBE;
 	nbFaces += NB_FACES_CUBE;
 }
+
+void addPlan(){
+	unsigned char ii, jj;
+    points3d[nbPts* SIZEOF_3DPOINT + 0] = -4;
+    points3d[nbPts* SIZEOF_3DPOINT + 1] = -4;
+    points3d[nbPts* SIZEOF_3DPOINT + 2] = 4;
+    nbPts ++;
+    points3d[nbPts* SIZEOF_3DPOINT + 0] = -4;
+    points3d[nbPts* SIZEOF_3DPOINT + 1] = -4;
+    points3d[nbPts* SIZEOF_3DPOINT + 2] = -4;
+    nbPts ++;
+    points3d[nbPts* SIZEOF_3DPOINT + 0] = -4;
+    points3d[nbPts* SIZEOF_3DPOINT + 1] = 4;
+    points3d[nbPts* SIZEOF_3DPOINT + 2] = -4;
+    nbPts ++;
+    points3d[nbPts* SIZEOF_3DPOINT + 0] = -4;
+    points3d[nbPts* SIZEOF_3DPOINT + 1] = 4;
+    points3d[nbPts* SIZEOF_3DPOINT + 2] = 4;
+    nbPts ++;
+    faces[nbFaces* SIZEOF_FACES + 0] = nbPts-4; // Index Point 1
+    faces[nbFaces* SIZEOF_FACES + 1] = nbPts-3; // Index Point 2
+    faces[nbFaces* SIZEOF_FACES + 2] = nbPts-2; // Index Point 3
+    faces[nbFaces* SIZEOF_FACES + 3] = 77; // Index Point 3
+    nbFaces ++;
+    faces[nbFaces* SIZEOF_FACES + 0] = nbPts-4; // Index Point 1
+    faces[nbFaces* SIZEOF_FACES + 1] = nbPts-2; // Index Point 2
+    faces[nbFaces* SIZEOF_FACES + 2] = nbPts-1; // Index Point 3
+    faces[nbFaces* SIZEOF_FACES + 3] = 77; // Index Point 3
+    nbFaces ++;
+}
+
+
+
 #endif
 void test_atan2() {
 
@@ -269,20 +302,28 @@ void fillFaces() {
             distFaces[ii] = dmoy;
         }*/
         distface = (unsigned char)(dmoy & 0x00FF);
-
+#ifndef ANGLEONLY
         P1X=points2d [offPt1+0];
         P1Y=points2d [offPt1+1];
         P2X=points2d [offPt2+0];
         P2Y=points2d [offPt2+1];
         P3X=points2d [offPt3+0];
         P3Y=points2d [offPt3+1];
+#else
+        P1X=-(points2d [offPt1+0]/2)+(SCREEN_WIDTH/2);
+        P1Y=-(points2d [offPt1+1]/2)+(SCREEN_HEIGHT/2);
+        P2X=-(points2d [offPt2+0]/2)+(SCREEN_WIDTH/2);
+        P2Y=-(points2d [offPt2+1]/2)+(SCREEN_HEIGHT/2);
+        P3X=-(points2d [offPt3+0]/2)+(SCREEN_WIDTH/2);
+        P3Y=-(points2d [offPt3+1]/2)+(SCREEN_HEIGHT/2);
+   
+#endif
         //printf ("[%d, %d], [%d, %d], [%d, %d]\n", P1X, P1Y, P2X, P2Y, P3X, P3Y);
         //get();
         fill8(P1X, P1Y, 
             P2X, P2Y, 
             P3X, P3Y,
             distface, faces[jj]);
-		
     }
 
 }
@@ -298,7 +339,7 @@ void faceIntro() {
  	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
 	CamRotX = 2;
 
-    for (i=0;i<60;) {
+    for (i=0;i<120;) {
 		CamPosX = traj[i++];
 		CamPosY = traj[i++];
 		CamRotZ = traj[i++];
@@ -315,14 +356,13 @@ void faceIntro() {
 
  	CamRotZ = -32 ;
 	CamRotX = 0;
-	for (i= 0; i< 10; i++) {
+	for (i= 0; i< 8; i++) {
 		forward();
         glProject (points2d, points3d, nbPts);
         initScreenBuffers();
         fillFaces();
         buffer2screen();
 	}
-
 	leaveSC();
 
 }
@@ -333,7 +373,7 @@ void txtGameLoop2() {
 	key=get();
 	glProject (points2d, points3d, nbPts);
     
-    /*printf ("(x=%d y=%d z=%d) [%d %d]\n", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+    printf ("(x=%d y=%d z=%d) [%d %d]\n", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
         for (ii=0; ii< nbPts; ii++){
             printf ("[%d %d %d] => [%d %d] %d \n"
             , points3d [ii*SIZEOF_3DPOINT+0], points3d[ii*SIZEOF_3DPOINT+1], points3d[ii*SIZEOF_3DPOINT+2]
@@ -341,7 +381,7 @@ void txtGameLoop2() {
             );
         }
         get();
-    */
+    
 	initScreenBuffers();
 	fillFaces();
     while (1==1) {
@@ -394,24 +434,19 @@ void faceDemo(){
 	nbSegments =0 ;
     nbFaces =0 ;
 	//addCube(-4, -4, 2);
-    addCube3(0, 0, 0);
+    //addCube3(0, 0, 0);
+    addPlan();
     //printf ("nbPoints = %d, nbSegments = %d, nbFaces = %d\n",nbPts, nbSegments, nbFaces);
 	lores0();
-	faceIntro();
-/*    CamPosX = -3;
-	CamPosY = 3;
+	//faceIntro();
+
+    CamPosX = -4;
+	CamPosY = 4;
 	CamPosZ = 1;
 
- 	CamRotZ = -32 ;
+ 	CamRotZ = -32;
 	CamRotX = 0;
 
-    CamPosX = 0;
-	CamPosY = -4;
-	CamPosZ = 1;
-
- 	CamRotZ = -64 ;
-	CamRotX = 0;
-*/
 
 	txtGameLoop2();
 

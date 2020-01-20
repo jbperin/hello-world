@@ -2,7 +2,7 @@
 #define CONFIG_H
 
 #define TEXTMODE 
-
+#define ANGLEONLY
 /*
  *  SCREEN DIMENSION
  */
