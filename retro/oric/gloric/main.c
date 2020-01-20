@@ -266,7 +266,9 @@ void fillFaces() {
     unsigned char idxPt1, idxPt2, idxPt3, distface;
     unsigned char offPt1, offPt2, offPt3;
     signed char P1X, P1Y, P2X, P2Y, P3X, P3Y;
-
+#ifdef ANGLEONLY
+	signed char P1AH, P1AV, P2AH, P2AV, P3AH, P3AV;
+#endif
 	for (ii=0; ii< nbFaces; ii++) {
         jj = ii << 2;
         /*idxPt1 = faces[ii*SIZEOF_FACES+0];
@@ -310,12 +312,19 @@ void fillFaces() {
         P3X=points2d [offPt3+0];
         P3Y=points2d [offPt3+1];
 #else
-        P1X=-(points2d [offPt1+0]/2)+(SCREEN_WIDTH/2);
-        P1Y=-(points2d [offPt1+1]/2)+(SCREEN_HEIGHT/2);
-        P2X=-(points2d [offPt2+0]/2)+(SCREEN_WIDTH/2);
-        P2Y=-(points2d [offPt2+1]/2)+(SCREEN_HEIGHT/2);
-        P3X=-(points2d [offPt3+0]/2)+(SCREEN_WIDTH/2);
-        P3Y=-(points2d [offPt3+1]/2)+(SCREEN_HEIGHT/2);
+	
+		P1AH =  points2d [offPt1+0]/2;
+        P1X  = -P1AH+(SCREEN_WIDTH/2);
+		P1AV =  points2d [offPt1+1]/2;
+        P1Y  = -P1AV+(SCREEN_HEIGHT/2);
+		P2AH =  points2d [offPt2+0]/2;
+        P2X  = -P2AH+(SCREEN_WIDTH/2);
+		P2AV =  points2d [offPt2+1]/2;
+        P2Y  = -P2AV+(SCREEN_HEIGHT/2);
+		P3AH =  points2d [offPt3+0]/2;
+        P3X  = -P3AH+(SCREEN_WIDTH/2);
+		P3AV =  points2d [offPt3+1]/2;
+        P3Y  = -P3AV+(SCREEN_HEIGHT/2);
    
 #endif
         //printf ("[%d, %d], [%d, %d], [%d, %d]\n", P1X, P1Y, P2X, P2Y, P3X, P3Y);
@@ -440,11 +449,11 @@ void faceDemo(){
 	lores0();
 	//faceIntro();
 
-    CamPosX = -4;
-	CamPosY = 4;
+    CamPosX = -8;
+	CamPosY = 0;
 	CamPosZ = 1;
 
- 	CamRotZ = -32;
+ 	CamRotZ = 0;
 	CamRotX = 0;
 
 
@@ -456,12 +465,12 @@ void faceDemo(){
 void main()
 {
     
-	faceDemo();
-/*    
+	//faceDemo();
+// THINK OF ANGLEONLY !!!!     
 #ifdef TEXTMODE
 	textDemo();
 #else
 	hiresDemo();
 #endif
-*/  
+ 
 }
