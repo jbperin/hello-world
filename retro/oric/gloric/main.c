@@ -268,6 +268,7 @@ void fillFaces() {
     signed char P1X, P1Y, P2X, P2Y, P3X, P3Y;
 #ifdef ANGLEONLY
 	signed char P1AH, P1AV, P2AH, P2AV, P3AH, P3AV;
+    unsigned char m1, m2, m3;
 #endif
 	for (ii=0; ii< nbFaces; ii++) {
         jj = ii << 2;
@@ -311,28 +312,43 @@ void fillFaces() {
         P2Y=points2d [offPt2+1];
         P3X=points2d [offPt3+0];
         P3Y=points2d [offPt3+1];
-#else
-	
-		P1AH =  points2d [offPt1+0]/2;
-        P1X  = -P1AH+(SCREEN_WIDTH/2);
-		P1AV =  points2d [offPt1+1]/2;
-        P1Y  = -P1AV+(SCREEN_HEIGHT/2);
-		P2AH =  points2d [offPt2+0]/2;
-        P2X  = -P2AH+(SCREEN_WIDTH/2);
-		P2AV =  points2d [offPt2+1]/2;
-        P2Y  = -P2AV+(SCREEN_HEIGHT/2);
-		P3AH =  points2d [offPt3+0]/2;
-        P3X  = -P3AH+(SCREEN_WIDTH/2);
-		P3AV =  points2d [offPt3+1]/2;
-        P3Y  = -P3AV+(SCREEN_HEIGHT/2);
-   
-#endif
+
         //printf ("[%d, %d], [%d, %d], [%d, %d]\n", P1X, P1Y, P2X, P2Y, P3X, P3Y);
         //get();
         fill8(P1X, P1Y, 
             P2X, P2Y, 
             P3X, P3Y,
             distface, faces[jj]);
+
+#else
+		P1AH =  points2d [offPt1+0];
+		P1AV =  points2d [offPt1+1];
+		P2AH =  points2d [offPt2+0];
+		P2AV =  points2d [offPt2+1];
+		P3AH =  points2d [offPt3+0];
+		P3AV =  points2d [offPt3+1];
+#define ANGLE_MAX 0xE0        
+        m1 = P1AH & ANGLE_MAX;
+        m2 = P2AH & ANGLE_MAX;
+        m3 = P3AH & ANGLE_MAX;
+        
+        if ((m1 == 0x00) || (m1 == ANGLE_MAX) || (m2 == 0x00) || (m2 == ANGLE_MAX) ||(m3 == 0x00) || (m3 == ANGLE_MAX)) {
+            
+            P1X  =  (SCREEN_WIDTH-P1AH)/2;
+            P1Y  =  (SCREEN_HEIGHT-P1AV)/2;
+            P2X  =  (SCREEN_WIDTH-P2AH)/2;
+            P2Y  =  (SCREEN_HEIGHT-P2AV)/2;
+            P3X  =  (SCREEN_WIDTH-P3AH)/2;
+            P3Y  =  (SCREEN_HEIGHT-P3AV)/2;
+            //printf ("[%d, %d], [%d, %d], [%d, %d]\n", P1X, P1Y, P2X, P2Y, P3X, P3Y);
+            //get();
+            fill8(P1X, P1Y, 
+                P2X, P2Y, 
+                P3X, P3Y,
+                distface, faces[jj]);
+        }
+   
+#endif
     }
 
 }
@@ -465,12 +481,12 @@ void faceDemo(){
 void main()
 {
     
-	//faceDemo();
-// THINK OF ANGLEONLY !!!!     
+	faceDemo();
+/* THINK OF ANGLEONLY !!!!     
 #ifdef TEXTMODE
 	textDemo();
 #else
 	hiresDemo();
 #endif
- 
+ */
 }
