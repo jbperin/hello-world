@@ -256,6 +256,26 @@ void buffer2screen(){
 		}
 	}*/
 }
+
+fillFace (signed char P1AH, signed char P1AV, signed char P2AH, signed char P2AV, signed char P3AH, signed char P3AV, unsigned char distface, char ch2disp) {
+    
+    signed char P1X, P1Y, P2X, P2Y, P3X, P3Y;
+    
+    P1X  =  (SCREEN_WIDTH-P1AH)/2;
+    P1Y  =  (SCREEN_HEIGHT-P1AV)/2;
+    P2X  =  (SCREEN_WIDTH-P2AH)/2;
+    P2Y  =  (SCREEN_HEIGHT-P2AV)/2;
+    P3X  =  (SCREEN_WIDTH-P3AH)/2;
+    P3Y  =  (SCREEN_HEIGHT-P3AV)/2;
+    printf ("P1A: [%d, %d], P2A: [%d, %d], P3A [%d, %d]\n", P1AH, P1AV, P2AH, P2AV, P3AH, P3AV);
+    printf ("[%d, %d], [%d, %d], [%d, %d]\n", P1X, P1Y, P2X, P2Y, P3X, P3Y);
+    get();
+    fill8(P1X, P1Y, 
+        P2X, P2Y, 
+        P3X, P3Y,
+        distface, ch2disp);
+
+}
 // extern void PutChar(char x_pos,char y_pos,char ch2disp);
 void fillFaces() {
 
@@ -327,26 +347,116 @@ void fillFaces() {
 		P2AV =  points2d [offPt2+1];
 		P3AH =  points2d [offPt3+0];
 		P3AV =  points2d [offPt3+1];
-#define ANGLE_MAX 0xE0        
+        if (abs(P2AH) < abs(P1AH)){
+            //swap P1 P2
+            tmpH = P1AH;
+            tmpV = P1AV;
+            P1AH = P2AH;
+            P1AV = P2AV;
+            P2AH = tmpH;
+            P2AV = tmpV;
+        } 
+        if (abs(P3AH) < abs(P1AH)){
+            //swap P1 P3
+            tmpH = P1AH;
+            tmpV = P1AV;
+            P1AH = P3AH;
+            P1AV = P3AV;
+            P3AH = tmpH;
+            P3AV = tmpV;            
+        } 
+        if (abs(P2AH) < abs(P3AH)){
+            //swap P2 P3
+            tmpH = P2AH;
+            tmpV = P2AV;
+            P2AH = P3AH;
+            P2AV = P3AV;
+            P3AH = tmpH;
+            P3AV = tmpV;
+            
+        } 
+#define ANGLE_MAX 0xC0        
+#define ANGLE_VIEW 0xE0        
+
         m1 = P1AH & ANGLE_MAX;
         m2 = P2AH & ANGLE_MAX;
         m3 = P3AH & ANGLE_MAX;
+        v1 = P1AH & ANGLE_VIEW;
+        v2 = P2AH & ANGLE_VIEW;
+        v3 = P3AH & ANGLE_VIEW;
         
-        if ((m1 == 0x00) || (m1 == ANGLE_MAX) || (m2 == 0x00) || (m2 == ANGLE_MAX) ||(m3 == 0x00) || (m3 == ANGLE_MAX)) {
-            
-            P1X  =  (SCREEN_WIDTH-P1AH)/2;
-            P1Y  =  (SCREEN_HEIGHT-P1AV)/2;
-            P2X  =  (SCREEN_WIDTH-P2AH)/2;
-            P2Y  =  (SCREEN_HEIGHT-P2AV)/2;
-            P3X  =  (SCREEN_WIDTH-P3AH)/2;
-            P3Y  =  (SCREEN_HEIGHT-P3AV)/2;
-            //printf ("[%d, %d], [%d, %d], [%d, %d]\n", P1X, P1Y, P2X, P2Y, P3X, P3Y);
-            //get();
-            fill8(P1X, P1Y, 
-                P2X, P2Y, 
-                P3X, P3Y,
-                distface, faces[jj]);
+/*
+     P1 P2 P3
+_1_   b  x  x   => rien
+_2_   f  b  x   => rien
+_3_   f  f  b   Si signe(P1AH)!=signe(P2AH) => XXXX
+                Sinon => rien
+_4_   f  f  f   Si signe(P1AH)!=signe(P2AH)  OU signe(P1AH)!=signe(P3AH) => XXXX
+                Sinon => rien
+      v  b  b   
+      v  f  b
+      v  f  f 
+      v  v  b
+      v  v  v
+*/        
+        if ((m1 == 0x00) || (m1 == ANGLE_MAX)){
+            if ((v1 == 0x00) || (v1 == ANGLE_VIEW)) {
+                // P1 VISIBLE
+                // _5_
+                // _6_
+                // _7_
+                // _8_
+                if ((m2 == 0x00) || (m2 == ANGLE_MAX)){
+                    if ((v2 == 0x00) || (v2 == ANGLE_VIEW)) {
+                        // P2 VISIBLE
+                        if ((m3 == 0x00) || (m3 == ANGLE_MAX)){
+                            if ((v3 == 0x00) || (v3 == ANGLE_VIEW)) {
+                                // P3 VISIBLE 
+                                fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV);
+                            } else {
+                                // P3 FRONT
+                            }
+                        } else {
+                            // P3 BACK
+                        }
+                    } else {
+                        // P2 FRONT
+                    }
+                } else {
+                    //   
+                }
+            } else {
+                // P1 FRONT
+                if ((m2 == 0x00) || (m2 == ANGLE_MAX)){
+                    // P2 FRONT
+                    if ((m3 == 0x00) || (m3 == ANGLE_MAX)){
+                        // P3 FRONT
+                        // _4_
+                        if ((P1AH & 0x80) != (P2AH & 0x80)) || ((P1AH & 0x80) != (P3AH & 0x80)) {
+                            fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV);
+                        } else {
+                            // nothing to do
+                        }
+                    } else {
+                        // P3 BACK
+                        // _3_
+                        if ((P1AH & 0x80) != (P2AH & 0x80)) {
+                            fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV);
+                        } else {
+                            // nothing to do
+                        }
+                    }
+                } else {
+                    // P2 BACK
+                    // _2_ nothing to do 
+                }
+            }
+        } else {
+            // P1 BACK
+            // _1_ nothing to do 
         }
+        
+        
    
 #endif
     }
@@ -465,11 +575,11 @@ void faceDemo(){
 	lores0();
 	//faceIntro();
 
-    CamPosX = -8;
+    CamPosX = -2;
 	CamPosY = 0;
 	CamPosZ = 1;
 
- 	CamRotZ = 0;
+ 	CamRotZ = -16;
 	CamRotX = 0;
 
 
