@@ -32,7 +32,7 @@ class sequence ():
         for i in range(len(sl)-1):
             res += "" if (i == 0) else ", "
             res += "%d, %d"%(sl[i][1], sl[i+1][0]-sl[i][0])
-        res += ", 255,0}\n"
+        res += ", 255,0};\n"
         return res
 
     def spread (self, nb, evtgetter, pattern):
@@ -64,10 +64,8 @@ def fireball(): return random.choice([252, 253])
 def main():
     S=sequence(123)
     S.insert(12, 35)
-    #print (S)
-    #print (S.toCarray())
-    S.spread (12, raindrop, "")
-    S.spread (5, lightning, "")
+    S.spread (12, raindrop, "UNIFORM")
+    S.spread (5, lightning, "UNIFORM")
     print (S)
     print (S.toCarray())
 
