@@ -101,27 +101,49 @@ void addPlan(signed char X, signed char Y, unsigned char L, signed char orientat
     points3d[nbPts* SIZEOF_3DPOINT + 2] = 4;
     nbPts ++;
     points3d[nbPts* SIZEOF_3DPOINT + 0] = (orientation == 0)?(0):-L;
-    points3d[nbPts* SIZEOF_3DPOINT + 1] = (orientation == 0)?(0):-L;
+    points3d[nbPts* SIZEOF_3DPOINT + 1] = (orientation == 0)?(-L):0;
     points3d[nbPts* SIZEOF_3DPOINT + 2] = -1;
     nbPts ++;
-    points3d[nbPts* SIZEOF_3DPOINT + 0] = (orientation == 0)?(1):-L;
-    points3d[nbPts* SIZEOF_3DPOINT + 1] = (orientation == 0)?(1):L;
+    points3d[nbPts* SIZEOF_3DPOINT + 0] = (orientation == 0)?(0):L;
+    points3d[nbPts* SIZEOF_3DPOINT + 1] = (orientation == 0)?(L):0;
     points3d[nbPts* SIZEOF_3DPOINT + 2] = -1;
     nbPts ++;
-    points3d[nbPts* SIZEOF_3DPOINT + 0] = (orientation == 0)?(1):-L;
-    points3d[nbPts* SIZEOF_3DPOINT + 1] = (orientation == 0)?(1):L;
+    points3d[nbPts* SIZEOF_3DPOINT + 0] = (orientation == 0)?(0):L;
+    points3d[nbPts* SIZEOF_3DPOINT + 1] = (orientation == 0)?(L):0;
     points3d[nbPts* SIZEOF_3DPOINT + 2] = 4;
     nbPts ++;
     faces[nbFaces* SIZEOF_FACES + 0] = nbPts-4; // Index Point 1
     faces[nbFaces* SIZEOF_FACES + 1] = nbPts-3; // Index Point 2
     faces[nbFaces* SIZEOF_FACES + 2] = nbPts-2; // Index Point 3
-    faces[nbFaces* SIZEOF_FACES + 3] = 77; // Index Point 3
+    faces[nbFaces* SIZEOF_FACES + 3] = char2disp; // Index Point 3
     nbFaces ++;
     faces[nbFaces* SIZEOF_FACES + 0] = nbPts-4; // Index Point 1
     faces[nbFaces* SIZEOF_FACES + 1] = nbPts-2; // Index Point 2
     faces[nbFaces* SIZEOF_FACES + 2] = nbPts-1; // Index Point 3
-    faces[nbFaces* SIZEOF_FACES + 3] = 77; // Index Point 3
+    faces[nbFaces* SIZEOF_FACES + 3] = char2disp; // Index Point 3
     nbFaces ++;
+    
+    
+	segments[nbSegments* SIZEOF_SEGMENT + 0] = nbPts-4; // Index Point 1
+	segments[nbSegments* SIZEOF_SEGMENT + 1] = nbPts-3; // Index Point 2
+	segments[nbSegments* SIZEOF_SEGMENT + 2] = '*'; // Character
+	nbSegments ++;
+    
+	segments[nbSegments* SIZEOF_SEGMENT + 0] = nbPts-3; // Index Point 1
+	segments[nbSegments* SIZEOF_SEGMENT + 1] = nbPts-2; // Index Point 2
+	segments[nbSegments* SIZEOF_SEGMENT + 2] = '*'; // Character
+	nbSegments ++;
+    
+	segments[nbSegments* SIZEOF_SEGMENT + 0] = nbPts-2; // Index Point 1
+	segments[nbSegments* SIZEOF_SEGMENT + 1] = nbPts-1; // Index Point 2
+	segments[nbSegments* SIZEOF_SEGMENT + 2] = '*'; // Character
+	nbSegments ++;
+    
+	segments[nbSegments* SIZEOF_SEGMENT + 0] = nbPts-4; // Index Point 1
+	segments[nbSegments* SIZEOF_SEGMENT + 1] = nbPts-1; // Index Point 2
+	segments[nbSegments* SIZEOF_SEGMENT + 2] = '*'; // Character
+	nbSegments ++;
+
 }
 
 
@@ -154,25 +176,99 @@ void doProjection(){
 	}
 }
 */
+
 /*
-void drawSegments(){
+def drawLine( x0,  y0,  x1,  y1):
+    points2d = []
+
+    dx =  abs(x1-x0);
+    #sx = x0<x1 ? 1 : -1;
+    if (x0<x1):
+        sx = 1
+    else:
+        sx = -1
+
+    dy = -abs(y1-y0);
+    #sy = y0<y1 ? 1 : -1;
+    if (y0<y1):
+        sy = 1
+    else:
+        sy = -1
+
+    err = dx+dy;  # error value e_xy 
+    print ("0. dx=%d sx=%d dy=%d sy=%d err=%d"%(dx, sx, dy, sy, err))
+    while (True):   # loop 
+        points2d.append([x0 , y0])
+        print (x0, y0)
+        if ((x0==x1) and (y0==y1)): break
+        e2 = 2*err;
+        if (e2 >=127) or (e2 <= -128): print (e2)
+        if (e2 >= dy):
+            err += dy; # e_xy+e_x > 0 
+            x0 += sx;
+        if (e2 <= dx): # e_xy+e_y < 0 
+            err += dx;
+            y0 += sy;
+*/
+
+void lrDrawSegments(){
 	unsigned char ii = 0;
 	unsigned char idxPt1, idxPt2;
+    unsigned char offPt1, offPt2;
+    int d1, d2;
+    int dmoy;
+    unsigned char distseg;
+    
+#ifdef ANGLEONLY
+	signed char P1AH, P1AV, P2AH, P2AV;
+#endif
+
 	for (ii = 0; ii< nbSegments; ii++){
 
 		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
 		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
 		char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
-
+        
+        offPt1 = idxPt1<<2;
+        offPt2 = idxPt2<<2;
+        d1 = *((int*)(points2d+offPt1+2));
+        //d2 = points2d [idxPt2*SIZEOF_2DPOINT+3]*256 + points2d [idxPt2*SIZEOF_2DPOINT+2];
+        d2 = *((int*)(points2d+offPt2+2));
+        
+        dmoy = (d1+d2)>>1;
+        if (dmoy >= 256) {
+            //distFaces[ii] = 256;
+            dmoy = 256;
+        }/* else {			
+            distFaces[ii] = dmoy;
+        }*/
+        distseg = (unsigned char)(dmoy & 0x00FF);
+        
+#ifndef ANGLEONLY
 		Point1X = points2d[idxPt1*SIZEOF_2DPOINT + 0];
 		Point1Y = points2d[idxPt1*SIZEOF_2DPOINT + 1];
 		Point2X = points2d[idxPt2*SIZEOF_2DPOINT + 0];
 		Point2Y = points2d[idxPt2*SIZEOF_2DPOINT + 1];
+        
+        printf ("dl ([%d, %d] %d, [%d, %d] %d =>  %d\n", Point1X, Point1Y, d1, Point2X, Point2Y, d2, distseg);
+        get();
+#else
+ 		P1AH = points2d[idxPt1*SIZEOF_2DPOINT + 0];
+		P1AV = points2d[idxPt1*SIZEOF_2DPOINT + 1];
+		P2AH = points2d[idxPt2*SIZEOF_2DPOINT + 0];
+		P2AV = points2d[idxPt2*SIZEOF_2DPOINT + 1];
+   
+        Point1X  =  (SCREEN_WIDTH-P1AH)/2;
+        Point1Y  =  (SCREEN_HEIGHT-P1AV)/2;
+        Point2X  =  (SCREEN_WIDTH-P2AH)/2;
+        Point2Y  =  (SCREEN_HEIGHT-P2AV)/2;
 
-		drawLine ();
+        printf ("dl ([%d, %d] %d, [%d, %d] %d => %d c=%d\n", Point1X, Point1Y, d1, Point2X, Point2Y, d2, distseg, 0);
+        get();
+#endif
 	}
 }
-*/
+
 char status_string[50];
 
 void dispInfo(){
@@ -537,7 +633,8 @@ void faceIntro() {
 		i = i % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
         glProject (points2d, points3d, nbPts);
         initScreenBuffers();
-        fillFaces();
+        //fillFaces();
+        lrDrawSegments();
         buffer2screen();
     }
 
@@ -551,7 +648,8 @@ void faceIntro() {
 		forward();
         glProject (points2d, points3d, nbPts);
         initScreenBuffers();
-        fillFaces();
+        //fillFaces();
+        lrDrawSegments();
         buffer2screen();
 	}
 	leaveSC();
@@ -576,6 +674,7 @@ void txtGameLoop2() {
     */
 	initScreenBuffers();
 	fillFaces();
+    lrDrawSegments();
     while (1==1) {
 		//clearScreen();
 		//drawSegments();
@@ -617,7 +716,8 @@ void txtGameLoop2() {
 		}
 		glProject (points2d, points3d, nbPts);
 		initScreenBuffers();
-		fillFaces();
+		//fillFaces();
+        lrDrawSegments();
 	}
 }
 
@@ -625,20 +725,22 @@ void faceDemo(){
 	nbPts =0 ;
 	nbSegments =0 ;
     nbFaces =0 ;
-	addCube3(-12, -12, 0);
-    addCube3(0, 0, 0);
+	//addCube3(-12, -12, 0);
+    //addCube3(0, 0, 0);
     //addPlan();
+    addPlan(0, 0, 4, 0, 'M');
+    //addPlan(2, 2, 4, 64, ':');
     //printf ("nbPoints = %d, nbSegments = %d, nbFaces = %d\n",nbPts, nbSegments, nbFaces);
 	lores0();
-	faceIntro();
+	//faceIntro();
 
-    /*CamPosX = -8;
+    CamPosX = -8;
 	CamPosY = 0;
 	CamPosZ = 1;
 
  	CamRotZ = 0;
 	CamRotX = 0;
-*/
+    
 
 	txtGameLoop2();
 
