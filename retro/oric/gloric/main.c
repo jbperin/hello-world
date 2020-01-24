@@ -91,22 +91,25 @@ void addCube3(char X, char Y, char Z){
 	nbFaces += NB_FACES_CUBE;
 }
 
-void addPlan(){
+void addPlan(signed char X, signed char Y, unsigned char L, signed char orientation, char char2disp){
 	unsigned char ii, jj;
-    points3d[nbPts* SIZEOF_3DPOINT + 0] = -4;
-    points3d[nbPts* SIZEOF_3DPOINT + 1] = -4;
+    signed char sens;
+    
+    sens = (orientation == 0)?(1):(-1);
+    points3d[nbPts* SIZEOF_3DPOINT + 0] = (orientation == 0)?(0):-L;
+    points3d[nbPts* SIZEOF_3DPOINT + 1] = (orientation == 0)?(-L):0;
     points3d[nbPts* SIZEOF_3DPOINT + 2] = 4;
     nbPts ++;
-    points3d[nbPts* SIZEOF_3DPOINT + 0] = -4;
-    points3d[nbPts* SIZEOF_3DPOINT + 1] = -4;
-    points3d[nbPts* SIZEOF_3DPOINT + 2] = -4;
+    points3d[nbPts* SIZEOF_3DPOINT + 0] = (orientation == 0)?(0):-L;
+    points3d[nbPts* SIZEOF_3DPOINT + 1] = (orientation == 0)?(0):-L;
+    points3d[nbPts* SIZEOF_3DPOINT + 2] = -1;
     nbPts ++;
-    points3d[nbPts* SIZEOF_3DPOINT + 0] = -4;
-    points3d[nbPts* SIZEOF_3DPOINT + 1] = 4;
-    points3d[nbPts* SIZEOF_3DPOINT + 2] = -4;
+    points3d[nbPts* SIZEOF_3DPOINT + 0] = (orientation == 0)?(1):-L;
+    points3d[nbPts* SIZEOF_3DPOINT + 1] = (orientation == 0)?(1):L;
+    points3d[nbPts* SIZEOF_3DPOINT + 2] = -1;
     nbPts ++;
-    points3d[nbPts* SIZEOF_3DPOINT + 0] = -4;
-    points3d[nbPts* SIZEOF_3DPOINT + 1] = 4;
+    points3d[nbPts* SIZEOF_3DPOINT + 0] = (orientation == 0)?(1):-L;
+    points3d[nbPts* SIZEOF_3DPOINT + 1] = (orientation == 0)?(1):L;
     points3d[nbPts* SIZEOF_3DPOINT + 2] = 4;
     nbPts ++;
     faces[nbFaces* SIZEOF_FACES + 0] = nbPts-4; // Index Point 1
@@ -349,8 +352,12 @@ void fillFaces() {
 		P2AV =  points2d [offPt2+1];
 		P3AH =  points2d [offPt3+0];
 		P3AV =  points2d [offPt3+1];
+        //
+        
+        //printf ("AHs [%d, %d, %d] %d %d %d \n", P1AH, P2AH, P3AH, abs(P1AH), abs(P2AH), abs(P3AH));
+        //get ();
         if (abs(P2AH) < abs(P1AH)){
-            //swap P1 P2
+            //printf("swap P1 P2\n");
             tmpH = P1AH;
             tmpV = P1AV;
             P1AH = P2AH;
@@ -359,7 +366,7 @@ void fillFaces() {
             P2AV = tmpV;
         } 
         if (abs(P3AH) < abs(P1AH)){
-            //swap P1 P3
+            //printf("swap P1 P3\n");
             tmpH = P1AH;
             tmpV = P1AV;
             P1AH = P3AH;
@@ -367,8 +374,8 @@ void fillFaces() {
             P3AH = tmpH;
             P3AV = tmpV;            
         } 
-        if (abs(P2AH) < abs(P3AH)){
-            //swap P2 P3
+        if (abs(P3AH) < abs(P2AH)){
+            //printf("swap P2 P3\n");
             tmpH = P2AH;
             tmpV = P2AV;
             P2AH = P3AH;
@@ -386,7 +393,8 @@ void fillFaces() {
         v1 = P1AH & ANGLE_VIEW;
         v2 = P2AH & ANGLE_VIEW;
         v3 = P3AH & ANGLE_VIEW;
-        
+        //printf ("AHs [%d, %d, %d] [%x, %x], %x], %x, %x, %x]\n", P1AH, P2AH, P3AH, m1, m2, m3, v1,v2,v3);
+        //get();
 /*
      P1 P2 P3
 _1_   b  x  x   => rien
@@ -395,7 +403,8 @@ _3_   f  f  b   Si signe(P1AH)!=signe(P2AH) => XXXX
                 Sinon => rien
 _4_   f  f  f   Si signe(P1AH)!=signe(P2AH)  OU signe(P1AH)!=signe(P3AH) => XXXX
                 Sinon => rien
-      v  b  b   
+      v  b  b   Si signe (P1AH) != signe(P2AH) et P2AH proche de -128/127 => clip
+                
       v  f  b
       v  f  f 
       v  v  b
@@ -426,8 +435,22 @@ _4_   f  f  f   Si signe(P1AH)!=signe(P2AH)  OU signe(P1AH)!=signe(P3AH) => XXXX
                     }
                 } else {
                     //   
-                }*/
-                fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
+                }
+                */
+                if (
+                    (
+                        (P1AH & 0x80) != (P2AH & 0x80)
+                    )||(
+                        (P1AH & 0x80) != (P3AH & 0x80)
+                    )
+                ){
+                    if ((abs(P3AH) < 127 - abs(P1AH))){
+                        fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
+                    }
+                } else {
+                
+                    fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
+                }
 
             } else {
                 // P1 FRONT
@@ -445,21 +468,50 @@ _4_   f  f  f   Si signe(P1AH)!=signe(P2AH)  OU signe(P1AH)!=signe(P3AH) => XXXX
                         // P3 BACK
                         // _3_
                         if ((P1AH & 0x80) != (P2AH & 0x80)) {
-                            fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV,            distface, faces[jj]);
+                            if (abs (P2AH) < 127 - abs (P1AH)) {
+                                fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
+                            }
                         } else {
-                            // nothing to do
+                            if ((P1AH & 0x80) != (P3AH & 0x80)) {
+                                if (abs (P3AH) < 127 - abs (P1AH)) {
+                                    fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
+                                }
+                            }
                         }
-                    }
+                                            
+                        if ((P1AH & 0x80) != (P3AH & 0x80)) {
+                            if (abs (P3AH) < 127 - abs (P1AH)) {
+                                fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
+                            }
+                        }
+                        }
                 } else {
                     // P2 BACK
                     // _2_ nothing to do 
+                    if ((P1AH & 0x80) != (P2AH & 0x80)) {
+                        if (abs (P2AH) < 127 - abs (P1AH)) {
+                            fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
+                        }
+                    } else {
+                        if ((P1AH & 0x80) != (P3AH & 0x80)) {
+                            if (abs (P3AH) < 127 - abs (P1AH)) {
+                                fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
+                            }
+                        }
+                    }
+                                        
+                    if ((P1AH & 0x80) != (P3AH & 0x80)) {
+                        if (abs (P3AH) < 127 - abs (P1AH)) {
+                            fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
+                        }
+                    }
                 }
             }
         } else {
             // P1 BACK
             // _1_ nothing to do 
         }
-        
+        //get();
         
    
 #endif
@@ -495,7 +547,7 @@ void faceIntro() {
 
  	CamRotZ = -32 ;
 	CamRotX = 0;
-	for (i= 0; i< 8; i++) {
+	for (i= 0; i< 16; i++) {
 		forward();
         glProject (points2d, points3d, nbPts);
         initScreenBuffers();
@@ -512,7 +564,8 @@ void txtGameLoop2() {
 	key=get();
 	glProject (points2d, points3d, nbPts);
     
-    printf ("(x=%d y=%d z=%d) [%d %d]\n", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+    
+    /*printf ("(x=%d y=%d z=%d) [%d %d]\n", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
         for (ii=0; ii< nbPts; ii++){
             printf ("[%d %d %d] => [%d %d] %d \n"
             , points3d [ii*SIZEOF_3DPOINT+0], points3d[ii*SIZEOF_3DPOINT+1], points3d[ii*SIZEOF_3DPOINT+2]
@@ -520,7 +573,7 @@ void txtGameLoop2() {
             );
         }
         get();
-    
+    */
 	initScreenBuffers();
 	fillFaces();
     while (1==1) {
@@ -572,20 +625,20 @@ void faceDemo(){
 	nbPts =0 ;
 	nbSegments =0 ;
     nbFaces =0 ;
-	//addCube(-4, -4, 2);
-    //addCube3(0, 0, 0);
-    addPlan();
+	addCube3(-12, -12, 0);
+    addCube3(0, 0, 0);
+    //addPlan();
     //printf ("nbPoints = %d, nbSegments = %d, nbFaces = %d\n",nbPts, nbSegments, nbFaces);
 	lores0();
-	//faceIntro();
+	faceIntro();
 
-    CamPosX = -8;
+    /*CamPosX = -8;
 	CamPosY = 0;
 	CamPosZ = 1;
 
  	CamRotZ = 0;
 	CamRotX = 0;
-
+*/
 
 	txtGameLoop2();
 
