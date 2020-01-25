@@ -6,6 +6,8 @@
 #include "externs.c"
 #include "alphabet.c"
 #include "traj.c"
+#define abs(x) (((x)<0)?-(x):(x))
+
 
 //
 // ===== Display.s =====
@@ -66,7 +68,7 @@ void initScreenBuffers(){
 	memset (fbuffer, 0x20, SCREEN_WIDTH*SCREEN_HEIGHT); // Space
 }
 
-
+/*
 void addCube3(char X, char Y, char Z){
 	unsigned char ii, jj;
 	for (jj=0; jj < NB_POINTS_CUBE; jj++){
@@ -90,27 +92,37 @@ void addCube3(char X, char Y, char Z){
 	nbSegments += NB_SEGMENTS_CUBE;
 	nbFaces += NB_FACES_CUBE;
 }
-
+*/
 void addPlan(signed char X, signed char Y, unsigned char L, signed char orientation, char char2disp){
 	unsigned char ii, jj;
-    signed char sens;
-    
-    sens = (orientation == 0)?(1):(-1);
-    points3d[nbPts* SIZEOF_3DPOINT + 0] = (orientation == 0)?(0):-L;
-    points3d[nbPts* SIZEOF_3DPOINT + 1] = (orientation == 0)?(-L):0;
-    points3d[nbPts* SIZEOF_3DPOINT + 2] = 4;
+	ii = (orientation == 0)?0:-L;
+	jj = (orientation == 0)?-L:0;
+	//printf ("plane [%d %d], l= %d, ori = %d, t = %c\n", X	, Y, L, orientation, char2disp); get();
+    points3d[nbPts* SIZEOF_3DPOINT + 0] = X + ii;
+    points3d[nbPts* SIZEOF_3DPOINT + 1] = Y + jj;
+    points3d[nbPts* SIZEOF_3DPOINT + 2] = 3;
+	//printf ("p3d [%d %d %d]\n", points3d[nbPts* SIZEOF_3DPOINT + 0]	, points3d[nbPts* SIZEOF_3DPOINT + 1], points3d[nbPts* SIZEOF_3DPOINT + 2]); get();
     nbPts ++;
-    points3d[nbPts* SIZEOF_3DPOINT + 0] = (orientation == 0)?(0):-L;
-    points3d[nbPts* SIZEOF_3DPOINT + 1] = (orientation == 0)?(-L):0;
-    points3d[nbPts* SIZEOF_3DPOINT + 2] = -1;
+	ii = (orientation == 0)?0:-L;
+	jj = (orientation == 0)?-L:0;
+    points3d[nbPts* SIZEOF_3DPOINT + 0] = X + ii ;
+    points3d[nbPts* SIZEOF_3DPOINT + 1] = Y + jj ;
+    points3d[nbPts* SIZEOF_3DPOINT + 2] = 0;
+	//printf ("p3d [%d %d %d]\n", points3d[nbPts* SIZEOF_3DPOINT + 0]	, points3d[nbPts* SIZEOF_3DPOINT + 1], points3d[nbPts* SIZEOF_3DPOINT + 2]); get();
     nbPts ++;
-    points3d[nbPts* SIZEOF_3DPOINT + 0] = (orientation == 0)?(0):L;
-    points3d[nbPts* SIZEOF_3DPOINT + 1] = (orientation == 0)?(L):0;
-    points3d[nbPts* SIZEOF_3DPOINT + 2] = -1;
+	ii = (orientation == 0)?(0):L;
+	jj = (orientation == 0)?(L):0;
+    points3d[nbPts* SIZEOF_3DPOINT + 0] = X + ii ;
+    points3d[nbPts* SIZEOF_3DPOINT + 1] = Y + jj ;
+    points3d[nbPts* SIZEOF_3DPOINT + 2] = 0;
+	//printf ("p3d [%d %d %d]\n", points3d[nbPts* SIZEOF_3DPOINT + 0]	, points3d[nbPts* SIZEOF_3DPOINT + 1], points3d[nbPts* SIZEOF_3DPOINT + 2]); get();
     nbPts ++;
-    points3d[nbPts* SIZEOF_3DPOINT + 0] = (orientation == 0)?(0):L;
-    points3d[nbPts* SIZEOF_3DPOINT + 1] = (orientation == 0)?(L):0;
-    points3d[nbPts* SIZEOF_3DPOINT + 2] = 4;
+	ii = (orientation == 0)?(0):L;
+	jj = (orientation == 0)?(L):0;
+    points3d[nbPts* SIZEOF_3DPOINT + 0] = X + ii ;
+    points3d[nbPts* SIZEOF_3DPOINT + 1] = Y + jj ;
+    points3d[nbPts* SIZEOF_3DPOINT + 2] = 3;
+	//printf ("p3d [%d %d %d]\n", points3d[nbPts* SIZEOF_3DPOINT + 0]	, points3d[nbPts* SIZEOF_3DPOINT + 1], points3d[nbPts* SIZEOF_3DPOINT + 2]); get();
     nbPts ++;
     faces[nbFaces* SIZEOF_FACES + 0] = nbPts-4; // Index Point 1
     faces[nbFaces* SIZEOF_FACES + 1] = nbPts-3; // Index Point 2
@@ -126,29 +138,30 @@ void addPlan(signed char X, signed char Y, unsigned char L, signed char orientat
     
 	segments[nbSegments* SIZEOF_SEGMENT + 0] = nbPts-4; // Index Point 1
 	segments[nbSegments* SIZEOF_SEGMENT + 1] = nbPts-3; // Index Point 2
-	segments[nbSegments* SIZEOF_SEGMENT + 2] = '*'; // Character
+	segments[nbSegments* SIZEOF_SEGMENT + 2] = '|'; // Character
 	nbSegments ++;
     
 	segments[nbSegments* SIZEOF_SEGMENT + 0] = nbPts-3; // Index Point 1
 	segments[nbSegments* SIZEOF_SEGMENT + 1] = nbPts-2; // Index Point 2
-	segments[nbSegments* SIZEOF_SEGMENT + 2] = '*'; // Character
+	segments[nbSegments* SIZEOF_SEGMENT + 2] = '-'; // Character
 	nbSegments ++;
     
 	segments[nbSegments* SIZEOF_SEGMENT + 0] = nbPts-2; // Index Point 1
 	segments[nbSegments* SIZEOF_SEGMENT + 1] = nbPts-1; // Index Point 2
-	segments[nbSegments* SIZEOF_SEGMENT + 2] = '*'; // Character
+	segments[nbSegments* SIZEOF_SEGMENT + 2] = '|'; // Character
 	nbSegments ++;
     
 	segments[nbSegments* SIZEOF_SEGMENT + 0] = nbPts-4; // Index Point 1
 	segments[nbSegments* SIZEOF_SEGMENT + 1] = nbPts-1; // Index Point 2
-	segments[nbSegments* SIZEOF_SEGMENT + 2] = '*'; // Character
+	segments[nbSegments* SIZEOF_SEGMENT + 2] = '-'; // Character
 	nbSegments ++;
-
+	//printf ("%d Points, %d Segments, %d Faces\n", nbPts, nbSegments, nbFaces); get();
 }
 
 
 
 #endif
+/*
 void test_atan2() {
 
 tx=0; ty=0; res=0; atan2_8();if (res!=0) printf("ERR atan(%d, %d)= %d\n",tx,ty,res);
@@ -163,6 +176,7 @@ tx=-1; ty=-1; res=0; atan2_8();if (res!=-96) printf("ERR atan(%d, %d)= %d\n",tx,
 //#include "output.txt"
 
 }
+*/
 /*
 void doProjection(){
 	unsigned char ii = 0;
@@ -176,6 +190,80 @@ void doProjection(){
 	}
 }
 */
+
+void zplot(unsigned char X, unsigned char Y, unsigned char dist, char char2disp) {
+	int  offset;
+    char *ptrFbuf;
+    unsigned char *ptrZbuf;
+	if ((Y <= 0) || (Y>=SCREEN_HEIGHT) || (X <= 0) || (X>=SCREEN_WIDTH)) return;
+    offset = Y*SCREEN_WIDTH+X;
+    ptrZbuf = zbuffer+offset;
+    ptrFbuf = fbuffer+offset;
+	//printf ("pl [%d %d] zbuff = %d , pointDist = %d\n", X, Y, *ptrZbuf, dist);
+	if (dist < *ptrZbuf ){
+            *ptrFbuf = char2disp;
+            *ptrZbuf = dist;
+    }
+	
+}
+
+signed char _brX;
+signed char _brY;
+signed char _brDx;
+signed char _brDy;
+signed char _brDestX;
+signed char _brDestY;
+signed char _brErr;
+signed char _brSx;
+signed char _brSy;
+
+
+void lrDrawLine (signed char x0, signed char y0, signed char x1, signed char y1, unsigned char distseg, char ch2disp) {
+
+
+	
+	signed char e2;
+	
+	_brX = x0;
+	_brY = y0;
+	_brDestX = x1;
+	_brDestY = y1;
+	_brDx =  abs(x1-x0);
+	_brDy= -abs(y1-y0);
+	_brSx = x0<x1 ? 1 : -1;
+	_brSy = y0<y1 ? 1 : -1;
+	_brErr=_brDx+_brDy;
+    if ((_brErr > 64) ||(_brErr < -63)) return;
+	
+	
+	while ((_brX != _brDestX) || (_brY != _brDestY)) { // loop 
+        // plot (brX, brY, distseg, ch2disp)
+		//printf ("plot [%d, %d] %d %s\n", _brX, _brY, distseg, ch2disp);
+		zplot(_brX, _brY, distseg, ch2disp);
+        //e2 = 2*err;
+		e2 = (_brErr < 0) ? (
+			((_brErr & 0x40) == 0)?(
+				0x80
+			):(
+				_brErr << 1
+			)
+		):(
+			((_brErr & 0x40) != 0)?(
+				0x7F
+			):(
+				_brErr << 1
+			)
+		);
+        if (e2 >= _brDy) {
+            _brErr += _brDy; // e_xy+e_x > 0 
+            _brX += _brSx;
+        }
+        if (e2 <= _brDx){ // e_xy+e_y < 0 
+            _brErr += _brDx;
+            _brY += _brSy;
+        }
+    }
+}
 
 /*
 def drawLine( x0,  y0,  x1,  y1):
@@ -242,7 +330,7 @@ void lrDrawSegments(){
         }/* else {			
             distFaces[ii] = dmoy;
         }*/
-        distseg = (unsigned char)(dmoy & 0x00FF);
+        distseg = (unsigned char)((dmoy-1) & 0x00FF); // FIXME -1 is a ugly hack
         
 #ifndef ANGLEONLY
 		Point1X = points2d[idxPt1*SIZEOF_2DPOINT + 0];
@@ -250,8 +338,8 @@ void lrDrawSegments(){
 		Point2X = points2d[idxPt2*SIZEOF_2DPOINT + 0];
 		Point2Y = points2d[idxPt2*SIZEOF_2DPOINT + 1];
         
-        printf ("dl ([%d, %d] %d, [%d, %d] %d =>  %d\n", Point1X, Point1Y, d1, Point2X, Point2Y, d2, distseg);
-        get();
+        //printf ("dl ([%d, %d] %d, [%d, %d] %d =>  %d\n", Point1X, Point1Y, d1, Point2X, Point2Y, d2, distseg);
+        //get();
 #else
  		P1AH = points2d[idxPt1*SIZEOF_2DPOINT + 0];
 		P1AV = points2d[idxPt1*SIZEOF_2DPOINT + 1];
@@ -263,8 +351,9 @@ void lrDrawSegments(){
         Point2X  =  (SCREEN_WIDTH-P2AH)/2;
         Point2Y  =  (SCREEN_HEIGHT-P2AV)/2;
 
-        printf ("dl ([%d, %d] %d, [%d, %d] %d => %d c=%d\n", Point1X, Point1Y, d1, Point2X, Point2Y, d2, distseg, 0);
-        get();
+        //printf ("dl ([%d, %d] %d, [%d, %d] %d => %d c=%d\n", Point1X, Point1Y, d1, Point2X, Point2Y, d2, distseg, 0);
+        //get();
+		lrDrawLine (Point1X, Point1Y, Point2X, Point2Y, distseg, char2Display);
 #endif
 	}
 }
@@ -286,7 +375,7 @@ void dispInfo(){
 #else
 #include "hrsDemo.c"
 #endif
-
+/*
 void hrDrawSegments2(){
 	unsigned char ii = 0;
 	unsigned char idxPt1, idxPt2;
@@ -338,10 +427,8 @@ void debugHiresIntro (){
 	//leaveSC();
 
 }
-
+*/
 #ifdef TEXTMODE
-
-#define abs(x) (((x)<0)?-(x):(x))
 
 #include "fill8.c"
 
@@ -391,6 +478,7 @@ void fillFaces() {
     unsigned char m1, m2, m3;
 	unsigned char v1, v2, v3;
 #endif
+	//printf ("%d Points, %d Segments, %d Faces\n", nbPts, nbSegments, nbFaces); get();
 	for (ii=0; ii< nbFaces; ii++) {
         jj = ii << 2;
         /*idxPt1 = faces[ii*SIZEOF_FACES+0];
@@ -404,21 +492,16 @@ void fillFaces() {
         offPt1 = faces[jj++] << 2;
         offPt2 = faces[jj++] << 2;
         offPt3 = faces[jj++] << 2;
-        
-        //d1 = points2d [idxPt1*SIZEOF_2DPOINT+3]*256 + points2d [idxPt1*SIZEOF_2DPOINT+2];
-        //d1 = points2d [(idxPt1<<2)+3]*256 + points2d [(idxPt1<<2)+2];
-        //d1 = points2d [(idxPt1<<2)+3];
-        //d1 <<= 8;
-        //d1 |= points2d [(idxPt1<<2)+2];
+        //printf ("face %d : %d %d %d\n",ii, offPt1, offPt2, offPt3);get();
         d1 = *((int*)(points2d+offPt1+2));
-        //d2 = points2d [idxPt2*SIZEOF_2DPOINT+3]*256 + points2d [idxPt2*SIZEOF_2DPOINT+2];
+
         d2 = *((int*)(points2d+offPt2+2));
-        //d3 = points2d [idxPt3*SIZEOF_2DPOINT+3]*256 + points2d [idxPt3*SIZEOF_2DPOINT+2];
+
         d3 = *((int*)(points2d+offPt3+2));
         
 
         //dmoy = (d1+d2+d3)/3;
-        dmoy = (d1+d2+d3)>>2;
+        dmoy = (d1+d2+d3)/3;
         if (dmoy >= 256) {
             //distFaces[ii] = 256;
             dmoy = 256;
@@ -434,8 +517,8 @@ void fillFaces() {
         P3X=points2d [offPt3+0];
         P3Y=points2d [offPt3+1];
 
-        //printf ("[%d, %d], [%d, %d], [%d, %d]\n", P1X, P1Y, P2X, P2Y, P3X, P3Y);
-        //get();
+        //printf ("[%d, %d], [%d, %d], [%d, %d]\n", P1X, P1Y, P2X, P2Y, P3X, P3Y);get();
+		
         fill8(P1X, P1Y, 
             P2X, P2Y, 
             P3X, P3Y,
@@ -450,8 +533,8 @@ void fillFaces() {
 		P3AV =  points2d [offPt3+1];
         //
         
-        //printf ("AHs [%d, %d, %d] %d %d %d \n", P1AH, P2AH, P3AH, abs(P1AH), abs(P2AH), abs(P3AH));
-        //get ();
+        //printf ("P1 [%d, %d], P2 [%d, %d], P3 [%d %d]\n", P1AH, P1AV, P2AH, P2AV,  P3AH, P3AV); get();
+
         if (abs(P2AH) < abs(P1AH)){
             //printf("swap P1 P2\n");
             tmpH = P1AH;
@@ -619,26 +702,26 @@ void faceIntro() {
     get();
     enterSC();
 
-	CamPosX = -24;
+	CamPosX = 0;
 	CamPosY = 0;
-	CamPosZ = 0;
+	CamPosZ = 1;
 
- 	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
-	CamRotX = 2;
+ 	CamRotZ = 0;
+	CamRotX = 0;
 
     for (i=0;i<120;) {
-		CamPosX = traj[i++];
-		CamPosY = traj[i++];
+		CamPosX = traj[i++]/4;
+		CamPosY = traj[i++]/4;
 		CamRotZ = traj[i++];
 		i = i % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
         glProject (points2d, points3d, nbPts);
         initScreenBuffers();
-        //fillFaces();
+        fillFaces();
         lrDrawSegments();
         buffer2screen();
     }
 
-	CamPosX = -8;
+/*	CamPosX = -8;
 	CamPosY = 8;
 	CamPosZ = 1;
 
@@ -648,10 +731,11 @@ void faceIntro() {
 		forward();
         glProject (points2d, points3d, nbPts);
         initScreenBuffers();
-        //fillFaces();
+        fillFaces();
         lrDrawSegments();
         buffer2screen();
 	}
+*/
 	leaveSC();
 
 }
@@ -659,7 +743,7 @@ void txtGameLoop2() {
 
 	char key;
     unsigned char ii;    
-	key=get();
+	//key=get();
 	glProject (points2d, points3d, nbPts);
     
     
@@ -716,7 +800,7 @@ void txtGameLoop2() {
 		}
 		glProject (points2d, points3d, nbPts);
 		initScreenBuffers();
-		//fillFaces();
+		fillFaces();
         lrDrawSegments();
 	}
 }
@@ -728,19 +812,22 @@ void faceDemo(){
 	//addCube3(-12, -12, 0);
     //addCube3(0, 0, 0);
     //addPlan();
-    addPlan(0, 0, 4, 0, 'M');
-    //addPlan(2, 2, 4, 64, ':');
+    addPlan(0, 2, 2, 64, '.');
+    addPlan(2, 0, 2, 0, ':');
+    addPlan(0, -2, 2, 64, ';');
+    addPlan(-2, 0, 2, 0, '\'');
+    //addPlan(4, 4, 2, 64, ':');
     //printf ("nbPoints = %d, nbSegments = %d, nbFaces = %d\n",nbPts, nbSegments, nbFaces);
 	lores0();
-	//faceIntro();
+	faceIntro();
 
-    CamPosX = -8;
+    /*CamPosX = -8;
 	CamPosY = 0;
-	CamPosZ = 1;
+	CamPosZ = 2;
 
  	CamRotZ = 0;
 	CamRotX = 0;
-    
+    */
 
 	txtGameLoop2();
 

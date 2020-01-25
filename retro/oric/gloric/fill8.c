@@ -210,6 +210,7 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
     ptrFbuf = fbuffer+offset;
     while (nbpoints >=0){
         if (dist < ptrZbuf[nbpoints] ){
+			//printf ("p [%d %d] <- %d. was %d \n", dx+nbpoints, py, dist, ptrZbuf [nbpoints]);
             ptrFbuf [nbpoints] = char2disp;
             ptrZbuf [nbpoints] = dist;
         }
@@ -227,7 +228,7 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 	signed char  pArr2Y;
 	//signed char  *ptrPtLeftX;
 	//signed char  *ptrPtRightX;
-	//printf ("fill [%d %d] [%d %d] [%d %d] %d %d\n", p1x, p1y, p2x, p2y, p3x, p3y, dist, char2disp);
+	//printf ("fill [%d %d] [%d %d] [%d %d] %d %d\n", p1x, p1y, p2x, p2y, p3x, p3y, dist, char2disp); get();
 
 	if (p1y <= p2y) {
 		if (p2y <= p3y) {
