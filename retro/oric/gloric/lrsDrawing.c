@@ -47,10 +47,11 @@ void lrDrawLine (signed char x0, signed char y0, signed char x1, signed char y1,
     if ((_brErr > 64) ||(_brErr < -63)) return;
 	
 	
-	while ((_brX != _brDestX) || (_brY != _brDestY)) { // loop 
+	while (1) { // loop 
         // plot (brX, brY, distseg, ch2disp)
 		//printf ("plot [%d, %d] %d %s\n", _brX, _brY, distseg, ch2disp);
 		zplot(_brX, _brY, distseg, ch2disp);
+        if ((_brX == _brDestX) && (_brY == _brDestY)) break;
         //e2 = 2*err;
 		e2 = (_brErr < 0) ? (
 			((_brErr & 0x40) == 0)?(
