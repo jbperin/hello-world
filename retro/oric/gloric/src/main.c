@@ -4,12 +4,12 @@
 #include "glOric.h"
 
 #include "externs.c"
-#include "geom.c"
+#include "data/geom.c"
 
 #define abs(x) (((x)<0)?-(x):(x))
 
 #ifndef TEXTMODE
-#include "traj.c"
+#include "data/traj.c"
 #endif
 
  // Camera Position
@@ -58,23 +58,23 @@ void dispInfo(){
 #include "txtDemo.c"
 #endif
 
-
 #ifdef HRSMODE
-#include "hrsDrawing.c"
+#include "render\hrsDrawing.c"
 #include "hrsDemo.c"
 #endif
 
 #ifdef LRSMODE
-#include "bresfill.c"
-#include "lrsDrawing.c"
+#include "raster\bresfill.c"
+#include "render\lrsDrawing.c"
 #include "logic.c"
 #include "lrsDemo.c"
 #endif
 
+
 void main()
 {
 	
-/* THINK OF ANGLEONLY !!!!  */   
+ 
 #ifdef TEXTMODE
 	textDemo();
 #endif
