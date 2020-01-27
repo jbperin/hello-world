@@ -1,12 +1,11 @@
 #-------------------------------------------------------------------------------
-# Name:        module1
-# Purpose:
+# Name:        Level Generator
+# Purpose:     Wave Generator for Rain Panic
 #
-# Author:      tbpk7658
+# Author:      Jean-Baptiste PERIN
 #
 # Created:     23/01/2020
-# Copyright:   (c) tbpk7658 2020
-# Licence:     <your licence>
+# Copyright:   (c) Jean-Baptiste PERIN 2020
 #-------------------------------------------------------------------------------
 import random
 
@@ -28,7 +27,7 @@ class sequence ():
     def toCarray(self):
         res = "unsigned char rain[] = {\n"
         sl = sorted(self.__seq__, key=lambda evt: evt[0])
-        #print(sl)
+
         for i in range(len(sl)-1):
             res += "" if (i == 0) else ", "
             res += "%d, %d"%(sl[i][1], sl[i+1][0]-sl[i][0])
@@ -36,16 +35,25 @@ class sequence ():
         return res
 
     def spread (self, nb, evtgetter, pattern):
+
+        def dop_random (thePattern):
+            if (thePattern == "UNIFORM"):
+                return random.randrange(0, self.__duration__)
+            elif (thePattern == "GAUSS"):
+                return max(self.__duration__-1, abs(int(random.gauss(self.__duration__/2, self.__duration__/3))))
+            elif (thePattern == "TRIANGULAR"):
+                return int(random.triangular(1, self.__duration__, self.__duration__*0.85))
+
         tims=[]
         for i in range (nb):
             nb_attempt = 0
-            t=random.randrange(0, self.__duration__)
+            t=dop_random (pattern)
             while (t in tims and nb_attempt < 100):
-                t=random.randrange(0, self.__duration__)
+                t=dop_random (pattern)
                 nb_attempt += 1
             if (nb_attempt >= 100): break;
             tims.append (t)
-        #print (tims)
+
         for t in tims:
             self.insert(t,evtgetter())
 
@@ -66,7 +74,9 @@ def main():
     S.insert(12, 35)
     S.spread (12, raindrop, "UNIFORM")
     S.spread (5, lightning, "UNIFORM")
-    print (S)
+    S.spread (5, cat, "GAUSS")
+    S.spread (5, ice, "TRIANGULAR")
+
     print (S.toCarray())
 
 if __name__ == '__main__':
