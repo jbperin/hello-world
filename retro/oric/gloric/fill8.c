@@ -25,49 +25,11 @@ extern char A2arrived;
 #define max(a,b)            (((a) > (b)) ? (a) : (b))
 #define min(a,b)            (((a) < (b)) ? (a) : (b))
 
-/*void A1stepY(){
-	signed char  nxtY, e2;
-	nxtY = A1Y+A1sY;
-	e2 = A1err << 1; // 2*A1err;
-
-	while ((A1arrived == 0) && ((e2>A1dX) || (A1Y!=nxtY))){
-		if (e2 >= A1dY){
-			A1err += A1dY;
-			A1X += A1sX;
-		}
-		if (e2 <= A1dX){
-			A1err += A1dX;
-			A1Y += A1sY;
-		}
-		A1arrived=((A1X == A1destX) && ( A1Y == A1destY))?1:0;
-		e2 = A1err << 1; // 2*A1err;
-	}
-}
-
-void A2stepY(){
-	signed char  nxtY, e2;
-	nxtY = A2Y+A2sY	;
-	e2 = A2err << 1; // 2*A2err;
-	while ((A2arrived == 0) && ((e2>A2dX) || (A2Y!=nxtY))){
-		if (e2 >= A2dY){
-			A2err += A2dY;
-			A2X += A2sX;
-		}
-		if (e2 <= A2dX){
-			A2err += A2dX;
-			A2Y += A2sY;
-		}
-		A2arrived=((A2X == A2destX) && ( A2Y == A2destY))?1:0;
-		e2 = A2err << 1; // 2*A2err;
-	}
-}
-*/
-/*
-
-void A1stepY(){
-	signed char  nxtY, e2;
-	nxtY = A1Y+A1sY;
-	printf ("nxtY = %d\n", nxtY);
+void A1reachY(signed char  nxtY){
+	
+	signed char  e2;
+	
+	//printf ("nxtY = %d\n", nxtY);
 	e2 = (A1err < 0) ? (
 			((A1err & 0x40) == 0)?(
 				0x80
@@ -81,21 +43,22 @@ void A1stepY(){
 				A1err << 1
 			)
 		);
-	printf ("e2 = %d\n", e2);
-	while ((A1arrived == 0) && ((e2>A1dX) || (A1Y!=nxtY))){
+		
+	//printf ("e2 = %d\n", e2);
+	while (A1arrived != 0){
 		if (e2 >= A1dY){
 			A1err += A1dY;
-			printf ("A1err = %d\n", A1err);
+			//printf ("A1err = %d\n", A1err);
 			A1X += A1sX;
-			printf ("A1X = %d\n", A1X);
+			//printf ("A1X = %d\n", A1X);
 		}
 		if (e2 <= A1dX){
 			A1err += A1dX;
-			printf ("A1err = %d\n", A1err);
+			//printf ("A1err = %d\n", A1err);
 			A1Y += A1sY;
-			printf ("A1Y = %d\n", A1Y);
+			//printf ("A1Y = %d\n", A1Y);
 		}
-		A1arrived=((A1X == A1destX) && ( A1Y == A1destY))?1:0;
+		A1arrived=( A1Y == nxtY)?1:0;
 		e2 = (A1err < 0) ? (
 				((A1err & 0x40) == 0)?(
 					0x80
@@ -109,14 +72,15 @@ void A1stepY(){
 					A1err << 1
 				)
 			);
-		printf ("e2 = %d\n", e2);
-
-		}
+		//printf ("e2 = %d\n", e2);
+	}
 }
 
-void A2stepY(){
-	signed char  nxtY, e2;
-	nxtY = A2Y+A2sY	;
+void A2reachY(signed char  nxtY){
+	
+	signed char  e2;
+	
+	//printf ("nxtY = %d\n", nxtY);
 	e2 = (A2err < 0) ? (
 			((A2err & 0x40) == 0)?(
 				0x80
@@ -130,16 +94,22 @@ void A2stepY(){
 				A2err << 1
 			)
 		);
-	while ((A2arrived == 0) && ((e2>A2dX) || (A2Y!=nxtY))){
+		
+	//printf ("e2 = %d\n", e2);
+	while (A2arrived!=0){
 		if (e2 >= A2dY){
 			A2err += A2dY;
+			//printf ("A2err = %d\n", A2err);
 			A2X += A2sX;
+			//printf ("A2X = %d\n", A2X);
 		}
 		if (e2 <= A2dX){
 			A2err += A2dX;
+			//printf ("A2err = %d\n", A2err);
 			A2Y += A2sY;
+			//printf ("A2Y = %d\n", A2Y);
 		}
-		A2arrived=((A2X == A2destX) && ( A2Y == A2destY))?1:0;
+		A2arrived=( A2Y == nxtY)?1:0;
 		e2 = (A2err < 0) ? (
 				((A2err & 0x40) == 0)?(
 					0x80
@@ -153,9 +123,11 @@ void A2stepY(){
 					A2err << 1
 				)
 			);
+		//printf ("e2 = %d\n", e2);
 	}
 }
-*/
+
+
 /*
 void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dist, char char2disp){
 
@@ -226,10 +198,8 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 	signed char  pArr1Y;
 	signed char  pArr2X;
 	signed char  pArr2Y;
-	//signed char  *ptrPtLeftX;
-	//signed char  *ptrPtRightX;
-	//printf ("fill [%d %d] [%d %d] [%d %d] %d %d\n", p1x, p1y, p2x, p2y, p3x, p3y, dist, char2disp); get();
 
+	//printf ("fill [%d %d] [%d %d] [%d %d] %d %d\n", p1x, p1y, p2x, p2y, p3x, p3y, dist, char2disp); get();
 	if (p1y <= p2y) {
 		if (p2y <= p3y) {
 			pDepX = p3x;
@@ -279,8 +249,7 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 	}
     //printf ("Dep = [%d, %d], Arr1 = [%d, %d], Arr2= [%d, %d]\n", pDepX,pDepY, pArr1X, pArr1Y, pArr2X, pArr2Y);
 	if (pDepY != pArr1Y) {
-        //printf ("ici1 \n");
-
+		
         //a1 = bres_agent(pDep[0],pDep[1],pArr1[0],pArr1[1])
 		A1X = pDepX;
 		A1Y = pDepY;
@@ -308,33 +277,11 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 		A2sY=(A2Y<A2destY)?1:-1;
 		A2arrived=((A2X == A2destX) && ( A2Y == A2destY))?1:0;
 
-		/*if (pArr1X == pArr2X) {
-            if (pDepX < pArr1X) {
-                ptrPtLeftX = &A2X;
-                ptrPtRightX = &A1X;		
-            } else {
-                ptrPtLeftX = &A1X;
-                ptrPtRightX = &A2X;		
-            }
-        } else if (pArr1X < pArr2X) {
-			ptrPtLeftX = &A1X;
-			ptrPtRightX = &A2X;		
-		} else {
-			ptrPtLeftX = &A2X;
-			ptrPtRightX = &A1X;
-		}*/
-
 		hfill8 (A1X, A2X, A1Y, dist, char2disp);
-		//printf ("ici1: %d %d %d  \n", A1X, A2X, A1Y);
-		//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
 		while (A1arrived == 0){
 
 			A1stepY();
 			A2stepY();
-			//printf ("A1 ={%d %d %d %d %d %d } \n", A1X, A1Y, A1err, A1sX, A1dX, A1dY);
-			//printf ("ici2: %d %d %d  \n", A1X, A2X, A1Y);
-			//get();
-			//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
 			hfill8 (A1X, A2X, A1Y, dist, char2disp);
 		}
 
@@ -353,54 +300,47 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 			A1stepY();
 			A2stepY();
 			hfill8 (A1X, A2X, A1Y, dist, char2disp);
-			//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
+
 		}
 	} else {
         
         // a1 = bres_agent(pDep[0],pDep[1],pArr2[0],pArr2[1])
-		A1X = pDepX;
-		A1Y = pDepY;
-		A1destX=pArr2X;
-		A1destY=pArr2Y;
-		A1dX=abs(A1destX-A1X);
-		A1dY=-abs(A1destY-A1Y);
-		A1err=A1dX+A1dY;
+		A1X 		= pDepX;
+		A1Y 		= pDepY;
+		A1destX		=pArr2X;
+		A1destY		=pArr2Y;
+		A1dX		=abs(A1destX-A1X);
+		A1dY		=-abs(A1destY-A1Y);
+		A1err		=A1dX+A1dY;
+		
         if ((A1err > 64) ||(A1err < -63)) return;
+		
 		A1sX=(A1X<A1destX)?1:-1;
 		A1sY=(A1Y<A1destY)?1:-1;
+		
 		A1arrived=((A1X == A1destX) && ( A1Y == A1destY))?1:0;
-        //printf ("vals= \n%d %d %d %d \n", A1destX, A1X, A1destY, A1Y);
+
         // a2 = bres_agent(pArr1[0],pArr1[1],pArr2[0],pArr2[1])
-		A2X = pArr1X;
-		A2Y = pArr1Y;
-		A2destX=pArr2X;
-		A2destY=pArr2Y;
-		A2dX=abs(A2destX-A2X);
-		A2dY=-abs(A2destY-A2Y);
-		A2err=A2dX+A2dY;
+		A2X 		= pArr1X;
+		A2Y 		= pArr1Y;
+		A2destX		= pArr2X;
+		A2destY		= pArr2Y;
+		A2dX		= abs(A2destX-A2X);
+		A2dY		= -abs(A2destY-A2Y);
+		A2err		= A2dX+A2dY;
+		
         if ((A2err > 64) ||(A2err < -63)) return;
+		
 		A2sX=(A2X<A2destX)?1:-1;
 		A2sY=(A2Y<A2destY)?1:-1;
 		A2arrived=((A2X == A2destX) && ( A2Y == A2destY))?1:0;
 
-
-		/*if (pDepX < pArr1X) {
-            ptrPtLeftX = &A1X;
-            ptrPtRightX = &A2X;		
-        } else {
-            ptrPtLeftX = &A2X;
-            ptrPtRightX = &A1X;		
-        }*/
-        //printf ("ici2 \n%d %d %d  \n", A1X, A2X, A1Y);
 		hfill8 (A1X, A2X, A1Y, dist, char2disp);
-		//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
 		
 		while ((A1arrived == 0) && (A2arrived == 0)){
-            //printf ("ici2 \n%d %d %d  \n", A1X, A2X, A1Y);
 			A1stepY();
 			A2stepY();
 			hfill8 (A1X, A2X, A1Y, dist, char2disp);
-			//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
 		}
 	}
 }

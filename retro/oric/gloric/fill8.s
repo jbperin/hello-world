@@ -1,3 +1,46 @@
+
+
+/*
+void A1stepY(){
+	signed char  nxtY, e2;
+	nxtY = A1Y+A1sY;
+	e2 = A1err << 1; // 2*A1err;
+
+	while ((A1arrived == 0) && ((e2>A1dX) || (A1Y!=nxtY))){
+		if (e2 >= A1dY){
+			A1err += A1dY;
+			A1X += A1sX;
+		}
+		if (e2 <= A1dX){
+			A1err += A1dX;
+			A1Y += A1sY;
+		}
+		A1arrived=((A1X == A1destX) && ( A1Y == A1destY))?1:0;
+		e2 = A1err << 1; // 2*A1err;
+	}
+}
+
+void A2stepY(){
+	signed char  nxtY, e2;
+	nxtY = A2Y+A2sY	;
+	e2 = A2err << 1; // 2*A2err;
+	while ((A2arrived == 0) && ((e2>A2dX) || (A2Y!=nxtY))){
+		if (e2 >= A2dY){
+			A2err += A2dY;
+			A2X += A2sX;
+		}
+		if (e2 <= A2dX){
+			A2err += A2dX;
+			A2Y += A2sY;
+		}
+		A2arrived=((A2X == A2destX) && ( A2Y == A2destY))?1:0;
+		e2 = A2err << 1; // 2*A2err;
+	}
+}
+*/
+
+
+
 _A1X
 	.byt 0
 _A1Y
@@ -39,7 +82,57 @@ _A2sY
 _A2arrived
 	.byt 0
 	
+/*
+void A1stepY(){
+	signed char  nxtY, e2;
+	nxtY = A1Y+A1sY;
+	printf ("nxtY = %d\n", nxtY);
+	e2 = (A1err < 0) ? (
+			((A1err & 0x40) == 0)?(
+				0x80
+			):(
+				A1err << 1
+			)
+		):(
+			((A1err & 0x40) != 0)?(
+				0x7F
+			):(
+				A1err << 1
+			)
+		);
+	printf ("e2 = %d\n", e2);
+	while ((A1arrived == 0) && ((e2>A1dX) || (A1Y!=nxtY))){
+		if (e2 >= A1dY){
+			A1err += A1dY;
+			printf ("A1err = %d\n", A1err);
+			A1X += A1sX;
+			printf ("A1X = %d\n", A1X);
+		}
+		if (e2 <= A1dX){
+			A1err += A1dX;
+			printf ("A1err = %d\n", A1err);
+			A1Y += A1sY;
+			printf ("A1Y = %d\n", A1Y);
+		}
+		A1arrived=((A1X == A1destX) && ( A1Y == A1destY))?1:0;
+		e2 = (A1err < 0) ? (
+				((A1err & 0x40) == 0)?(
+					0x80
+				):(
+					A1err << 1
+				)
+			):(
+				((A1err & 0x40) != 0)?(
+					0x7F
+				):(
+					A1err << 1
+				)
+			);
+		printf ("e2 = %d\n", e2);
 
+		}
+}
+*/
 
 _A1stepY
 .(
@@ -173,6 +266,51 @@ A1stepYdone:
 .)
 	rts
 
+/*
+void A2stepY(){
+	signed char  nxtY, e2;
+	nxtY = A2Y+A2sY	;
+	e2 = (A2err < 0) ? (
+			((A2err & 0x40) == 0)?(
+				0x80
+			):(
+				A2err << 1
+			)
+		):(
+			((A2err & 0x40) != 0)?(
+				0x7F
+			):(
+				A2err << 1
+			)
+		);
+	while ((A2arrived == 0) && ((e2>A2dX) || (A2Y!=nxtY))){
+		if (e2 >= A2dY){
+			A2err += A2dY;
+			A2X += A2sX;
+		}
+		if (e2 <= A2dX){
+			A2err += A2dX;
+			A2Y += A2sY;
+		}
+		A2arrived=((A2X == A2destX) && ( A2Y == A2destY))?1:0;
+		e2 = (A2err < 0) ? (
+				((A2err & 0x40) == 0)?(
+					0x80
+				):(
+					A2err << 1
+				)
+			):(
+				((A2err & 0x40) != 0)?(
+					0x7F
+				):(
+					A2err << 1
+				)
+			);
+	}
+}
+*/
+	
+	
 _A2stepY
 .(
 	// save context
@@ -300,510 +438,3 @@ A2stepYdone:
 
 .)
 	rts
-/*
-*/
-	
-
-/*
-_fill8_bis
-.(
-	ldx #10 : lda #8 : jsr enter :
-	ldy #12 : lda (ap),y : sta tmp0 : iny : lda (ap),y : sta tmp0+1 :
-	lda tmp0 : sta reg0 :
-	ldy #14 : lda (ap),y : sta reg1 :
-	ldy #2 : ldx #0 : lda (ap),y : sta tmp0 : .( : bpl skip : ldx #$FF :skip : .)  : txa : sta tmp0+1 :
-	ldy #6 : ldx #0 : lda (ap),y : sta tmp1 : .( : bpl skip : ldx #$FF :skip : .)  : txa : sta tmp1+1 :
-	lda tmp1 : cmp tmp0 : lda tmp1+1 : sbc tmp0+1 : .( : bvc *+4 : eor #$80 : bpl skip : jmp JBLmain358 :skip : .) : : :
-	ldy #6 : ldx #0 : lda (ap),y : sta tmp0 : .( : bpl skip : ldx #$FF :skip : .)  : txa : sta tmp0+1 :
-	ldy #10 : ldx #0 : lda (ap),y : sta tmp1 : .( : bpl skip : ldx #$FF :skip : .)  : txa : sta tmp1+1 :
-	lda tmp1 : cmp tmp0 : lda tmp1+1 : sbc tmp0+1 : .( : bvc *+4 : eor #$80 : bpl skip : jmp JBLmain360 :skip : .) : : :
-	ldy #8 : lda (ap),y : ldy #6 : sta (fp),y :
-	ldy #10 : lda (ap),y : sta reg2 :
-	ldy #4 : lda (ap),y : ldy #7 : sta (fp),y :
-	ldy #6 : lda (ap),y : sta reg3 :
-	ldy #0 : lda (ap),y : sta reg4 :
-	ldy #2 : lda (ap),y : sta reg5 :
-	jmp JBLmain359 :
-JBLmain360
-	ldy #4 : lda (ap),y : ldy #6 : sta (fp),y :
-	ldy #6 : lda (ap),y : sta reg2 :
-	ldy #2 : ldx #0 : lda (ap),y : sta tmp0 : .( : bpl skip : ldx #$FF :skip : .)  : txa : sta tmp0+1 :
-	ldy #10 : ldx #0 : lda (ap),y : sta tmp1 : .( : bpl skip : ldx #$FF :skip : .)  : txa : sta tmp1+1 :
-	lda tmp1 : cmp tmp0 : lda tmp1+1 : sbc tmp0+1 : .( : bvc *+4 : eor #$80 : bpl skip : jmp JBLmain362 :skip : .) : : :
-	ldy #8 : lda (ap),y : ldy #7 : sta (fp),y :
-	ldy #10 : lda (ap),y : sta reg3 :
-	ldy #0 : lda (ap),y : sta reg4 :
-	ldy #2 : lda (ap),y : sta reg5 :
-	jmp JBLmain359 :
-JBLmain362
-	ldy #0 : lda (ap),y : ldy #7 : sta (fp),y :
-	ldy #2 : lda (ap),y : sta reg3 :
-	ldy #8 : lda (ap),y : sta reg4 :
-	ldy #10 : lda (ap),y : sta reg5 :
-	jmp JBLmain359 :
-JBLmain358
-	ldy #2 : ldx #0 : lda (ap),y : sta tmp0 : .( : bpl skip : ldx #$FF :skip : .)  : txa : sta tmp0+1 :
-	ldy #10 : ldx #0 : lda (ap),y : sta tmp1 : .( : bpl skip : ldx #$FF :skip : .)  : txa : sta tmp1+1 :
-	lda tmp1 : cmp tmp0 : lda tmp1+1 : sbc tmp0+1 : .( : bvc *+4 : eor #$80 : bpl skip : jmp JBLmain364 :skip : .) : : :
-	ldy #8 : lda (ap),y : ldy #6 : sta (fp),y :
-	ldy #10 : lda (ap),y : sta reg2 :
-	ldy #0 : lda (ap),y : ldy #7 : sta (fp),y :
-	ldy #2 : lda (ap),y : sta reg3 :
-	ldy #4 : lda (ap),y : sta reg4 :
-	ldy #6 : lda (ap),y : sta reg5 :
-	jmp JBLmain365 :
-JBLmain364
-	ldy #0 : lda (ap),y : ldy #6 : sta (fp),y :
-	ldy #2 : lda (ap),y : sta reg2 :
-	ldy #6 : ldx #0 : lda (ap),y : sta tmp0 : .( : bpl skip : ldx #$FF :skip : .)  : txa : sta tmp0+1 :
-	ldy #10 : ldx #0 : lda (ap),y : sta tmp1 : .( : bpl skip : ldx #$FF :skip : .)  : txa : sta tmp1+1 :
-	lda tmp1 : cmp tmp0 : lda tmp1+1 : sbc tmp0+1 : .( : bvc *+4 : eor #$80 : bpl skip : jmp JBLmain366 :skip : .) : : :
-	ldy #8 : lda (ap),y : ldy #7 : sta (fp),y :
-	ldy #10 : lda (ap),y : sta reg3 :
-	ldy #4 : lda (ap),y : sta reg4 :
-	ldy #6 : lda (ap),y : sta reg5 :
-	jmp JBLmain367 :
-JBLmain366
-	ldy #4 : lda (ap),y : ldy #7 : sta (fp),y :
-	ldy #6 : lda (ap),y : sta reg3 :
-	ldy #8 : lda (ap),y : sta reg4 :
-	ldy #10 : lda (ap),y : sta reg5 :
-JBLmain367
-JBLmain365
-JBLmain359
-	lda #0 : ldx reg2 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx reg3 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : bne *+5 : jmp JBLmain368 :
-	ldy #6 : lda (fp),y : sta _A1X :
-	lda reg2 : sta _A1Y :
-	ldy #7 : lda (fp),y : sta _A1destX :
-	lda reg3 : sta _A1destY :
-	lda #0 : ldx _A1destX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1X : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain371 : :
-	lda #0 : ldx _A1destX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1X : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta reg6 : lda #0 : sbc tmp0+1 : sta reg6+1 :
-	jmp JBLmain372 :
-JBLmain371
-	lda #0 : ldx _A1destX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1X : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta reg6 : lda tmp0+1 : sbc tmp1+1 : sta reg6+1 :
-JBLmain372
-	lda reg6 : sta _A1dX :
-	lda #0 : ldx _A1destY : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1Y : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain373 : :
-	lda #0 : ldx _A1destY : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1Y : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta reg6 : lda #0 : sbc tmp0+1 : sta reg6+1 :
-	jmp JBLmain374 :
-JBLmain373
-	lda #0 : ldx _A1destY : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1Y : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta reg6 : lda tmp0+1 : sbc tmp1+1 : sta reg6+1 :
-JBLmain374
-	lda #0 : sec : sbc reg6 : sta tmp0 : lda #0 : sbc reg6+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1dY :
-	lda #0 : ldx _A1dX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1dY : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	clc : lda tmp0 : adc tmp1 : sta tmp0 : lda tmp0+1 : adc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1err :
-	lda #0 : ldx _A1X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1destX : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain375 : :
-	lda #<(1) : sta reg6 : lda #>(1) : sta reg6+1 :
-	jmp JBLmain376 :
-JBLmain375
-	lda #<(-1) : sta reg6 : lda #>(-1) : sta reg6+1 :
-JBLmain376
-	lda reg6 : sta _A1sX :
-	lda #0 : ldx _A1Y : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1destY : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain377 : :
-	lda #<(1) : sta reg6 : lda #>(1) : sta reg6+1 :
-	jmp JBLmain378 :
-JBLmain377
-	lda #<(-1) : sta reg6 : lda #>(-1) : sta reg6+1 :
-JBLmain378
-	lda reg6 : sta _A1sY :
-	lda #0 : ldx _A1X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1destX : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp JBLmain379 :
-	lda #0 : ldx _A1Y : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1destY : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp JBLmain379 :
-	lda #<(1) : sta reg6 : lda #>(1) : sta reg6+1 :
-	jmp JBLmain380 :
-JBLmain379
-	lda #<(0) : sta reg6 : lda #>(0) : sta reg6+1 :
-JBLmain380
-	lda reg6 : sta _A1arrived :
-	ldy #6 : lda (fp),y : sta _A2X :
-	lda reg2 : sta _A2Y :
-	lda reg4 : sta _A2destX :
-	lda reg5 : sta _A2destY :
-	lda #0 : ldx _A2destX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2X : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain381 : :
-	lda #0 : ldx _A2destX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2X : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta reg6 : lda #0 : sbc tmp0+1 : sta reg6+1 :
-	jmp JBLmain382 :
-JBLmain381
-	lda #0 : ldx _A2destX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2X : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta reg6 : lda tmp0+1 : sbc tmp1+1 : sta reg6+1 :
-JBLmain382
-	lda reg6 : sta _A2dX :
-	lda #0 : ldx _A2destY : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2Y : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain383 : :
-	lda #0 : ldx _A2destY : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2Y : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta reg6 : lda #0 : sbc tmp0+1 : sta reg6+1 :
-	jmp JBLmain384 :
-JBLmain383
-	lda #0 : ldx _A2destY : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2Y : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta reg6 : lda tmp0+1 : sbc tmp1+1 : sta reg6+1 :
-JBLmain384
-	lda #0 : sec : sbc reg6 : sta tmp0 : lda #0 : sbc reg6+1 : sta tmp0+1 :
-	lda tmp0 : sta _A2dY :
-	lda #0 : ldx _A2dX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2dY : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	clc : lda tmp0 : adc tmp1 : sta tmp0 : lda tmp0+1 : adc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta _A2err :
-	lda #0 : ldx _A2X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2destX : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain385 : :
-	lda #<(1) : sta reg6 : lda #>(1) : sta reg6+1 :
-	jmp JBLmain386 :
-JBLmain385
-	lda #<(-1) : sta reg6 : lda #>(-1) : sta reg6+1 :
-JBLmain386
-	lda reg6 : sta _A2sX :
-	lda #0 : ldx _A2Y : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2destY : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain387 : :
-	lda #<(1) : sta reg6 : lda #>(1) : sta reg6+1 :
-	jmp JBLmain388 :
-JBLmain387
-	lda #<(-1) : sta reg6 : lda #>(-1) : sta reg6+1 :
-JBLmain388
-	lda reg6 : sta _A2sY :
-	lda #0 : ldx _A2X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2destX : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp JBLmain389 :
-	lda #0 : ldx _A2Y : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2destY : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp JBLmain389 :
-	lda #<(1) : sta reg6 : lda #>(1) : sta reg6+1 :
-	jmp JBLmain390 :
-JBLmain389
-	lda #<(0) : sta reg6 : lda #>(0) : sta reg6+1 :
-JBLmain390
-	lda reg6 : sta _A2arrived :
-	lda #0 : ldx _A1X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #0 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda #0 : ldx _A2X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #2 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda #0 : ldx _A1Y : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #4 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda reg0 : sta tmp0 : lda #0 : sta tmp0+1 :
-	lda tmp0 : ldy #6 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda #0 : ldx reg1 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #8 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	ldy #10 : jsr _hfill8 :
-	jmp JBLmain392 :
-JBLmain391
-	ldy #0 : jsr _A1stepY :
-	ldy #0 : jsr _A2stepY :
-	lda #0 : ldx _A1X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #0 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda #0 : ldx _A2X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #2 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda #0 : ldx _A1Y : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #4 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda reg0 : sta tmp0 : lda #0 : sta tmp0+1 :
-	lda tmp0 : ldy #6 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda #0 : ldx reg1 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #8 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	ldy #10 : jsr _hfill8 :
-JBLmain392
-	lda #0 : ldx _A1arrived : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ora tmp0+1 : bne *+5 : jmp JBLmain391 :
-	ldy #7 : lda (fp),y : sta _A1X :
-	lda reg3 : sta _A1Y :
-	lda reg4 : sta _A1destX :
-	lda reg5 : sta _A1destY :
-	lda #0 : ldx _A1destX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1X : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain395 : :
-	lda #0 : ldx _A1destX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1X : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta reg7 : lda #0 : sbc tmp0+1 : sta reg7+1 :
-	jmp JBLmain396 :
-JBLmain395
-	lda #0 : ldx _A1destX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1X : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta reg7 : lda tmp0+1 : sbc tmp1+1 : sta reg7+1 :
-JBLmain396
-	lda reg7 : sta _A1dX :
-	lda #0 : ldx _A1destY : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1Y : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain397 : :
-	lda #0 : ldx _A1destY : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1Y : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta reg7 : lda #0 : sbc tmp0+1 : sta reg7+1 :
-	jmp JBLmain398 :
-JBLmain397
-	lda #0 : ldx _A1destY : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1Y : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta reg7 : lda tmp0+1 : sbc tmp1+1 : sta reg7+1 :
-JBLmain398
-	lda #0 : sec : sbc reg7 : sta tmp0 : lda #0 : sbc reg7+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1dY :
-	lda #0 : ldx _A1dX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1dY : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	clc : lda tmp0 : adc tmp1 : sta tmp0 : lda tmp0+1 : adc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1err :
-	lda #0 : ldx _A1X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1destX : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain399 : :
-	lda #<(1) : sta reg7 : lda #>(1) : sta reg7+1 :
-	jmp JBLmain400 :
-JBLmain399
-	lda #<(-1) : sta reg7 : lda #>(-1) : sta reg7+1 :
-JBLmain400
-	lda reg7 : sta _A1sX :
-	lda #0 : ldx _A1Y : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1destY : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain401 : :
-	lda #<(1) : sta reg7 : lda #>(1) : sta reg7+1 :
-	jmp JBLmain402 :
-JBLmain401
-	lda #<(-1) : sta reg7 : lda #>(-1) : sta reg7+1 :
-JBLmain402
-	lda reg7 : sta _A1sY :
-	lda #0 : ldx _A1X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1destX : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp JBLmain403 :
-	lda #0 : ldx _A1Y : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1destY : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp JBLmain403 :
-	lda #<(1) : sta reg7 : lda #>(1) : sta reg7+1 :
-	jmp JBLmain404 :
-JBLmain403
-	lda #<(0) : sta reg7 : lda #>(0) : sta reg7+1 :
-JBLmain404
-	lda reg7 : sta _A1arrived :
-	jmp JBLmain406 :
-JBLmain405
-	ldy #0 : jsr _A1stepY :
-	ldy #0 : jsr _A2stepY :
-	lda #0 : ldx _A1X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #0 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda #0 : ldx _A2X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #2 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda #0 : ldx _A1Y : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #4 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda reg0 : sta tmp0 : lda #0 : sta tmp0+1 :
-	lda tmp0 : ldy #6 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda #0 : ldx reg1 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #8 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	ldy #10 : jsr _hfill8 :
-JBLmain406
-	lda #0 : ldx _A1arrived : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ora tmp0+1 : beq *+5 : jmp JBLmain408 :
-	lda #0 : ldx _A2arrived : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ora tmp0+1 : bne *+5 : jmp JBLmain405 :
-JBLmain408
-	jmp JBLmain369 :
-JBLmain368
-	ldy #6 : lda (fp),y : sta _A1X :
-	lda reg2 : sta _A1Y :
-	lda reg4 : sta _A1destX :
-	lda reg5 : sta _A1destY :
-	lda #0 : ldx _A1destX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1X : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain410 : :
-	lda #0 : ldx _A1destX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1X : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	ldy #8 : lda #0 : sec : sbc tmp0 : sta (fp),y : iny : lda #0 : sbc tmp0+1 : sta (fp),y :
-	jmp JBLmain411 :
-JBLmain410
-	lda #0 : ldx _A1destX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1X : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : ldy #8 : sta (fp),y : iny : lda tmp0+1 : sbc tmp1+1 : sta (fp),y :
-JBLmain411
-	ldy #8 : lda (fp),y : sta _A1dX :
-	lda #0 : ldx _A1destY : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1Y : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain412 : :
-	lda #0 : ldx _A1destY : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1Y : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	ldy #8 : lda #0 : sec : sbc tmp0 : sta (fp),y : iny : lda #0 : sbc tmp0+1 : sta (fp),y :
-	jmp JBLmain413 :
-JBLmain412
-	lda #0 : ldx _A1destY : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1Y : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : ldy #8 : sta (fp),y : iny : lda tmp0+1 : sbc tmp1+1 : sta (fp),y :
-JBLmain413
-	ldy #8 : lda #0 : sec : sbc (fp),y : sta tmp0 : iny : lda #0 : sbc (fp),y : sta tmp0+1 :
-	lda tmp0 : sta _A1dY :
-	lda #0 : ldx _A1dX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1dY : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	clc : lda tmp0 : adc tmp1 : sta tmp0 : lda tmp0+1 : adc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1err :
-	lda #0 : ldx _A1X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1destX : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain414 : :
-	ldy #8 : lda #<(1) : sta (fp),y : iny : lda #>(1) : sta (fp),y :
-	jmp JBLmain415 :
-JBLmain414
-	ldy #8 : lda #<(-1) : sta (fp),y : iny : lda #>(-1) : sta (fp),y :
-JBLmain415
-	ldy #8 : lda (fp),y : sta _A1sX :
-	lda #0 : ldx _A1Y : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1destY : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain416 : :
-	ldy #8 : lda #<(1) : sta (fp),y : iny : lda #>(1) : sta (fp),y :
-	jmp JBLmain417 :
-JBLmain416
-	ldy #8 : lda #<(-1) : sta (fp),y : iny : lda #>(-1) : sta (fp),y :
-JBLmain417
-	ldy #8 : lda (fp),y : sta _A1sY :
-	lda #0 : ldx _A1X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1destX : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp JBLmain418 :
-	lda #0 : ldx _A1Y : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A1destY : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp JBLmain418 :
-	ldy #8 : lda #<(1) : sta (fp),y : iny : lda #>(1) : sta (fp),y :
-	jmp JBLmain419 :
-JBLmain418
-	ldy #8 : lda #<(0) : sta (fp),y : iny : lda #>(0) : sta (fp),y :
-JBLmain419
-	ldy #8 : lda (fp),y : sta _A1arrived :
-	ldy #7 : lda (fp),y : sta _A2X :
-	lda reg3 : sta _A2Y :
-	lda reg4 : sta _A2destX :
-	lda reg5 : sta _A2destY :
-	lda #0 : ldx _A2destX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2X : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain420 : :
-	lda #0 : ldx _A2destX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2X : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	ldy #8 : lda #0 : sec : sbc tmp0 : sta (fp),y : iny : lda #0 : sbc tmp0+1 : sta (fp),y :
-	jmp JBLmain421 :
-JBLmain420
-	lda #0 : ldx _A2destX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2X : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : ldy #8 : sta (fp),y : iny : lda tmp0+1 : sbc tmp1+1 : sta (fp),y :
-JBLmain421
-	ldy #8 : lda (fp),y : sta _A2dX :
-	lda #0 : ldx _A2destY : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2Y : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain422 : :
-	lda #0 : ldx _A2destY : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2Y : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	ldy #8 : lda #0 : sec : sbc tmp0 : sta (fp),y : iny : lda #0 : sbc tmp0+1 : sta (fp),y :
-	jmp JBLmain423 :
-JBLmain422
-	lda #0 : ldx _A2destY : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2Y : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : ldy #8 : sta (fp),y : iny : lda tmp0+1 : sbc tmp1+1 : sta (fp),y :
-JBLmain423
-	ldy #8 : lda #0 : sec : sbc (fp),y : sta tmp0 : iny : lda #0 : sbc (fp),y : sta tmp0+1 :
-	lda tmp0 : sta _A2dY :
-	lda #0 : ldx _A2dX : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2dY : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	clc : lda tmp0 : adc tmp1 : sta tmp0 : lda tmp0+1 : adc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta _A2err :
-	lda #0 : ldx _A2X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2destX : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain424 : :
-	ldy #8 : lda #<(1) : sta (fp),y : iny : lda #>(1) : sta (fp),y :
-	jmp JBLmain425 :
-JBLmain424
-	ldy #8 : lda #<(-1) : sta (fp),y : iny : lda #>(-1) : sta (fp),y :
-JBLmain425
-	ldy #8 : lda (fp),y : sta _A2sX :
-	lda #0 : ldx _A2Y : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2destY : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmain426 : :
-	ldy #8 : lda #<(1) : sta (fp),y : iny : lda #>(1) : sta (fp),y :
-	jmp JBLmain427 :
-JBLmain426
-	ldy #8 : lda #<(-1) : sta (fp),y : iny : lda #>(-1) : sta (fp),y :
-JBLmain427
-	ldy #8 : lda (fp),y : sta _A2sY :
-	lda #0 : ldx _A2X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2destX : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp JBLmain428 :
-	lda #0 : ldx _A2Y : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #0 : ldx _A2destY : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp JBLmain428 :
-	ldy #8 : lda #<(1) : sta (fp),y : iny : lda #>(1) : sta (fp),y :
-	jmp JBLmain429 :
-JBLmain428
-	ldy #8 : lda #<(0) : sta (fp),y : iny : lda #>(0) : sta (fp),y :
-JBLmain429
-	ldy #8 : lda (fp),y : sta _A2arrived :
-	lda #0 : ldx _A1X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #0 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda #0 : ldx _A2X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #2 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda #0 : ldx _A1Y : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #4 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda reg0 : sta tmp0 : lda #0 : sta tmp0+1 :
-	lda tmp0 : ldy #6 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda #0 : ldx reg1 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #8 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	ldy #10 : jsr _hfill8 :
-	jmp JBLmain431 :
-JBLmain430
-	ldy #0 : jsr _A1stepY :
-	ldy #0 : jsr _A2stepY :
-	lda #0 : ldx _A1X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #0 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda #0 : ldx _A2X : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #2 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda #0 : ldx _A1Y : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #4 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda reg0 : sta tmp0 : lda #0 : sta tmp0+1 :
-	lda tmp0 : ldy #6 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	lda #0 : ldx reg1 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ldy #8 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
-	ldy #10 : jsr _hfill8 :
-JBLmain431
-	lda #0 : ldx _A1arrived : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ora tmp0+1 : beq *+5 : jmp JBLmain433 :
-	lda #0 : ldx _A2arrived : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ora tmp0+1 : bne *+5 : jmp JBLmain430 :
-JBLmain433
-JBLmain369
-.)
-	jmp leave :
-*/

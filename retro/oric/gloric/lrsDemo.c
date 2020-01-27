@@ -25,21 +25,7 @@ void faceIntro() {
         buffer2screen();
     }
 
-/*	CamPosX = -8;
-	CamPosY = 8;
-	CamPosZ = 1;
 
- 	CamRotZ = -32 ;
-	CamRotX = 0;
-	for (i= 0; i< 16; i++) {
-		forward();
-        glProject (points2d, points3d, nbPts);
-        initScreenBuffers();
-        fillFaces();
-        lrDrawSegments();
-        buffer2screen();
-	}
-*/
 	leaveSC();
 
 }
