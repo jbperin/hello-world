@@ -24,7 +24,7 @@ extern char A2arrived;
 
 #define max(a,b)            (((a) > (b)) ? (a) : (b))
 #define min(a,b)            (((a) < (b)) ? (a) : (b))
-
+/*
 void A1reachY(signed char  nxtY){
 	
 	signed char  e2;
@@ -126,7 +126,7 @@ void A2reachY(signed char  nxtY){
 		//printf ("e2 = %d\n", e2);
 	}
 }
-
+*/
 
 /*
 void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dist, char char2disp){
@@ -155,6 +155,8 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
 }
 */
 
+//static int multi40[] = {0, 40, 80, 120, 160, 200, 240, 280, 320, 360, 400, 440, 480, 520, 560, 600, 640, 680, 720, 760, 800, 840, 880, 920, 960, 1000, 1040};
+
 void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dist, char char2disp){
 
     signed char dx, fx;
@@ -164,7 +166,7 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
     char *ptrFbuf;
     unsigned char *ptrZbuf;
     signed char nbpoints;
-    
+    int val;
     if ((py <= 0) || (py>=SCREEN_HEIGHT)) return;
     if (p1x > p2x) {
         dx = max(0, p2x);
@@ -176,8 +178,8 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
 
     nbpoints = fx - dx;
     if (nbpoints <0) return;
-   
-    offset = py*SCREEN_WIDTH+dx;
+    
+    offset = py*SCREEN_WIDTH+dx;//
     ptrZbuf = zbuffer+offset;
     ptrFbuf = fbuffer+offset;
     while (nbpoints >=0){
@@ -402,7 +404,6 @@ void fillFaces() {
         d2 = *((int*)(points2d+offPt2+2));
 
         d3 = *((int*)(points2d+offPt3+2));
-        
 
         //dmoy = (d1+d2+d3)/3;
         dmoy = (d1+d2+d3)/3;
@@ -422,7 +423,6 @@ void fillFaces() {
         P3Y=points2d [offPt3+1];
 
         //printf ("[%d, %d], [%d, %d], [%d, %d]\n", P1X, P1Y, P2X, P2Y, P3X, P3Y);get();
-		
         fill8(P1X, P1Y, 
             P2X, P2Y, 
             P3X, P3Y,
@@ -435,12 +435,10 @@ void fillFaces() {
 		P2AV =  points2d [offPt2+1];
 		P3AH =  points2d [offPt3+0];
 		P3AV =  points2d [offPt3+1];
-        //
         
         //printf ("P1 [%d, %d], P2 [%d, %d], P3 [%d %d]\n", P1AH, P1AV, P2AH, P2AV,  P3AH, P3AV); get();
 
         if (abs(P2AH) < abs(P1AH)){
-            //printf("swap P1 P2\n");
             tmpH = P1AH;
             tmpV = P1AV;
             P1AH = P2AH;
@@ -449,7 +447,6 @@ void fillFaces() {
             P2AV = tmpV;
         } 
         if (abs(P3AH) < abs(P1AH)){
-            //printf("swap P1 P3\n");
             tmpH = P1AH;
             tmpV = P1AV;
             P1AH = P3AH;
@@ -458,7 +455,6 @@ void fillFaces() {
             P3AV = tmpV;            
         } 
         if (abs(P3AH) < abs(P2AH)){
-            //printf("swap P2 P3\n");
             tmpH = P2AH;
             tmpV = P2AV;
             P2AH = P3AH;
@@ -478,48 +474,9 @@ void fillFaces() {
         v3 = P3AH & ANGLE_VIEW;
         //printf ("AHs [%d, %d, %d] [%x, %x], %x], %x, %x, %x]\n", P1AH, P2AH, P3AH, m1, m2, m3, v1,v2,v3);
         //get();
-/*
-     P1 P2 P3
-_1_   b  x  x   => rien
-_2_   f  b  x   => rien
-_3_   f  f  b   Si signe(P1AH)!=signe(P2AH) => XXXX
-                Sinon => rien
-_4_   f  f  f   Si signe(P1AH)!=signe(P2AH)  OU signe(P1AH)!=signe(P3AH) => XXXX
-                Sinon => rien
-      v  b  b   Si signe (P1AH) != signe(P2AH) et P2AH proche de -128/127 => clip
-                
-      v  f  b
-      v  f  f 
-      v  v  b
-      v  v  v
-*/        
+      
         if ((m1 == 0x00) || (m1 == ANGLE_MAX)){
             if ((v1 == 0x00) || (v1 == ANGLE_VIEW)) {
-                // P1 VISIBLE
-                // _5_
-                // _6_
-                // _7_
-                // _8_
-                /*if ((m2 == 0x00) || (m2 == ANGLE_MAX)){
-                    if ((v2 == 0x00) || (v2 == ANGLE_VIEW)) {
-                        // P2 VISIBLE
-                        if ((m3 == 0x00) || (m3 == ANGLE_MAX)){
-                            if ((v3 == 0x00) || (v3 == ANGLE_VIEW)) {
-                                // P3 VISIBLE 
-                                fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
-                            } else {
-                                // P3 FRONT
-                            }
-                        } else {
-                            // P3 BACK
-                        }
-                    } else {	
-                        // P2 FRONT
-                    }
-                } else {
-                    //   
-                }
-                */
                 if (
                     (
                         (P1AH & 0x80) != (P2AH & 0x80)
@@ -531,10 +488,8 @@ _4_   f  f  f   Si signe(P1AH)!=signe(P2AH)  OU signe(P1AH)!=signe(P3AH) => XXXX
                         fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
                     }
                 } else {
-                
                     fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
                 }
-
             } else {
                 // P1 FRONT
                 if ((m2 == 0x00) || (m2 == ANGLE_MAX)){
@@ -567,7 +522,7 @@ _4_   f  f  f   Si signe(P1AH)!=signe(P2AH)  OU signe(P1AH)!=signe(P3AH) => XXXX
                                 fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
                             }
                         }
-                        }
+                    }
                 } else {
                     // P2 BACK
                     // _2_ nothing to do 
@@ -594,9 +549,6 @@ _4_   f  f  f   Si signe(P1AH)!=signe(P2AH)  OU signe(P1AH)!=signe(P3AH) => XXXX
             // P1 BACK
             // _1_ nothing to do 
         }
-        //get();
-        
-   
 #endif
     }
 
