@@ -3,7 +3,7 @@
 
 void faceIntro() {
     int i;
-    get();
+    //get();
     enterSC();
 
 	CamPosX = 0;
@@ -104,8 +104,8 @@ void faceDemo(){
     
     addPlan(0, 2, 2, 64, '.');
     addPlan(2, 0, 2, 0, ':');
-    addPlan(0, -2, 2, 64, ';');
-    //addPlan(-2, 0, 2, 0, '\'');
+    //addPlan(0, -2, 2, 64, ';');
+    addPlan(-2, 0, 2, 0, '\'');
     
     
     //addPlan(4, 4, 2, 64, ':');

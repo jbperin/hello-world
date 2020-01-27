@@ -58,13 +58,14 @@ void dispInfo(){
 #include "txtDemo.c"
 #endif
 
+
 #ifdef HRSMODE
 #include "hrsDrawing.c"
 #include "hrsDemo.c"
 #endif
 
 #ifdef LRSMODE
-#include "fill8.c"
+#include "bresfill.c"
 #include "lrsDrawing.c"
 #include "logic.c"
 #include "lrsDemo.c"

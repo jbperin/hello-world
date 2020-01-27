@@ -6,7 +6,7 @@
 #include "glOric.h"
 #include "config.h"
 
-#include "alphabet.c"
+#include "data/alphabet.c"
 #include "traj.c"
 #include "fill8.c"
 
