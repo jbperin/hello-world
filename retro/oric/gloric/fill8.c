@@ -168,10 +168,10 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
     if ((py <= 0) || (py>=SCREEN_HEIGHT)) return;
     if (p1x > p2x) {
         dx = max(0, p2x);
-        fx = min(p1x, SCREEN_WIDTH);
+        fx = min(p1x, SCREEN_WIDTH-1);
     } else {
         dx = max(0, p1x);
-        fx = min(p2x, SCREEN_WIDTH);
+        fx = min(p2x, SCREEN_WIDTH-1);
     }
 
     nbpoints = fx - dx;
