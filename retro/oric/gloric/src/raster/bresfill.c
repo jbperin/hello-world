@@ -178,7 +178,7 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
     nbpoints = fx - dx;
     if (nbpoints <0) return;
 
-    offset = multi40[py] + dx;//py*SCREEN_WIDTH+dx;//
+    offset = py*SCREEN_WIDTH+dx;//multi40[py] + dx;
     ptrZbuf = zbuffer+offset;
     ptrFbuf = fbuffer+offset;
     while (nbpoints >=0){

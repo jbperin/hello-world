@@ -19,7 +19,7 @@ void zplot(unsigned char X, unsigned char Y, unsigned char dist, char char2disp)
 	if ((Y <= 0) || (Y>=SCREEN_HEIGHT) || (X <= 0) || (X>=SCREEN_WIDTH)) return;
 
 
-		offset = multi40[Y] + X; //Y*SCREEN_WIDTH+X;
+		offset = Y*SCREEN_WIDTH+X; //multi40[Y] + X;
     ptrZbuf = zbuffer+offset;
     ptrFbuf = fbuffer+offset;
 	//printf ("pl [%d %d] zbuff = %d , pointDist = %d\n", X, Y, *ptrZbuf, dist);
@@ -30,10 +30,27 @@ void zplot(unsigned char X, unsigned char Y, unsigned char dist, char char2disp)
 
 }
 
+void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned char patt03, unsigned char patt04, unsigned char patt05, unsigned char patt06, unsigned char patt07, unsigned char patt08)
+{
 
+	 unsigned char * adr;
+   adr  =(unsigned char *) (0xB400 + c*8);
+	 *(adr++) = patt01;
+	 *(adr++) = patt02;
+	 *(adr++) = patt03;
+	 *(adr++) = patt04;
+	 *(adr++) = patt05;
+	 *(adr++) = patt06;
+	 *(adr++) = patt07;
+	 *(adr++) = patt08;
+
+}
+#define DOLLAR 36
 void lrDrawLine (signed char x0, signed char y0, signed char x1, signed char y1, unsigned char distseg, char ch2disp) {
 
 	signed char e2;
+	char char2disp;
+
 
 	_brX = x0;
 	_brY = y0;
@@ -46,11 +63,17 @@ void lrDrawLine (signed char x0, signed char y0, signed char x1, signed char y1,
 	_brErr=_brDx+_brDy;
     if ((_brErr > 64) ||(_brErr < -63)) return;
 
+	if ((ch2disp == '/') && (_brSx == -1)) {
+		char2disp = DOLLAR;
+	} else {
+		char2disp = ch2disp;
+	}
+
 
 	while (1) { // loop
         // plot (brX, brY, distseg, ch2disp)
 		//printf ("plot [%d, %d] %d %s\n", _brX, _brY, distseg, ch2disp);
-		zplot(_brX, _brY, distseg, ch2disp);
+		zplot(_brX, _brY, distseg, char2disp);
         if ((_brX == _brDestX) && (_brY == _brDestY)) break;
         //e2 = 2*err;
 		e2 = (_brErr < 0) ? (

@@ -34,11 +34,6 @@ prdone:
 err .dsb 1
 e2 .dsb 1
 
-_Point1X .dsb 1
-_Point1Y .dsb 1
-_Point2X .dsb 1
-_Point2Y .dsb 1
-_char2Display .dsb 1
 
 dX .dsb 1
 dY .dsb 1
@@ -143,7 +138,7 @@ computeErr:
     adc dY
 ; err = a
     sta err
-//  if ((A1err >= 64) ||(A1err < -64)) return;  
+//  if ((A1err >= 64) ||(A1err < -64)) return;
     sec
     sbc #$40
     bvc *+4
@@ -155,7 +150,7 @@ computeErr:
     bvc *+4
     eor #$80
     bmi endloop
-    
+
 //  while (true)   /* loop */
 drawloop:
 //      PLOT (x0, y0)
