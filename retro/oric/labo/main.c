@@ -177,20 +177,29 @@ display_menu()
 	paper(6);ink(4);
 
 	// scrolling hybrid graphics mode : Text & Hires
-	poke(0xbb80+40,30); 
+	poke(0xbb80+40,HIRES_50Hz); 
 	for (i=8;i<16;i++)
-		poke(0xA000+(40*i)+2,26);
+		poke(0xA000+(40*i)+2,TEXT_50Hz);
 
 	// Scrolling Text colors
-	*(unsigned char*)(0xA000+(40*8)+1)=1&7;
-	*(unsigned char*)(0xA000+(40*9)+1)=5&7;
-	*(unsigned char*)(0xA000+(40*10)+1)=3&7;
-	*(unsigned char*)(0xA000+(40*11)+1)=7&7;
-	*(unsigned char*)(0xA000+(40*12)+1)=3&7;
-	*(unsigned char*)(0xA000+(40*13)+1)=5&7;
-	*(unsigned char*)(0xA000+(40*14)+1)=1&7;
-	*(unsigned char*)(0xA000+(40*15)+1)=0&7;
-	
+	// *(unsigned char*)(0xA000+(40*8)+1)=1&7;
+	// *(unsigned char*)(0xA000+(40*9)+1)=5&7;
+	// *(unsigned char*)(0xA000+(40*10)+1)=3&7;
+	// *(unsigned char*)(0xA000+(40*11)+1)=7&7;
+	// *(unsigned char*)(0xA000+(40*12)+1)=3&7;
+	// *(unsigned char*)(0xA000+(40*13)+1)=5&7;
+	// *(unsigned char*)(0xA000+(40*14)+1)=1&7;
+	// *(unsigned char*)(0xA000+(40*15)+1)=0&7;
+
+	*(unsigned char*)(0xA000+(40*8)+1)=2&7;
+	*(unsigned char*)(0xA000+(40*9)+1)=6&7;
+	*(unsigned char*)(0xA000+(40*10)+1)=4&7;
+	*(unsigned char*)(0xA000+(40*11)+1)=0&7;
+	*(unsigned char*)(0xA000+(40*12)+1)=4&7;
+	*(unsigned char*)(0xA000+(40*13)+1)=6&7;
+	*(unsigned char*)(0xA000+(40*14)+1)=2&7;
+	*(unsigned char*)(0xA000+(40*15)+1)=1&7;
+
     AdvancedPrint(0,0,"                                        ");
 	AdvancedPrint(2,1,"                                      ");
 	// clear background
@@ -237,7 +246,7 @@ display_menu()
 void main()
 {
 	unsigned char line, column;
-	
+	unsigned char ii;
 	// AdvancedPrint(2,1,"Hello World !");
 	// AdvancedPrint(3,2,"Hello World !");
 	// AdvancedPrint(4,3,"Hello World !");
@@ -255,9 +264,24 @@ void main()
 	// put_char (2, 10, HIRES_50Hz);
 	// put_char (3, 20, TEXT_50Hz);
 
-	redefine_char();
-	display_menu();
+	// redefine_char();
+	// display_menu();
 
+	// FOR Y=0 TO 40
+	for (ii = 0; ii<40 ; ii++){
+
+	// : POKE #BB80+(Y*40)+0,30   ' Switch to HIRES
+		poke (0xBB80+(ii*40)+0,HIRES_50Hz);
+	// NEXT Y
+	}
+	for (ii = 0; ii<199 ; ii++){
+	// FOR Y=0 TO 199
+	// : POKE #A000+(Y*40)+1,Y AND 7   ' Change INK color
+		poke (0xA000+(ii*40)+1, ii & 0x07);
+	// : POKE #A000+(Y*40)+2,26        ' Switch to TEXT
+		poke (0xA000+(ii*40)+2, TEXT_50Hz);
+	// NEXT Y
+	}
 
 }
 
