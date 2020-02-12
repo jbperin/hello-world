@@ -2,7 +2,7 @@
 Resources:
 [Oric Atmos sur hebdogiciel](http://www.hebdogiciel.free.fr/oric.htm)
 [Listings Oric Micro 7](http://abandonlistings.free.fr/micro7/)
-
+[Pages de liens d'André Cheramy](http://andre.cheramy.net/telechargement/Programmes/choix.htm)
 # Real ORIC
 
 ## Connection

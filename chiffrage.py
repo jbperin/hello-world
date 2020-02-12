@@ -17,20 +17,41 @@ import numpy as np
 def main():
     fig, ax = plt.subplots(1, 1)
     df = 5
-    loc = 7
-    scale = 2
+    loc = 20
+    scale = 8
 
     mean, var, skew, kurt = chi2.stats(df, moments='mvsk')
     #x = np.linspace(chi2.ppf(0.01, df, loc, scale),chi2.ppf(0.99, df, loc, scale), 20)
     valmax = int(chi2.ppf(0.99, df, loc, scale)) + 1
     if (valmax % 2 !=0): valmax = valmax + 1
-    valmax= 46
+    #valmax= 46
     x = np.linspace(0 , valmax, valmax +1)
 
-    print (x)
+    #print (x)
     proba = chi2.pdf(x, df, loc, scale)
     vs = map(repr, proba.tolist())
-    print (" ".join(list(vs)).replace (".",","))
+    repartition = list(zip(x.tolist(), proba.tolist()))
+
+    nbTranche = 5
+    valmin =  loc
+    space = (valmax - valmin ) / nbTranche
+
+    remain = 100
+    tranche0 = int(100* sum([pro for val, pro in repartition if (val<valmin)]))
+    remain -= tranche0
+    print ("P(v < %d) = %d"%(valmin, tranche0))
+    for traidx in  range (nbTranche):
+        deb = valmin + traidx * space
+        fin = valmin + (traidx+1) * space
+        tranche = int(100* sum([pro for val, pro in repartition if (val>=deb) and (val < fin)]))
+        remain -= tranche
+        print ("P(%d <= v < %d) = %d"%(deb, fin, tranche))
+    trancheF = 100* sum([pro for val, pro in repartition if (val>=valmin + nbTranche * space)])
+    print ("P(v >= %d) = %d"%(valmin + nbTranche * space, remain))
+
+    for certitude in [0.6, 0.7, 0.75, 0.8, 0.85, 0.90, 0.95]:
+        print ("certi = %d , val = %d"%(certitude, int(chi2.ppf(certitude, df, loc, scale))))
+    #print (" ".join(list(vs)).replace (".",","))
     #print (" ".join(proba.tolist()))
     #print (" ".join().replace(".",","))
     ax.plot(x, proba,'r-', lw=5, alpha=0.6, label='chi2 pdf')
