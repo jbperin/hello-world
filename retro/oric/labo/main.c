@@ -9,38 +9,6 @@
 #include "const.h"
 
 
-#define INK_BLACK	0
-#define INK_RED		1
-#define INK_GREEN	2
-#define INK_YELLOW	3
-#define INK_BLUE	4
-#define INK_MAGENTA	5
-#define INK_CYAN	6
-#define INK_WHITE	7
-
-// Character Set modifier	
-// 8		Use Standard Charset	
-// 9		Use Alternate Charset	
-// 10		Use Double Size Standard Charset	
-// 11		Use Double Size Alternate Charset	
-// 12		Use Blinking Standard Charset	
-// 13		Use Blinking Alternate Charset	
-// 14		Use Double Size Blinking Standard Charset	
-// 15		Use Double Size Blinking Alternate Charset	
-// Change Paper (background) color	
-#define PAPER_BLACK	16
-#define PAPER_RED	17
-#define PAPER_GREEN	18
-#define PAPER_YELLOW	19
-#define PAPER_BLUE	20
-#define PAPER_MAGENTA	21
-#define PAPER_CYAN	22
-#define PAPER_WHITE	23
-// Video control attributes	
-#define TEXT_60Hz	24
-#define TEXT_50Hz	26
-#define HIRES_60Hz	28
-#define HIRES_50Hz	30
 
 
 // Declare the assembly code function
@@ -60,7 +28,7 @@ void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned ch
 }
 void put_char (unsigned char lin, unsigned char col, char ch2disp){
 	char *ptr;
-	ptr = (char *)(SCREEN_ADRESS+SCREEN_WIDTH*lin+col);
+	ptr = (char *)(LORES_SCREEN_ADDRESS+LORES_SCREEN_WIDTH*lin+col);
 	*ptr = ch2disp;
 }
 
@@ -241,11 +209,12 @@ display_menu()
 	// gotoxy(20,0);printf("CODE=%d IDX=%d",rain[index_raindrop],index_raindrop);
 }
 
-
+unsigned char tab_color [] = {INK_CYAN, INK_YELLOW, INK_MAGENTA, INK_BLUE, INK_GREEN, INK_RED, INK_CYAN, INK_YELLOW} ;
 
 void main()
 {
 	unsigned char line, column;
+
 	unsigned char ii;
 	// AdvancedPrint(2,1,"Hello World !");
 	// AdvancedPrint(3,2,"Hello World !");
@@ -267,21 +236,74 @@ void main()
 	// redefine_char();
 	// display_menu();
 
-	// FOR Y=0 TO 40
-	for (ii = 0; ii<40 ; ii++){
+	for (ii = 0; ii<LORES_SCREEN_HEIGHT ; ii++){
 
-	// : POKE #BB80+(Y*40)+0,30   ' Switch to HIRES
-		poke (0xBB80+(ii*40)+0,HIRES_50Hz);
-	// NEXT Y
+		poke (LORES_SCREEN_ADDRESS+(ii*LORES_SCREEN_WIDTH)+0,HIRES_50Hz);
+
 	}
+
 	for (ii = 0; ii<199 ; ii++){
-	// FOR Y=0 TO 199
-	// : POKE #A000+(Y*40)+1,Y AND 7   ' Change INK color
-		poke (0xA000+(ii*40)+1, ii & 0x07);
-	// : POKE #A000+(Y*40)+2,26        ' Switch to TEXT
-		poke (0xA000+(ii*40)+2, TEXT_50Hz);
-	// NEXT Y
+
+		poke (HIRES_SCREEN_ADDRESS+(ii*40)+1, tab_color[ii & 0x07]);
+		poke (HIRES_SCREEN_ADDRESS+(ii*40)+2, TEXT_50Hz);
+
 	}
+	//               CYAN, YELL, MAGE, BLUE, GREEN, RED, CYAN, YELL
+	change_char('c', 0x7F, 0x00, 0x00, 0x7F, 0x00, 0x00, 0x7F, 0x00);
+	change_char('y', 0x00, 0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F);
+	change_char('m', 0x00, 0x00, 0x7F, 0x00, 0x00, 0x7F, 0x00, 0x00);
+	change_char('r', 0x00, 0x55, 0x7F, 0x00, 0x55, 0x7F, 0x00, 0x00);
+	change_char('g', 0x55, 0xAA, 0x00, 0x00, 0x7F, 0x00, 0x55, 0xAA);
+	change_char('b', 0xAA, 0x00, 0x00, 0x7F, 0x00, 0x00, 0x55, 0x00);
+
+
+
+    for (line = 0; line < LORES_SCREEN_HEIGHT/2; line++) {
+        for (column = 2; column < LORES_SCREEN_WIDTH; column++) {
+			put_char(line, column, 'b');
+        // put_char(line, 1, PAPER_BLUE);
+		}
+    }
+    for (line = LORES_SCREEN_HEIGHT/2; line < LORES_SCREEN_HEIGHT; line++) {
+        for (column = 2; column < LORES_SCREEN_WIDTH; column++) {
+            put_char(line, column, 'g');
+            // put_char(ii, 1, PAPER_GREEN);
+        }
+    }
+
+	put_char(6, 11, 'c');
+	put_char(6, 12, 'c');
+	put_char(6, 13, 'c');
+	put_char(6, 14, 'y');
+	put_char(6, 15, 'y');
+	put_char(6, 16, 'y');
+	put_char(6, 17, 'm');
+	put_char(6, 18, 'm');
+	put_char(6, 19, 'm');
+	put_char(6, 20, 'r');
+	put_char(6, 21, 'r');
+	put_char(6, 22, 'r');
+	put_char(6, 23, 'g');
+	put_char(6, 24, 'g');
+	put_char(6, 25, 'g');
+
+	
+/*
+    for (ii = 0; ii < LORES_SCREEN_HEIGHT/2; ii++) {
+        put_char(ii, 0, INK_BLACK);
+        put_char(ii, 1, PAPER_BLUE);
+    }
+    for (ii = LORES_SCREEN_HEIGHT/2; ii < LORES_SCREEN_HEIGHT; ii++) {
+        put_char(ii, 0, INK_BLACK);
+        put_char(ii, 1, PAPER_GREEN);
+    }
+
+	put_char(6, 10, INK_RED );
+	put_char(6, 11, 'c');
+	put_char(6, 12, 'c');
+	put_char(6, 13, 'c');
+*/
+
 
 }
 
