@@ -208,8 +208,55 @@ display_menu()
 	// to debbug
 	// gotoxy(20,0);printf("CODE=%d IDX=%d",rain[index_raindrop],index_raindrop);
 }
+void affiche_intro (){
+	redefine_char();
+	display_menu();
 
+}
 unsigned char tab_color [] = {INK_CYAN, INK_YELLOW, INK_MAGENTA, INK_BLUE, INK_GREEN, INK_RED, INK_CYAN, INK_YELLOW} ;
+
+void config_screen_memory() {
+	int ii, jj;
+	char val;
+	// for (ii = 1 ; ii < 20; ii++) {
+	// poke (LORES_SCREEN_ADDRESS+(ii*LORES_SCREEN_WIDTH)+0,HIRES_50Hz);
+	// poke (HIRES_SCREEN_ADDRESS+((ii*8+0)*LORES_SCREEN_WIDTH)+1, tab_color[0 & 0x07]);
+	// poke (HIRES_SCREEN_ADDRESS+((ii*8+0)*LORES_SCREEN_WIDTH)+2, TEXT_50Hz);
+	// poke (HIRES_SCREEN_ADDRESS+((ii*8+1)*LORES_SCREEN_WIDTH)+1, tab_color[1 & 0x07]);
+	// poke (HIRES_SCREEN_ADDRESS+((ii*8+1)*LORES_SCREEN_WIDTH)+2, TEXT_50Hz);
+	// poke (HIRES_SCREEN_ADDRESS+((ii*8+2)*LORES_SCREEN_WIDTH)+1, tab_color[2 & 0x07]);
+	// poke (HIRES_SCREEN_ADDRESS+((ii*8+2)*LORES_SCREEN_WIDTH)+2, TEXT_50Hz);
+	// poke (HIRES_SCREEN_ADDRESS+((ii*8+3)*LORES_SCREEN_WIDTH)+1, tab_color[3 & 0x07]);
+	// poke (HIRES_SCREEN_ADDRESS+((ii*8+3)*LORES_SCREEN_WIDTH)+2, TEXT_50Hz);
+	// poke (HIRES_SCREEN_ADDRESS+((ii*8+4)*LORES_SCREEN_WIDTH)+1, tab_color[4 & 0x07]);
+	// poke (HIRES_SCREEN_ADDRESS+((ii*8+4)*LORES_SCREEN_WIDTH)+2, TEXT_50Hz);
+	// poke (HIRES_SCREEN_ADDRESS+((ii*8+5)*LORES_SCREEN_WIDTH)+1, tab_color[5 & 0x07]);
+	// poke (HIRES_SCREEN_ADDRESS+((ii*8+5)*LORES_SCREEN_WIDTH)+2, TEXT_50Hz);
+	// poke (HIRES_SCREEN_ADDRESS+((ii*8+6)*LORES_SCREEN_WIDTH)+1, tab_color[6 & 0x07]);
+	// poke (HIRES_SCREEN_ADDRESS+((ii*8+6)*LORES_SCREEN_WIDTH)+2, TEXT_50Hz);
+	// poke (HIRES_SCREEN_ADDRESS+((ii*8+7)*LORES_SCREEN_WIDTH)+1, tab_color[7 & 0x07]);
+	// poke (HIRES_SCREEN_ADDRESS+((ii*8+7)*LORES_SCREEN_WIDTH)+2, TEXT_50Hz);
+	// for (jj=3; jj< LORES_SCREEN_WIDTH; jj++){
+	// 	val = peek (LORES_SCREEN_ADDRESS+(ii*LORES_SCREEN_WIDTH)+jj);
+	// 	poke(LORES_SCREEN_ADDRESS+(ii*LORES_SCREEN_WIDTH)+jj, val | 0x80);
+	// }
+	// }
+
+	
+	for (ii = 1; ii<22 ; ii++){
+		poke (LORES_SCREEN_ADDRESS+(ii*LORES_SCREEN_WIDTH)+0,HIRES_50Hz);
+		for (jj = 0; jj < 8; jj++) {
+			poke (HIRES_SCREEN_ADDRESS+((ii*8+jj)*LORES_SCREEN_WIDTH)+1, tab_color[jj]);
+			poke (HIRES_SCREEN_ADDRESS+((ii*8+jj)*LORES_SCREEN_WIDTH)+2, TEXT_50Hz);
+		}
+	}
+
+	// for (ii = 8; ii<HIRES_SCREEN_HEIGHT ; ii++){
+	// 	poke (HIRES_SCREEN_ADDRESS+(ii*LORES_SCREEN_WIDTH)+1, tab_color[ii & 0x07]);
+	// 	poke (HIRES_SCREEN_ADDRESS+(ii*LORES_SCREEN_WIDTH)+2, TEXT_50Hz);
+	// }
+}
+
 
 void main()
 {
@@ -233,59 +280,48 @@ void main()
 	// put_char (2, 10, HIRES_50Hz);
 	// put_char (3, 20, TEXT_50Hz);
 
-	// redefine_char();
-	// display_menu();
+	//affiche_intro();
+	//cls();
+	config_screen_memory();
 
-	for (ii = 0; ii<LORES_SCREEN_HEIGHT ; ii++){
-
-		poke (LORES_SCREEN_ADDRESS+(ii*LORES_SCREEN_WIDTH)+0,HIRES_50Hz);
-
-	}
-
-	for (ii = 0; ii<199 ; ii++){
-
-		poke (HIRES_SCREEN_ADDRESS+(ii*40)+1, tab_color[ii & 0x07]);
-		poke (HIRES_SCREEN_ADDRESS+(ii*40)+2, TEXT_50Hz);
-
-	}
 	//               CYAN, YELL, MAGE, BLUE, GREEN, RED, CYAN, YELL
-	change_char('c', 0x7F, 0x00, 0x00, 0x7F, 0x00, 0x00, 0x7F, 0x00);
-	change_char('y', 0x00, 0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F);
-	change_char('m', 0x00, 0x00, 0x7F, 0x00, 0x00, 0x7F, 0x00, 0x00);
-	change_char('r', 0x00, 0x55, 0x7F, 0x00, 0x55, 0x7F, 0x00, 0x00);
-	change_char('g', 0x55, 0xAA, 0x00, 0x00, 0x7F, 0x00, 0x55, 0xAA);
-	change_char('b', 0xAA, 0x00, 0x00, 0x7F, 0x00, 0x00, 0x55, 0x00);
+	// change_char('c', 0x7F, 0x00, 0x00, 0x7F, 0x00, 0x00, 0x7F, 0x00);
+	// change_char('y', 0x00, 0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F);
+	// change_char('m', 0x00, 0x00, 0x7F, 0x00, 0x00, 0x7F, 0x00, 0x00);
+	// change_char('r', 0x00, 0x55, 0x7F, 0x00, 0x55, 0x7F, 0x00, 0x00);
+	// change_char('g', 0x55, 0xAA, 0x00, 0x00, 0x7F, 0x00, 0x55, 0xAA);
+	// change_char('b', 0xAA, 0x00, 0x00, 0x7F, 0x00, 0x00, 0x55, 0x00);
 
 
 
-    for (line = 0; line < LORES_SCREEN_HEIGHT/2; line++) {
-        for (column = 2; column < LORES_SCREEN_WIDTH; column++) {
-			put_char(line, column, 'b');
-        // put_char(line, 1, PAPER_BLUE);
-		}
-    }
-    for (line = LORES_SCREEN_HEIGHT/2; line < LORES_SCREEN_HEIGHT; line++) {
-        for (column = 2; column < LORES_SCREEN_WIDTH; column++) {
-            put_char(line, column, 'g');
-            // put_char(ii, 1, PAPER_GREEN);
-        }
-    }
+    // for (line = 0; line < LORES_SCREEN_HEIGHT/2; line++) {
+    //     for (column = 2; column < LORES_SCREEN_WIDTH; column++) {
+	// 		put_char(line, column, 'b');
+    //     // put_char(line, 1, PAPER_BLUE);
+	// 	}
+    // }
+    // for (line = LORES_SCREEN_HEIGHT/2; line < LORES_SCREEN_HEIGHT; line++) {
+    //     for (column = 2; column < LORES_SCREEN_WIDTH; column++) {
+    //         put_char(line, column, 'g');
+    //         // put_char(ii, 1, PAPER_GREEN);
+    //     }
+    // }
 
-	put_char(6, 11, 'c');
-	put_char(6, 12, 'c');
-	put_char(6, 13, 'c');
-	put_char(6, 14, 'y');
-	put_char(6, 15, 'y');
-	put_char(6, 16, 'y');
-	put_char(6, 17, 'm');
-	put_char(6, 18, 'm');
-	put_char(6, 19, 'm');
-	put_char(6, 20, 'r');
-	put_char(6, 21, 'r');
-	put_char(6, 22, 'r');
-	put_char(6, 23, 'g');
-	put_char(6, 24, 'g');
-	put_char(6, 25, 'g');
+	// put_char(6, 11, 'c');
+	// put_char(6, 12, 'c');
+	// put_char(6, 13, 'c');
+	// put_char(6, 14, 'y');
+	// put_char(6, 15, 'y');
+	// put_char(6, 16, 'y');
+	// put_char(6, 17, 'm');
+	// put_char(6, 18, 'm');
+	// put_char(6, 19, 'm');
+	// put_char(6, 20, 'r');
+	// put_char(6, 21, 'r');
+	// put_char(6, 22, 'r');
+	// put_char(6, 23, 'g');
+	// put_char(6, 24, 'g');
+	// put_char(6, 25, 'g');
 
 	
 /*
