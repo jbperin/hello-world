@@ -5,5 +5,5 @@
 ::
 SET OSDKADDR=$800
 SET OSDKNAME=HWADVANCED
-SET OSDKFILE=main print
+SET OSDKFILE=main print keyboard
 

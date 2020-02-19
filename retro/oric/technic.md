@@ -3,7 +3,35 @@ Resources:
 [Oric Atmos sur hebdogiciel](http://www.hebdogiciel.free.fr/oric.htm)
 [Listings Oric Micro 7](http://abandonlistings.free.fr/micro7/)
 [Pages de liens d'André Cheramy](http://andre.cheramy.net/telechargement/Programmes/choix.htm)
+
+
 # Real ORIC
+
+## La 3D sur Oric:
+
+1337:
+
+
+Pole Position (1982):
+https://www.youtube.com/watch?v=_0xsJJcp_38
+
+3D Fongus: https://www.oric.org/software/3d_fongus-110.html
+https://www.youtube.com/watch?v=4Cbynlhs-kk
+
+3D Munch: https://www.oric.org/index.php?page=software&fille=detail&num_log=1007
+https://www.youtube.com/watch?v=kQkvrQqbkvA
+
+3D Maze: 
+https://www.youtube.com/watch?v=zX7WK7H4znc
+
+Loki:
+https://www.youtube.com/watch?v=dz0T8B5haE0
+
+Starter 3D:
+https://www.youtube.com/watch?v=a3fbSeYWt28
+
+
+
 
 ## Connection
 https://www.youtube.com/watch?v=9HTE_Dg1W4w
