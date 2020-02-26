@@ -259,6 +259,13 @@ ou encore
 [8bit_atan2](https://codebase64.org/doku.php?id=base:8bit_atan2_8-bit_angle)
 ## Algo de dessin
 
+
+### UV mapping
+
+http://s390174849.online.de/ray.tscc.de/fatmap.htm
+http://www.multi.fi/~mbc/sources/fatmap2.txt
+
+
 ### Tracé de Segment
 
 [Algo de  Bresenham](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm)
