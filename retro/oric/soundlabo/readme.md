@@ -1,4 +1,9 @@
 
+
+W8912: $F590 -> F5C0
+param : A : num de registre
+        X : donnée à transférer
+
 PING: $FA9F
 SHOOT: $FAB5
 EXPLD: $FACB
@@ -18,15 +23,13 @@ PARAMS+3 canaux actifs (0 à 7) (bruit)
 PARAMS+5 enveloppe (1 à 7) (bruit)
 PARAMS+7 durée enveloppe (0 à 65535) (bruit)
 
-MUSIC:  $FC18
+MUSIC:  $FC18 -> $FC5D
 PARAMS+1 canal (1 à 3)
 PARAMS+3 octave (0 à 7)
 PARAMS+5 note (0 à 12)
 PARAMS+7 volume (0 à 15)
 
-W8912: $F590 -> F5C0
-param : A : num de registre
-        X : donnée à transférer
+
 
 
 int play(int soundchanels,int noisechanels,int envelop,int volume);
