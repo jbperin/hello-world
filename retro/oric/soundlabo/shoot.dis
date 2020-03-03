@@ -1,0 +1,11 @@
+SHOOT         FAB5  A2 BD     LDX #$BD         
+              FAB7  A0 FA     LDY #$FA         
+              FAB9  20 86 FA  JSR $FA86        
+              FABC  60        RTS              
+ShootData     FABD  00 00     BRK #$00         
+              FABF  00 00     BRK #$00         
+              FAC1  00 00     BRK #$00         
+              FAC3  0F 07 10  SLO $1007        
+              FAC6  10 10     BPL $FAD8        
+              FAC8  00 08     BRK #$08         
+              FACA  00 A2     BRK #$A2         

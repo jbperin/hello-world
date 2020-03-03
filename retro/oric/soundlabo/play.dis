@@ -1,0 +1,35 @@
+PLAY          FBD0  AD E3 02  LDA $02E3        
+              FBD3  0A        ASL              
+              FBD4  0A        ASL              
+              FBD5  0A        ASL              
+              FBD6  0D E1 02  ORA $02E1        
+              FBD9  49 3F     EOR #$3F         
+              FBDB  AA        TAX              
+              FBDC  A9 07     LDA #$07         
+              FBDE  20 90 F5  JSR WriteToAY    
+              FBE1  18        CLC              
+              FBE2  AD E7 02  LDA $02E7        
+              FBE5  0A        ASL              
+              FBE6  8D E7 02  STA $02E7        
+              FBE9  AD E8 02  LDA $02E8        
+              FBEC  2A        ROL              
+              FBED  8D E8 02  STA $02E8        
+              FBF0  A9 0B     LDA #$0B         
+              FBF2  AE E7 02  LDX $02E7        
+              FBF5  20 90 F5  JSR WriteToAY    
+              FBF8  A9 0C     LDA #$0C         
+              FBFA  AE E8 02  LDX $02E8        
+              FBFD  20 90 F5  JSR WriteToAY    
+              FC00  AD E5 02  LDA $02E5        
+              FC03  29 07     AND #$07         
+              FC05  A8        TAY              
+              FC06  B9 10 FC  LDA $FC10,Y      
+              FC09  AA        TAX              
+              FC0A  A9 0D     LDA #$0D         
+              FC0C  20 90 F5  JSR WriteToAY    
+              FC0F  60        RTS              
+              FC10  00 00     BRK #$00         
+              FC12  04 08     DOP $08          
+              FC14  0A        ASL              
+              FC15  0B 0C     ANC #$0C         
+              FC17  0D A2 E1  ORA $E1A2        

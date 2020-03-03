@@ -1,11 +1,54 @@
 [TOC]
+
+
 Resources:
+
 [Oric Atmos sur hebdogiciel](http://www.hebdogiciel.free.fr/oric.htm)
+
 [Listings Oric Micro 7](http://abandonlistings.free.fr/micro7/)
+
 [Pages de liens d'André Cheramy](http://andre.cheramy.net/telechargement/Programmes/choix.htm)
 
 
+
 # Real ORIC
+
+## MOS 6522
+
+![](imgs/Mos_6522_BlockDiagram.PNG)
+
+|RS[3:0]|Register|Descritpion| Remark|
+|--|--|--|--|
+|0|ORB|Output Register B||
+|1|ORA|Output Register B||
+|2|DDRB|Data Direction B||
+|3|DDRA|Data Direction A||
+|4|T1L-L / T1C-L|Timer 1 Latch/Counter Low|Write Latch Read Counter|
+|5|T1C-H|Timer 1 Counter High| Triggers T1L-L / T1C-L Transfert|
+|6|T1L-L|||
+|7|T1L-H|||
+|8|T2C-L / T2C-L|Timer 2 Latch/Counter Low|Write Latch Read Counter|
+|9|T2C-H|Timer 2 Counter High|Triggers T2L-L / T2C-L Transfert|
+|A|SR|Shift Register||
+|B|ACR|Auxiliary Control Register||
+|C|PCR|Peripheral Control Register||
+|D|IFR|Interrupt Flag Register||
+|E|IER|Interrupt Enable Register||
+|F|ORA|||
+
+Port A connects to Printer 8-bit bus and 8912 Sound chip 
+Port B connects to Printer 8-bit's 
+
+CA1 inputs acknowledge signal on printer port
+CA2 connects to 8912 sound chip
+CB1 connected to the cassette input circuitry
+CB2 when 1 the 8912 reads from port A of the 6522
+
+## PSG AY3 8912
+
+![](imgs/PSG_AY3_8912_BlockDiagram.PNG)
+![](imgs/PSG_AY3_8912_Registers.PNG)
+
 
 ## La 3D sur Oric:
 
@@ -21,7 +64,7 @@ https://www.youtube.com/watch?v=4Cbynlhs-kk
 3D Munch: https://www.oric.org/index.php?page=software&fille=detail&num_log=1007
 https://www.youtube.com/watch?v=kQkvrQqbkvA
 
-3D Maze: 
+3D Maze:
 https://www.youtube.com/watch?v=zX7WK7H4znc
 
 Loki:

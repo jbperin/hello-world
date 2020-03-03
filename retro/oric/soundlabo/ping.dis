@@ -1,0 +1,11 @@
+PING          FA9F  A2 A7     LDX #$A7         
+              FAA1  A0 FA     LDY #$FA         
+              FAA3  20 86 FA  JSR $FA86        
+              FAA6  60        RTS              
+PingData      FAA7  18        CLC              
+              FAA8  00 00     BRK #$00         
+              FAAA  00 00     BRK #$00         
+              FAAC  00 00     BRK #$00         
+              FAAE  3E 10 00  ROL $0010,X      
+              FAB1  00 00     BRK #$00         
+              FAB3  0F 00 A2  SLO $A200        

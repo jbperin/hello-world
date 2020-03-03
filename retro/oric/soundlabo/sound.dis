@@ -1,0 +1,65 @@
+SOUND         FB40  AD E1 02  LDA $02E1        
+              FB43  C9 01     CMP #$01         
+              FB45  D0 22     BNE $FB69        
+              FB47  A9 00     LDA #$00         
+              FB49  AE E3 02  LDX $02E3        
+              FB4C  20 90 F5  JSR WriteToAY    
+              FB4F  A9 01     LDA #$01         
+              FB51  AE E4 02  LDX $02E4        
+              FB54  20 90 F5  JSR WriteToAY    
+              FB57  AD E5 02  LDA $02E5        
+              FB5A  29 0F     AND #$0F         
+              FB5C  D0 04     BNE $FB62        
+              FB5E  A2 10     LDX #$10         
+              FB60  D0 01     BNE $FB63        
+              FB62  AA        TAX              
+              FB63  A9 08     LDA #$08         
+              FB65  20 90 F5  JSR WriteToAY    
+              FB68  60        RTS              
+              FB69  C9 02     CMP #$02         
+              FB6B  D0 22     BNE $FB8F        
+              FB6D  A9 02     LDA #$02         
+              FB6F  AE E3 02  LDX $02E3        
+              FB72  20 90 F5  JSR WriteToAY    
+              FB75  A9 03     LDA #$03         
+              FB77  AE E4 02  LDX $02E4        
+              FB7A  20 90 F5  JSR WriteToAY    
+              FB7D  AD E5 02  LDA $02E5        
+              FB80  29 0F     AND #$0F         
+              FB82  D0 04     BNE $FB88        
+              FB84  A2 10     LDX #$10         
+              FB86  D0 01     BNE $FB89        
+              FB88  AA        TAX              
+              FB89  A9 09     LDA #$09         
+              FB8B  20 90 F5  JSR WriteToAY    
+              FB8E  60        RTS              
+              FB8F  C9 03     CMP #$03         
+              FB91  D0 22     BNE $FBB5        
+              FB93  A9 04     LDA #$04         
+              FB95  AE E3 02  LDX $02E3        
+              FB98  20 90 F5  JSR WriteToAY    
+              FB9B  A9 05     LDA #$05         
+              FB9D  AE E4 02  LDX $02E4        
+              FBA0  20 90 F5  JSR WriteToAY    
+              FBA3  AD E5 02  LDA $02E5        
+              FBA6  29 0F     AND #$0F         
+              FBA8  D0 04     BNE $FBAE        
+              FBAA  A2 10     LDX #$10         
+              FBAC  D0 01     BNE $FBAF        
+              FBAE  AA        TAX              
+              FBAF  A9 0A     LDA #$0A         
+              FBB1  20 90 F5  JSR WriteToAY    
+              FBB4  60        RTS              
+              FBB5  A9 06     LDA #$06         
+              FBB7  AE E3 02  LDX $02E3        
+              FBBA  20 90 F5  JSR WriteToAY    
+              FBBD  AD E1 02  LDA $02E1        
+              FBC0  C9 04     CMP #$04         
+              FBC2  F0 93     BEQ $FB57        
+              FBC4  C9 05     CMP #$05         
+              FBC6  F0 B5     BEQ $FB7D        
+              FBC8  C9 06     CMP #$06         
+              FBCA  F0 D7     BEQ $FBA3        
+              FBCC  EE E0 02  INC $02E0        
+              FBCF  60        RTS              
+     

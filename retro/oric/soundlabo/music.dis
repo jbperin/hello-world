@@ -1,0 +1,28 @@
+MUSIC         FC18  A2 E1     LDX #$E1         
+              FC1A  A9 04     LDA #$04         
+              FC1C  20 E4 F2  JSR $F2E4        
+              FC1F  B0 39     BCS $FC5A        
+              FC21  A2 E3     LDX #$E3         
+              FC23  A9 08     LDA #$08         
+              FC25  20 F8 F2  JSR $F2F8        
+              FC28  B0 30     BCS $FC5A        
+              FC2A  A2 E5     LDX #$E5         
+              FC2C  A9 0D     LDA #$0D         
+              FC2E  20 E4 F2  JSR $F2E4        
+              FC31  B0 27     BCS $FC5A        
+              FC33  AC E3 02  LDY $02E3        
+              FC36  AE E5 02  LDX $02E5        
+              FC39  BD 5E FC  LDA MusicData,X  
+              FC3C  8D E4 02  STA $02E4        
+              FC3F  BD 6B FC  LDA $FC6B,X      
+              FC42  8D E3 02  STA $02E3        
+              FC45  AD E7 02  LDA $02E7        
+              FC48  8D E5 02  STA $02E5        
+              FC4B  88        DEY              
+              FC4C  30 09     BMI $FC57        
+              FC4E  4E E4 02  LSR $02E4        
+              FC51  6E E3 02  ROR $02E3        
+              FC54  4C 4B FC  JMP $FC4B        
+              FC57  4C 40 FB  JMP SOUND        
+              FC5A  EE E0 02  INC $02E0        
+              FC5D  60        RTS              

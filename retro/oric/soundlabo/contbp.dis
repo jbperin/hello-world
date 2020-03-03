@@ -1,0 +1,12 @@
+KeyClickL     FB2A  A2 32     LDX #$32         
+              FB2C  A0 FB     LDY #$FB         
+              FB2E  20 86 FA  JSR $FA86        
+              FB31  60        RTS              
+KeyClickLData
+              FB32  2F 00 00  RLA $0000        
+              FB35  00 00     BRK #$00         
+              FB37  00 00     BRK #$00         
+              FB39  3E 10 00  ROL $0010,X      
+              FB3C  00 1F     BRK #$1F         
+              FB3E  00 00     BRK #$00         
+SOUND         FB40  AD E1 02  LDA $02E1        

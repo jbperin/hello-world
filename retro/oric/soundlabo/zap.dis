@@ -1,0 +1,12 @@
+ExplodeData   FACB  A2 D3     LDX #$D3         
+              FACD  A0 FA     LDY #$FA         
+              FACF  20 86 FA  JSR $FA86        
+              FAD2  60        RTS              
+              FAD3  00 00     BRK #$00         
+              FAD5  00 00     BRK #$00         
+              FAD7  00 00     BRK #$00         
+              FAD9  1F        SLO              
+              FADA  07 10     SLO $10          
+              FADC  10 10     BPL $FAEE        
+              FADE  00 18     BRK #$18         
+              FAE0  00 A2     BRK #$A2         

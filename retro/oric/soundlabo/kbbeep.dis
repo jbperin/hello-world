@@ -1,0 +1,28 @@
+ZAP           FAE1  A2 06     LDX #$06         
+              FAE3  A0 FB     LDY #$FB         
+              FAE5  20 86 FA  JSR $FA86        
+              FAE8  A9 00     LDA #$00         
+              FAEA  AA        TAX              
+              FAEB  8A        TXA              
+              FAEC  48        PHA              
+              FAED  A9 00     LDA #$00         
+              FAEF  20 90 F5  JSR WriteToAY    
+              FAF2  A2 00     LDX #$00         
+              FAF4  CA        DEX              
+              FAF5  D0 FD     BNE $FAF4        
+              FAF7  68        PLA              
+              FAF8  AA        TAX              
+              FAF9  E8        INX              
+              FAFA  E0 70     CPX #$70         
+              FAFC  D0 ED     BNE $FAEB        
+              FAFE  A9 08     LDA #$08         
+              FB00  A2 00     LDX #$00         
+              FB02  20 90 F5  JSR WriteToAY    
+              FB05  60        RTS              
+ZapData       FB06  00 00     BRK #$00         
+              FB08  00 00     BRK #$00         
+              FB0A  00 00     BRK #$00         
+              FB0C  00 3E     BRK #$3E         
+              FB0E  0F 00 00  SLO $0000        
+              FB11  00 00     BRK #$00         
+              FB13  00 A2     BRK #$A2         
