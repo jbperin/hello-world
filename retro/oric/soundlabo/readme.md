@@ -49,4 +49,7 @@ _music
         jmp grexit      ;common exit point
 
 _sound        
-
+        ldx #3          ;Get three parms
+        jsr getXparm
+        jsr $fb40       ;sound
+        jmp grexit      ;common exit point

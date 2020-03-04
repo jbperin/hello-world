@@ -5,5 +5,5 @@
 ::
 SET OSDKADDR=$800
 SET OSDKNAME=HWMIXED
-SET OSDKFILE=main print sound
+SET OSDKFILE=main print sound task25hz kernel
 
