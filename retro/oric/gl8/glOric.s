@@ -10,11 +10,14 @@
 .importzp ptr1, ptr2, ptr3, ptr4 ; 16 bits
 .importzp tmp1, tmp2, tmp3, tmp4; 8 bits
 
+;;    ___                                      
+;;   / __\  __ _  _ __ ___    ___  _ __   __ _ 
+;;  / /    / _` || '_ ` _ \  / _ \| '__| / _` |
+;; / /___ | (_| || | | | | ||  __/| |   | (_| |
+;; \____/  \__,_||_| |_| |_| \___||_|    \__,_|
+                                            
 .export _CamPosX, _CamPosY, _CamPosZ
 .export _CamRotZ, _CamRotX
-
-.export _glProject
-
 
 ;; Camera Position
 _CamPosX:		.word 0
@@ -24,6 +27,65 @@ _CamPosZ:		.word 0
 ;; Camera Orientation
 _CamRotZ:		.byte 0			
 _CamRotX:		.byte 0
+
+
+;;  __                            
+;; / _\     ___   ___  _ __    ___
+;; \ \     / __| / _ \| '_ \  / _ \
+;; _\ \   | (__ |  __/| | | ||  __/
+;; \__/    \___| \___||_| |_| \___|
+
+
+.export _nbSegments, _nbParticules, _nbFaces
+.export _segmentsPt1, _segmentsPt2, _segmentsChar
+.export _particulesPt, _particulesChar
+.export _facesPt1, _facesPt2, _facesPt3, _facesChar
+
+
+_nbSegments:         .res 1
+_nbParticules:       .res 1
+_nbFaces:            .res 1
+
+_segmentsPt1:        .res NB_MAX_SEGMENTS
+_segmentsPt2:        .res NB_MAX_SEGMENTS
+_segmentsChar:       .res NB_MAX_SEGMENTS
+
+_particulesPt:       .res NB_MAX_PARTICULES
+_particulesChar:     .res NB_MAX_PARTICULES
+
+_facesPt1:           .res NB_MAX_FACES
+_facesPt2:           .res NB_MAX_FACES
+_facesPt3:           .res NB_MAX_FACES
+_facesChar:          .res NB_MAX_FACES
+
+;;    ___                 _              _    _               
+;;   / _ \ _ __   ___    (_)  ___   ___ | |_ (_)  ___   _ __  
+;;  / /_)/| '__| / _ \   | | / _ \ / __|| __|| | / _ \ | '_ \ 
+;; / ___/ | |   | (_) |  | ||  __/| (__ | |_ | || (_) || | | |
+;; \/     |_|    \___/  _/ | \___| \___| \__||_| \___/ |_| |_|
+;;                     |__/                                   
+
+.export _projOptions, _nbPoints
+.export _points3dX, _points3dY, _points3dZ, _points2aH, _points2aV, _points2dH, _points2dL
+
+
+_projOptions:        .res 1
+_nbPoints:           .res 1
+
+_points3dX:          .res NB_MAX_POINTS
+_points3dY:          .res NB_MAX_POINTS
+_points3dZ:          .res NB_MAX_POINTS
+
+_points2aH:          .res NB_MAX_POINTS
+_points2aV:          .res NB_MAX_POINTS
+_points2dH:          .res NB_MAX_POINTS
+_points2dL:          .res NB_MAX_POINTS
+
+
+.export _PointX, _PointY, _PointZ
+
+.export _ResX, _ResY
+
 
 ;; Point 3D Coordinates
 _PointX:		.word 0
@@ -53,7 +115,7 @@ VAngleOverflow: .byte 0
 
 ptrpt3 		:= ptr3
 ptrpt2 		:= ptr2
-nbPoints 	:= tmp1
+;;nbPoints 	:= tmp1
 ;;opts 		:= tmp1
 _res		:= tmp2
 _tx		:= tmp3
@@ -66,10 +128,12 @@ _ty		:= tmp4
 ;void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char opts);
 ;---------------------------------------------------------------------------------
 
+.export _glProject
+
 .proc _glProject
 	;;sta tmp1		;opts
 	jsr popa
-	sta tmp2		;nbPoints
+	sta _nbPoints		;nbPoints
 	jsr popax		;get tabpoint3D
 	sta ptrpt3
 	stx ptrpt3+1
@@ -77,7 +141,7 @@ _ty		:= tmp4
 	sta ptrpt2
 	stx ptrpt2+1
 
-    ldx nbPoints		;nbPoints
+    ldx _nbPoints		;nbPoints
     dex
     txa ; ii = nbPoints - 1
     asl
@@ -86,7 +150,7 @@ _ty		:= tmp4
     adc #$03
     tay
     
-    ldx nbPoints		;nbPoints
+    ldx _nbPoints		;nbPoints
     dex
     txa ; ii = nbPoints - 1
     asl
@@ -170,12 +234,55 @@ dofastprojdone:
     rts
 .endproc
 
+.export _glProjectArrays
+
+.proc _glProjectArrays
+
+    ;; for (ii = 0; ii < nbPoints; ii++){
+	ldy		_nbPoints
+glProjectArrays_loop:
+	dey
+	bmi		glProjectArrays_done
+		;;     x = points3dX[ii];
+		lda 	_points3dX, y
+		sta		_PointX
+		;;     y = points3dY[ii];
+		lda 	_points3dY, y
+		sta		_PointY
+		;;     z = points3dZ[ii];
+		lda 	_points3dZ, y
+		sta		_PointZ
+
+    ;;     projectPoint(x, y, z, options, &ah, &av, &dist);
+		jsr 	_project 
+
+    ;;     points2aH[ii] = ah;
+		lda 	_ResX
+		sta		_points2aH, y
+    ;;     points2aV[ii] = av;
+		lda 	_ResY
+		sta		_points2aV, y
+    ;;     points2dH[ii] = (signed char)((dist & 0xFF00)>>8) && 0x00FF;
+		lda		_Norm+1
+		sta		_points2dH, y
+    ;;     points2dL[ii] = (signed char) (dist & 0x00FF);
+		lda		_Norm
+		sta		_points2dL, y
+
+    ;; }
+	jmp glProjectArrays_loop
+glProjectArrays_done:
+
+	rts
+.endproc
+
 
 
 
 ;---------------------------------------------------------------------------------
 ;_project
 ;---------------------------------------------------------------------------------
+.export _project
 .proc _project
 	;; save context
     pha
@@ -194,24 +301,28 @@ dofastprojdone:
 	lda _PointX
 	sbc _CamPosX
 	sta _DeltaX
-	lda _PointX+1
-	sbc _CamPosX+1
-	sta _DeltaX+1
+	sta _tx
+	;; FOR 16 bits Coords
+	;; lda _PointX+1
+	;; sbc _CamPosX+1
+	;; sta _DeltaX+1
 
 	;; DeltaY = CamPosY - PointY
 	sec
 	lda _PointY
 	sbc _CamPosY
 	sta _DeltaY
-	lda _PointY+1
-	sbc _CamPosY+1
-	sta _DeltaY+1
+	sta _ty
+	;; FOR 16 bits Coords
+	;; lda _PointY+1
+	;; sbc _CamPosY+1
+	;; sta _DeltaY+1
 
     ;; AngleH = atan2 (DeltaY, DeltaX)
-    lda _DeltaY
-    sta _ty
-    lda _DeltaX
-    sta _tx
+    ;;lda _DeltaY
+    ;;sta _ty
+    ;;lda _DeltaX
+    ;;sta _tx
     jsr _atan2_8
     lda _res
     sta _AngleH
@@ -224,9 +335,10 @@ dofastprojdone:
 	lda _PointZ
 	sbc _CamPosZ
 	sta _DeltaZ
-	lda _PointZ+1
-	sbc _CamPosZ+1
-	sta _DeltaZ+1
+	;; FOR 16 bits Coords
+	;; lda _PointZ+1
+	;; sbc _CamPosZ+1
+	;; sta _DeltaZ+1
 
     ;; AngleV = atan2 (DeltaZ, Norm)
     lda _DeltaZ
@@ -257,118 +369,12 @@ project_noHAngleOverflow:
     sta VAngleOverflow
 
 project_noVAngleOverflow:   
-	
-.IFDEF TEXTDEMO
- 	;; Quick Disgusting Hack  X = (-AnglePH //2 ) + LE / 2
- 	lda AnglePH
-	cmp #$80
-	ror
-    ora HAngleOverflow
-   
- 	eor #$FF
- 	sec
- 	adc #$00
- 	clc
-    adc #SCREEN_WIDTH/2
- 	sta _ResX
- 
- 	lda AnglePV
-	cmp #$80
-	ror
-    ora VAngleOverflow
-    
- 	eor #$FF
- 	sec
- 	adc #$00
- 	clc
-    adc #SCREEN_HEIGHT/2
- 	sta _ResY
-;; #else
-.ELSE
 
-	;; Extend AnglePH on 16 bits
-	lda #$00
-	sta _ResX+1
 	lda AnglePH
 	sta _ResX
-	bpl angHpositiv
-	lda #$FF
-	sta _ResX+1
-angHpositiv:
-	;; Invert AnglePH on 16 bits
-	sec 
-	lda #$00
-	sbc _ResX
-	sta _ResX
-	lda #$00
-	sbc _ResX+1
-	sta _ResX+1
-	;; Multiply by 4
-	asl _ResX
-	rol _ResX+1
-	asl _ResX
-	rol _ResX+1
-	;; Add offset of screen center
-	clc
-	lda _ResX
-	adc #120
-	sta _ResX
-	lda _ResX+1
-	adc #$00
-	sta _ResX+1
-
-	;; lda AnglePH
-	;; eor #$FF
-	;; sec
-	;; adc #$00
-	;; asl
-	;; asl
-	;; clc
-    ;; adc #120 ; 240/2 = WIDTH/2
-	;; sta _ResX
-    ;; 
-	;; lda AnglePV
-	;; eor #$FF
-	;; sec
-	;; adc #$00
-	;; asl
-	;; asl
-	;; adc #100 ; = 200 /2 SCREEN_HEIGHT/2
-	;; sta _ResY
-	
-	;; Extend AnglePV on 16 bits
-	lda #$00
-	sta _ResY+1
 	lda AnglePV
 	sta _ResY
-	bpl angVpositiv
-	lda #$FF
-	sta _ResY+1
-angVpositiv:
-	;; Invert AnglePV on 16 bits
-	sec 
-	lda #$00
-	sbc _ResY
-	sta _ResY
-	lda #$00
-	sbc _ResY+1
-	sta _ResY+1
-	;; Multiply by 4
-	asl _ResY
-	rol _ResY+1
-	asl _ResY
-	rol _ResY+1
-	;; Add offset of screen center
-	clc
-	lda _ResY
-	adc #100
-	sta _ResY
-	lda _ResY+1
-	adc #$00
-	sta _ResY+1
-
-;; #endif	
-.ENDIF	
+	
 	;; restore context
 	pla
 	tay
@@ -552,7 +558,15 @@ Ypositiv:
     rts
 .endproc
 
+.export		_fbuffer
+.export		_zbuffer
 
+.segment	"BSS"
+
+_fbuffer:
+	.res	1040,$00
+_zbuffer:
+	.res	1040,$00
 
 octant_adjust:	.byt %00111111		;; x+,y+,|x|>|y|
 		.byt %00000000		;; x+,y+,|x|<|y|
