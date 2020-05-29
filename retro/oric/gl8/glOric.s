@@ -18,7 +18,7 @@
                                             
 .export _CamPosX, _CamPosY, _CamPosZ
 .export _CamRotZ, _CamRotX
-
+.segment    "DATA" 
 ;; Camera Position
 _CamPosX:		.word 0
 _CamPosY:		.word 0
@@ -84,13 +84,13 @@ _points2dL:          .res NB_MAX_POINTS
 
 .export _PointX, _PointY, _PointZ
 
-.export _ResX, _ResY
-
 
 ;; Point 3D Coordinates
 _PointX:		.word 0
 _PointY:		.word 0
 _PointZ:		.word 0
+
+.export _ResX, _ResY
 
 
 ;; Point 2D Projected Coordinates
@@ -112,6 +112,69 @@ AnglePV: .byte 0 ; vertical angle of point from player pov
 HAngleOverflow: .byte 0 
 VAngleOverflow: .byte 0 
 
+
+.export _idxPt1, _idxPt2, _idxPt3
+_idxPt1:         .byte 0
+_idxPt2:         .byte 0
+_idxPt3:         .byte 0
+
+.export _P1X, _P1Y, _P2X, _P2Y, _P3X, _P3Y
+
+_P1X: .byte 0
+_P1Y: .byte 0
+_P2X: .byte 0
+_P2Y: .byte 0
+_P3X: .byte 0
+_P3Y: .byte 0
+
+.export _P1AH, _P1AV, _P2AH, _P2AV, _P3AH, _P3AV
+_P1AH: .byte 0
+_P1AV: .byte 0
+_P2AH: .byte 0
+_P2AV: .byte 0
+_P3AH: .byte 0
+_P3AV: .byte 0
+
+.export _dmoy, _distseg, _distface, _distpoint, _ch2disp
+_dmoy:         .word 0
+
+_distface: .byte 0
+_distseg: .byte 0
+_distpoint: .byte 0
+_ch2disp: .byte 0
+
+
+
+.export _A1X, _A1Y, _A1destX, _A1destY, _A1dX, _A1dY, _A1err, _A1sX, _A1sY, _A1arrived
+.export _A2X, _A2Y, _A2destX, _A2destY, _A2dX, _A2dY, _A2err, _A2sX, _A2sY, _A2arrived
+
+_A1X: 	.byte 0
+_A1Y: 	.byte 0
+_A1destX: .byte 0
+_A1destY: .byte 0
+_A1dX: .byte 0
+_A1dY: .byte 0
+_A1err: .byte 0
+_A1sX: .byte 0
+_A1sY: .byte 0
+_A1arrived: .byte 0
+_A2X: .byte 0
+_A2Y: .byte 0
+_A2destX: .byte 0
+_A2destY: .byte 0
+_A2dX: .byte 0
+_A2dY: .byte 0
+_A2err: .byte 0
+_A2sX: .byte 0
+_A2sY: .byte 0
+_A2arrived: .byte 0
+
+_A1Right: .byte 0
+
+_mDeltaY1: .byte 0
+_mDeltaX1: .byte 0
+_mDeltaY2: .byte 0
+_mDeltaX2: .byte 0
 
 ptrpt3 		:= ptr3
 ptrpt2 		:= ptr2
@@ -387,10 +450,14 @@ project_noVAngleOverflow:
 ;---------------------------------------------------------------------------------
 ;_norm
 ;---------------------------------------------------------------------------------
+.segment    "DATA"
+
 absX: .byt 0
 absY: .byt 0
 tmpufnX: .byt 0
 tmpufnY: .byt 0
+
+.segment    "CODE"
 
 .proc _norm_8
 
@@ -503,8 +570,10 @@ hfndone:
     rts
 .endproc
 
-octant: .res 1
+.segment    "DATA"
 
+octant: .res 1
+.segment    "CODE"
 ;---------------------------------------------------------------------------------
 ;_atan2 https://codebase64.org/doku.php?id=base:8bit_atan2_8-bit_angle
 ;---------------------------------------------------------------------------------
@@ -561,7 +630,7 @@ Ypositiv:
 .export		_fbuffer
 .export		_zbuffer
 
-.segment	"BSS"
+.segment	"DATA"
 
 _fbuffer:
 	.res	1040,$00
