@@ -112,6 +112,8 @@ AnglePV: .byte 0 ; vertical angle of point from player pov
 HAngleOverflow: .byte 0 
 VAngleOverflow: .byte 0 
 
+.export _isFace2BeDrawn;
+_isFace2BeDrawn:  .byte 0
 
 .export _idxPt1, _idxPt2, _idxPt3
 _idxPt1:         .byte 0
@@ -143,7 +145,35 @@ _distseg: .byte 0
 _distpoint: .byte 0
 _ch2disp: .byte 0
 
+.export _pDepX , _pDepY, _pArr1X, _pArr1Y, _pArr2X, _pArr2Y
 
+_pDepX:  .byte 0
+_pDepY:  .byte 0
+_pArr1X: .byte 0
+_pArr1Y: .byte 0
+_pArr2X: .byte 0
+_pArr2Y: .byte 0
+
+.export _mDeltaY1, _mDeltaX1, _mDeltaY2, _mDeltaX2
+
+_mDeltaY1: .byte 0
+_mDeltaX1: .byte 0
+_mDeltaY2: .byte 0
+_mDeltaX2: .byte 0
+
+.export _m1, _m2, _m3, _v1, _v2, _v3
+; unsigned char m1, m2, m3;
+_m1:         .byte 0
+_m2:         .byte 0
+_m3:         .byte 0
+; unsigned char v1, v2, v3;
+_v1:         .byte 0
+_v2:         .byte 0
+_v3:         .byte 0
+
+.export _A1XSatur, _A2XSatur
+_A1XSatur: .byte 0
+_A2XSatur: .byte 0
 
 .export _A1X, _A1Y, _A1destX, _A1destY, _A1dX, _A1dY, _A1err, _A1sX, _A1sY, _A1arrived
 .export _A2X, _A2Y, _A2destX, _A2destY, _A2dX, _A2dY, _A2err, _A2sX, _A2sY, _A2arrived
@@ -169,12 +199,14 @@ _A2sX: .byte 0
 _A2sY: .byte 0
 _A2arrived: .byte 0
 
+.export _A1Right, _lineIndex, _departX, _finX, _hLineLength
+
 _A1Right: .byte 0
 
-_mDeltaY1: .byte 0
-_mDeltaX1: .byte 0
-_mDeltaY2: .byte 0
-_mDeltaX2: .byte 0
+_lineIndex:   .byte 0
+_departX:     .byte 0
+_finX:        .byte 0
+_hLineLength: .byte 0
 
 ptrpt3 		:= ptr3
 ptrpt2 		:= ptr2
@@ -598,8 +630,8 @@ Ypositiv:
     rol octant
 
     sec
-    lda log2_tab,x
-    sbc log2_tab,y
+    lda _log2_tab,x
+    sbc _log2_tab,y
     bcc *+4
     eor #$ff
     tax
@@ -684,8 +716,8 @@ atan_tab:	.byt $00,$00,$00,$00,$00,$00,$00,$00
 
 
 		;;;;;;;; log2(x)*32 ;;;;;;;;
-
-log2_tab:	.byt $00,$00,$20,$32,$40,$4a,$52,$59
+.export _log2_tab
+_log2_tab:	.byt $00,$00,$20,$32,$40,$4a,$52,$59
 		.byt $60,$65,$6a,$6e,$72,$76,$79,$7d
 		.byt $80,$82,$85,$87,$8a,$8c,$8e,$90
 		.byt $92,$94,$96,$98,$99,$9b,$9d,$9e
