@@ -1,27 +1,57 @@
 
 import re
 
-dest_file = "C:\\Users\\Public\\Git\\hello-world\\retro\\oric\\gloric\\main.bas"
+# dest_file = "C:\\Users\\Public\\Git\\hello-world\\retro\\oric\\gloric\\main.bas"
+dest_file = "C:\\Users\\tbpk7658\\Documents\\Projets\\hello-world\\retro\\oric\\main.bas"
+dest_build = "C:\\Users\\tbpk7658\\Documents\\Projets\\hello-world\\retro\\oric\\build.bat"
+
+build_content=r"""
+ECHO #file main.bas  1>%OSDK%\TMP\main.bas
+
+TYPE main.bas  1>>%OSDK%\TMP\main.bas
+
+%OSDK%\BIN\Bas2Tap -b2t1 -color1 %OSDK%\TMP\main.bas build\main.tap
+copy build\main.tap %OSDK%\Oricutron\
+PUSHD %OSDK%\Oricutron
+START oricutron.exe -t main.tap
+POPD
+
+"""
+#
+
+##scr_content=r"""
+##    HIRES
+##    FOR Y=0 TO 199
+##    S=INT(SIN(Y/10)*8)
+##    FOR I=0 TO 39
+##    P=#A000+Y*40+X
+##    Q=(S+X)-INT((S+X)/8)*8+16
+##    POKE P,Q
+##    NEXT
+##    NEXT
+##"""
+
+##scr_content=r"""
+##    HIRES
+##    PAPER 1 : INK 3
+##    A$ ="TARTEMOLLE"
+##    FORW=0 TO 20
+##        CURSET 20,50+W*3,3
+##        GOSUB label
+##    NEXT
+##    END
+##label:
+##    REM ... CHAINE AVEC ESPACES
+##    FOR I=1 TO LEN(A$)
+##        CHAR ASC(MID$(A$,I)),0,1
+##        DRAW W,0,3
+##    NEXT I
+##    RETURN
+##"""
 
 scr_content=r"""
-    LET ADRBASE = # 800
 
-    ' Je stocke mes donnees en memoire
-    FOR N=0TO5
-    : READ DTA: POKE ADRBASE+N,DTA
-    NEXT N
-
-    ' Je relis mes donnees depuis la memoire
-    LET OFFSET = 0
-    V1 = DEEK (ADRBASE + OFFSET): OFFSET = OFFSET + 2
-    V2 = DEEK (ADRBASE + OFFSET): OFFSET = OFFSET + 2
-    V3 = DEEK (ADRBASE + OFFSET): OFFSET = OFFSET + 2
-    PRINT "V1 = ";V1;", V2 = ";V2;", V3 = ";V3
-
-    ' Mes donnees
-    DATA 3, 0, #FE, 0, 2, 0
 """
-
 
 class script:
     def __init__ (self):
@@ -117,6 +147,8 @@ def main():
     thescript.addContent(scr_content)
     with open(dest_file, "w") as ficout:
         ficout.write(thescript.toStr())
+    with open(dest_build, "w") as ficout:
+        ficout.write(build_content)
     os.chdir(os.path.dirname(os.path.abspath(dest_file)))
     #C:\Users\tbpk7658\Documents\Projets\hello-world\retro\oric\gloric\
     subprocess.call([r'build.bat'])
