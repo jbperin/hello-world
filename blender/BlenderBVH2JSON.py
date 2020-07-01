@@ -1,12 +1,19 @@
 
 import bpy
 import os
+import json
 
 scene = bpy.context.scene
 frame_current = scene.frame_current
 
 frame_start = bpy.context.scene.frame_start
 frame_end = bpy.context.scene.frame_end
+
+
+def jsonToFile(filepath, data):
+    with open(filepath, 'w') as json_file:
+        json_file.write(json.dumps(data, indent=4, sort_keys=True))
+
 
 def MakeEmpty(Name):
     e = None
@@ -90,6 +97,12 @@ def runThroughBones (bone_name, indent):
 #        file.write("%s %s\n" % (indent_str, loc))
 
 
+bpy.ops.import_anim.bvh(
+    filepath="C:\\Users\\tbpk7658\\Downloads\\cmuconvert-daz-01-09\\02\\02_01.bvh", 
+    use_fps_scale=False, 
+    update_scene_fps=True, 
+    update_scene_duration=True,
+    )
 
 frame_start = bpy.context.scene.frame_start
 frame_end = bpy.context.scene.frame_end
@@ -136,3 +149,13 @@ for frame in range(frame_start, frame_end + 1):
 scene.frame_set(frame_start)
 
 print (frame_values)
+basedir = os.path.dirname(bpy.data.filepath)
+if not basedir:
+    raise Exception("Blend file is not saved")
+
+filepath = os.path.join(basedir, 'output.json')
+
+jsonToFile(filepath, frame_values)
+#with open(filepath, "w", encoding="utf8", newline="\n") as ficout:
+#    ficout.write (str(frame_values))
+
