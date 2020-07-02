@@ -18,3 +18,5 @@ blender/bvh2json.blend1
 *.dsk
 *.bin
 *.xlsx
+retro/oric/skeleton/.ipynb_checkpoints/ProtoSkel-checkpoint.ipynb
+retro/oric/skeleton/BUILD/map.htm
