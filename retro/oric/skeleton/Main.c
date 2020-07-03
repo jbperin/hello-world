@@ -35,9 +35,15 @@ extern void DrawClippedLine();
 #define NB_POINTS_SKEL 14
 #define NB_SEGMENTS_SKEL 13
 
+#include "traj_c.c"
+
 
 #include "WALK_02_01_c.c"
 
+char * listActions[] = {  points3D_WALK_02_01
+};
+unsigned char nbFramesActions[] = {  NB_FRAME_WALK_02_01
+}; 
 
 unsigned char segmentsSkel[]={
 	0, 1,
@@ -131,13 +137,19 @@ void drawSegments (unsigned char segments[], char pts2d[], unsigned char nbSeg )
 void main()
 {
     unsigned char ii;
-    int k;
+    int kk=0;                     // keyboard entry
+    unsigned char inGame = 1;
+
+    unsigned char actionNumber = 0;
 
     char *ptr_dataskel;
     unsigned char nb_frameskel;
 
-    hires ();
+    unsigned char indexInTraj = 16*3;
 
+    hires ();
+    memset(ADR_DRAWING, 64, 8000);
+    
     GenerateTables();  // for line8
 
     glCamPosX = -64;
@@ -150,24 +162,55 @@ void main()
     glNbVertices      = 0;
     glNbSegments = 0;
 
-    ptr_dataskel = points3D_WALK_02_01;
-    nb_frameskel = NB_FRAME_WALK_02_01;
+    ptr_dataskel = listActions[actionNumber];
+    nb_frameskel = nbFramesActions[actionNumber];
 
-    while ((k = key()) != 81) {
+    while (inGame) {
 
-        ptr_dataskel = points3D_WALK_02_01;
-        nb_frameskel = NB_FRAME_WALK_02_01;
+        ptr_dataskel = listActions[actionNumber];
+        nb_frameskel = nbFramesActions[actionNumber];
 
 
-        for (ii = 0; ii < nb_frameskel ; ii ++) {
+        for (ii = 0; (ii < nb_frameskel) && inGame ; ii ++) {
+
+            kk = key();
+            if (kk != 0) {
+                switch (kk) {
+                    case 8:  // gauche => tourne gauche
+                        indexInTraj = (indexInTraj + 3) % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
+                        glCamPosX = traj[indexInTraj + 0];
+                        glCamPosY = traj[indexInTraj + 1];
+                        glCamRotZ = traj[indexInTraj + 2];
+                        printf("idx = %d, pX=%d pY=%d rZ=%d\n", indexInTraj, glCamPosX, glCamPosY, glCamRotZ);
+                        break;
+                    case 9:  // droite => tourne droite
+                        if (indexInTraj == 0)
+                            indexInTraj = NB_POINTS_TRAJ*SIZE_POINTS_TRAJ - SIZE_POINTS_TRAJ;
+                        indexInTraj = (indexInTraj - SIZE_POINTS_TRAJ);
+                        glCamPosX = traj[indexInTraj + 0];
+                        glCamPosY = traj[indexInTraj + 1];
+                        glCamRotZ = traj[indexInTraj + 2];
+                        printf("idx = %d, pX=%d pY=%d rZ=%d\n", indexInTraj, glCamPosX, glCamPosY, glCamRotZ);
+                        break;
+                    case 83: // 'S'
+                        printf ("you pressed S");
+                        break;
+                    case 81: // 'Q'
+                        inGame = 0;
+                        break;
+                    
+                }
+            }
 
             glProject(points2Dskel, ptr_dataskel, NB_POINTS_SKEL, 0);
 
+            // memset(ADR_DRAWING, 64, 8000);
             HiresClear();
 
             drawSegments (segmentsSkel, points2Dskel, NB_SEGMENTS_SKEL );
 
-            ScreenCopyHires();
+            // ScreenCopyHires();
+            memcpy((void *) HIRES_SCREEN_ADDRESS,(void *)ADR_DRAWING,8000);
 
             ptr_dataskel += NB_POINTS_SKEL*SIZEOF_3DPOINT;
         }
