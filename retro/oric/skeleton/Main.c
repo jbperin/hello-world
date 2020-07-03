@@ -39,10 +39,32 @@ extern void DrawClippedLine();
 
 
 #include "WALK_02_01_c.c"
+#include "RUNJOG_02_03_c.c"
+#include "JUMP_02_04_c.c"
+#include "HELLO_141_16_c.c"
+#include "KICK_86_03_c.c"
+#include "IDLE_140_06_c.c"
+#include "QUIT_113_08_c.c"
+#include "DANCE_141_12_c.c"
 
 char * listActions[] = {  points3D_WALK_02_01
+    , points3D_RUNJOG_02_03
+    , points3D_JUMP_02_04
+    , points3D_HELLO_141_16
+    , points3D_KICK_86_03
+    , points3D_IDLE_140_06
+    , points3D_QUIT_113_08
+    , points3D_DANCE_141_12
 };
+
 unsigned char nbFramesActions[] = {  NB_FRAME_WALK_02_01
+    , NB_FRAME_RUNJOG_02_03
+    , NB_FRAME_JUMP_02_04
+    , NB_FRAME_HELLO_141_16
+    , NB_FRAME_KICK_86_03
+    , NB_FRAME_IDLE_140_06
+    , NB_FRAME_QUIT_113_08
+    , NB_FRAME_DANCE_141_12
 }; 
 
 unsigned char segmentsSkel[]={
@@ -63,7 +85,21 @@ unsigned char segmentsSkel[]={
 
 char points2Dskel [NB_POINTS_SKEL	* SIZEOF_2DPOINT];
 
+char points3D_GROUND[]={
+		-16,	-32,	-32,	0 
+	,	-16,	32,	-32,	1 
+	,	16,	-32,	-32,	2 
+	,	16,	32,	-32,	3 
+};
+unsigned char segmentsGround[]={
+	0, 1,
+	1, 3,
+	3, 2,
+	2, 0,
+};
+char points2Dground [4 * SIZEOF_2DPOINT];
 
+ 
 void drawSegments (unsigned char segments[], char pts2d[], unsigned char nbSeg ) {
 	unsigned char ii;
     signed char aH1, aV1, aH2, aV2;
@@ -140,7 +176,8 @@ void main()
     int kk=0;                     // keyboard entry
     unsigned char inGame = 1;
 
-    unsigned char actionNumber = 0;
+    unsigned char actionNumber = 5;
+    unsigned char changeAction = 0;
 
     char *ptr_dataskel;
     unsigned char nb_frameskel;
@@ -148,14 +185,15 @@ void main()
     unsigned char indexInTraj = 16*3;
 
     hires ();
+    printf ("Left/Right, (D)ance, (H)ello, (I)dle, (J)ump, (K)ick, (R)un, (W)alk, (Q)uit");
     memset(ADR_DRAWING, 64, 8000);
-    
+
     GenerateTables();  // for line8
 
     glCamPosX = -64;
     glCamPosY = 0;
     glCamPosZ = 0;
-
+ 
     glCamRotZ = 0;  // -128 -> -127 unit : 2PI/(2^8 - 1)
     glCamRotX = 0;
 
@@ -169,10 +207,13 @@ void main()
 
         ptr_dataskel = listActions[actionNumber];
         nb_frameskel = nbFramesActions[actionNumber];
-
+        
 
         for (ii = 0; (ii < nb_frameskel) && inGame ; ii ++) {
-
+            if ((actionNumber == 6) && (ii == nb_frameskel-1)){
+                inGame = 0;
+                break;
+            }
             kk = key();
             if (kk != 0) {
                 switch (kk) {
@@ -181,7 +222,7 @@ void main()
                         glCamPosX = traj[indexInTraj + 0];
                         glCamPosY = traj[indexInTraj + 1];
                         glCamRotZ = traj[indexInTraj + 2];
-                        printf("idx = %d, pX=%d pY=%d rZ=%d\n", indexInTraj, glCamPosX, glCamPosY, glCamRotZ);
+                        // printf("idx = %d, pX=%d pY=%d rZ=%d\n", indexInTraj, glCamPosX, glCamPosY, glCamRotZ);
                         break;
                     case 9:  // droite => tourne droite
                         if (indexInTraj == 0)
@@ -190,24 +231,50 @@ void main()
                         glCamPosX = traj[indexInTraj + 0];
                         glCamPosY = traj[indexInTraj + 1];
                         glCamRotZ = traj[indexInTraj + 2];
-                        printf("idx = %d, pX=%d pY=%d rZ=%d\n", indexInTraj, glCamPosX, glCamPosY, glCamRotZ);
+                        // printf("idx = %d, pX=%d pY=%d rZ=%d\n", indexInTraj, glCamPosX, glCamPosY, glCamRotZ);
                         break;
-                    case 83: // 'S'
-                        printf ("you pressed S");
+                    case 68: // 'D'
+                        actionNumber = 7;changeAction = 1;
                         break;
+                    case 72: // 'H'
+                        actionNumber = 3;changeAction = 1;
+                        break;
+                    case 73: // 'I'
+                        actionNumber = 5;changeAction = 1;
+                        break;
+                    case 74: // 'J'
+                        actionNumber = 2;changeAction = 1;
+                        break;
+                    case 75: // 'K'
+                        actionNumber = 4;changeAction = 1;
+                        break;
+                    case 65: // 'A'
                     case 81: // 'Q'
-                        inGame = 0;
+                        actionNumber = 6;changeAction = 1;
                         break;
-                    
+                    case 82: // 'R'
+                        actionNumber = 1;changeAction = 1;
+                        break;
+                    case 90: // 'W'
+                        actionNumber = 0;changeAction = 1;
+                        break;
+                    default:
+                        printf ("you pressed %d\n", kk);
                 }
             }
-
+            if (changeAction) {
+                changeAction = 0;
+                break;
+            }
             glProject(points2Dskel, ptr_dataskel, NB_POINTS_SKEL, 0);
-
+           glProject(points2Dground, points3D_GROUND, 4, 0);
+            
             // memset(ADR_DRAWING, 64, 8000);
             HiresClear();
 
             drawSegments (segmentsSkel, points2Dskel, NB_SEGMENTS_SKEL );
+            drawSegments (segmentsGround, points2Dground, 4 );
+
 
             // ScreenCopyHires();
             memcpy((void *) HIRES_SCREEN_ADDRESS,(void *)ADR_DRAWING,8000);
