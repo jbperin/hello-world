@@ -1,0 +1,25 @@
+
+#define CLIP_BORDER	1
+
+
+#define CLIP_LEFT	3
+#define CLIP_RIGHT	239
+#define CLIP_TOP	1
+#define CLIP_BOTTOM	199
+
+#define USE_ACCURATE_CLIPPING
+#define USE_BUFFERED_SCREEN
+
+#define SCREEN_WIDTH                    40
+#define SCREEN_HEIGHT                   26
+
+#define _ADR_SCREEN_BUFFER 7800
+#define _ADR_SCREEN_MEMORY a000
+
+#ifdef USE_BUFFERED_SCREEN
+#define _ADR_DRAWING _ADR_SCREEN_BUFFER
+#define ADR_DRAWING 0x7800
+#else
+#define _ADR_DRAWING _ADR_SCREEN_MEMORY
+#define ADR_DRAWING 0xa000
+#endif
