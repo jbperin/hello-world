@@ -7,15 +7,15 @@
 #define ANGLE_MAX 0xC0
 #define ANGLE_VIEW 0xE0
 
-extern char                 points3d[]; // NB_MAX_VERTICES * SIZEOF_3DPOINT
-unsigned char        nbPts = 0;
-extern char                 points2d[]; // NB_MAX_VERTICES * SIZEOF_2DPOINT
-extern char          faces[];
-extern unsigned char glNbFaces;
-extern unsigned char segments[];
-extern unsigned char glNbSegments;
-extern unsigned char particles[];
-extern unsigned char glNbParticles;
+// extern char                 points3d[]; // NB_MAX_VERTICES * SIZEOF_3DPOINT
+// unsigned char        nbPts = 0;
+// extern char                 points2d[]; // NB_MAX_VERTICES * SIZEOF_2DPOINT
+// extern char          faces[];
+// extern unsigned char glNbFaces;
+// extern unsigned char segments[];
+// extern unsigned char glNbSegments;
+// extern unsigned char particles[];
+// extern unsigned char glNbParticles;
 
 //
 // ====== Filler.s ==========
@@ -41,11 +41,23 @@ extern int LargeX1;
 extern int LargeY1;
 extern void DrawClippedLine();
 
+
+#define NB_POINTS_3D 3
+#include "tabpoints.c"
+#define NB_SEGMENTS 3
+unsigned char tabSegments[]={
+	0, 1,
+	1, 2,
+	2, 0,
+};
+char points2D [NB_POINTS_3D	* SIZEOF_2DPOINT];
+
+
 #define NB_POINTS_SKEL 8
 #define NB_SEGMENTS_SKEL 12
 #define CUBE_SIZE 16
 
-char points3Dskel[]={
+char points3Dskel2[]={
 	 -CUBE_SIZE, -CUBE_SIZE, CUBE_SIZE, 0// +CUBE_SIZE, 0 // P0
 	,-CUBE_SIZE, -CUBE_SIZE,  -CUBE_SIZE, 0// -CUBE_SIZE, 0 // P1
 	,+CUBE_SIZE, -CUBE_SIZE,  -CUBE_SIZE, 0// -CUBE_SIZE, 0 // P2
@@ -56,7 +68,7 @@ char points3Dskel[]={
 	,+CUBE_SIZE, +CUBE_SIZE, CUBE_SIZE, 0// +CUBE_SIZE, 0 // P7
 };
 
-unsigned char segmentsSkel[]={
+unsigned char segmentsSkel2[]={
 	0, 1,
 	1, 2,
 	2, 3,
@@ -71,7 +83,7 @@ unsigned char segmentsSkel[]={
 	3, 7,
 };
 
-char points2Dskel [NB_POINTS_SKEL	* SIZEOF_2DPOINT];
+char points2Dskel2 [NB_POINTS_SKEL	* SIZEOF_2DPOINT];
 
 
 void drawSegments (unsigned char segments[], char pts2d[], unsigned char nbSeg ) {
@@ -173,31 +185,24 @@ void hrDrawFace(char p2d[], unsigned char idxPt1, unsigned char idxPt2, unsigned
 			unsigned char y1= 100 - ((p2d[idxPt2 * SIZEOF_2DPOINT + 1])<<2);
 			unsigned char x2= 120  + ((p2d[idxPt3 * SIZEOF_2DPOINT + 0])<<2);
 			unsigned char y2= 100 - ((p2d[idxPt3 * SIZEOF_2DPOINT + 1])<<2);
-    // AddTriangle(
-    //     p2d[idxPt1 * SIZEOF_2DPOINT + 0], p2d[idxPt1 * SIZEOF_2DPOINT + 1],
-    //     p2d[idxPt2 * SIZEOF_2DPOINT + 0], p2d[idxPt2 * SIZEOF_2DPOINT + 1],
-    //     p2d[idxPt3 * SIZEOF_2DPOINT + 0], p2d[idxPt3 * SIZEOF_2DPOINT + 1],
-    //     (pattern & 3));
     AddTriangle(x0, y0, x1, y1, x2, y2, (pattern & 3));
 }
 
 void hrDrawFaces() {
-    hrDrawFace(points2Dskel, 0, 1, 2, 2);
-    hrDrawFace(points2Dskel, 0, 2, 3, 2);
-    //hrDrawFace(points2d, 0, 1, 5, 1);
-    //hrDrawFace(points2d, 0, 5, 4, 1);
-    hrDrawFace(points2Dskel, 4, 5, 6, 0);
-    hrDrawFace(points2Dskel, 4, 6, 7, 0);
+    hrDrawFace(points2D, 0, 1, 2, 2);
+    // hrDrawFace(points2Dskel, 0, 2, 3, 2);
+    // //hrDrawFace(points2d, 0, 1, 5, 1);
+    // //hrDrawFace(points2d, 0, 5, 4, 1);
+    // hrDrawFace(points2Dskel, 4, 5, 6, 0);
+    // hrDrawFace(points2Dskel, 4, 6, 7, 0);
 }
 
 void main()
 {
-
-
     hires ();
 
     GenerateTables();  // for line8
-    // GenerateTables();  // for line8
+
     ComputeDivMod();   // for filler
     InitTables();      //for filler
 
@@ -210,25 +215,23 @@ void main()
 
     glNbVertices      = 0;
     glNbSegments = 0;
-    get();
-    // addGeom2(0, 0, 0, 4, 4, 4, 0, geomCube);
 
     // for (glCamRotZ = -32; glCamRotZ < 32 ; glCamRotZ ++) {
 
-        glProject(points2Dskel, points3Dskel, NB_POINTS_SKEL, 0);
+        glProject(points2D, tabPoints3D, NB_POINTS_3D, 0);
         // for (jj=0; jj< glNbVertices; jj++){
         //     printf ("%d %d %d => %d %d \n", points3d[jj*SIZEOF_3DPOINT], points3d[jj*SIZEOF_3DPOINT+1], points3d[jj*SIZEOF_3DPOINT+2], points2d[jj*SIZEOF_2DPOINT], points2d[jj*SIZEOF_2DPOINT+1]);get();
         // }
 
         HiresClear();
 
-        drawSegments (segmentsSkel, points2Dskel, NB_SEGMENTS_SKEL );
+        drawSegments (tabSegments, points2D, NB_SEGMENTS );
         // memset(0xa000, 64, 8000);  // clear screen
         // hrDrawSegments(points2d, segments, glNbSegments);
         hrDrawFaces();
         // memcpy((void *) HIRES_SCREEN_ADDRESS,(void *)ADR_DRAWING,8000);
         ScreenCopyHires();
-        printf ("%d\n",glCamRotZ);
+        // printf ("%d\n",glCamRotZ);
     // }
 
 
