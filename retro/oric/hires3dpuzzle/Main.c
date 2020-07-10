@@ -52,6 +52,13 @@ unsigned char tabSegments[]={
 };
 char points2D [NB_POINTS_3D	* SIZEOF_2DPOINT];
 
+#include "traj_c.c"
+
+
+signed char * current_traj;
+unsigned char index_in_traj;
+unsigned char traj_index;
+
 
 #define NB_POINTS_SKEL 8
 #define NB_SEGMENTS_SKEL 12
@@ -190,15 +197,22 @@ void hrDrawFace(char p2d[], unsigned char idxPt1, unsigned char idxPt2, unsigned
 
 void hrDrawFaces() {
     hrDrawFace(points2D, 0, 1, 2, 2);
-    // hrDrawFace(points2Dskel, 0, 2, 3, 2);
-    // //hrDrawFace(points2d, 0, 1, 5, 1);
-    // //hrDrawFace(points2d, 0, 5, 4, 1);
-    // hrDrawFace(points2Dskel, 4, 5, 6, 0);
-    // hrDrawFace(points2Dskel, 4, 6, 7, 0);
+}
+
+void updateCamera() {
+                    glCamPosX = current_traj [index_in_traj + 0];
+                    glCamPosY = current_traj [index_in_traj + 1];
+                    glCamPosZ = current_traj [index_in_traj + 2];
+                    glCamRotZ = current_traj [index_in_traj + 3];  // -128 -> -127 unit : 2PI/(2^8 - 1)
+                    glCamRotX = current_traj [index_in_traj + 4];
+    printf ("[%d, %d, %d] (%d, %d)\n", glCamPosX, glCamPosY, glCamPosZ, glCamRotZ, glCamRotX);
 }
 
 void main()
 {
+    unsigned char inGame = 1;
+    int kk=0;                     // keyboard entry
+
     hires ();
 
     GenerateTables();  // for line8
@@ -206,34 +220,66 @@ void main()
     ComputeDivMod();   // for filler
     InitTables();      //for filler
 
-    glCamPosX = -64;
-    glCamPosY = 0;
-    glCamPosZ = 0;
+    traj_index = FIRST_TRAJ_TABLE;
+    current_traj = tab_traj[traj_index];
+    index_in_traj = (NB_POINT_TRAJ/2)*SIZE_POINT_TRAJ;
 
-    glCamRotZ = 0;  // -128 -> -127 unit : 2PI/(2^8 - 1)
-    glCamRotX = 0;
+    glCamPosX = current_traj [index_in_traj + 0]; //-64;
+    glCamPosY = current_traj [index_in_traj + 1];
+    glCamPosZ = current_traj [index_in_traj + 2];
 
-    glNbVertices      = 0;
-    glNbSegments = 0;
+    glCamRotZ = current_traj [index_in_traj + 3];  // -128 -> -127 unit : 2PI/(2^8 - 1)
+    glCamRotX = current_traj [index_in_traj + 4];
 
     // for (glCamRotZ = -32; glCamRotZ < 32 ; glCamRotZ ++) {
+    while (inGame) {
 
         glProject(points2D, tabPoints3D, NB_POINTS_3D, 0);
-        // for (jj=0; jj< glNbVertices; jj++){
-        //     printf ("%d %d %d => %d %d \n", points3d[jj*SIZEOF_3DPOINT], points3d[jj*SIZEOF_3DPOINT+1], points3d[jj*SIZEOF_3DPOINT+2], points2d[jj*SIZEOF_2DPOINT], points2d[jj*SIZEOF_2DPOINT+1]);get();
-        // }
 
         HiresClear();
-
         drawSegments (tabSegments, points2D, NB_SEGMENTS );
-        // memset(0xa000, 64, 8000);  // clear screen
-        // hrDrawSegments(points2d, segments, glNbSegments);
         hrDrawFaces();
-        // memcpy((void *) HIRES_SCREEN_ADDRESS,(void *)ADR_DRAWING,8000);
         ScreenCopyHires();
-        // printf ("%d\n",glCamRotZ);
-    // }
 
-
+        kk = get();
+        if (kk != 0) {
+            switch (kk) {
+                case 8:  // gauche => tourne gauche
+                    index_in_traj = (index_in_traj + SIZE_POINT_TRAJ) % (NB_POINT_TRAJ*SIZE_POINT_TRAJ);
+                    break;
+                case 9:  // droite => tourne droite
+                    if (index_in_traj == 0)
+                        index_in_traj = NB_POINT_TRAJ*SIZE_POINT_TRAJ - SIZE_POINT_TRAJ;
+                    index_in_traj = (index_in_traj - SIZE_POINT_TRAJ);
+                    break;
+                case 10: // bas
+                    if (traj_index < NB_TRAJ_TABLE - 1)
+                        traj_index = traj_index + 1;
+                    current_traj = tab_traj[traj_index];
+                    break;
+                case 11: // haut
+                    if (traj_index > 0)
+                        traj_index = traj_index - 1;
+                    current_traj = tab_traj[traj_index];
+                    break;
+                case 68: // 'D'
+                case 72: // 'H'
+                case 73: // 'I'
+                case 74: // 'J'
+                case 75: // 'K'
+                    break;
+                case 65: // 'A'
+                case 81: // 'Q'
+                    inGame = 0;
+                    break;
+                case 82: // 'R'
+                case 90: // 'W'
+                    break;
+                default:
+                    printf ("you pressed %d\n", kk);
+            }
+            updateCamera();
+        }
+    }
 }
 
