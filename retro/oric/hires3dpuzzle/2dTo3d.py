@@ -1,5 +1,7 @@
 import math
 import random
+
+
 SCREEN_WIDTH = 240
 SCREEN_HEIGHT= 200
 
@@ -13,17 +15,17 @@ CamRotX=0
 def unproject(x, y, distance):
     APH = (x-(SCREEN_WIDTH/2))/4
     APV = ((SCREEN_HEIGHT/2)-y)/4
-    print (APV, APH)
+
     AH = APH+CamRotZ
     AV = APV+CamRotX
-    print (AH, AV)
+
     deltaZ = math.tan(AV*math.pi/128)*distance
     Z = CamPosZ + deltaZ
-    print (deltaZ, Z)
+
     deltaYOverDeltaX = math.tan(AH*math.pi/128)
     DeltaX = math.sqrt((distance*distance) / (1 + deltaYOverDeltaX*deltaYOverDeltaX))
     DeltaY = deltaYOverDeltaX * DeltaX
-    print (deltaZ, Z)
+
     X = CamPosX + DeltaX
     Y = CamPosY + DeltaY
     return map(round, [X, Y, Z] )
@@ -35,34 +37,159 @@ lparticule = [
     [ 160, 140, 64], 
 ]
 
-def main ():
-    strcoords = """
-#define CAM_POS_INIT_X %d
-#define CAM_POS_INIT_Y %d
-#define CAM_POS_INIT_Z %d
+def exportModel (name, points, segments, faces, initvectors):
 
-#define CAM_ROT_INIT_Z %d
-#define CAM_ROT_INIT_X %d
+    global CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX
 
-char tabPoints3D []= {
-"""%(CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX)
+    str_init = f"signed char tab_init_{name}[] = {{ {initvectors[0]}, {initvectors[1]}, {initvectors[2]}, {initvectors[3]}, {initvectors[4]} }};\n";
+
+    CamPosX=initvectors[0]
+    CamPosY=initvectors[1]
+    CamPosZ=initvectors[2]
+    CamRotZ=initvectors[3]
+    CamRotX=initvectors[4]
+
+    str_points = f"char tab_point_{name}[] = {{\n"
     first = True
     index = 0
-    for [c,l,dist] in lparticule:
+
+    for [c,l,dist] in points:
         #dist = random.randint(40, 120)
         [X, Y, Z] = unproject (c,l,dist)
-        
         if first:
-            strcoords += "\t %d,\t%d,\t%d,\t0\n"%(X, Y, Z)
+            h = ""
             first = False
         else:
-            strcoords += "\t,%d,\t%d,\t%d,\t0\n"%(X, Y, Z)
+            h = ","
+        str_points += f"\t{h}{X},\t{Y},\t{Z},\t{index}\n"
         index += 1
+    str_points += f"}};\n"
 
-    res = strcoords + '};\n'
-    print (res)
+    str_segments = f"unsigned char tab_segment_{name}[] = {{\n"
+    first = True
+    for [idxP1, idxP2] in segments:
+        if first:
+            h = ""
+            first = False
+        else:
+            h = ","
+        str_segments += f"\t{h}{idxP1},\t{idxP2}\n"
+    str_segments += f"}};\n"
+
+    str_faces = f"unsigned char tab_face_{name}[] = {{\n"
+    first = True
+    for [idxP1, idxP2, idxP3, motif] in faces:
+        if first:
+            h = ""
+            first = False
+        else:
+            h = ","
+        str_faces += f"\t{h}{idxP1},\t{idxP2},\t{idxP3},\t{motif}\n"
+    str_faces += f"}};\n"
+    res = str_init  + str_points + str_segments + str_faces
+    return res
+
+
+dict_models = {
+    "triangle": { 
+        "points" :  [ 
+            [ 120, 60, 64], 
+            [  80, 140, 64], 
+            [ 160, 140, 64], 
+        ], 
+        "segments" : [ # 
+            [0, 1], 
+            [1, 2], 
+            [2, 0]
+        ], 
+        "faces" : [ # faces
+            [0, 1, 2, 2]
+        ], 
+        "soluce" : [-64, 0, 0, 0, 0] #initvectors=
+    }
+
+}
+
+def main ():
+    code_source = f"#define NB_MODELS {len(dict_models)}\n"
+    code_source += f"#define NB_MAX_POINT {max([len(values['points']) for values in dict_models.values()])}\n"
+    for key, values in dict_models.items ():
+        code_source += exportModel (name = key, points = values["points"], segments = values ["segments"], faces = values["faces"], initvectors = values["soluce"])
+
+    code_source += f"char *ltab_points[]={{\n"
+    first = True
+    for name in dict_models:
+        if first:
+            h=''
+            first = False
+        else:
+            h=','
+        
+        code_source += f"\t{h}tab_point_{name}\n"
+    code_source += f"}};\n"
+
+    code_source += f"unsigned char ltab_nbpoints[]={{\n"
+    first = True
+    for name, values in dict_models.items():
+        if first:
+            h=''
+            first = False
+        else:
+            h=','
+        code_source += f"\t{h}{len(values['points'])} // {name}\n"
+    code_source += f"}};\n"
+
+    code_source += f"unsigned char *ltab_segments[]={{\n"
+    first = True
+    for name in dict_models:
+        if first:
+            h=''
+            first = False
+        else:
+            h=','
+        
+        code_source += f"\t{h}tab_segment_{name}\n"
+    code_source += f"}};\n"
+
+    code_source += f"unsigned char ltab_nbsegments[]={{\n"
+    first = True
+    for name, values in dict_models.items():
+        if first:
+            h=''
+            first = False
+        else:
+            h=','
+        code_source += f"\t{h}{len(values['segments'])} // {name}\n"
+    code_source += f"}};\n"
+
+
+    code_source += f"unsigned char *ltab_faces[]={{\n"
+    first = True
+    for name in dict_models:
+        if first:
+            h=''
+            first = False
+        else:
+            h=','
+        
+        code_source += f"\t{h}tab_face_{name}\n"
+    code_source += f"}};\n"
+
+    code_source += f"unsigned char ltab_nbfaces[]={{\n"
+    first = True
+    for name, values in dict_models.items():
+        if first:
+            h=''
+            first = False
+        else:
+            h=','
+        code_source += f"\t{h}{len(values['faces'])} // {name}\n"
+    code_source += f"}};\n"
+
+
     with open("tabpoints.c", "w") as f:
-        f.write(res)
+        f.write(code_source)
+   
 
 if __name__ == "__main__":
 	main()

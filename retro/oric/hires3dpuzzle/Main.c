@@ -7,16 +7,6 @@
 #define ANGLE_MAX 0xC0
 #define ANGLE_VIEW 0xE0
 
-// extern char                 points3d[]; // NB_MAX_VERTICES * SIZEOF_3DPOINT
-// unsigned char        nbPts = 0;
-// extern char                 points2d[]; // NB_MAX_VERTICES * SIZEOF_2DPOINT
-// extern char          faces[];
-// extern unsigned char glNbFaces;
-// extern unsigned char segments[];
-// extern unsigned char glNbSegments;
-// extern unsigned char particles[];
-// extern unsigned char glNbParticles;
-
 //
 // ====== Filler.s ==========
 
@@ -42,55 +32,17 @@ extern int LargeY1;
 extern void DrawClippedLine();
 
 
-#define NB_POINTS_3D 3
 #include "tabpoints.c"
-#define NB_SEGMENTS 3
-unsigned char tabSegments[]={
-	0, 1,
-	1, 2,
-	2, 0,
-};
-char points2D [NB_POINTS_3D	* SIZEOF_2DPOINT];
+
+char points2D [NB_MAX_POINT	* SIZEOF_2DPOINT];
 
 #include "traj_c.c"
-
 
 signed char * current_traj;
 unsigned char index_in_traj;
 unsigned char traj_index;
+unsigned char model_index;
 
-
-#define NB_POINTS_SKEL 8
-#define NB_SEGMENTS_SKEL 12
-#define CUBE_SIZE 16
-
-char points3Dskel2[]={
-	 -CUBE_SIZE, -CUBE_SIZE, CUBE_SIZE, 0// +CUBE_SIZE, 0 // P0
-	,-CUBE_SIZE, -CUBE_SIZE,  -CUBE_SIZE, 0// -CUBE_SIZE, 0 // P1
-	,+CUBE_SIZE, -CUBE_SIZE,  -CUBE_SIZE, 0// -CUBE_SIZE, 0 // P2
-	,+CUBE_SIZE, -CUBE_SIZE, CUBE_SIZE, 0// +CUBE_SIZE, 0 // P3
-	,-CUBE_SIZE, +CUBE_SIZE, CUBE_SIZE, 0// +CUBE_SIZE, 0 // P4
-	,-CUBE_SIZE, +CUBE_SIZE,   -CUBE_SIZE, 0// -CUBE_SIZE, 0 // P5
-	,+CUBE_SIZE, +CUBE_SIZE,  -CUBE_SIZE, 0// -CUBE_SIZE, 0 // P6
-	,+CUBE_SIZE, +CUBE_SIZE, CUBE_SIZE, 0// +CUBE_SIZE, 0 // P7
-};
-
-unsigned char segmentsSkel2[]={
-	0, 1,
-	1, 2,
-	2, 3,
-	3, 0,
-	4, 5,
-	5, 6,
-	6, 7,
-	7, 4,
-	0, 4,
-	1, 5,
-	2, 6,
-	3, 7,
-};
-
-char points2Dskel2 [NB_POINTS_SKEL	* SIZEOF_2DPOINT];
 
 
 void drawSegments (unsigned char segments[], char pts2d[], unsigned char nbSeg ) {
@@ -186,12 +138,12 @@ void AddTriangle(unsigned char x0, unsigned char y0, unsigned char x1, unsigned 
 }
 
 void hrDrawFace(char p2d[], unsigned char idxPt1, unsigned char idxPt2, unsigned char idxPt3, unsigned char pattern) {
-   			unsigned char x0= 120 + ((p2d[idxPt1 * SIZEOF_2DPOINT + 0])<<2);
-			unsigned char y0= 100 - ((p2d[idxPt1 * SIZEOF_2DPOINT + 1])<<2);
-			unsigned char x1= 120  + ((p2d[idxPt2 * SIZEOF_2DPOINT + 0])<<2);
-			unsigned char y1= 100 - ((p2d[idxPt2 * SIZEOF_2DPOINT + 1])<<2);
-			unsigned char x2= 120  + ((p2d[idxPt3 * SIZEOF_2DPOINT + 0])<<2);
-			unsigned char y2= 100 - ((p2d[idxPt3 * SIZEOF_2DPOINT + 1])<<2);
+    unsigned char x0= 120 + ((p2d[idxPt1 * SIZEOF_2DPOINT + 0])<<2);
+    unsigned char y0= 100 - ((p2d[idxPt1 * SIZEOF_2DPOINT + 1])<<2);
+    unsigned char x1= 120  + ((p2d[idxPt2 * SIZEOF_2DPOINT + 0])<<2);
+    unsigned char y1= 100 - ((p2d[idxPt2 * SIZEOF_2DPOINT + 1])<<2);
+    unsigned char x2= 120  + ((p2d[idxPt3 * SIZEOF_2DPOINT + 0])<<2);
+    unsigned char y2= 100 - ((p2d[idxPt3 * SIZEOF_2DPOINT + 1])<<2);
     AddTriangle(x0, y0, x1, y1, x2, y2, (pattern & 3));
 }
 
@@ -200,11 +152,11 @@ void hrDrawFaces() {
 }
 
 void updateCamera() {
-                    glCamPosX = current_traj [index_in_traj + 0];
-                    glCamPosY = current_traj [index_in_traj + 1];
-                    glCamPosZ = current_traj [index_in_traj + 2];
-                    glCamRotZ = current_traj [index_in_traj + 3];  // -128 -> -127 unit : 2PI/(2^8 - 1)
-                    glCamRotX = current_traj [index_in_traj + 4];
+    glCamPosX = current_traj [index_in_traj + 0];
+    glCamPosY = current_traj [index_in_traj + 1];
+    glCamPosZ = current_traj [index_in_traj + 2];
+    glCamRotZ = current_traj [index_in_traj + 3];  // -128 -> -127 unit : 2PI/(2^8 - 1)
+    glCamRotX = current_traj [index_in_traj + 4];
     printf ("[%d, %d, %d] (%d, %d)\n", glCamPosX, glCamPosY, glCamPosZ, glCamRotZ, glCamRotX);
 }
 
@@ -224,6 +176,8 @@ void main()
     current_traj = tab_traj[traj_index];
     index_in_traj = (NB_POINT_TRAJ/2)*SIZE_POINT_TRAJ;
 
+    model_index = 0;
+
     glCamPosX = current_traj [index_in_traj + 0]; //-64;
     glCamPosY = current_traj [index_in_traj + 1];
     glCamPosZ = current_traj [index_in_traj + 2];
@@ -231,13 +185,12 @@ void main()
     glCamRotZ = current_traj [index_in_traj + 3];  // -128 -> -127 unit : 2PI/(2^8 - 1)
     glCamRotX = current_traj [index_in_traj + 4];
 
-    // for (glCamRotZ = -32; glCamRotZ < 32 ; glCamRotZ ++) {
     while (inGame) {
 
-        glProject(points2D, tabPoints3D, NB_POINTS_3D, 0);
+        glProject(points2D, ltab_points[model_index], ltab_nbpoints[model_index], 0);
 
         HiresClear();
-        drawSegments (tabSegments, points2D, NB_SEGMENTS );
+        drawSegments (ltab_segments[model_index], points2D, ltab_nbsegments[model_index] );
         hrDrawFaces();
         ScreenCopyHires();
 
