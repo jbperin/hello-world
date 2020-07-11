@@ -17,9 +17,9 @@
 #-------------------------------------------------------------------------------
 import math
 
-NB_STEP_AZIMTUH = 8
+NB_STEP_AZIMTUH = 32
 NB_STEP_INCLINATION = 5
-RADIUS = 64
+RADIUS = 80
 
 STEP_INCLINATION = round(180/(NB_STEP_INCLINATION+1))
 STEP_AZIMUTH = round (360/(NB_STEP_AZIMTUH))

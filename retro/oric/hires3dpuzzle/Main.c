@@ -1,11 +1,50 @@
 
 #include "glOric.h"
 #include "params.h"
+
+
 /*
  * VISIBILITY LIMITS
  */
 #define ANGLE_MAX 0xC0
 #define ANGLE_VIEW 0xE0
+
+#define LANG 2
+
+
+
+#if defined LANG && LANG == 1
+char help[]         ="Ht/Bs/Gch/Drt (S)uiv (P)rec (Q)uitter\n";
+char format[]       ="Puzzle %d. %d/%d resolus.\n\n";
+// S = Suivant
+#define KEY_NEXT_MODEL          83
+// P = Precedent
+#define KEY_PREVIOUS_MODEL      80
+// Q = Quitter
+#define KEY_EXIT                81
+#endif
+
+#if defined LANG && LANG == 2
+char help[]         ="Arrb/Abj/Izq/Drch (S)ig (P)rev Sa(L)ir\n";
+char format[]       ="Rompecaberas %d. %d/%d resueltos.";
+// S = Siguiente
+#define KEY_NEXT_MODEL          83
+// P = Previo
+#define KEY_PREVIOUS_MODEL      80
+// L = Salir
+#define KEY_EXIT                76
+#endif
+
+#if ! defined LANG || LANG == 0
+char help[]="Up/Dwn/Lft/Rght (N)ext (P)revious (Q)uit";
+char format[]="Puzzle %d / %d. %d puzzles solved.";
+// N
+#define KEY_NEXT_MODEL          78
+// P
+#define KEY_PREVIOUS_MODEL      80
+// Q = Quitter
+#define KEY_EXIT                81
+#endif
 
 //
 // ====== Filler.s ==========
@@ -43,6 +82,10 @@ unsigned char index_in_traj;
 unsigned char traj_index;
 unsigned char model_index;
 
+unsigned char solved [NB_MODELS];
+unsigned char nbSolved = 0;
+signed char * save_traj[NB_MODELS];
+unsigned char save_index_in_traj[NB_MODELS];
 
 
 void drawSegments (unsigned char segments[], char pts2d[], unsigned char nbSeg ) {
@@ -157,20 +200,38 @@ void hrDrawFaces() {
     }
 }
 
+void updateModel(){
+    current_traj = save_traj[model_index];
+    index_in_traj = save_index_in_traj[model_index];
+    updateStatus();
+}
+
+void saveModelContext(){
+    save_traj[model_index] = current_traj; 
+    save_index_in_traj[model_index] = index_in_traj;
+}
+
 void updateCamera() {
+    unsigned int idx;
     glCamPosX = current_traj [index_in_traj + 0];
     glCamPosY = current_traj [index_in_traj + 1];
     glCamPosZ = current_traj [index_in_traj + 2];
     glCamRotZ = current_traj [index_in_traj + 3];  // -128 -> -127 unit : 2PI/(2^8 - 1)
     glCamRotX = current_traj [index_in_traj + 4];
-    printf ("[%d, %d, %d] (%d, %d)\n", glCamPosX, glCamPosY, glCamPosZ, glCamRotZ, glCamRotX);
-}
+    // printf ("[%d, %d, %d] (%d, %d)\n", glCamPosX, glCamPosY, glCamPosZ, glCamRotZ, glCamRotX);
 
+}
+void updateStatus() {
+    cls();
+    printf (help);
+    printf (format, model_index, NB_MODELS, nbSolved);
+}
 void main()
 {
     unsigned char inGame = 1;
     int kk=0;                     // keyboard entry
-
+    unsigned char ii;
+    unsigned int idx;
     hires ();
 
     GenerateTables();  // for line8
@@ -182,7 +243,17 @@ void main()
     current_traj = tab_traj[traj_index];
     index_in_traj = (NB_POINT_TRAJ/2)*SIZE_POINT_TRAJ;
 
-    model_index = 0;
+    model_index = 1;
+
+    nbSolved = 0;
+
+    updateStatus();
+
+    for (ii = 0; ii < NB_MODELS; ii++) {
+        solved[ii]= 0;
+        save_traj[ii] = tab_traj[traj_index];
+        save_index_in_traj[ii] = index_in_traj; 
+    }
 
     glCamPosX = current_traj [index_in_traj + 0]; //-64;
     glCamPosY = current_traj [index_in_traj + 1];
@@ -221,21 +292,38 @@ void main()
                         traj_index = traj_index - 1;
                     current_traj = tab_traj[traj_index];
                     break;
-                case 68: // 'D'
-                case 72: // 'H'
-                case 73: // 'I'
-                case 74: // 'J'
-                case 75: // 'K'
+                // case 82: // 'R'
+                // case 90: // 'W'
+                // case 65: // 'A'
+                // case 68: // 'D'
+                // case 72: // 'H'
+                // case 73: // 'I'
+                // case 74: // 'J'
+                // case 75: // 'K'
+                // case 76: // 'L'
+                // case 77: // 'M'
+                // case 79: // 'O'
+                //     break;
+                case KEY_PREVIOUS_MODEL: // 'P'
+                    if (model_index > 0){
+                        saveModelContext();
+                        model_index--;
+                        updateModel();
+                    }
                     break;
-                case 65: // 'A'
-                case 81: // 'Q'
+                case KEY_NEXT_MODEL: // 'N'
+                    if (model_index < NB_MODELS-1) {
+                        saveModelContext();
+                        model_index++;
+                        updateModel();
+                    }
+                    break;
+                case KEY_EXIT: // 'Q'
                     inGame = 0;
                     break;
-                case 82: // 'R'
-                case 90: // 'W'
-                    break;
                 default:
-                    printf ("you pressed %d\n", kk);
+                    // printf ("you pressed %d\n", kk);
+                    break;
             }
             updateCamera();
         }
