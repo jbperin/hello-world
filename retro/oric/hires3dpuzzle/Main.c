@@ -104,7 +104,6 @@ void drawSegments (unsigned char segments[], char pts2d[], unsigned char nbSeg )
 
             }
         }
-
 		if (isSegment2BeDrawn) {
 			LargeX0= 120  + ((int)(aH1)<<2);
 			LargeY0= 100 - ((int)(aV1)<<2);
@@ -148,7 +147,14 @@ void hrDrawFace(char p2d[], unsigned char idxPt1, unsigned char idxPt2, unsigned
 }
 
 void hrDrawFaces() {
-    hrDrawFace(points2D, 0, 1, 2, 2);
+    unsigned char ii;
+    unsigned char *current_face_tab;
+    unsigned char idx;
+    current_face_tab = ltab_faces[model_index];
+    for (ii=0; ii< ltab_nbfaces[model_index]; ii++){
+        idx = ii << 2;
+        hrDrawFace(points2D, current_face_tab[idx], current_face_tab[idx+1], current_face_tab[idx+2], current_face_tab[idx+3]);
+    }
 }
 
 void updateCamera() {
