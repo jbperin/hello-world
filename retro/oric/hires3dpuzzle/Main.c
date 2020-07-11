@@ -15,7 +15,7 @@
 
 #if defined LANG && LANG == 1
 char help[]         ="Ht/Bs/Gch/Drt (S)uiv (P)rec (Q)uitter\n";
-char format[]       ="Puzzle %d. %d/%d resolus.\n\n";
+char format[]       ="Puzzle %d. %d/%d resolus.";
 // S = Suivant
 #define KEY_NEXT_MODEL          83
 // P = Precedent
@@ -25,8 +25,8 @@ char format[]       ="Puzzle %d. %d/%d resolus.\n\n";
 #endif
 
 #if defined LANG && LANG == 2
-char help[]         ="Arrb/Abj/Izq/Drch (S)ig (P)rev Sa(L)ir\n";
-char format[]       ="Rompecaberas %d. %d/%d resueltos.";
+char help[]         ="Arrb/Abj/Izq/Drch (S)ig (P)rev Sa(L)ir";
+char format[]       ="Rompecaberas %d. %d/%d resueltos.\n";
 // S = Siguiente
 #define KEY_NEXT_MODEL          83
 // P = Previo
@@ -37,7 +37,7 @@ char format[]       ="Rompecaberas %d. %d/%d resueltos.";
 
 #if ! defined LANG || LANG == 0
 char help[]="Up/Dwn/Lft/Rght (N)ext (P)revious (Q)uit";
-char format[]="Puzzle %d / %d. %d puzzles solved.";
+char format[]="Puzzle %d. %d/%d puzzles solved.";
 // N
 #define KEY_NEXT_MODEL          78
 // P
@@ -78,6 +78,7 @@ char points2D [NB_MAX_POINT	* SIZEOF_2DPOINT];
 #include "traj_c.c"
 
 signed char * current_traj;
+signed char * current_soluce;
 unsigned char index_in_traj;
 unsigned char traj_index;
 unsigned char model_index;
@@ -203,7 +204,8 @@ void hrDrawFaces() {
 void updateModel(){
     current_traj = save_traj[model_index];
     index_in_traj = save_index_in_traj[model_index];
-    updateStatus();
+    current_soluce = ltab_soluces[model_index];
+    updateCamera();
 }
 
 void saveModelContext(){
@@ -218,13 +220,21 @@ void updateCamera() {
     glCamPosZ = current_traj [index_in_traj + 2];
     glCamRotZ = current_traj [index_in_traj + 3];  // -128 -> -127 unit : 2PI/(2^8 - 1)
     glCamRotX = current_traj [index_in_traj + 4];
-    // printf ("[%d, %d, %d] (%d, %d)\n", glCamPosX, glCamPosY, glCamPosZ, glCamRotZ, glCamRotX);
-
+    // printf ("p=[%d, %d, %d] (%d, %d).", glCamPosX, glCamPosY, glCamPosZ, glCamRotZ, glCamRotX);
+    // printf ("s=[%d, %d, %d] (%d, %d).", current_soluce[0], current_soluce[1], current_soluce[2], current_soluce[3], current_soluce[4]);
+    if (solved[model_index]==0) {
+        if ((glCamPosX == current_soluce[0]) && (glCamPosY == current_soluce[1]) && (glCamPosZ == current_soluce[2]) && (glCamRotZ == current_soluce[3]) && (glCamRotX == current_soluce[4])){
+            solved[model_index]= 1;
+            nbSolved ++;
+            updateStatus();
+                // printf ("Solved.");
+        }
+    }
 }
 void updateStatus() {
     cls();
     printf (help);
-    printf (format, model_index, NB_MODELS, nbSolved);
+    printf (format, model_index, nbSolved, NB_MODELS);
 }
 void main()
 {
@@ -244,6 +254,7 @@ void main()
     index_in_traj = (NB_POINT_TRAJ/2)*SIZE_POINT_TRAJ;
 
     model_index = 1;
+    current_soluce = ltab_soluces[model_index];
 
     nbSolved = 0;
 
@@ -275,22 +286,34 @@ void main()
         if (kk != 0) {
             switch (kk) {
                 case 8:  // gauche => tourne gauche
-                    index_in_traj = (index_in_traj + SIZE_POINT_TRAJ) % (NB_POINT_TRAJ*SIZE_POINT_TRAJ);
+                    if (solved[model_index]==0) {
+                        index_in_traj = (index_in_traj + SIZE_POINT_TRAJ) % (NB_POINT_TRAJ*SIZE_POINT_TRAJ);
+                        updateCamera();
+                    }
                     break;
                 case 9:  // droite => tourne droite
-                    if (index_in_traj == 0)
-                        index_in_traj = NB_POINT_TRAJ*SIZE_POINT_TRAJ - SIZE_POINT_TRAJ;
-                    index_in_traj = (index_in_traj - SIZE_POINT_TRAJ);
+                    if (solved[model_index]==0) {
+                        if (index_in_traj == 0)
+                            index_in_traj = NB_POINT_TRAJ*SIZE_POINT_TRAJ - SIZE_POINT_TRAJ;
+                        index_in_traj = (index_in_traj - SIZE_POINT_TRAJ);
+                        updateCamera();
+                    }
                     break;
                 case 10: // bas
-                    if (traj_index < NB_TRAJ_TABLE - 1)
-                        traj_index = traj_index + 1;
-                    current_traj = tab_traj[traj_index];
+                    if (solved[model_index]==0) {
+                        if (traj_index < NB_TRAJ_TABLE - 1)
+                            traj_index = traj_index + 1;
+                        current_traj = tab_traj[traj_index];
+                        updateCamera();
+                    }
                     break;
                 case 11: // haut
-                    if (traj_index > 0)
-                        traj_index = traj_index - 1;
-                    current_traj = tab_traj[traj_index];
+                    if (solved[model_index]==0) {
+                        if (traj_index > 0)
+                            traj_index = traj_index - 1;
+                        current_traj = tab_traj[traj_index];
+                        updateCamera();
+                    }
                     break;
                 // case 82: // 'R'
                 // case 90: // 'W'
@@ -325,7 +348,7 @@ void main()
                     // printf ("you pressed %d\n", kk);
                     break;
             }
-            updateCamera();
+            
         }
     }
 }

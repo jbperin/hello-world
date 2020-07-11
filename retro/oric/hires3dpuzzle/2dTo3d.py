@@ -105,7 +105,8 @@ dict_models = {
         "faces" : [ # faces
             [0, 1, 2, 2]
         ], 
-        "soluce" : [-64, 0, 0, 0, 0] #initvectors=
+        "soluce" : [-80, 0, 0, 0, 0] #initvectors=
+        
     }
     ,"square": { 
         "points" :  [ 
@@ -124,7 +125,7 @@ dict_models = {
             [0, 1, 2, 2],
             [1, 2, 3, 1]
         ], 
-        "soluce" : [-64, 0, 0, 0, 0] #initvectors=
+        "soluce" : [-80, 6, 0, -3, 0] #initvectors=
     }
 
 }
@@ -205,6 +206,17 @@ def main ():
         code_source += f"\t{h}{len(values['faces'])} // {name}\n"
     code_source += f"}};\n"
 
+    code_source += f"signed char *ltab_soluces[]={{\n"
+    first = True
+    for name in dict_models:
+        if first:
+            h=''
+            first = False
+        else:
+            h=','
+        
+        code_source += f"\t{h}tab_init_{name}\n"
+    code_source += f"}};\n"
 
     with open("tabpoints.c", "w") as f:
         f.write(code_source)

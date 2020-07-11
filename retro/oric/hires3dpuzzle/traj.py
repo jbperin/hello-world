@@ -64,7 +64,9 @@ def genTraj():
             Z = RADIUS * math.cos (inclination_radian)
             # Rotation in fixed point representation
             RotX = (ii - 90)*128/180
-            RotZ = (jj - 180)*128/180
+            RotZ = round((jj - 180)*128/180)
+            if (RotX == -128): RotX = 0
+            if (RotZ == -128): RotZ = 0
             vals = list(map(round,[X, Y, Z, RotZ, RotX]))
             # vals = list([X, Y, Z])
             tab_pos["%d"%(ii)].append(vals)
