@@ -9,7 +9,7 @@
 #define ANGLE_MAX 0xC0
 #define ANGLE_VIEW 0xE0
 
-#define LANG 2
+#define LANG 0
 
 
 
@@ -36,7 +36,7 @@ char format[]       ="Rompecaberas %d. %d/%d resueltos.\n";
 #endif
 
 #if ! defined LANG || LANG == 0
-char help[]="Up/Dwn/Lft/Rght (N)ext (P)revious (Q)uit";
+char help[]         ="Up/Dwn/Lft/Rght (N)ext (P)rev (Q)uit\n";
 char format[]="Puzzle %d. %d/%d puzzles solved.";
 // N
 #define KEY_NEXT_MODEL          78
@@ -253,7 +253,7 @@ void main()
     current_traj = tab_traj[traj_index];
     index_in_traj = (NB_POINT_TRAJ/2)*SIZE_POINT_TRAJ;
 
-    model_index = 1;
+    model_index = 0;
     current_soluce = ltab_soluces[model_index];
 
     nbSolved = 0;
