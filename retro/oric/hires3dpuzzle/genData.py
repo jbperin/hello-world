@@ -6,13 +6,16 @@ SCREEN_HEIGHT= 200
 
 NB_STEP_AZIMTUH = 16
 NB_STEP_INCLINATION = 5
-RADIUS = 64
+
+TRAJ_RADIUS = 80
+
+SHAPE_RADIUS = round(TRAJ_RADIUS * math.sin(31*math.pi/128))
 
 STEP_INCLINATION = round(180/(NB_STEP_INCLINATION+1))
 STEP_AZIMUTH = round (360/(NB_STEP_AZIMTUH))
 
-MIN_DISTANCE = 60
-MAX_DISTANCE = 70
+MIN_DISTANCE = TRAJ_RADIUS - SHAPE_RADIUS//2
+MAX_DISTANCE = TRAJ_RADIUS - SHAPE_RADIUS//2
 
 
 dict_models = {
@@ -48,6 +51,93 @@ dict_models = {
         "faces" : [ # faces
             [0, 1, 2, 2],
             [1, 2, 3, 1]
+        ], 
+        "soluce" : [-80, 6, 0, -3, 0] #initvectors=
+    }
+    ,"board": { 
+        "points" :  [ 
+            [  80, 60, 50], #0
+            [ 120, 60, 64], #1
+            [ 120,100, 64], #2
+            [  80,100, 80], #3
+
+            [ 120, 60, 72], #4
+            [ 160, 60, 72], #5
+            [ 160,100, 72], #6
+            [ 120,100, 64], #7
+
+            [ 120,100, 64], #8
+            [ 160,100, 64], #9
+            [ 160,140, 64], #10
+            [ 120,140, 64], #11
+
+            [  80,100, 64], #12
+            [ 120,100, 64], #13
+            [ 120,140, 64], #14
+            [ 80,140, 64],  #15
+        ], 
+        "segments" : [ # 
+            [0, 5], 
+            [5,10], 
+            [10,15],
+            [15, 0]
+        ], 
+        "faces" : [ # faces
+            [0, 1, 3, 0],
+            [1, 3, 2, 0],
+
+            [4, 5, 7, 1],
+            [5, 7, 6, 1],
+
+            [8, 9,11, 2],
+            [9,11,10, 2],
+
+            [12,13,15, 3],
+            [13,15,14, 3],
+        ], 
+        "soluce" : [-80, 6, 0, -3, 0] #initvectors=
+    }
+    ,"face_01": { 
+        "points" :  [ 
+            [ 150, 13, 50], #0
+            [ 160, 30, 64], #1
+            [ 160, 44, 64], #2
+            [ 166, 55, 80], #3
+
+            [ 166, 75, 72], #4
+            [ 167, 94, 72], #5
+            [ 165, 97, 72], #6
+            [ 140,100, 64], #7
+
+            [ 124, 98, 64], #8
+            [ 119, 92, 64], #9
+            [ 112, 82, 64], #10
+            [ 108, 84, 64], #11
+
+            [ 114,102, 64], #12
+            [ 114,118, 64], #13
+            [ 104,144, 64], #14
+
+        ], 
+        "segments" : [ # 
+            [0, 1], 
+            [1, 2], 
+            [2, 3],
+            [3, 4],
+            [4, 5],
+            [5, 6],
+            [6, 7],
+            [7, 8],
+            [8, 9],
+            [9, 10],
+            [10, 11],
+            [11, 12],
+            [12, 13],
+            [13, 14],
+
+        ], 
+        "faces" : [ # faces
+        [0, 1, 2, 0]
         ], 
         "soluce" : [-80, 6, 0, -3, 0] #initvectors=
     }
@@ -92,9 +182,9 @@ def genTraj():
             # print ("\tazimuth = %d \n"%jj)
             azimuth_radian = math.radians(jj)
             inclination_radian = math.radians(ii)
-            X = round(RADIUS * math.sin (inclination_radian) * math.cos (azimuth_radian))
-            Y = round(RADIUS * math.sin (inclination_radian) * math.sin (azimuth_radian))
-            Z = round(RADIUS * math.cos (inclination_radian))
+            X = round(TRAJ_RADIUS * math.sin (inclination_radian) * math.cos (azimuth_radian))
+            Y = round(TRAJ_RADIUS * math.sin (inclination_radian) * math.sin (azimuth_radian))
+            Z = round(TRAJ_RADIUS * math.cos (inclination_radian))
             # Rotation in fixed point representation
             RotX = round((ii - 90)*128/180)
             RotZ = round((jj - 180)*128/180)
@@ -135,13 +225,13 @@ def unproject(x, y, distance):
     dist = math.sqrt(CamPosX**2 + CamPosY**2)
     APH = (x-(SCREEN_WIDTH/2))/4
     APV = ((SCREEN_HEIGHT/2)-y)/4
-    print (APH, APV)
+    # print (APH, APV)
     AH = APH+CamRotZ
     AV = APV+CamRotX
-    print ("AH, AV : ", AH, AV, AV*180/128)
+    # print ("AH, AV : ", AH, AV, AV*180/128)
     DeltaZ = math.tan(AV*math.pi/128)*dist 
     Z = CamPosZ + DeltaZ
-    print ("DeltaZ, Z: ", DeltaZ, Z)
+    # print ("DeltaZ, Z: ", DeltaZ, Z)
 
     sign_dx=-1
     sign_dy=-1
@@ -158,10 +248,10 @@ def unproject(x, y, distance):
         else:
             sign_dx=1
 
-    print ("deltaYOverDeltaX", deltaYOverDeltaX)
+    # print ("deltaYOverDeltaX", deltaYOverDeltaX)
     DeltaX = math.copysign (math.sqrt((dist*dist) / (1 + deltaYOverDeltaX*deltaYOverDeltaX)), sign_dx)
     DeltaY = math.copysign (deltaYOverDeltaX * DeltaX, sign_dy)
-    print ("DeltaX, DeltaY: ", DeltaX, DeltaY)
+    # print ("DeltaX, DeltaY: ", DeltaX, DeltaY)
     X = CamPosX + DeltaX
     Y = CamPosY + DeltaY
     effective_distance = math.sqrt(DeltaX**2 + DeltaY**2 + DeltaZ**2)
@@ -194,10 +284,20 @@ def exportModel (name, points, segments, faces, initvectors):
     index = 0
 
     for [c,l,dist] in points:
+        nbattempt = 1
         dist = random.randint(MIN_DISTANCE, MAX_DISTANCE)
-        print (c, l, dist)
-        [X, Y, Z] = unproject (c,l,dist)
-        print ([X, Y, Z])
+        # print (c, l, dist)
+        while (nbattempt < 1000):
+            [X, Y, Z] = unproject (c,l,dist)
+            distance2center = math.sqrt(X**2+ Y**2+ Z**2)
+            nbattempt += 1
+            if (distance2center < SHAPE_RADIUS):
+                break
+        if (nbattempt < 1000):
+            print ([X, Y, Z], distance2center)
+        else:
+            print (f"unable to find solution for point {c}, {l} of shape {name}")
+            raise Exception(f"unable to find solution for point {c}, {l} of shape {name}", 'eggs')
         if first:
             h = ""
             first = False
