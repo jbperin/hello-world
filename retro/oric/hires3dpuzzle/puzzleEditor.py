@@ -15,6 +15,8 @@ import imghdr
 from PIL import ImageDraw
 from collections import*
 
+from enum import Enum
+
 """
 CITATIONS
 
@@ -73,14 +75,10 @@ def drawOnImage(canvas):
 def colourChosen(drawWindow, canvas, colour):
     if canvas.data.image!=None:
         canvas.data.drawColour=colour
-        canvas.data.mainWindow.bind("<Button-1>",\
-                                    lambda event: drawClick(event, canvas))
         canvas.data.mainWindow.bind("<B1-Motion>",\
                                     lambda event: drawDraw(event, canvas))
     drawWindow.destroy()
-    
-def drawClick(event, canvas):
-    print ("clicked", event.x, event.y)
+
 
 def drawDraw(event, canvas):
     if canvas.data.drawOn==True:
@@ -623,14 +621,96 @@ def posterize(canvas):
 
 
 ################ EDIT MENU FUNCTIONS ############################
+class EditionMode(Enum):
+    NONE = 0
+    POINT_ADDITION = 1
+    SEGMENT_ADDITION = 2
+    FACE_ADDITION = 3
+    # WAITING_DESACTIVATION = 3
+
+listPoints = []
+listSegments = []
+listFaces = []
+currentMode =  EditionMode.POINT_ADDITION
+currentSegment = []  
+currentFace = []  
+import math
+
+def findClosestPoint (xc, yc):
+    idxPoint = None
+    if len(listPoints) >= 1:
+        # idxPoint = 0
+        closestDistance = math.inf
+        for ii in range (len(listPoints)):
+            [x, y] = listPoints[ii]  
+            distance = math.sqrt((xc-x)**2 + (yc-y)**2)
+            if distance < closestDistance:
+                closestDistance = distance
+                idxPoint = ii
+    return idxPoint    
+
+def drawClick(event, canvas):
+    global currentSegment, currentFace
+
+    caller = event.widget
+
+    if caller==canvas:
+        print ("clicked", event.x, event.y)
+        if (currentMode == EditionMode.POINT_ADDITION):
+            listPoints.append ([event.x // 4, event.y // 4])
+            x=int(round((event.x-canvas.data.imageTopX)*canvas.data.imageScale))
+            y=int(round((event.y-canvas.data.imageTopY)*canvas.data.imageScale))
+            # print ("pixel", x, y)
+            draw = ImageDraw.Draw(canvas.data.image)
+            #"#fb0"
+            draw.ellipse((x-3, y-3, x+ 3, y+3), fill=canvas.data.drawColour,\
+                        outline=None)
+            # save(canvas)
+            canvas.data.undoQueue.append(canvas.data.image.copy())
+            canvas.data.imageForTk=makeImageForTk(canvas)
+            drawImage(canvas)
+
+        elif (currentMode == EditionMode.SEGMENT_ADDITION):
+            xc, yc = event.x // 4, event.y // 4
+            idxPoint = findClosestPoint (xc, yc)
+            currentSegment.append(idxPoint)
+            if len(currentSegment) == 2:
+                listSegments.append(currentSegment)
+                currentSegment=[]
+                
+        elif (currentMode == EditionMode.FACE_ADDITION):
+            xc, yc = event.x // 4, event.y // 4
+            idxPoint = findClosestPoint (xc, yc)
+            currentFace.append(idxPoint)
+            if len(currentFace) == 3:
+                listFaces.append(currentFace)
+                currentFace=[]
+        else:
+            print ("Select mode first")
+
 
 def keyPressed(canvas, event):
+    global currentMode
     if event.keysym=="z":
         undo(canvas)
     elif event.keysym=="y":
         redo(canvas)
     elif event.keysym=="p":
-        print ("Point recording")
+        print ("point mode")
+        currentMode =  EditionMode.POINT_ADDITION  
+    elif event.keysym=="s":
+        currentMode =  EditionMode.SEGMENT_ADDITION 
+        print ("segment mode") 
+    elif event.keysym=="f":
+        currentMode =  EditionMode.FACE_ADDITION  
+        print ("face mode")
+    elif event.keysym=="e": 
+        print ("EXPORT")
+        print (listPoints)
+        print (listSegments)
+        print (listFaces)
+
+
        
 
 # we use deques so as to make Undo and Redo more efficient and avoid
@@ -683,7 +763,7 @@ def newImage(canvas):
     #make sure it's an image file
     try: filetype=imghdr.what(imageName)
     except:
-        messageBox.showinfo(title="Image File",\
+        messagebox.showinfo(title="Image File",\
         message="Choose an Image File!" , parent=canvas.data.mainWindow)
     # restrict filetypes to .jpg, .bmp, etc.
     if filetype in ['jpeg', 'bmp', 'png', 'tiff']:
@@ -695,8 +775,11 @@ def newImage(canvas):
         canvas.data.imageSize=im.size #Original Image dimensions
         canvas.data.imageForTk=makeImageForTk(canvas)
         drawImage(canvas)
+        canvas.data.mainWindow.bind("<Button-1>",\
+                                    lambda event: drawClick(event, canvas))
+
     else:
-        messageBox.showinfo(title="Image File",\
+        messagebox.showinfo(title="Image File",\
         message="Choose an Image File!" , parent=canvas.data.mainWindow)
 
 ######## CREATE A VERSION OF IMAGE TO BE DISPLAYED ON THE CANVAS #########
