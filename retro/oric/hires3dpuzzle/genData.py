@@ -1,6 +1,8 @@
 import math
 import random
 
+from structSpacer import spaceStruct
+
 SCREEN_WIDTH = 240
 SCREEN_HEIGHT= 200
 
@@ -9,33 +11,22 @@ NB_STEP_INCLINATION = 5
 
 TRAJ_RADIUS = 80
 
-SHAPE_RADIUS = round(TRAJ_RADIUS * math.sin(31*math.pi/128))
+SHAPE_RADIUS            = round(TRAJ_RADIUS * math.sin(31*math.pi/128))
 
-STEP_INCLINATION = round(180/(NB_STEP_INCLINATION+1))
-STEP_AZIMUTH = round (360/(NB_STEP_AZIMTUH))
+STEP_INCLINATION        = round(180/(NB_STEP_INCLINATION+1))
+STEP_AZIMUTH            = round (360/(NB_STEP_AZIMTUH))
 
 MIN_DISTANCE = TRAJ_RADIUS - SHAPE_RADIUS//2
-MAX_DISTANCE = TRAJ_RADIUS - SHAPE_RADIUS//2
+MAX_DISTANCE = TRAJ_RADIUS + SHAPE_RADIUS//2
 
 
-dict_models = {
-    "triangle": { 
-        "points" :  [ 
-            [ 120, 60, 64], 
-            [  80, 140, 64], 
-            [ 160, 140, 64], 
-        ], 
-        "segments" : [ # 
-            [0, 1], 
-            [1, 2], 
-            [2, 0]
-        ], 
-        "faces" : [ # faces
-            [0, 1, 2, 2]
-        ], 
-        "soluce" : [-80, 6, 0, -3, 0] #initvectors=
-    }
-    ,"square": { 
+models = {
+    "boat":{"points":[[46, 19, 0], [48, 94, 0], [81, 93, 0], [80, 16, 0], [49, 82, 0], [74, 72, 0], [81, 77, 0], [114, 65, 0]], 
+    "segments":[[0, 1], [3, 2]], 
+    "faces":[[0, 4, 5, 0], [3, 6, 7, 0]],  
+    "soluce" : [-80, 6, 0, -3, 0]},
+
+    "square": { 
         "points" :  [ 
             [  80, 60, 50], 
             [ 160, 60, 64], 
@@ -97,51 +88,6 @@ dict_models = {
         ], 
         "soluce" : [-80, 6, 0, -3, 0] #initvectors=
     }
-    ,"face_01": { 
-        "points" :  [ 
-            [ 150, 13, 50], #0
-            [ 160, 30, 64], #1
-            [ 160, 44, 64], #2
-            [ 166, 55, 80], #3
-
-            [ 166, 75, 72], #4
-            [ 167, 94, 72], #5
-            [ 165, 97, 72], #6
-            [ 140,100, 64], #7
-
-            [ 124, 98, 64], #8
-            [ 119, 92, 64], #9
-            [ 112, 82, 64], #10
-            [ 108, 84, 64], #11
-
-            [ 114,102, 64], #12
-            [ 114,118, 64], #13
-            [ 104,144, 64], #14
-
-        ], 
-        "segments" : [ # 
-            [0, 1], 
-            [1, 2], 
-            [2, 3],
-            [3, 4],
-            [4, 5],
-            [5, 6],
-            [6, 7],
-            [7, 8],
-            [8, 9],
-            [9, 10],
-            [10, 11],
-            [11, 12],
-            [12, 13],
-            [13, 14],
-
-        ], 
-        "faces" : [ # faces
-        [0, 1, 2, 0]
-        ], 
-        "soluce" : [-80, 6, 0, -3, 0] #initvectors=
-    }
-
 }
 
 
@@ -332,7 +278,7 @@ def exportModel (name, points, segments, faces, initvectors):
     return res
 
 
-def genModelSourceCode(tab_pos):
+def genModelSourceCode(tab_pos, current_model):
 
 
     # Choose the position from which the model has to be seen
@@ -342,6 +288,7 @@ def genModelSourceCode(tab_pos):
     # soluce = tab_pos[list(tab_pos.keys())[traj_number]][step_number]
 
     # print (nb_traj)
+    dict_models = spaceStruct(current_model)
 
     code_source = f"#define NB_MODELS {len(dict_models)}\n"
     code_source += f"#define NB_MAX_POINT {max([len(values['points']) for values in dict_models.values()])}\n"
@@ -444,9 +391,9 @@ def main ():
     source_code = genTrajectorySourceCode (tabPos)
     with open ("traj_c.c",'w') as fic:
         fic.write(source_code)
-
+    
     with open("tabpoints.c", "w") as f:
-        f.write(genModelSourceCode(tabPos))
+        f.write(genModelSourceCode(tabPos, models))
 
 def checkRotDis (CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX):
     distance2center = math.sqrt(CamPosX**2 + CamPosY**2 + CamPosZ**2)
