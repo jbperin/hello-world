@@ -642,7 +642,7 @@ def findClosestPoint (xc, yc):
         # idxPoint = 0
         closestDistance = math.inf
         for ii in range (len(listPoints)):
-            [x, y] = listPoints[ii]  
+            [x, y, d] = listPoints[ii]  
             distance = math.sqrt((xc-x)**2 + (yc-y)**2)
             if distance < closestDistance:
                 closestDistance = distance
@@ -657,7 +657,7 @@ def drawClick(event, canvas):
     if caller==canvas:
         print ("clicked", event.x, event.y)
         if (currentMode == EditionMode.POINT_ADDITION):
-            listPoints.append ([event.x // 4, event.y // 4])
+            listPoints.append ([event.x // 4, event.y // 4, 0])
             x=int(round((event.x-canvas.data.imageTopX)*canvas.data.imageScale))
             y=int(round((event.y-canvas.data.imageTopY)*canvas.data.imageScale))
             # print ("pixel", x, y)
@@ -683,11 +683,15 @@ def drawClick(event, canvas):
             idxPoint = findClosestPoint (xc, yc)
             currentFace.append(idxPoint)
             if len(currentFace) == 3:
+                currentFace.append(0) # empty space for pattern
                 listFaces.append(currentFace)
                 currentFace=[]
         else:
             print ("Select mode first")
 
+def exportData(lPoint, lSegment, lFace):
+    res = '"name":{"points":%s, "segments":%s, "faces":%s,  "soluce" : [-80, 6, 0, -3, 0]},'%(lPoint, lSegment, lFace)
+    print (res)
 
 def keyPressed(canvas, event):
     global currentMode
@@ -706,9 +710,7 @@ def keyPressed(canvas, event):
         print ("face mode")
     elif event.keysym=="e": 
         print ("EXPORT")
-        print (listPoints)
-        print (listSegments)
-        print (listFaces)
+        print (exportData(listPoints, listSegments, listFaces))
 
 
        
