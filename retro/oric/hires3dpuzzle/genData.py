@@ -1,6 +1,6 @@
 import math
 import random
-
+import os
 from structSpacer import spaceStruct
 
 SCREEN_WIDTH = 240
@@ -21,10 +21,19 @@ MAX_DISTANCE = TRAJ_RADIUS + SHAPE_RADIUS//2
 
 
 models = {
-    "boat":{"points":[[46, 19, 0], [48, 94, 0], [81, 93, 0], [80, 16, 0], [49, 82, 0], [74, 72, 0], [81, 77, 0], [114, 65, 0]], 
-    "segments":[[0, 1], [3, 2]], 
-    "faces":[[0, 4, 5, 0], [3, 6, 7, 0]],  
-    "soluce" : [-80, 6, 0, -3, 0]},
+
+    "boat1":{
+        "points":[[110, 32, 0], [111, 121, 0], [150, 109, 0], [156, 26, 0], [157, 113, 0], [203, 96, 0], [110, 136, 0], [156, 135, 0], [102, 44, 0], [50, 127, 0], [97, 85, 0], [106, 75, 0], [100, 104, 0], [57, 128, 0], [200, 128, 0], [81, 132, 0], [96, 156, 0], [142, 162, 0], [182, 156, 0], [184, 135, 0], [80, 132, 0], [96, 155, 0], [110, 138, 0]], 
+        "segments":[[0, 6], [3, 7], [9, 6], [6, 7], [14, 7]], 
+        "faces":[[8, 9, 10, 0], [11, 13, 12, 0], [1, 2, 0, 0], [3, 4, 5, 0], [20, 21, 6, 1], [6, 16, 17, 1], [17, 6, 7, 1], [7, 17, 18, 1], [18, 7, 19, 1], [19, 14, 7, 1]],  
+        "soluce" : [-80, 6, 0, -3, 0]},
+
+    # "boat":{
+    #     "points":[[89, 17, 0], [92, 161, 0], [93, 138, 0], [145, 121, 0], [154, 10, 0], [154, 158, 0], [156, 127, 0], [221, 103, 0], [18, 138, 0], [81, 29, 0], [81, 87, 0], [19, 149, 0], [78, 115, 0], [51, 155, 0], [71, 189, 0], [138, 195, 0], [189, 187, 0], [192, 162, 0], [214, 149, 0], [185, 150, 0]], 
+    #     "segments":[[0, 1], [4, 5], [11, 13]],
+    #     "faces":[[0, 2, 3, 0], [4, 6, 7, 0], [9, 8, 10, 0], [11, 10, 12, 0], [13, 14, 1, 0], [14, 1, 15, 0], [1, 5, 15, 0], [5, 15, 16, 0], [5, 17, 16, 0], [5, 19, 17, 0], [19, 17, 18, 0]],
+    #     "soluce" : [-80, 6, 0, -3, 0]
+    # },
 
     "square": { 
         "points" :  [ 
@@ -217,6 +226,11 @@ def exportModel (name, points, segments, faces, initvectors):
 
     global CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX
 
+    filename = f"model_{name}_c.c"
+
+    if os.path.isfile(filename):
+        return f'#include "{filename}"\n'
+
     str_init = f"signed char tab_init_{name}[] = {{ {initvectors[0]}, {initvectors[1]}, {initvectors[2]}, {initvectors[3]}, {initvectors[4]} }};\n";
 
     CamPosX=initvectors[0]
@@ -275,7 +289,10 @@ def exportModel (name, points, segments, faces, initvectors):
         str_faces += f"\t{h}{idxP1},\t{idxP2},\t{idxP3},\t{motif}\n"
     str_faces += f"}};\n"
     res = str_init  + str_points + str_segments + str_faces
-    return res
+    
+    with open (filename,'w') as fic:
+        fic.write(res)
+    return '#include "{filename}"\n'
 
 
 def genModelSourceCode(tab_pos, current_model):
