@@ -1,4 +1,4 @@
-
+NB_MAX_POINT = 64
 def spaceStruct(currStruct):
 
     newStruct = {}
@@ -16,14 +16,15 @@ def spaceStruct(currStruct):
             [pointIdx1, pointIdx2] = seg
             newSeg = []
             for pointIdx in [pointIdx1, pointIdx2]:
-                if pointIdx in already_used_points:
+                if pointIdx in already_used_points and len(newStruct[key]["points"]) < NB_MAX_POINT:
                     # on crée un nouveau point
                     newPoint =  value["points"][pointIdx].copy()
                     newStruct[key]["points"].append(newPoint)
                     idxNewPoint = len(newStruct[key]["points"])-1
                     newSeg.append (idxNewPoint)
                 else:
-                    already_used_points.append(pointIdx)
+                    if not pointIdx in already_used_points:
+                        already_used_points.append(pointIdx)
                     newSeg.append (pointIdx)
 
             newStruct[key]["segments"].append(newSeg)
@@ -34,14 +35,15 @@ def spaceStruct(currStruct):
             [pointIdx1, pointIdx2, pointIdx3, dull] = fac
             newFac = []
             for pointIdx in [pointIdx1, pointIdx2, pointIdx3]:
-                if pointIdx in already_used_points:
+                if pointIdx in already_used_points and len(newStruct[key]["points"]) < NB_MAX_POINT:
                     # on crée un nouveau point
                     newPoint =  value["points"][pointIdx].copy()
                     newStruct[key]["points"].append(newPoint)
                     idxNewPoint = len(newStruct[key]["points"])-1
                     newFac.append (idxNewPoint)
                 else:
-                    already_used_points.append(pointIdx)
+                    if not pointIdx in already_used_points:
+                        already_used_points.append(pointIdx)
                     newFac.append (pointIdx)
             newFac.append(dull)
             newStruct[key]["faces"].append(newFac)

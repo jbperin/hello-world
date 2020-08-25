@@ -72,11 +72,43 @@ def drawOnImage(canvas):
     drawFrame.pack(side=BOTTOM)
 
 
+fillPattern = 0
+fillColor = None
+
+
 def colourChosen(drawWindow, canvas, colour):
+    global fillColor, fillPattern
+    print (colour)
+    fillColor = colour
+    if (colour == "red"):
+        fillPattern = 0
+    elif (colour == "blue"):
+        fillPattern = 1
+    elif (colour == "green"):
+        fillPattern = 2
+    elif (colour == "magenta"):
+        fillPattern = 3
+    elif (colour == "cyan"):
+        fillPattern = 4
+    elif (colour == "yellow"):
+        fillPattern = 5
+    elif (colour == "orange"):
+        fillPattern = 6
+    elif (colour == "purple"):
+        fillPattern = 7
+    elif (colour == "brown"):
+        fillPattern = 8
+    elif (colour == "black"):
+        fillPattern = 9
+    elif (colour == "white"):
+        fillPattern = 10
+    elif (colour == "gray"):
+        fillPattern = 11
+
     if canvas.data.image!=None:
         canvas.data.drawColour=colour
-        canvas.data.mainWindow.bind("<B1-Motion>",\
-                                    lambda event: drawDraw(event, canvas))
+        # canvas.data.mainWindow.bind("<B1-Motion>",\
+        #                             lambda event: drawDraw(event, canvas))
     drawWindow.destroy()
 
 
@@ -650,31 +682,38 @@ def findClosestPoint (xc, yc):
     return idxPoint    
 
 def drawClick(event, canvas):
-    global currentSegment, currentFace
+    global currentSegment, currentFace, fillColor, fillPattern
 
     caller = event.widget
 
     if caller==canvas:
         print ("clicked", event.x, event.y)
         if (currentMode == EditionMode.POINT_ADDITION):
-            listPoints.append ([event.x // 4, event.y // 4, 0])
-            x=int(round((event.x-canvas.data.imageTopX)*canvas.data.imageScale))
-            y=int(round((event.y-canvas.data.imageTopY)*canvas.data.imageScale))
-            # print ("pixel", x, y)
-            draw = ImageDraw.Draw(canvas.data.image)
-            #"#fb0"
-            draw.ellipse((x-3, y-3, x+ 3, y+3), fill=canvas.data.drawColour,\
-                        outline=None)
-            # save(canvas)
-            canvas.data.undoQueue.append(canvas.data.image.copy())
-            canvas.data.imageForTk=makeImageForTk(canvas)
-            drawImage(canvas)
+            xc, yc = event.x // 4, event.y // 4
+            listPoints.append ([xc, yc, 0])
+            canvas.create_oval(xc*4-3, yc*4-3, xc*4+ 3, yc*4+3, outline='#f11')
+            # x=int(round((event.x-canvas.data.imageTopX)*canvas.data.imageScale))
+            # y=int(round((event.y-canvas.data.imageTopY)*canvas.data.imageScale))
+            # # print ("pixel", x, y)
+            # draw = ImageDraw.Draw(canvas.data.image)
+            # #"#fb0"
+            # draw.ellipse((x-3, y-3, x+ 3, y+3), fill=canvas.data.drawColour,\
+            #             outline=None)
+            # # save(canvas)
+            # canvas.data.undoQueue.append(canvas.data.image.copy())
+            # canvas.data.imageForTk=makeImageForTk(canvas)
+            # drawImage(canvas)
 
         elif (currentMode == EditionMode.SEGMENT_ADDITION):
             xc, yc = event.x // 4, event.y // 4
             idxPoint = findClosestPoint (xc, yc)
             currentSegment.append(idxPoint)
             if len(currentSegment) == 2:
+                canvas.create_line(
+                    listPoints[currentSegment[0]][0]*4, listPoints[currentSegment[0]][1]*4,
+                    listPoints[currentSegment[1]][0]*4, listPoints[currentSegment[1]][1]*4
+                    , fill='#f11', width=2
+                )
                 listSegments.append(currentSegment)
                 currentSegment=[]
                 
@@ -682,8 +721,16 @@ def drawClick(event, canvas):
             xc, yc = event.x // 4, event.y // 4
             idxPoint = findClosestPoint (xc, yc)
             currentFace.append(idxPoint)
+            
             if len(currentFace) == 3:
-                currentFace.append(0) # empty space for pattern
+                points =[
+                    listPoints[currentFace[0]][0]*4, listPoints[currentFace[0]][1]*4,
+                    listPoints[currentFace[1]][0]*4, listPoints[currentFace[1]][1]*4,
+                    listPoints[currentFace[2]][0]*4, listPoints[currentFace[2]][1]*4,
+                ]
+                canvas.create_polygon(points, outline='#f11', fill=fillColor, width=2)
+
+                currentFace.append(fillPattern) # empty space for pattern
                 listFaces.append(currentFace)
                 currentFace=[]
         else:
@@ -691,7 +738,7 @@ def drawClick(event, canvas):
 
 def exportData(lPoint, lSegment, lFace):
     res = '"name":{"points":%s, "segments":%s, "faces":%s,  "soluce" : [-80, 6, 0, -3, 0]},'%(lPoint, lSegment, lFace)
-    print (res)
+    return (res)
 
 def keyPressed(canvas, event):
     global currentMode
@@ -712,8 +759,8 @@ def keyPressed(canvas, event):
         print ("EXPORT")
         print (exportData(listPoints, listSegments, listFaces))
 
+     
 
-       
 
 # we use deques so as to make Undo and Redo more efficient and avoid
 # memory space isuues 
@@ -946,8 +993,8 @@ def run():
     # create the root and the canvas
     root = Tk()
     root.title("Image Editor")
-    canvasWidth=500
-    canvasHeight=500
+    canvasWidth=960
+    canvasHeight=800
     canvas = Canvas(root, width=canvasWidth, height=canvasHeight, \
                     background="gray")
     # Set up canvas data and call init
