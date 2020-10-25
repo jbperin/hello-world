@@ -30,7 +30,7 @@ int jb_sound(int chanel,int period,int volume){
 }
 
 #define SLOW_DOWN_DURATION 7000
-#define music_tempo_delay 6  // delay to temporize the music
+#define music_tempo_delay 60  // delay to temporize the music
 int           music_index;       // music in for music array indexing
 int           music_tempo;       // music temporisation 
 char          volume;		     // game sound volume
@@ -46,7 +46,7 @@ void dispinfo () {
 char game_music[] = {
 1,7,12,4,0,0,0,0, 1,7,12,4,0,0,0,0, 1,7,11,4,0,0,0,0, 1,7,11,4,0,0,0,0, 1,7,9,4,0,0,0,0, 3,3,9,4,8,2,0,0, 
 //Intro,A2,,,,,,,
-/*6,7,0,0,8,3,4,4,  3,3,9,4,8,2,0,0, 7,7,11,4,8,3,4,4, 2,3,0,0,7,2,0,0, 7,7,11,4,7,3,2,4, 2,3,0,0,7,2,0,0,
+6,7,0,0,8,3,4,4,  3,3,9,4,8,2,0,0, 7,7,11,4,8,3,4,4, 2,3,0,0,7,2,0,0, 7,7,11,4,7,3,2,4, 2,3,0,0,7,2,0,0,
 7,7,11,4,7,3,2,4, 2,3,0,0,5,2,0,0, 7,7,12,4,5,3,12,4,2,3,0,0,5,2,0,0, 7,7,12,4,5,3,12,4,3,3,12,4,5,2,0,0,
 7,7,11,4,5,3,12,4,3,3,11,4,5,2,0,0,7,7,9,4,5,3,12,4, 3,3,9,4,8,2,0,0, 6,7,0,0,8,3,4,4,  3,3,12,4,8,2,0,0,
 7,7,2,5,8,3,4,4,  2,3,0,0,7,2,0,0, 7,7,12,4,7,3,2,4, 3,3,11,4,7,2,0,0,7,7,9,4,7,3,2,4,  2,3,0,0,5,2,0,0,
@@ -72,7 +72,7 @@ char game_music[] = {
 3,3,2,5,8,2,0,0,  6,7,0,0,8,3,4,4, 3,3,7,4,8,2,0,0,  7,7,7,4,8,3,4,4, 2,3,0,0,7,2,0,0,  7,7,4,4,7,3,2,4,
 3,3,7,4,7,2,0,0,  7,7,7,4,7,3,2,4, 3,3,5,4,5,2,0,0,  6,7,0,0,5,3,12,4,3,3,4,5,5,2,0,0,  6,7,0,0,5,3,12,4,
 3,3,2,5,5,2,0,0,  1,7,9,4,0,0,0,0, 2,7,0,0,5,2,0,0,  2,7,0,0,5,2,0,0, 2,7,0,0,5,2,0,0
-*/
+
 };
 
 void play_music()
@@ -115,7 +115,7 @@ void main()
 
 
 	music_index=0;
-
+	music_tempo = 8;
 	volume=7;
 
 	get();
@@ -127,22 +127,23 @@ void main()
 	// 	jb_music(2,o2,n2,volume);
 	// if (n3>0) 
 	// 	jb_music(3,o3,n3,volume);		
-
+	
 	do {
 		// for(tt=0;tt<SLOW_DOWN_DURATION;tt++);
 		dispinfo ();
+		music_tempo--;
 		// play_music();
+		if (music_tempo==0)
+		{
+			play_music();
+			music_tempo=music_tempo_delay;
+		}
 	} while (1==1);
 
 	// soundchanels = ; noisechanels = ; envelop = ; volume = ;
 	// play(soundchanels,noisechanels,envelop, volume);
 	// music_tempo--;
 	
-	// if (music_tempo==0)
-	// {
-	// 	play_music();
-	// 	music_tempo=music_tempo_delay;
-	// }
 
 
 	// chanel= ; octave= ; key= ; volume=;
