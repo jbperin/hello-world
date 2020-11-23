@@ -1,5 +1,13 @@
 
 
+# installation des packages python pour la décompression de LHA/LHZ
+```
+pip install patool
+pip install pyunpack
+```
+
+
+
 W8912: $F590 -> F5C0
 param : A : num de registre
         X : donnée à transférer

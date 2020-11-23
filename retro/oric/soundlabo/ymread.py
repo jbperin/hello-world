@@ -20,7 +20,7 @@ import binascii
 YM_FILE_PATH = 'C:\\Users\\Public\\osdk_1_15\\sample\\basic\\tap2dsk-GameMusics\\data'
 YM_FILE_NAME = 'alien_frame.ym'
 YM_FILE_PATH = 'C:\\Users\\Public\\Git\\hello-world\\retro\\oric\\soundlabo'
-YM_FILE_NAME = 'mySong.ym'
+YM_FILE_NAME = 'Ghouls4.ym'
 
 
 dRegisterName = { 
@@ -114,7 +114,7 @@ def main():
     with open(YM_FILE_PATH+'\\'+YM_FILE_NAME, "rb") as f:
         bytes_read = f.read()
     file_format = struct.unpack('4s',bytes_read[0:4])[0].decode("utf-8")
-    # print (file_format[0].decode("utf-8"))
+    print (file_format, struct.unpack('4s',bytes_read[0:4])[0])
     if file_format == 'YM5!':
         s = struct.Struct('>4s 8s I I I I H I H')
         unpacked = s.unpack(bytes_read[0:s.size])
