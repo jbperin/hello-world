@@ -37,6 +37,153 @@ WriteToAY_F59D:
     rts              
 
 
+BlockToAY:
+.(
+	PHP 				;This routine takes X and Y
+	SEI 				;as the low and high halves of
+	STX $14 			;the start address of a table
+	STY $15 			;to send data to the sound
+	LDY #$00 			;chip from.
+BlockToAY_FA8E:
+	LDA ($14),Y 		; 14 bytes are sent to the 8912
+	TAX 				; starting with register 0 and
+	TYA 				; working up in order until
+	PHA 				; register D. The data from
+	JSR WriteToAY 		; the table is used starting
+	PLA 				; from the low address.
+	TAY
+
+	INY 				; The I/O port is not written
+	CPY #$0E 			; to.
+	BNE BlockToAY_FA8E
+	PLP
+.)
+RTS
+
+_jbOups:
+.(
+	LDX #<(OUPS_DATA)	; LL de l'adresse des 14 paramètres
+    LDY #>(OUPS_DATA)	; HH de l'adresse des 14 paramètres
+    JSR BlockToAY		
+; Début de la temporisation
+	SEI		
+YTOURS:
+	LDY #$60		; Temporisation boucle externe (96 tours)
+	LDX #$00		; Temporisation boucle interne (256 tours)
+BCOUL1:
+	DEX
+	BNE BCOUL1		; Délai boucle interne de 1,28 ms
+    DEY
+    BNE BCOUL1		; Délai total de 0,12s (boucles X et Y)
+    CLI
+; Fin de la temporisation		
+    LDA #$07		; Registre 7 du PSG : contrôle des canaux
+    LDX #$3F		; 0011 1111 tous inactivés
+    JSR WriteToAY
+.)
+    RTS
+
+_jbZap:
+ZAP:
+.(
+	LDX #<(ZAP_DATA_FB06) ; #$06 			ZAP
+	LDY #>(ZAP_DATA_FB06); #$FB 			; Send sound data to 8912 as
+	JSR BlockToAY		; in SHOOT etc.
+	LDA #$00
+	TAX 				; This section writes to the
+ZAP_FAEB:
+    TXA 			    ; 	tone channel A at regular
+	PHA 				; intervals with increasing
+	LDA #$00 			; tone periods. Thus
+	JSR WriteToAY 		; 	successively lower frequencies
+	LDX #$00 			; are produced. The delay loop
+ZAP_FAF4: 
+    DEX 			    ; 	takes about 1.25mS to
+	BNE ZAP_FAF4 		; 	execute.
+	PLA
+	TAX
+	INX
+	CPX #$70 			; The main loop is executed 112
+	BNE ZAP_FAEB 		; times in total.
+	LDA #$08 			; Zero channel A amplitude.
+	LDX #$00
+	JSR WriteToAY
+.)	
+RTS
+;                       R0   R1   R2   R3   R4   R5   R6   R7   R10  R11  R12  R13  R14  R15   
+OUPS_DATA	.byt        $46, $00, $00, $00, $00, $00, $00, $3E, $0F, $00, $00, $BD, $28, $02
+
+ZAP_DATA_FB06 .byt      $00, $00, $00, $00, $00, $00, $00, $3E, $0F, $00, $00, $00, $00, $00
+EXPLODE_DATA_FAD3 .byt  $00, $00, $00, $00, $00, $00, $1F, $07, $10, $10, $10, $00, $18, $00
+
+PING_DATA_FAA7 .byt     $18, $00, $00, $00, $00, $00, $00, $3E, $10, $00, $00, $00, $0F, $00
+SHOOT_DATA_FABD .byt    $00, $00, $00, $00, $00, $00, $0F, $07, $10, $10, $10, $00, $08, $00
+
+TOUNOR_DATA	.byt	    $1F, $00, $00, $00, $00, $00, $00, $3E, $10, $00, $00, $1F, $00, $00
+TOUCON_DATA	.byt	    $2F, $00, $00, $00, $00, $00, $00, $3E, $10, $00, $00, $1F, $00, $00
+
+HKEY_CLICK_DATA	.byt	$1F, $00, $00, $00, $00, $00, $00, $3E, $10, $00, $00, $1F, $00, $00
+LKEY_CLICK_DATA	.byt	$2F, $00, $00, $00, $00, $00, $00, $3E, $10, $00, $00, $1F, $00, $00
+
+
+_jbHKeyClick:
+.(
+    LDX #<(HKEY_CLICK_DATA)           ; HKEY_CLICK
+    LDY #>(HKEY_CLICK_DATA)           ; Sets X and Y to point to the
+    JSR BlockToAY                   ; data below to generate the
+.)
+    RTS         ; sound.
+
+_jbLKeyClick:
+.(
+    LDX #<(LKEY_CLICK_DATA)           ; LKEY_CLICK
+    LDY #>(LKEY_CLICK_DATA)           ; Sets X and Y to point to the
+    JSR BlockToAY                   ; data below to generate the
+.)
+    RTS         ; sound.
+
+_jbTounor:
+.(
+    LDX #<(TOUNOR_DATA)           ; TOUNOR
+    LDY #>(TOUNOR_DATA)           ; Sets X and Y to point to the
+    JSR BlockToAY                   ; data below to generate the
+.)
+    RTS         ; sound.
+
+_jbToucon:
+.(
+    LDX #<(TOUCON_DATA)           ; TOUCON
+    LDY #>(TOUCON_DATA)           ; Sets X and Y to point to the
+    JSR BlockToAY                   ; data below to generate the
+.)
+    RTS         ; sound.
+
+_jbPing:
+.(
+    LDX #<(PING_DATA_FAA7)           ; PING
+    LDY #>(PING_DATA_FAA7)           ; Sets X and Y to point to the
+    JSR BlockToAY                   ; data below to generate the
+.)
+    RTS         ; sound.
+
+_jbShoot:
+.(
+    LDX #<(SHOOT_DATA_FABD) ;SHOOT
+    LDY #>(SHOOT_DATA_FABD) ;Sets X and Y to point to the
+    JSR BlockToAY ; data below to generate the
+.)
+    RTS ;sound.
+
+_jbExplode:
+.(
+    LDX #<(EXPLODE_DATA_FAD3) ;EXPLODE
+    LDY #>(EXPLODE_DATA_FAD3) ;Sets X and Y to point to the
+    JSR BlockToAY     ; data below to generate the
+.)
+    RTS ; sound.
+
+
+
 
 ; MUSIC:  $FC18 -> $FC5D
 ; PARAMS+1 canal (1 à 3)
