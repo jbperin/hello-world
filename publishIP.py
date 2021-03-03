@@ -33,9 +33,9 @@ if (strCurrentIp != strPreviousIp) :
     # write IP String to local file
     with open(IP_FILE, "w") as text_file:
         text_file.write(strCurrentIp)
-
+    
     with open(HTM_REDIRECT, "w") as htm_file:
-        htm_file.write('<head><meta http-equiv="refresh" content="0; URL=http://%s:8080/" /></head>'%strCurrentIp)
+        htm_file.write('<head><meta http-equiv="refresh" content="0; URL=http://%s:8080/OricutronJS/index_nophp.html" /></head>'%strCurrentIp)
         
     print ("FTP updating ")
 
