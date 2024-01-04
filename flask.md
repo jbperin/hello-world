@@ -3,7 +3,7 @@
 
 # PYTHON
 
-install
+installation
 
 
 ```bash
