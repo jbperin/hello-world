@@ -11,7 +11,7 @@
     <!--link rel="icon" type="image/x-icon" href="favicon.ico"-->
 </head>
 <body>
-    <h1>TITLE</h1>
+    <h1>LOCAL</h1>
         <div id="root"></div>
         <script>
 
@@ -19,19 +19,16 @@
 let alphaExp = /^[0-9a-fA-F]{4}$/;
 
 function Main(app, api_key) {
-    console.log("Dans le main")
+    //console.log("Dans le main")
     let para = document.createElement('p')
     para.setAttribute('id', 'message')
     para.textContent = "La clé entrée est "+api_key 
     app.appendChild(para);
 }
-function  retrieveDetailInfo (api_key, key_listener, key_error) {
-    console.log("retrieve Detail Info")
-    data = api_key
-    key_listener(data)
-}
+// Main (document.getElementById("root"),"1234")
+
 function apiKeyNotFoundOnLocalStorage (app, p_onValidValue, p_onInvalidValue){
-    console.log ("api_key not found on local storage")
+    //console.log ("api_key not found on local storage")
 
     let para = document.createElement('p')
     para.setAttribute('id', 'prompt_api_key')
@@ -53,27 +50,31 @@ function apiKeyNotFoundOnLocalStorage (app, p_onValidValue, p_onInvalidValue){
     inp.addEventListener('keyup', function (evt) { // use change here. not neccessarily
       console.log(evt);
       if (this.value.match(alphaExp) && evt.key !== "Control") {
+          console.log ("cle complete")
           this.setAttribute('class', 'w3-input');
           this.setAttribute('valid', 'true');
-          retrieveDetailInfo (this.value, (key_info) => {
-            console.log ("api_key entered by user validated by LiveObjects .. memorize it");
-            api_key = this.value;
-            localStorage.setItem("api_key", api_key);
+        //   retrieveDetailInfo (this.value, (key_info) => {
+        //     console.log ("api_key entered by user validated by LiveObjects .. memorize it");
+        //     api_key = this.value;
+        //     localStorage.setItem("api_key", api_key);
             if (this.parentNode != null) {
-              this.parentNode.removeChild(document.getElementById("prompt_api_key"));
+                console.log ("removing")
+              this.parentNode.parentNode.removeChild(document.getElementById("prompt_api_key"));
               this.parentNode.removeChild(this);
             }
             p_onValidValue(app, api_key);
-          }, () => {
-            console.log ("api_key entered bu user is not validated by LiveObjects");
-          })
+        //   }, () => {
+        //     console.log ("api_key entered bu user is not validated by LiveObjects");
+        //   })
         } else {
             this.setAttribute('class', 'w3-input w3-border w3-pale-blue')
             this.setAttribute('valid', 'false')
         }
     }, false);
 }
+apiKeyNotFoundOnLocalStorage (document.getElementById("root"), onValidValue= Main, onInvalidValue= (invkey)=>{})
 
+/*
 function apiKeyNotFoundInCredentials (app, f_onValidValue, f_onInvalidValue){
     // Try to find it in Local Storage
     api_key = localStorage.getItem("api_key");
@@ -120,7 +121,7 @@ function obtainInfo (app, onValidValue, onInvalidValue){
 }
 
 obtainInfo (document.getElementById("root"), onValidValue= Main, onInvalidValue= (invkey)=>{})
-
+*/
         </script>
     </body>
 </html>
