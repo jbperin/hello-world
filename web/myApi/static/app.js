@@ -23,7 +23,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (vehiclesTable) {
                     vehiclesTable.destroy();
                 }
-                vehiclesTable = $('#vehicles-table').DataTable();
+                vehiclesTable = $('#vehicles-table').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'csv'
+                    ]
+                });
             });
     }
 
