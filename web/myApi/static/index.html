@@ -4,11 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fleet Management</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>Fleet Management</h1>
-    <div id="vehicle-list"></div>
+
+    <h2>Vehicles List</h2>
+    <table id="vehicles-table" class="display">
+        <thead>
+            <tr>
+                <th>Make</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="vehicle-list">
+            <!-- Vehicle rows will be appended here -->
+        </tbody>
+    </table>
 
     <h2>Add Vehicle</h2>
     <form id="add-vehicle-form">
@@ -21,6 +36,8 @@
         <button type="submit">Add Vehicle</button>
     </form>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

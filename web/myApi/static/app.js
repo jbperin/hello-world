@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const vehicleList = document.getElementById('vehicle-list');
     const addVehicleForm = document.getElementById('add-vehicle-form');
+    let vehiclesTable;
 
     // Fetch and display vehicles
     function fetchVehicles() {
@@ -9,13 +10,20 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 vehicleList.innerHTML = '';
                 data.forEach(vehicle => {
-                    const vehicleDiv = document.createElement('div');
-                    vehicleDiv.innerHTML = `
-                        <strong>${vehicle.make} ${vehicle.model}</strong> (${vehicle.year})
-                        <button onclick="deleteVehicle(${vehicle.id})">Delete</button>
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${vehicle.make}</td>
+                        <td>${vehicle.model}</td>
+                        <td>${vehicle.year}</td>
+                        <td><button onclick="deleteVehicle(${vehicle.id})">Delete</button></td>
                     `;
-                    vehicleList.appendChild(vehicleDiv);
+                    vehicleList.appendChild(row);
                 });
+
+                if (vehiclesTable) {
+                    vehiclesTable.destroy();
+                }
+                vehiclesTable = $('#vehicles-table').DataTable();
             });
     }
 
