@@ -29,6 +29,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         'csv'
                     ]
                 });
+
+                // Reapply column visibility based on checkboxes
+                $('.column-toggle').each(function() {
+                    var column = vehiclesTable.column($(this).attr('data-column'));
+                    column.visible($(this).is(':checked'));
+                });
             });
     }
 
@@ -65,6 +71,12 @@ document.addEventListener('DOMContentLoaded', function() {
             fetchVehicles();
         });
     };
+
+    // Handle column visibility toggling
+    $(document).on('change', '.column-toggle', function() {
+        var column = vehiclesTable.column($(this).attr('data-column'));
+        column.visible($(this).is(':checked'));
+    });
 
     // Initial fetch of vehicles
     fetchVehicles();
