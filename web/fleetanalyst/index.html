@@ -5,9 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Composants</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <style>
+        .column-controls {
+            margin-bottom: 15px;
+        }
+        .column-controls label {
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
     <h1>Liste des Composants</h1>
+    <div class="column-controls">
+        <label><input type="checkbox" class="column-toggle" data-column="0" checked> Identifiant</label>
+        <label><input type="checkbox" class="column-toggle" data-column="1" checked> Date de fabrication</label>
+        <label><input type="checkbox" class="column-toggle" data-column="2" checked> Date d'installation</label>
+        <label><input type="checkbox" class="column-toggle" data-column="3" checked> Nombre d'utilisation</label>
+        <label><input type="checkbox" class="column-toggle" data-column="4" checked> Pays d'installation</label>
+    </div>
     <button onclick="filterInstallation()">Afficher composants avec date d'installation > 58 jours après fabrication</button>
     <button onclick="filterUsage()">Afficher composants avec nombre d'utilisation > 12</button>
     <table id="componentsTable" class="display">

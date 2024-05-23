@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    // Initialiser DataTable
     var table = $('#componentsTable').DataTable();
 
     // Fonction pour afficher les données dans la table
@@ -12,8 +11,9 @@ $(document).ready(function() {
                 component.date_installation,
                 component.nombre_utilisation,
                 component.pays_installation
-            ]).draw();
+            ]);
         });
+        table.draw(); // Redessiner la table après ajout des données
     }
 
     // Afficher les données initiales
@@ -24,7 +24,8 @@ $(document).ready(function() {
         var filtered = components.filter(function(component) {
             var fabricationDate = new Date(component.date_fabrication);
             var installationDate = new Date(component.date_installation);
-            var diffDays = (installationDate - fabricationDate) / (1000 * 60 * 60 * 24);
+            var diffTime = installationDate - fabricationDate;
+            var diffDays = diffTime / (1000 * 60 * 60 * 24);
             return diffDays > 58;
         });
         displayData(filtered);
@@ -37,4 +38,16 @@ $(document).ready(function() {
         });
         displayData(filtered);
     }
+
+    // Fonction pour afficher/masquer les colonnes
+    $('.column-toggle').on('change', function(e) {
+        var column = table.column($(this).attr('data-column'));
+        column.visible($(this).is(':checked'));
+    });
+
+    // Initialiser la visibilité des colonnes
+    $('.column-toggle').each(function() {
+        var column = table.column($(this).attr('data-column'));
+        column.visible($(this).is(':checked'));
+    });
 });
