@@ -50,4 +50,45 @@ $(document).ready(function() {
         var column = table.column($(this).attr('data-column'));
         column.visible($(this).is(':checked'));
     });
+
+    // Fonction pour exporter les données visibles en CSV
+    function exportTableToCSV(filename) {
+        var csv = [];
+        var headers = [];
+        var visibleColumns = [];
+
+        // Get the headers
+        $('#componentsTable thead th').each(function(index) {
+            if (table.column(index).visible()) {
+                headers.push($(this).text());
+                visibleColumns.push(index);
+            }
+        });
+        csv.push(headers.join(','));
+
+        // Get the data from visible rows
+        table.rows({ search: 'applied' }).every(function(rowIdx, tableLoop, rowLoop) {
+            var row = this.data();
+            var rowData = [];
+            visibleColumns.forEach(function(index) {
+                rowData.push(row[index]);
+            });
+            csv.push(rowData.join(','));
+        });
+
+        // Download CSV file
+        var csvFile = new Blob([csv.join('\n')], { type: 'text/csv' });
+        var downloadLink = document.createElement('a');
+        downloadLink.download = filename;
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        downloadLink.style.display = 'none';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    }
+
+    // Event listener for export button
+    $('#exportButton').on('click', function() {
+        exportTableToCSV('composants.csv');
+    });
 });
