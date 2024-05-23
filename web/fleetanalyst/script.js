@@ -3,11 +3,11 @@ $(document).ready(function() {
     var table = $('#componentsTable').DataTable({
         data: components,
         columns: [
-            { title: "Identifiant", data: "id" },
-            { title: "Date de fabrication", data: "date_fabrication" },
-            { title: "Date d'installation", data: "date_installation" },
-            { title: "Nombre d'utilisation", data: "nombre_utilisation" },
-            { title: "Pays d'installation", data: "pays_installation" }
+            { title: "Identifiant", data: "id", visible: true },
+            { title: "Date de fabrication", data: "date_fabrication", visible: true },
+            { title: "Date d'installation", data: "date_installation", visible: true },
+            { title: "Nombre d'utilisation", data: "nombre_utilisation", visible: true },
+            { title: "Pays d'installation", data: "pays_installation", visible: false } // Exemple de colonne masquée par défaut
         ],
         order: [[1, 'desc']] // Tri initial sur la colonne "Date de fabrication" (index 1) en ordre décroissant
     });
@@ -48,7 +48,7 @@ $(document).ready(function() {
         column.visible($(this).is(':checked'));
     });
 
-    // Initialiser la visibilité des colonnes
+    // Initialiser la visibilité des colonnes en fonction des checkboxes
     $('.column-toggle').each(function() {
         var column = table.column($(this).attr('data-column'));
         column.visible($(this).is(':checked'));
