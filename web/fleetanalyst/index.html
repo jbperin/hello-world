@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Composants</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+</head>
+<body>
+    <h1>Liste des Composants</h1>
+    <button onclick="filterInstallation()">Afficher composants avec date d'installation > 58 jours après fabrication</button>
+    <button onclick="filterUsage()">Afficher composants avec nombre d'utilisation > 12</button>
+    <table id="componentsTable" class="display">
+        <thead>
+            <tr>
+                <th>Identifiant</th>
+                <th>Date de fabrication</th>
+                <th>Date d'installation</th>
+                <th>Nombre d'utilisation</th>
+                <th>Pays d'installation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Les données seront ajoutées ici par JavaScript -->
+        </tbody>
+    </table>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="components.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
