@@ -1,18 +1,21 @@
 $(document).ready(function() {
-    var table = $('#componentsTable').DataTable();
+    // Initialiser DataTable avec un tri initial sur la colonne "Date de fabrication" en ordre décroissant
+    var table = $('#componentsTable').DataTable({
+        data: components,
+        columns: [
+            { title: "Identifiant", data: "id" },
+            { title: "Date de fabrication", data: "date_fabrication" },
+            { title: "Date d'installation", data: "date_installation" },
+            { title: "Nombre d'utilisation", data: "nombre_utilisation" },
+            { title: "Pays d'installation", data: "pays_installation" }
+        ],
+        order: [[1, 'desc']] // Tri initial sur la colonne "Date de fabrication" (index 1) en ordre décroissant
+    });
 
     // Fonction pour afficher les données dans la table
     function displayData(data) {
         table.clear();
-        data.forEach(function(component) {
-            table.row.add([
-                component.id,
-                component.date_fabrication,
-                component.date_installation,
-                component.nombre_utilisation,
-                component.pays_installation
-            ]);
-        });
+        table.rows.add(data);
         table.draw(); // Redessiner la table après ajout des données
     }
 
