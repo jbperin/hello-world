@@ -1,5 +1,13 @@
 console.log("myApp.js")
-
+const game = new Chess();
+// const stockfish = new Worker('stockfish.js');
+const board = Chessboard('board', {
+    draggable: true,
+    position: 'start',
+    dropOffBoard: 'trash',
+    onDrop: onBoardDrop,
+    sparePieces: false
+});
 const FEN_POSITIONS = [
     // Add your FEN positions here
     'rnbqkb1r/pppppppp/5n2/8/8/5N2/PPPPPPPP/RNBQKB1R w KQkq - 1 2',
@@ -24,29 +32,24 @@ function onBoardDrop (source, target, piece, newPos, oldPos, orientation) {
         updateEvaluation();
         setTimeout(makeStockfishMove, 500);
     } else {
-        console.log('~~~~~~~ Move not played ~~~~~')
+        console.log('~~~~~~~ Move not played !!~~~~~');
+        // illegal move
+        return 'snapback'
+        // game.undo();
+        // board.position(Chessboard.objToFen(oldPos));
+        // board.position(game.fen()); // Chessboard.objToFen(oldPos));
     }
 }
-const board = Chessboard('board', {
-    draggable: true,
-    position: 'start',
-    dropOffBoard: 'trash',
-    onDrop: onBoardDrop,
-    sparePieces: false
-});
-const game = new Chess();
-// const stockfish = new Worker('stockfish.js');
 
-let evaluationElement = document.getElementById('evaluation');
 
-document.getElementById('newGame').addEventListener('click', startNewGame);
 
 function startNewGame() {
     const randomFEN = FEN_POSITIONS[Math.floor(Math.random() * FEN_POSITIONS.length)];
+    console.log("Start new game")
     game.load(randomFEN);
     board.position(randomFEN);
     updateEvaluation();
-    console.log("Start new game")
+    
 }
 
 
@@ -58,15 +61,15 @@ function updateEvaluation() {
 }
 
 stockfish.onmessage = function(event) {
-    console.log("stockfish.onmessage"+event.data)
-    if (event.data.includes('Total evaluation')) {
-        console.log('Total evaluation')
-
-        evaluationElement.innerText = `Evaluation: ${event.data}`;
+    console.log("stockfish.onmessage "+event.data)
+    if (event.data.startsWith("Total Evaluation")) {
+        console.log('Total Evaluation')
+        const evaluation = event.data.split(': ')[1];
+        evaluationElement.innerText = `Evaluation:`+evaluation; // `${event.data}`;
     }
     if (event.data.includes('bestmove')) {
-        console.log('Total bestmove')
         const bestMove = event.data.split(' ')[1];
+        console.log('bestmove' + bestMove)
         game.move(bestMove);
         board.position(game.fen());
         updateEvaluation();
@@ -77,15 +80,13 @@ function makeStockfishMove() {
     stockfish.postMessage(`position fen ${game.fen()}`);
     stockfish.postMessage('go depth 15');
 
-    // stockfish.onmessage = function(event) {
-    //     if (event.data.includes('bestmove')) {
-    //         const bestMove = event.data.split(' ')[1];
-    //         game.move(bestMove);
-    //         board.position(game.fen());
-    //         updateEvaluation();
-    //     }
-    // };
+
 }
+
+
+let evaluationElement = document.getElementById('evaluation');
+
+document.getElementById('newGame').addEventListener('click', startNewGame);
 
 // Initialize the game
 startNewGame();

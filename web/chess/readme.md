@@ -1,5 +1,11 @@
 
 
+https://github.com/exoticorn/stockfish-js
+
+https://chessboardjs.com/
+
+https://github.com/jhlywa/chess.js/
+
 
 `.\chrome.exe --allow-file-access-from-files`
 
@@ -32,4 +38,4 @@ const myWorker = new Worker("data:application/x-javascript;base64,b25tZXNzYW..."
 ```
 
 
-
+https://github.com/oakmac/chessboardjs/issues/160
