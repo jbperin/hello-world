@@ -1,0 +1,14 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+}
+
+#board {
+    width: 400px;
+    margin: 20px auto;
+}
+
+#controls {
+    margin-top: 20px;
+}
