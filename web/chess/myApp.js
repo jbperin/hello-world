@@ -1,15 +1,16 @@
 console.log("myApp.js")
 
 const game = new Chess();
-
-const board = Chessboard('board', {
+let chessboard_parameters = {
     draggable           : true,
     position            : 'start',
+    orientation         : 'white',
     dropOffBoard        : 'snapback', // 'trash',
     onDrop              : onBoardDrop,
     sparePieces         : false,
     pieceTheme          : 'https://chessboardjs.com/img/chesspieces/alpha/{piece}.png',
-});
+};
+let board = Chessboard('board', chessboard_parameters);
 jQuery('#board').on('scroll touchmove touchend touchstart contextmenu', function(e){
     e.preventDefault();
     }
@@ -18,6 +19,8 @@ const FEN_POSITIONS = [
     // Add your FEN positions here
     'rnbqkb1r/pppppppp/5n2/8/8/5N2/PPPPPPPP/RNBQKB1R w KQkq - 1 2',
     'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+    'rnbqkbnr/ppp1pppp/3p4/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - 0 2',
+    'rnbqkb1r/ppp1pppp/3p1n2/8/3PP3/2N5/PPP2PPP/R1BQKBNR b KQkq - 2 3',
     // Add more positions as needed
 ];
 
@@ -47,6 +50,12 @@ function startNewGame() {
     const randomFEN = FEN_POSITIONS[Math.floor(Math.random() * FEN_POSITIONS.length)];
     console.log("Start new game")
     game.load(randomFEN);
+    if (game.turn() === 'b'){
+        chessboard_parameters.orientation = 'black';
+    } else {
+        chessboard_parameters.orientation = 'white';
+    }
+    board = Chessboard('board', chessboard_parameters);    
     board.position(randomFEN);
     updateEvaluation();
     
