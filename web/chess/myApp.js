@@ -1,25 +1,25 @@
 console.log("myApp.js")
+
 const game = new Chess();
-// const stockfish = new Worker('stockfish.js');
+
 const board = Chessboard('board', {
-    draggable: true,
-    position: 'start',
-    dropOffBoard: 'trash',
-    onDrop: onBoardDrop,
-    sparePieces: false
+    draggable           : true,
+    position            : 'start',
+    dropOffBoard        : 'snapback', // 'trash',
+    onDrop              : onBoardDrop,
+    sparePieces         : false
 });
+jQuery('#board').on('scroll touchmove touchend touchstart contextmenu', function(e){
+    e.preventDefault();
+    }
+);
 const FEN_POSITIONS = [
     // Add your FEN positions here
     'rnbqkb1r/pppppppp/5n2/8/8/5N2/PPPPPPPP/RNBQKB1R w KQkq - 1 2',
     'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
     // Add more positions as needed
 ];
-// board.on('drop', function(source, target, piece, newPos, oldPos, orientation) {
-//     if (game.move({ from: source, to: target })) {
-//         updateEvaluation();
-//         setTimeout(makeStockfishMove, 500);
-//     }
-// });
+
 function onBoardDrop (source, target, piece, newPos, oldPos, orientation) {
     console.log('Source: ' + source)
     console.log('Target: ' + target)
@@ -42,7 +42,6 @@ function onBoardDrop (source, target, piece, newPos, oldPos, orientation) {
 }
 
 
-
 function startNewGame() {
     const randomFEN = FEN_POSITIONS[Math.floor(Math.random() * FEN_POSITIONS.length)];
     console.log("Start new game")
@@ -51,8 +50,6 @@ function startNewGame() {
     updateEvaluation();
     
 }
-
-
 
 function updateEvaluation() {
     stockfish.postMessage(`position fen ${game.fen()}`);
@@ -67,20 +64,21 @@ stockfish.onmessage = function(event) {
         const evaluation = event.data.split(': ')[1];
         evaluationElement.innerText = `Evaluation:`+evaluation; // `${event.data}`;
     }
-    if (event.data.includes('bestmove')) {
+    if (event.data.startsWith('bestmove')) {
         const bestMove = event.data.split(' ')[1];
-        console.log('bestmove' + bestMove)
-        game.move(bestMove);
-        board.position(game.fen());
-        updateEvaluation();
+        console.log('bestmove = ' + bestMove + '.')
+        if (game.move({from:bestMove.substring(0, 2), to: bestMove.substring(2, 4)})){
+            board.position(game.fen());
+            updateEvaluation();
+        } else {
+            console.log('XXXXXXX ===== >>unable to play bestmove = ' + bestMove)
+        }
     }
 };
 
 function makeStockfishMove() {
     stockfish.postMessage(`position fen ${game.fen()}`);
     stockfish.postMessage('go depth 15');
-
-
 }
 
 
