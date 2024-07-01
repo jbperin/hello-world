@@ -57,6 +57,19 @@ function updateEvaluation() {
     console.log("Update Evaluation")
 }
 
+function handleUserMove() {
+    const move = moveInput.value;
+    const moveResult = game.move(move, {sloppy: true});
+    if (moveResult) {
+        board.position(game.fen());
+        updateEvaluation();
+        moveInput.value = '';
+        setTimeout(makeStockfishMove, 500);
+    } else {
+        alert("Invalid move. Please try again.");
+    }
+}
+
 stockfish.onmessage = function(event) {
     console.log("stockfish.onmessage "+event.data)
     if (event.data.startsWith("Total Evaluation")) {
@@ -83,8 +96,11 @@ function makeStockfishMove() {
 
 
 let evaluationElement = document.getElementById('evaluation');
+let moveInput = document.getElementById('moveInput');
+let submitMove = document.getElementById('submitMove');
 
 document.getElementById('newGame').addEventListener('click', startNewGame);
+submitMove.addEventListener('click', handleUserMove);
 
 // Initialize the game
 startNewGame();
