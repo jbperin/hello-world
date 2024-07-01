@@ -7,7 +7,8 @@ const board = Chessboard('board', {
     position            : 'start',
     dropOffBoard        : 'snapback', // 'trash',
     onDrop              : onBoardDrop,
-    sparePieces         : false
+    sparePieces         : false,
+    pieceTheme          : 'https://chessboardjs.com/img/chesspieces/alpha/{piece}.png',
 });
 jQuery('#board').on('scroll touchmove touchend touchstart contextmenu', function(e){
     e.preventDefault();
