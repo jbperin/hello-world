@@ -73,11 +73,17 @@ function updateEvaluation() {
     stockfish.postMessage('eval');
     console.log("Update Evaluation")
 }
-function parseBestLine(message) {
+function parseBestLine(message, startingMoveNumber = 1) {
     const match = message.match(/ pv (.*)/);
     if (match) {
         const moves = match[1].split(' ');
         const algebraicMoves = [];
+        let currentMoveNumber = startingMoveNumber;
+        let moveCount = 0;
+        if (game.turn() === 'b') {
+            algebraicMoves.push('1...');
+            moveCount++
+        }
         moves.forEach(move => {
             let moveResult = game.move(move, { sloppy: true });
             let san = moveResult.san;
@@ -100,7 +106,13 @@ function parseBestLine(message) {
                 unicode_san += san.substring(1);
             }
 
+            if (moveCount % 2 === 0) {
+                algebraicMoves.push(`${currentMoveNumber}.`);
+                currentMoveNumber++;
+            }
+
             algebraicMoves.push(unicode_san);
+            moveCount++;
         });
 
         moves.forEach(() => game.undo());
@@ -108,6 +120,7 @@ function parseBestLine(message) {
     }
     return null;
 }
+
 
 function handleUserMove() {
     const move = moveInput.value;

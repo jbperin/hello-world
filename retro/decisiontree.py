@@ -27,7 +27,7 @@ for v1 in range(2**NBITS):
         print (v1, toBin(v1, NBITS), mathval1, binval1, targetbit)
         y.append(targetbit)
             
-tree = DecisionTreeClassifier().fit(X, y)
+tree = DecisionTreeClassifier(max_depth=2).fit(X, y)
 
 r = export_text(tree) # , feature_names = ["a", "b"])
 
