@@ -1,6 +1,8 @@
 console.log("myApp.js")
 
 const game = new Chess();
+let position_history=[];
+
 let chessboard_parameters = {
     draggable           : true,
     position            : 'start',
@@ -45,20 +47,24 @@ function onBoardDrop (source, target, piece, newPos, oldPos, orientation) {
     }
 }
 
-
-function startNewGame() {
-    const randomFEN = FEN_POSITIONS[Math.floor(Math.random() * FEN_POSITIONS.length)];
-    console.log("Start new game")
-    game.load(randomFEN);
+function refreshBoard(){
     if (game.turn() === 'b'){
         chessboard_parameters.orientation = 'black';
     } else {
         chessboard_parameters.orientation = 'white';
     }
     board = Chessboard('board', chessboard_parameters);    
-    board.position(randomFEN);
+    board.position(game.fen());
     updateEvaluation();
-    
+
+}
+function startNewGame() {
+    const randomFEN = FEN_POSITIONS[Math.floor(Math.random() * FEN_POSITIONS.length)];
+    console.log("Start new game")
+    position_history=[];
+    position_history.push(randomFEN)
+    game.load(randomFEN);
+    refreshBoard();
 }
 
 function updateEvaluation() {
@@ -72,6 +78,7 @@ function handleUserMove() {
     const moveResult = game.move(move, {sloppy: true});
     if (moveResult) {
         board.position(game.fen());
+        position_history.push(game.fen())
         updateEvaluation();
         moveInput.value = '';
         setTimeout(makeStockfishMove, 500);
@@ -80,6 +87,34 @@ function handleUserMove() {
     }
 }
 
+function backMove() {
+    console.log(" history == "+position_history)
+    if (position_history.length >= 2) {
+        game.undo();
+        position_history.pop()
+        game.undo();
+        position_history.pop()
+        board.position(game.fen());
+    }
+    updateEvaluation();
+}
+
+function resetPosition() {
+    if (position_history.length >= 1) {
+        start_pos = position_history[0]
+        console.log(" initial position == "+start_pos)
+        game.load(start_pos)
+        refreshBoard();
+        updateEvaluation();
+    // if (position_history.length >= 1) {
+        // game.undo();
+        // position_history.pop()
+        // game.undo();
+        // position_history.pop()
+        // board.position(game.fen());
+    }
+    // 
+}
 stockfish.onmessage = function(event) {
     console.log("stockfish.onmessage "+event.data)
     if (event.data.startsWith("Total Evaluation")) {
@@ -92,6 +127,7 @@ stockfish.onmessage = function(event) {
         console.log('bestmove = ' + bestMove + '.')
         if (game.move({from:bestMove.substring(0, 2), to: bestMove.substring(2, 4)})){
             board.position(game.fen());
+            position_history.push(game.fen())
             updateEvaluation();
         } else {
             console.log('XXXXXXX ===== >>unable to play bestmove = ' + bestMove)
@@ -105,12 +141,12 @@ function makeStockfishMove() {
 }
 
 
-let evaluationElement = document.getElementById('evaluation');
-let moveInput = document.getElementById('moveInput');
-let submitMove = document.getElementById('submitMove');
+// let evaluationElement = document.getElementById('evaluation');
+// let moveInput = document.getElementById('moveInput');
+// let submitMove = document.getElementById('submitMove');
 
-document.getElementById('newGame').addEventListener('click', startNewGame);
-submitMove.addEventListener('click', handleUserMove);
+// document.getElementById('newGame').addEventListener('click', startNewGame);
+// submitMove.addEventListener('click', handleUserMove);
 
-// Initialize the game
-startNewGame();
+// // Initialize the game
+// startNewGame();

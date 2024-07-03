@@ -26,18 +26,39 @@
 <body>
     <h1>Play Chess Against Stockfish</h1>
     <!--div id="board"></div-->
+    <div id="controls">
+        <button id="Back">Back</button>
+        <button id="Reset">Reset</button>
+        <button id="Play">Play</button>
+    </div>
     <div id="board" style="width: 400px"></div>
     <div id="controls">
-        <button id="newGame">New Game</button>
+        <button id="Game">New Game</button>
         <p id="evaluation">Evaluation: N/A</p>
-        <input type="text" id="moveInput" placeholder="e2e4">
-        <button id="submitMove">Submit Move</button>
     </div>
+    <input type="text" id="moveInput" placeholder="e2e4">
+    <button id="submitMove">Submit Move</button>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chess.js@0.10.3/chess.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.js"></script>
     <script src="stockfish_base64_worker.js"></script>
+    <script src="fenStudies.js"></script>
     <script src="myApp.js"></script>
+    <script >
+        let evaluationElement = document.getElementById('evaluation');
+        let moveInput = document.getElementById('moveInput');
+        let submitMove = document.getElementById('submitMove');
+        let backButton = document.getElementById('Back');
+        let resetButton = document.getElementById('Reset');
+        document.getElementById('Game').addEventListener('click', startNewGame);
+        
+        submitMove.addEventListener('click', handleUserMove);
+        backButton.addEventListener('click', backMove);
+        resetButton.addEventListener('click', resetPosition);
+
+        // Initialize the game
+        startNewGame();        
+    </script>
 </body>
 </html>
