@@ -36,6 +36,7 @@ function onBoardDrop (source, target, piece, newPos, oldPos, orientation) {
     console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     if (game.move({ from: source, to: target })) {
         updateEvaluation();
+        position_history.push(game.fen())
         setTimeout(makeStockfishMove, 500);
     } else {
         console.log('~~~~~~~ Move not played !!~~~~~');
@@ -72,6 +73,41 @@ function updateEvaluation() {
     stockfish.postMessage('eval');
     console.log("Update Evaluation")
 }
+function parseBestLine(message) {
+    const match = message.match(/ pv (.*)/);
+    if (match) {
+        const moves = match[1].split(' ');
+        const algebraicMoves = [];
+        moves.forEach(move => {
+            let moveResult = game.move(move, { sloppy: true });
+            let san = moveResult.san;
+            let unicode_san = san; // Default to the SAN notation
+
+            if (san.startsWith('N')) {
+                unicode_san = game.turn() === 'w' ? '♞' : '♘';
+                unicode_san += san.substring(1);
+            } else if (san.startsWith('K')) {
+                unicode_san = game.turn() === 'w' ? '♚' : '♔';
+                unicode_san += san.substring(1);
+            } else if (san.startsWith('Q')) {
+                unicode_san = game.turn() === 'w' ? '♛' : '♕';
+                unicode_san += san.substring(1);
+            } else if (san.startsWith('R')) {
+                unicode_san = game.turn() === 'w' ? '♜' : '♖';
+                unicode_san += san.substring(1);
+            } else if (san.startsWith('B')) {
+                unicode_san = game.turn() === 'w' ? '♝' : '♗';
+                unicode_san += san.substring(1);
+            }
+
+            algebraicMoves.push(unicode_san);
+        });
+
+        moves.forEach(() => game.undo());
+        return algebraicMoves.join(' ');
+    }
+    return null;
+}
 
 function handleUserMove() {
     const move = moveInput.value;
@@ -88,17 +124,35 @@ function handleUserMove() {
 }
 
 function backMove() {
-    console.log(" history == "+position_history)
-    if (position_history.length >= 2) {
+    
+    if (position_history.length > 2) {
         game.undo();
         position_history.pop()
         game.undo();
         position_history.pop()
         board.position(game.fen());
+        updateEvaluation();
+    } else {
+        if (position_history.length > 1) {
+            game.undo();
+            position_history.pop()
+            refreshBoard();
+            updateEvaluation();
+        }        
     }
+    console.log(" history == "+position_history)
+}   
+function playMove() {
+    if (game.turn() === 'w'){
+        chessboard_parameters.orientation = 'black';
+    } else {
+        chessboard_parameters.orientation = 'white';
+    }
+    board = Chessboard('board', chessboard_parameters);    
+    board.position(game.fen());
+    setTimeout(makeStockfishMove, 500);
     updateEvaluation();
 }
-
 function resetPosition() {
     if (position_history.length >= 1) {
         start_pos = position_history[0]
@@ -116,21 +170,28 @@ function resetPosition() {
     // 
 }
 stockfish.onmessage = function(event) {
-    console.log("stockfish.onmessage "+event.data)
-    if (event.data.startsWith("Total Evaluation")) {
+    const message = event.data;
+    console.log("stockfish.onmessage "+message)
+    if (message.startsWith("Total Evaluation")) {
         console.log('Total Evaluation')
-        const evaluation = event.data.split(': ')[1];
+        const evaluation = message.split(': ')[1];
         evaluationElement.innerText = `Evaluation:`+evaluation; // `${event.data}`;
     }
-    if (event.data.startsWith('bestmove')) {
-        const bestMove = event.data.split(' ')[1];
+    if (message.startsWith('bestmove')) {
+        const bestMove = message.split(' ')[1];
         console.log('bestmove = ' + bestMove + '.')
         if (game.move({from:bestMove.substring(0, 2), to: bestMove.substring(2, 4)})){
             board.position(game.fen());
             position_history.push(game.fen())
+            console.log("history = "+ position_history)
             updateEvaluation();
         } else {
             console.log('XXXXXXX ===== >>unable to play bestmove = ' + bestMove)
+        }
+    } else if (message.startsWith('info depth')) {
+        const bestLine = parseBestLine(message);
+        if (bestLine) {
+            bestLineElement.innerText = `Best line: ${bestLine}`;
         }
     }
 };
