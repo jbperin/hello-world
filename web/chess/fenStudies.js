@@ -133,3 +133,12 @@ const FEN_STUDIES = [
     'r5k1/5p2/2p1r3/2P5/1Q5P/1P2P1P1/5P2/6K1 w - - 0 1',
     'r5k1/6pp/6q1/3pBp2/3N4/5P2/3Q1KP1/8 w - - 0 1',
 ];
+
+const FEN_POSITIONS = [
+    // Add your FEN positions here
+    'rnbqkb1r/pppppppp/5n2/8/8/5N2/PPPPPPPP/RNBQKB1R w KQkq - 1 2',
+    'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+    'rnbqkbnr/ppp1pppp/3p4/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - 0 2',
+    'rnbqkb1r/ppp1pppp/3p1n2/8/3PP3/2N5/PPP2PPP/R1BQKBNR b KQkq - 2 3',
+    // Add more positions as needed
+];
