@@ -38,7 +38,8 @@
     </div>
     <div id="board" style="width: 400px"></div>
     <div id="info">
-        <button id="Game">New Game</button>
+        <button id="Study">Study</button>
+        <button id="Game">Game</button>
         <p id="evaluation">Evaluation: N/A</p>
         <p id="bestLine">Best line: N/A</p>
     </div>
@@ -59,12 +60,14 @@
         let backButton = document.getElementById('Back');
         let resetButton = document.getElementById('Reset');
         let playButton = document.getElementById('Play');
+        let studyButton = document.getElementById('Study');
         document.getElementById('Game').addEventListener('click', startNewGame);
         
         submitMove.addEventListener('click', handleUserMove);
         backButton.addEventListener('click', backMove);
         resetButton.addEventListener('click', resetPosition);
         playButton.addEventListener('click', playMove);
+        studyButton.addEventListener('click', newStudy);
 
         // Initialize the game
         startNewGame();        

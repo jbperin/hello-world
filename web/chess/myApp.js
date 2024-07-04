@@ -52,6 +52,14 @@ function refreshBoard(){
     updateEvaluation();
 
 }
+function newStudy() {
+    const randomFEN = FEN_STUDIES[Math.floor(Math.random() * FEN_STUDIES.length)];
+    console.log("Start new study")
+    position_history=[];
+    position_history.push(randomFEN)
+    game.load(randomFEN);
+    refreshBoard();
+}
 function startNewGame() {
     const randomFEN = FEN_POSITIONS[Math.floor(Math.random() * FEN_POSITIONS.length)];
     console.log("Start new game")
