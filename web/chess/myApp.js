@@ -1,6 +1,9 @@
 console.log("myApp.js")
 
+const DEFAULT_POSITION='rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+
 const game = new Chess();
+
 let position_history=[];
 
 let chessboard_parameters = {
@@ -12,7 +15,9 @@ let chessboard_parameters = {
     sparePieces         : false,
     pieceTheme          : 'https://chessboardjs.com/img/chesspieces/alpha/{piece}.png',
 };
+
 let board = Chessboard('board', chessboard_parameters);
+
 jQuery('#board').on('scroll touchmove touchend touchstart contextmenu', function(e){
     e.preventDefault();
     }
@@ -20,24 +25,19 @@ jQuery('#board').on('scroll touchmove touchend touchstart contextmenu', function
 
 
 function onBoardDrop (source, target, piece, newPos, oldPos, orientation) {
-    console.log('Source: ' + source)
-    console.log('Target: ' + target)
-    console.log('Piece: ' + piece)
-    console.log('New position: ' + Chessboard.objToFen(newPos))
-    console.log('Old position: ' + Chessboard.objToFen(oldPos))
-    console.log('Orientation: ' + orientation)
-    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    // console.log('Source: ' + source)
+    // console.log('Target: ' + target)
+    // console.log('Piece: ' + piece)
+    // console.log('New position: ' + Chessboard.objToFen(newPos))
+    // console.log('Old position: ' + Chessboard.objToFen(oldPos))
+    // console.log('Orientation: ' + orientation)
+    // console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     if (game.move({ from: source, to: target })) {
         updateEvaluation();
         position_history.push(game.fen())
         setTimeout(makeStockfishMove, 500);
     } else {
-        console.log('~~~~~~~ Move not played !!~~~~~');
-        // illegal move
         return 'snapback'
-        // game.undo();
-        // board.position(Chessboard.objToFen(oldPos));
-        // board.position(game.fen()); // Chessboard.objToFen(oldPos));
     }
 }
 
@@ -50,7 +50,6 @@ function refreshBoard(){
     board = Chessboard('board', chessboard_parameters);    
     board.position(game.fen());
     updateEvaluation();
-
 }
 function newStudy() {
     const randomFEN = FEN_STUDIES[Math.floor(Math.random() * FEN_STUDIES.length)];
@@ -60,12 +59,46 @@ function newStudy() {
     game.load(randomFEN);
     refreshBoard();
 }
+
+function probChoose(moves) {
+    // Calculate the total sum of probabilities
+    const totalProb = moves.reduce((sum, move) => sum + move.prob, 0);
+
+    // Generate a random number between 0 and totalProb
+    let rand = Math.random() * totalProb;
+
+    // Iterate through the moves to find which move corresponds to the random number
+    for (let i = 0; i < moves.length; i++) {
+        rand -= moves[i].prob;
+        if (rand <= 0) {
+            return moves[i].mov;
+        }
+    }
+
+    // In case of rounding errors, return the last move
+    return moves[moves.length - 1].mov;
+}
+
+
+
 function startNewGame() {
-    const randomFEN = FEN_POSITIONS[Math.floor(Math.random() * FEN_POSITIONS.length)];
-    console.log("Start new game")
+    // const randomFEN = FEN_POSITIONS[Math.floor(Math.random() * FEN_POSITIONS.length)];
+    color = (Math.floor(Math.random() * (1 - 0 + 1) + 0) == 0) ? 'white' : 'black'
+    console.log("Start new game ", color )
     position_history=[];
-    position_history.push(randomFEN)
-    game.load(randomFEN);
+    position_history.push(DEFAULT_POSITION)
+    game.load(DEFAULT_POSITION);
+
+    if (color == 'white') {
+
+    } else {
+        console.log("User play Black. We need to choose a move for White")
+        theMove = probChoose(openingBookWhite)
+        console.log(theMove)
+        resmove = game.move({from:theMove.substring(0, 2), to: theMove.substring(2, 4)})
+        position_history.push(game.fen())
+        console.log(); 
+    }
     refreshBoard();
 }
 
@@ -185,7 +218,7 @@ function resetPosition() {
 }
 stockfish.onmessage = function(event) {
     const message = event.data;
-    console.log("stockfish.onmessage "+message)
+    // console.log("stockfish.onmessage "+message)
     if (message.startsWith("Total Evaluation")) {
         console.log('Total Evaluation')
         const evaluation = message.split(': ')[1];
