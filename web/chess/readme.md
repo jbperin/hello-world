@@ -39,3 +39,14 @@ const myWorker = new Worker("data:application/x-javascript;base64,b25tZXNzYW..."
 
 
 https://github.com/oakmac/chessboardjs/issues/160
+
+
+# TODO
+
+Mettre à jour la bestline lors des retours arrière
+Mettre l'évaluation en couleur
+Rendre masquable les infos de jue tels que Evalluation et Best Line
+
+Corriger la gestion des coups de promotion
+Vérifier les prise en passant
+ 

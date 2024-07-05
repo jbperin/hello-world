@@ -33,9 +33,52 @@ function onBoardDrop (source, target, piece, newPos, oldPos, orientation) {
     // console.log('Orientation: ' + orientation)
     // console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     if (game.move({ from: source, to: target })) {
-        updateEvaluation();
-        position_history.push(game.fen())
-        setTimeout(makeStockfishMove, 500);
+        listmove = game.history({ verbose: true }).map (e => e.from+e.to)
+        // openingBookWhite.filter((muv)=> muv.move == listmove[0])
+        if (position_history[0]==DEFAULT_POSITION) {
+            ii=0;
+            if (game.turn === 'b') {
+                openingBook = openingBookBlack
+            } else {
+                openingBook = openingBookWhite
+            }
+            stp=openingBook.filter((muv)=> muv.mov == listmove[ii])[0].vars;
+            outOfBook = false;
+            while (stp && ii < listmove.length-1){
+                ii++;
+                tmpstp=stp.filter((muv)=> muv.mov == listmove[ii]);
+                if (tmpstp.length != 0) {
+                    stp = tmpstp[0].vars;
+                } else {
+                    outOfBook = true;
+                    break;
+                }
+            }
+            // If we found an entry in opening book
+            if ((! outOfBook) && (ii == listmove.length-1)){
+                if (stp.length >= 1){
+                    theMove = probChoose(stp)
+                    if (game.move({from:theMove.substring(0, 2), to: theMove.substring(2, 4)})){
+                        board.position(game.fen());
+                        position_history.push(game.fen())
+                        console.log("history = "+ position_history)
+                        updateEvaluation();
+                    } else {
+                        alert("Invalid move from Opening book ???");
+                    }
+
+                } else {
+                    setTimeout(makeStockfishMove, 500);
+                    console.log("Ask Stockfish to guess the bet move");
+                }
+            } else {
+                setTimeout(makeStockfishMove, 500);
+                console.log("Ask Stockfish to guess the bet move");
+            }
+        }
+        console.log (stp)
+
+        
     } else {
         return 'snapback'
     }
