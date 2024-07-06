@@ -5,6 +5,8 @@ const DEFAULT_POSITION='rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
 const game = new Chess();
 
 let position_history=[];
+let pendingPromotion = null;
+
 
 let chessboard_parameters = {
     draggable           : true,
@@ -51,15 +53,13 @@ function checkGameState(){
 // isDraw() Returns true or false if the game is drawn (50-move rule or insufficient material).
 // isCheckmate() Returns true or false if the side to move has been checkmated.
 
-function onBoardDrop (source, target, piece, newPos, oldPos, orientation) {
-    // console.log('Source: ' + source)
-    // console.log('Target: ' + target)
-    // console.log('Piece: ' + piece)
-    // console.log('New position: ' + Chessboard.objToFen(newPos))
-    // console.log('Old position: ' + Chessboard.objToFen(oldPos))
-    // console.log('Orientation: ' + orientation)
-    // console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-    if (game.move({ from: source, to: target })) {
+function makeMove(theMove){
+
+    if (game.move(theMove)) {
+
+        board.position(game.fen());
+        position_history.push(game.fen())
+        console.log("history = "+ position_history)
 
         if ((res = checkGameState()) != 'ongoing') {alert(res);return};
 
@@ -105,23 +105,79 @@ function onBoardDrop (source, target, piece, newPos, oldPos, orientation) {
                     }
 
                 } else {
+                    console.log("Ask Stockfish to guess the best move");
                     setTimeout(makeStockfishMove, 500);
-                    console.log("Ask Stockfish to guess the bet move");
                 }
             } else {
+                console.log("Ask Stockfish to guess the best move");
                 setTimeout(makeStockfishMove, 500);
-                console.log("Ask Stockfish to guess the bet move");
             }
         } else {
-            setTimeout(makeStockfishMove, 500);
-            console.log("Ask Stockfish to guess the bet move");
+            // console.log("Ask Stockfish to guess the best move");
+            // setTimeout(makeStockfishMove, 500);
 
         }
+        return true
+    } else {
+        return false
+    }
+}
+
+function onBoardDrop (source, target, piece, newPos, oldPos, orientation) {
+    // console.log('Source: ' + source)
+    // console.log('Target: ' + target)
+    // console.log('Piece: ' + piece)
+    // console.log('New position: ' + Chessboard.objToFen(newPos))
+    // console.log('Old position: ' + Chessboard.objToFen(oldPos))
+    // console.log('Orientation: ' + orientation)
+    // console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+
+    promotions = game.moves({ verbose: true }).filter((mv)=> mv.to == target && mv.promotion)
+
+    if (promotions.length != 0) {
+        pendingPromotion = { from: source, to: target };
+        showPromotionChoices(target);
+    } else {
+        if (! makeMove({ from: source, to: target })){
+            return 'snapback'
+        }
+        updateEvaluation();
+        setTimeout(makeStockfishMove, 500);
+    }
+
+    
+
         // console.log (stp)
 
         
-    } else {
-        return 'snapback'
+
+}
+function showPromotionChoices(targetSquare) {
+    const boardElement = document.getElementById('board');
+    const rect = boardElement.getBoundingClientRect();
+    const squareSize = rect.width / 8;
+    const file = targetSquare[0].charCodeAt(0) - 'a'.charCodeAt(0);
+    const rank = 8 - parseInt(targetSquare[1]);
+    const top = rank * squareSize + rect.top;
+    const left = file * squareSize + rect.left;
+
+    promotionDiv.style.top = `${top}px`;
+    promotionDiv.style.left = `${left}px`;
+    promotionDiv.style.display = 'block';
+}
+
+function makePromotionMove(piece) {
+    if (pendingPromotion) {
+        const theMove = {
+            from: pendingPromotion.from,
+            to: pendingPromotion.to,
+            promotion: piece
+        };
+        pendingPromotion = null;
+        promotionDiv.style.display = 'none';
+        makeMove(theMove);
+        updateEvaluation();
+        setTimeout(makeStockfishMove, 500);
     }
 }
 

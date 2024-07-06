@@ -25,6 +25,19 @@
             font-size: 14px;
             font-style: italic;
         }
+        .promotion-choice {
+            display: none;
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            z-index: 10;
+        }
+        .promotion-choice button {
+            display: block;
+            width: 100%;
+            font-size: 18px;
+            padding: 5px;
+        }
     </style>
     <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css" integrity="sha384-q94+BZtLrkL1/ohfjR8c6L+A6qzNH9R2hBLwyoAfu3i/WCvQjzL2RQJ3uNHDISdU" crossorigin="anonymous">
 </head>
@@ -37,6 +50,12 @@
         <button id="Play">Play</button>
     </div>
     <div id="board" style="width: 400px"></div>
+    <div id="promotion" class="promotion-choice">
+        <button data-piece="q">Queen</button>
+        <button data-piece="r">Rook</button>
+        <button data-piece="b">Bishop</button>
+        <button data-piece="n">Knight</button>
+    </div>
     <div id="info">
         <button id="Study">Study</button>
         <button id="Game">Game</button>
@@ -63,6 +82,7 @@
         let resetButton = document.getElementById('Reset');
         let playButton = document.getElementById('Play');
         let studyButton = document.getElementById('Study');
+        let promotionDiv = document.getElementById('promotion');
         document.getElementById('Game').addEventListener('click', startNewGame);
         
         submitMove.addEventListener('click', handleUserMove);
@@ -70,6 +90,13 @@
         resetButton.addEventListener('click', resetPosition);
         playButton.addEventListener('click', playMove);
         studyButton.addEventListener('click', newStudy);
+
+        promotionDiv.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', () => {
+                const piece = button.getAttribute('data-piece');
+                makePromotionMove(piece);
+            });
+        });
 
         // Initialize the game
         startNewGame();        
