@@ -23,6 +23,33 @@ jQuery('#board').on('scroll touchmove touchend touchstart contextmenu', function
     }
 );
 
+function checkGameState(){
+    result = 'ongoing';
+    if (game.game_over()) {
+        if (game.in_draw()){
+            
+            if (game.in_stalemate()) {
+                result = 'draw: in_stalemate';
+            } else if (game.in_threefold_repetition()){
+                result = 'draw: in_threefold_repetition';
+            } else if (game.insufficient_material()) {
+                result = 'draw: insufficient_material';
+            }
+        } else {
+            if (game.turn() === 'b'){
+                result = 'Whites win';
+            } else {
+                result = 'Blacks wins';
+            }      
+        }     
+    }
+    return result;
+}
+// isGameOver() Returns true if the game has ended via checkmate, stalemate, draw, threefold repetition, or insufficient material. Otherwise, returns false
+// isInsufficientMaterial() Returns true if the game is drawn due to insufficient material (K vs. K, K vs. KB, or K vs. KN) otherwise false.
+// isStalemate() Returns true or false if the side to move has been stalemated.
+// isDraw() Returns true or false if the game is drawn (50-move rule or insufficient material).
+// isCheckmate() Returns true or false if the side to move has been checkmated.
 
 function onBoardDrop (source, target, piece, newPos, oldPos, orientation) {
     // console.log('Source: ' + source)
@@ -33,9 +60,17 @@ function onBoardDrop (source, target, piece, newPos, oldPos, orientation) {
     // console.log('Orientation: ' + orientation)
     // console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     if (game.move({ from: source, to: target })) {
+
+        if ((res = checkGameState()) != 'ongoing') {alert(res);return};
+
+
         listmove = game.history({ verbose: true }).map (e => e.from+e.to)
         // openingBookWhite.filter((muv)=> muv.move == listmove[0])
+
+        // If we are in a game that started from default start position, then we can use OpenBook
         if (position_history[0]==DEFAULT_POSITION) {
+            
+            // Search for this position in the Opening Book
             ii=0;
             if (game.turn === 'b') {
                 openingBook = openingBookBlack
@@ -54,6 +89,7 @@ function onBoardDrop (source, target, piece, newPos, oldPos, orientation) {
                     break;
                 }
             }
+
             // If we found an entry in opening book
             if ((! outOfBook) && (ii == listmove.length-1)){
                 if (stp.length >= 1){
@@ -62,6 +98,7 @@ function onBoardDrop (source, target, piece, newPos, oldPos, orientation) {
                         board.position(game.fen());
                         position_history.push(game.fen())
                         console.log("history = "+ position_history)
+                        if ((res = checkGameState()) != 'ongoing') {alert(res);return};
                         updateEvaluation();
                     } else {
                         alert("Invalid move from Opening book ???");
@@ -75,8 +112,12 @@ function onBoardDrop (source, target, piece, newPos, oldPos, orientation) {
                 setTimeout(makeStockfishMove, 500);
                 console.log("Ask Stockfish to guess the bet move");
             }
+        } else {
+            setTimeout(makeStockfishMove, 500);
+            console.log("Ask Stockfish to guess the bet move");
+
         }
-        console.log (stp)
+        // console.log (stp)
 
         
     } else {
@@ -206,6 +247,7 @@ function handleUserMove() {
         board.position(game.fen());
         position_history.push(game.fen())
         updateEvaluation();
+        if ((res = checkGameState()) != 'ongoing') {alert(res);};
         moveInput.value = '';
         setTimeout(makeStockfishMove, 500);
     } else {
@@ -274,6 +316,8 @@ stockfish.onmessage = function(event) {
             board.position(game.fen());
             position_history.push(game.fen())
             console.log("history = "+ position_history)
+            if ((res = checkGameState()) != 'ongoing') {alert(res);return};
+
             updateEvaluation();
         } else {
             console.log('XXXXXXX ===== >>unable to play bestmove = ' + bestMove)
