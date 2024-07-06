@@ -139,10 +139,11 @@ function onBoardDrop (source, target, piece, newPos, oldPos, orientation) {
         showPromotionChoices(target);
     } else {
         if (! makeMove({ from: source, to: target })){
+            updateEvaluation();
             return 'snapback'
         }
-        updateEvaluation();
-        setTimeout(makeStockfishMove, 500);
+        
+        // setTimeout(makeStockfishMove, 500);
     }
 
     
@@ -343,9 +344,10 @@ function playMove() {
 }
 function resetPosition() {
     if (position_history.length >= 1) {
-        start_pos = position_history[0]
-        console.log(" initial position == "+start_pos)
-        game.load(start_pos)
+        start_pos = position_history[0];
+        console.log(" initial position == "+start_pos);
+        game.load(start_pos);
+        position_history = [start_pos];
         refreshBoard();
         updateEvaluation();
     // if (position_history.length >= 1) {
