@@ -114,7 +114,7 @@ function makeMove(theMove){
             }
         } else {
             // console.log("Ask Stockfish to guess the best move");
-            // setTimeout(makeStockfishMove, 500);
+            setTimeout(makeStockfishMove, 500);
 
         }
         return true
@@ -370,7 +370,9 @@ stockfish.onmessage = function(event) {
     if (message.startsWith('bestmove')) {
         const bestMove = message.split(' ')[1];
         console.log('bestmove = ' + bestMove + '.')
-        if (game.move({from:bestMove.substring(0, 2), to: bestMove.substring(2, 4)})){
+        theMove = {from:bestMove.substring(0, 2), to: bestMove.substring(2, 4)};
+        if (bestMove.length == 5) theMove.promotion = bestMove.substring(4, 5)
+        if (game.move(theMove)){
             board.position(game.fen());
             position_history.push(game.fen())
             console.log("history = "+ position_history)
