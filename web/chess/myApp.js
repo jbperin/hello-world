@@ -79,6 +79,73 @@ function checkGameState(){
     }
     return result;
 }
+
+function getMovesFromBook (listmove) {
+    // Search for this position in the Opening Book
+    ii=0;
+    if (game.turn === 'b') {
+        openingBook = openingBookBlack
+    } else {
+        openingBook = openingBookWhite
+    }
+    tmpstp=openingBook.filter((muv)=> muv.mov == listmove[ii]);
+    // stp=openingBook.filter((muv)=> muv.mov == listmove[ii])[0].vars;
+    // outOfBook = false;
+    if (tmpstp.length != 0) {
+        stp = tmpstp[0].vars;
+        outOfBook = false;
+    } else {
+        outOfBook = true;
+    }
+    while ((! outOfBook) && stp && (ii < listmove.length-1)){
+        ii++;
+        tmpstp=stp.filter((muv)=> muv.mov == listmove[ii]);
+        if (tmpstp.length != 0) {
+            stp = tmpstp[0].vars;
+        } else {
+            outOfBook = true;
+            break;
+        }
+    }
+
+    // If we found an entry in opening book
+    if ((! outOfBook) && (ii == listmove.length-1)){
+        return (stp)
+    } else {
+        return []
+    }
+}
+function formatTheoryMoveList(theory){
+    const algebraicMoves = [];
+    theory.sort((a, b) => b.prob - a.prob).forEach(move => {
+        let moveResult = game.move(move.mov, { sloppy: true });
+        let san = moveResult.san;
+        let unicode_san = san; // Default to the SAN notation
+
+        if (san.startsWith('N')) {
+            unicode_san = game.turn() === 'w' ? '♞' : '♘';
+            unicode_san += san.substring(1);
+        } else if (san.startsWith('K')) {
+            unicode_san = game.turn() === 'w' ? '♚' : '♔';
+            unicode_san += san.substring(1);
+        } else if (san.startsWith('Q')) {
+            unicode_san = game.turn() === 'w' ? '♛' : '♕';
+            unicode_san += san.substring(1);
+        } else if (san.startsWith('R')) {
+            unicode_san = game.turn() === 'w' ? '♜' : '♖';
+            unicode_san += san.substring(1);
+        } else if (san.startsWith('B')) {
+            unicode_san = game.turn() === 'w' ? '♝' : '♗';
+            unicode_san += san.substring(1);
+        }
+        unicode_san += ` (${Math.round(move.prob*10000)/100}%)`
+        game.undo();
+        algebraicMoves.push(unicode_san);
+    });
+
+    return algebraicMoves.join(', ');
+
+}
 // isGameOver() Returns true if the game has ended via checkmate, stalemate, draw, threefold repetition, or insufficient material. Otherwise, returns false
 // isInsufficientMaterial() Returns true if the game is drawn due to insufficient material (K vs. K, K vs. KB, or K vs. KN) otherwise false.
 // isStalemate() Returns true or false if the side to move has been stalemated.
@@ -95,7 +162,7 @@ function makeMove(theMove){
         if ((res = checkGameState()) != 'ongoing') {alert(res);return true};
 
 
-        listmove = game.history({ verbose: true }).map (e => e.from+e.to)
+        listmove = game.history({ verbose: true }).map (e => e.from+e.to) // FIXME : deal with promotion
         // openingBookWhite.filter((muv)=> muv.move == listmove[0])
 
         // If we are in a game that started from default start position, then we can use OpenBook
@@ -136,6 +203,8 @@ function makeMove(theMove){
                         board.position(game.fen());
                         updateHistory();
                         if ((res = checkGameState()) != 'ongoing') {alert(res);return};
+                        // update book content
+                        updateBookMoveList();
                         updateEvaluation();
                     } else {
                         alert("Invalid move from Opening book ???");
@@ -143,15 +212,18 @@ function makeMove(theMove){
 
                 } else {
                     console.log("Ask Stockfish to guess the best move");
+                    bookElement.innerText = "Book: empty" 
                     setTimeout(makeStockfishMove, 500);
                 }
             } else {
                 console.log("Ask Stockfish to guess the best move");
+                bookElement.innerText = "Book: empty" 
                 setTimeout(makeStockfishMove, 500);
             }
         } else {
             // console.log("Ask Stockfish to guess the best move");
             setTimeout(makeStockfishMove, 500);
+            bookElement.innerText = "Book: empty" 
 
         }
         return true
@@ -279,7 +351,12 @@ function probChoose(moves) {
 }
 
 
+function updateBookMoveList (){
+    listmove = game.history({ verbose: true }).map (e => e.from+e.to)// FIXME : deal with promotion
+    theory = getMovesFromBook (listmove);
+    bookElement.innerText = "Book: " + ((theory.length != 0)? formatTheoryMoveList(theory): "empty");
 
+}
 function startNewGame() {
     // const randomFEN = FEN_POSITIONS[Math.floor(Math.random() * FEN_POSITIONS.length)];
     color = (Math.floor(Math.random() * (1 - 0 + 1) + 0) == 0) ? 'white' : 'black'
@@ -291,14 +368,14 @@ function startNewGame() {
     game.load(DEFAULT_POSITION);
 
     if (color == 'white') {
-
+        updateBookMoveList ();
     } else {
         console.log("User play Black. We need to choose a move for White")
         theMove = probChoose(openingBookWhite)
         console.log(theMove)
         resmove = game.move({from:theMove.substring(0, 2), to: theMove.substring(2, 4)})
         updateHistory();
-        console.log(); 
+        updateBookMoveList ();
     }
     refreshBoard();
 }
@@ -413,6 +490,11 @@ function backMove() {
             // updateEvaluation();
         }        
     }
+    if (position_history[0]==DEFAULT_POSITION) {
+        updateBookMoveList();
+    } else {
+        bookElement.innerText = "Book: empty" ;
+    }
 
 }   
 function playMove() {
@@ -422,9 +504,10 @@ function playMove() {
         chessboard_parameters.orientation = 'white';
     }
     board = Chessboard('board', chessboard_parameters);    
-    // board.position(game.fen());
+    board.position(game.fen());
     setTimeout(makeStockfishMove, 500);
     updateEvaluation();
+    
 }
 function resetPosition() {
     if (position_history.length >= 1) {
@@ -457,7 +540,7 @@ stockfish.onmessage = function(event) {
             board.position(game.fen());
             updateHistory();
             if ((res = checkGameState()) != 'ongoing') {alert(res);return};
-
+            updateBookMoveList();
             updateEvaluation();
         } else {
             console.log('XXXXXXX ===== >>unable to play bestmove = ' + bestMove)
