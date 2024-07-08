@@ -1,10 +1,22 @@
+//
+// Empêcher qu'on puisse déplacer une pièce pendant que stockfish réfléchit
+// Empêcher qu'on puisse déplacer une pièce 
+// 
+
+
 console.log("myApp.js")
 
 const DEFAULT_POSITION='rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 
 const game = new Chess();
-
+let currentEvaluation = null;
+let currentBestline = null;
 let position_history=[];
+const position_eval= new Map();
+position_eval.set (DEFAULT_POSITION,{
+    evaluation: null,
+    bestLine: null
+})
 let pendingPromotion = null;
 
 
@@ -14,6 +26,10 @@ let chessboard_parameters = {
     orientation         : 'white',
     dropOffBoard        : 'snapback', // 'trash',
     onDrop              : onBoardDrop,
+    onDragStart         : onDragStart,
+    onSnapEnd           : onSnapEnd,
+    onMouseoutSquare    : onMouseoutSquare,
+    onMouseoverSquare   : onMouseoverSquare,
     sparePieces         : false,
     pieceTheme          : 'https://chessboardjs.com/img/chesspieces/alpha/{piece}.png',
 };
@@ -25,6 +41,22 @@ jQuery('#board').on('scroll touchmove touchend touchstart contextmenu', function
     }
 );
 
+function updateHistory(){
+    position_history.push(game.fen())
+    position_eval.set (game.fen(),{
+        evaluation: currentEvaluation,
+        bestLine: currentBestline
+    })
+    // console.log("update history = ",game.fen(),{
+    //     evaluation: currentEvaluation,
+    //     bestLine: currentBestline
+    // })
+
+}
+function resetHistory(initFEN){
+    position_history=[];
+    position_history.push(initFEN);
+}
 function checkGameState(){
     result = 'ongoing';
     if (game.game_over()) {
@@ -58,10 +90,9 @@ function makeMove(theMove){
     if (game.move(theMove)) {
 
         board.position(game.fen());
-        position_history.push(game.fen())
-        console.log("history = "+ position_history)
+        updateHistory();
 
-        if ((res = checkGameState()) != 'ongoing') {alert(res);return};
+        if ((res = checkGameState()) != 'ongoing') {alert(res);return true};
 
 
         listmove = game.history({ verbose: true }).map (e => e.from+e.to)
@@ -77,9 +108,16 @@ function makeMove(theMove){
             } else {
                 openingBook = openingBookWhite
             }
-            stp=openingBook.filter((muv)=> muv.mov == listmove[ii])[0].vars;
-            outOfBook = false;
-            while (stp && ii < listmove.length-1){
+            tmpstp=openingBook.filter((muv)=> muv.mov == listmove[ii]);
+            // stp=openingBook.filter((muv)=> muv.mov == listmove[ii])[0].vars;
+            // outOfBook = false;
+            if (tmpstp.length != 0) {
+                stp = tmpstp[0].vars;
+                outOfBook = false;
+            } else {
+                outOfBook = true;
+            }
+            while ((! outOfBook) && stp && (ii < listmove.length-1)){
                 ii++;
                 tmpstp=stp.filter((muv)=> muv.mov == listmove[ii]);
                 if (tmpstp.length != 0) {
@@ -96,8 +134,7 @@ function makeMove(theMove){
                     theMove = probChoose(stp)
                     if (game.move({from:theMove.substring(0, 2), to: theMove.substring(2, 4)})){
                         board.position(game.fen());
-                        position_history.push(game.fen())
-                        console.log("history = "+ position_history)
+                        updateHistory();
                         if ((res = checkGameState()) != 'ongoing') {alert(res);return};
                         updateEvaluation();
                     } else {
@@ -142,17 +179,35 @@ function onBoardDrop (source, target, piece, newPos, oldPos, orientation) {
             updateEvaluation();
             return 'snapback'
         }
-        
-        // setTimeout(makeStockfishMove, 500);
+
     }
-
-    
-
-        // console.log (stp)
-
-        
-
 }
+
+function onDragStart (source, piece, position, orientation) {
+    // do not pick up pieces if the game is over
+    if (game.game_over()) return false;
+    // only pick up pieces for White
+    console.log (source, piece, game.turn());
+    if (game.turn() === 'w'){
+        if (piece.startsWith('b')) return false
+    } else {
+        if (piece.startsWith('w')) return false
+    }
+}
+
+// update the board position after the piece snap
+// for castling, en passant, pawn promotion
+function onSnapEnd () {
+  board.position(game.fen());
+}
+
+function onMouseoverSquare (square, piece) {
+}
+function onMouseoutSquare (square, piece) {
+}
+
+
+
 function showPromotionChoices(targetSquare) {
     const boardElement = document.getElementById('board');
     const rect = boardElement.getBoundingClientRect();
@@ -192,12 +247,15 @@ function refreshBoard(){
     board.position(game.fen());
     updateEvaluation();
 }
+
+
 function newStudy() {
     const randomFEN = FEN_STUDIES[Math.floor(Math.random() * FEN_STUDIES.length)];
     console.log("Start new study")
-    position_history=[];
-    position_history.push(randomFEN)
     game.load(randomFEN);
+    resetHistory(randomFEN);
+    bestLineElement.innerText = `Best line: undefined`;
+    evaluationElement.innerText = `Evaluation: undefined`;
     refreshBoard();
 }
 
@@ -226,8 +284,10 @@ function startNewGame() {
     // const randomFEN = FEN_POSITIONS[Math.floor(Math.random() * FEN_POSITIONS.length)];
     color = (Math.floor(Math.random() * (1 - 0 + 1) + 0) == 0) ? 'white' : 'black'
     console.log("Start new game ", color )
-    position_history=[];
-    position_history.push(DEFAULT_POSITION)
+    resetHistory(DEFAULT_POSITION);
+    bestLineElement.innerText = `Best line: undefined`;
+    evaluationElement.innerText = `Evaluation: undefined`;
+
     game.load(DEFAULT_POSITION);
 
     if (color == 'white') {
@@ -237,16 +297,32 @@ function startNewGame() {
         theMove = probChoose(openingBookWhite)
         console.log(theMove)
         resmove = game.move({from:theMove.substring(0, 2), to: theMove.substring(2, 4)})
-        position_history.push(game.fen())
+        updateHistory();
         console.log(); 
     }
     refreshBoard();
 }
 
 function updateEvaluation() {
-    stockfish.postMessage(`position fen ${game.fen()}`);
-    stockfish.postMessage('eval');
-    console.log("Update Evaluation")
+    // stockfish.postMessage(`position fen ${game.fen()}`);
+    // stockfish.postMessage('eval');
+    // console.log("Update Evaluation")
+}
+
+function extractEvaluation (message){
+    let match = message.match(/ score cp (.*)/);
+    if (match) {
+        const eval = match[1].split(' ')[0]/100;
+        // console.log ("Evaluation = " +eval);
+        
+        return (game.turn() === 'w') ? eval: -eval
+    }
+    match = message.match(/ score mate (.*)/);
+    if (match) {
+        const eval = match[1].split(' ')[0];
+        // console.log ("Evaluation = M " +eval);
+        return (game.turn() === 'w') ? eval: "-"+eval;
+    }
 }
 function parseBestLine(message, startingMoveNumber = 1) {
     const match = message.match(/ pv (.*)/);
@@ -302,7 +378,7 @@ function handleUserMove() {
     const moveResult = game.move(move, {sloppy: true});
     if (moveResult) {
         board.position(game.fen());
-        position_history.push(game.fen())
+        updateHistory();
         updateEvaluation();
         if ((res = checkGameState()) != 'ongoing') {alert(res);};
         moveInput.value = '';
@@ -320,16 +396,24 @@ function backMove() {
         game.undo();
         position_history.pop()
         board.position(game.fen());
-        updateEvaluation();
+
+        theEval = position_eval.get(game.fen());
+        bestLineElement.innerText = `Best line: ${theEval.bestLine}`;
+        evaluationElement.innerText = `Evaluation: `+theEval.evaluation;
+        // updateEvaluation();
     } else {
         if (position_history.length > 1) {
             game.undo();
             position_history.pop()
             refreshBoard();
-            updateEvaluation();
+
+            theEval = position_eval.get(game.fen());
+            bestLineElement.innerText = `Best line: ${theEval.bestLine}`;
+            evaluationElement.innerText = `Evaluation: `+theEval.evaluation;
+            // updateEvaluation();
         }        
     }
-    console.log(" history == "+position_history)
+
 }   
 function playMove() {
     if (game.turn() === 'w'){
@@ -338,7 +422,7 @@ function playMove() {
         chessboard_parameters.orientation = 'white';
     }
     board = Chessboard('board', chessboard_parameters);    
-    board.position(game.fen());
+    // board.position(game.fen());
     setTimeout(makeStockfishMove, 500);
     updateEvaluation();
 }
@@ -347,18 +431,15 @@ function resetPosition() {
         start_pos = position_history[0];
         console.log(" initial position == "+start_pos);
         game.load(start_pos);
-        position_history = [start_pos];
+        resetHistory(start_pos);
+        bestLineElement.innerText = `Best line: undefined`;
+        evaluationElement.innerText = `Evaluation: undefined`;
+    
         refreshBoard();
         updateEvaluation();
-    // if (position_history.length >= 1) {
-        // game.undo();
-        // position_history.pop()
-        // game.undo();
-        // position_history.pop()
-        // board.position(game.fen());
     }
-    // 
 }
+
 stockfish.onmessage = function(event) {
     const message = event.data;
     // console.log("stockfish.onmessage "+message)
@@ -374,8 +455,7 @@ stockfish.onmessage = function(event) {
         if (bestMove.length == 5) theMove.promotion = bestMove.substring(4, 5)
         if (game.move(theMove)){
             board.position(game.fen());
-            position_history.push(game.fen())
-            console.log("history = "+ position_history)
+            updateHistory();
             if ((res = checkGameState()) != 'ongoing') {alert(res);return};
 
             updateEvaluation();
@@ -383,10 +463,14 @@ stockfish.onmessage = function(event) {
             console.log('XXXXXXX ===== >>unable to play bestmove = ' + bestMove)
         }
     } else if (message.startsWith('info depth')) {
+        console.log("stockfish.onmessage "+message)
         const bestLine = parseBestLine(message);
         if (bestLine) {
+            currentBestline = bestLine;
             bestLineElement.innerText = `Best line: ${bestLine}`;
         }
+        currentEvaluation = extractEvaluation(message);
+        evaluationElement.innerText = `Evaluation: `+currentEvaluation;
     }
 };
 
@@ -394,7 +478,6 @@ function makeStockfishMove() {
     stockfish.postMessage(`position fen ${game.fen()}`);
     stockfish.postMessage('go depth 15');
 }
-
 
 // let evaluationElement = document.getElementById('evaluation');
 // let moveInput = document.getElementById('moveInput');

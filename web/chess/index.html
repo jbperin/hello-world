@@ -5,23 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stockfish</title>
     <!--link rel="stylesheet" href="styles.css"-->
+    <!--link rel="stylesheet" href="styles.css"-->
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin: 20px;
+            margin: 2px;
         }
 
         #board {
-            width: 400px;
-            margin: 20px auto;
+            width: 300px;
+            margin: 2px auto;
         }
 
         #controls {
-            margin-top: 20px;
+            margin-top: 2px;
         }
         #bestLine {
-            margin-top: 10px;
+            margin-top: 1px;
             font-size: 14px;
             font-style: italic;
         }
@@ -42,14 +43,14 @@
     <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css" integrity="sha384-q94+BZtLrkL1/ohfjR8c6L+A6qzNH9R2hBLwyoAfu3i/WCvQjzL2RQJ3uNHDISdU" crossorigin="anonymous">
 </head>
 <body>
-    <h1>Play Chess Against Stockfish</h1>
+    <!-- <h1>Play Chess Against Stockfish</h1> -->
     <!--div id="board"></div-->
     <div id="controls">
         <button id="Back">Back</button>
         <button id="Reset">Reset</button>
         <button id="Play">Play</button>
     </div>
-    <div id="board" style="width: 400px"></div>
+    <div id="board"></div>
     <div id="promotion" class="promotion-choice">
         <button data-piece="q">Queen</button>
         <button data-piece="r">Rook</button>
@@ -62,8 +63,8 @@
         <p id="evaluation">Evaluation: N/A</p>
         <p id="bestLine">Best line: N/A</p>
     </div>
-    <input type="text" id="moveInput" placeholder="e2e4">
-    <button id="submitMove">Submit Move</button>
+    <!--input type="text" id="moveInput" placeholder="e2e4">
+    <button id="submitMove">Submit Move</button-->
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chess.js@0.10.3/chess.min.js"></script>
@@ -77,7 +78,7 @@
         let evaluationElement = document.getElementById('evaluation');
         let bestLineElement = document.getElementById('bestLine');
         let moveInput = document.getElementById('moveInput');
-        let submitMove = document.getElementById('submitMove');
+        // let submitMove = document.getElementById('submitMove');
         let backButton = document.getElementById('Back');
         let resetButton = document.getElementById('Reset');
         let playButton = document.getElementById('Play');
@@ -85,7 +86,7 @@
         let promotionDiv = document.getElementById('promotion');
         document.getElementById('Game').addEventListener('click', startNewGame);
         
-        submitMove.addEventListener('click', handleUserMove);
+        // submitMove.addEventListener('click', handleUserMove);
         backButton.addEventListener('click', backMove);
         resetButton.addEventListener('click', resetPosition);
         playButton.addEventListener('click', playMove);
