@@ -83,7 +83,7 @@ function checkGameState(){
 function getMovesFromBook (listmove) {
     // Search for this position in the Opening Book
     ii=0;
-    if (game.turn === 'b') {
+    if (game.turn() === 'b') {
         openingBook = openingBookBlack
     } else {
         openingBook = openingBookWhite
@@ -170,7 +170,7 @@ function makeMove(theMove){
             
             // Search for this position in the Opening Book
             ii=0;
-            if (game.turn === 'b') {
+            if (game.turn() === 'b') {
                 openingBook = openingBookBlack
             } else {
                 openingBook = openingBookWhite
