@@ -1,18 +1,35 @@
 import json
 import chess.pgn
 
-Account="KingsGambit"
+Account="Petrov"
 DEPTH_HALF_MOVE = 24
 
-pgn = open(f"C:\\Users\\tbpk7658\\Documents\\repos\\hello-world\\web\\chess\\games_KingsGambit.pgn", encoding="ansi")
+#  cat games_Short.pgn games_Botvinnik.pgn games_Korchnoi.pgn > french_players.pgn
+# pgn = open(f"C:\\Users\\tbpk7658\\Documents\\repos\\hello-world\\web\\chess\\french_players.pgn", encoding="ansi")
+
+#  cat games_Karpov.pgn games_Botvinnik.pgn games_Petrosian.pgn > caro_players.pgn
+# pgn = open(f"C:\\Users\\tbpk7658\\Documents\\repos\\hello-world\\web\\chess\\caro_players.pgn", encoding="ansi")
+
+#  cat games_Caruana.pgn games_Nepomniachtchi.pgn games_Kramnik.pgn > petrov_players.pgn
+pgn = open(f"C:\\Users\\tbpk7658\\Documents\\repos\\hello-world\\web\\chess\\petrov_players.pgn", encoding="ansi")
 
 theGame = chess.pgn.read_game(pgn)
 gamesAsWhite = []
 gamesAsBlack = []
 while theGame:
     # print (theGame.headers)
-    gamesAsWhite.append(theGame)
-    gamesAsBlack.append(theGame)
+    # Petrov
+    if "ECO" in theGame.headers and theGame.headers["ECO"] in ["C42", "C43"]:
+
+    # Caro Kaan
+    # if "ECO" in theGame.headers and theGame.headers["ECO"] in ["B10", "B11", "B12", "B13", "B14", "B15", "B16", "B17", "B18", "B19"]:
+
+    # French
+    # if "ECO" in theGame.headers and theGame.headers["ECO"] in ["C00", "C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09",
+    #                               "C10", "C11", "C12", "C13", "C14", "C15", "C16", "C17", "C18", "C19"]:
+        gamesAsWhite.append(theGame)
+        gamesAsBlack.append(theGame)
+
     # if theGame.headers["ECO"] in ["B10", "B11", "B12", "B13", "B14", "B15", "B16", "B17", "B18", "B19"]:
     #     print ("caro kahn")
     #     if theGame.headers["White"].startswith(Account):

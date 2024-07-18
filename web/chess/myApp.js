@@ -1,6 +1,5 @@
-//
-// Empêcher qu'on puisse déplacer une pièce pendant que stockfish réfléchit
-// Empêcher qu'on puisse déplacer une pièce 
+// Author: Jean-Baptiste PERIN
+// TODO: Empêcher qu'on puisse déplacer une pièce pendant que stockfish réfléchit
 // 
 
 
