@@ -50,7 +50,7 @@ def buildUnitaryMatrixFromSimonFunction(fonction):
         idxend = binaire_vers_entier(booleens_vers_chaine(fullstate))
         
         #vect = [1 if fullstate[u] else 0 for u in range(len(fullstate))]
-        print (f"{idxstart} {idxend}{list(combinaison)}, {fullstate}, ")
+        #print (f"{idxstart} {idxend}{list(combinaison)}, {fullstate}, ")
         #M=M.row_insert(idx_col, sp.Matrix([vect]))
         # print (M)
         M[idxstart, idxend] = 1
