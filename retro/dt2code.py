@@ -130,7 +130,7 @@ def full_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis):
         result['left'] = full_abstract_tree(listOfIdxOfBitToEncode, hypothesis + [(tree.tree_.feature[node_id], 0)])
         listOfIdxOfBitToEncode = savl.copy()
         result['right'] = full_abstract_tree(listOfIdxOfBitToEncode, hypothesis + [(tree.tree_.feature[node_id], 1)])
-        #listOfIdxOfBitToEncode = savl.copy()
+        listOfIdxOfBitToEncode = savl.copy()
 
         return result
 
@@ -152,7 +152,6 @@ def abstree_to_python_code(abstree, indent=0):
             code_lines += abstree_to_python_code(abstree['subtree']['right'], indent + 1)        
         else:
             code_lines += abstree_to_python_code(abstree['subtree'], indent)
-    
     return code_lines
 ### value subtree feature left right
 
