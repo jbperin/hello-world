@@ -89,9 +89,10 @@ def build_X_y(NBITS, idxOfBitToEncode, hypothesis):
     # print(y)
     return X, y
 
+
 def display_tree(tree):
-    r = export_text(tree) # , feature_names = ["a", "b"])
-    print (r)
+    r = export_text(tree)
+    print(r)
 
 
 
@@ -129,10 +130,32 @@ def full_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis):
         result['left'] = full_abstract_tree(listOfIdxOfBitToEncode, hypothesis + [(tree.tree_.feature[node_id], 0)])
         listOfIdxOfBitToEncode = savl.copy()
         result['right'] = full_abstract_tree(listOfIdxOfBitToEncode, hypothesis + [(tree.tree_.feature[node_id], 1)])
-        listOfIdxOfBitToEncode = savl.copy()
+        #listOfIdxOfBitToEncode = savl.copy()
 
         return result
+
+
+def abstree_to_python_code(abstree, indent=0):
+    code_lines = []
+    ind = '  ' * indent
+    # Handle value assignment
+    if 'value' in abstree:
+        code_lines.append(f"{ind}{abstree['value']}")
     
+    # If there is a subtree, process it recursively
+    if 'subtree' in abstree:
+        if 'feature' in abstree['subtree']:
+            var = f"a{abstree['subtree']['feature']}"
+            code_lines.append(f"{ind}if ({var} == 0):")
+            code_lines += abstree_to_python_code(abstree['subtree']['left'], indent + 1)   
+            code_lines.append(f"{ind}else:")     
+            code_lines += abstree_to_python_code(abstree['subtree']['right'], indent + 1)        
+        else:
+            code_lines += abstree_to_python_code(abstree['subtree'], indent)
+    
+    return code_lines
+### value subtree feature left right
+
 listOfIdxOfBitToEncode = [3, 2, 1, 0]  
 hypothesis = []
 
@@ -141,4 +164,5 @@ abstree = full_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis)
 
 print(json.dumps(json.loads(str(abstree).replace ("'",'"')), indent=2))
 
-
+for line in abstree_to_python_code(abstree):
+    print(line)
