@@ -162,6 +162,3 @@ abstree = full_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis)
 
 
 print(json.dumps(json.loads(str(abstree).replace ("'",'"')), indent=2))
-
-for line in abstree_to_python_code(abstree):
-    print(line)
