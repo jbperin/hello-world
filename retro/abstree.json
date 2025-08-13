@@ -1,0 +1,105 @@
+{
+  "value": "r3 = 0",
+  "subtree": {
+    "feature": 3,
+    "left": {
+      "value": "r2 = 0",
+      "subtree": {
+        "feature": 2,
+        "left": {
+          "feature": 1,
+          "left": {
+            "value": "r1 = 0",
+            "subtree": {
+              "feature": 0,
+              "left": {
+                "value": "r0 = 0"
+              },
+              "right": {
+                "value": "r0 = 1"
+              }
+            }
+          },
+          "right": {
+            "feature": 0,
+            "left": {
+              "value": "r1 = 0",
+              "subtree": {
+                "value": "r0 = 1"
+              }
+            },
+            "right": {
+              "value": "r1 = 1",
+              "subtree": {
+                "value": "r0 = 0"
+              }
+            }
+          }
+        },
+        "right": {
+          "value": "r1 = 1",
+          "subtree": {
+            "feature": 1,
+            "left": {
+              "value": "r0 = 0"
+            },
+            "right": {
+              "feature": 0,
+              "left": {
+                "value": "r0 = 0"
+              },
+              "right": {
+                "value": "r0 = 1"
+              }
+            }
+          }
+        }
+      }
+    },
+    "right": {
+      "feature": 2,
+      "left": {
+        "value": "r2 = 0",
+        "subtree": {
+          "value": "r1 = 1",
+          "subtree": {
+            "value": "r0 = 1"
+          }
+        }
+      },
+      "right": {
+        "feature": 0,
+        "left": {
+          "feature": 1,
+          "left": {
+            "value": "r2 = 0",
+            "subtree": {
+              "value": "r1 = 1",
+              "subtree": {
+                "value": "r0 = 1"
+              }
+            }
+          },
+          "right": {
+            "value": "r2 = 1",
+            "subtree": {
+              "value": "r1 = 0",
+              "subtree": {
+                "value": "r0 = 0"
+              }
+            }
+          }
+        },
+        "right": {
+          "value": "r2 = 1",
+          "subtree": {
+            "value": "r1 = 0",
+            "subtree": {
+              "value": "r0 = 0"
+            }
+          }
+        }
+      }
+    }
+  }
+}

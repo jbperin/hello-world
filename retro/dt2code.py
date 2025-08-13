@@ -94,24 +94,27 @@ def display_tree(tree):
     r = export_text(tree)
     print(r)
 
-
-
-
 def full_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis):
 
     idxOfBitToEncode = listOfIdxOfBitToEncode[0]
 
     X, y = build_X_y(NBITS, idxOfBitToEncode, hypothesis)
 
+    if len(y) == 1:
+        result = {'value': f"r{idxOfBitToEncode} = {y[0]}"}
+        if (len(listOfIdxOfBitToEncode) != 1):
+            listOfIdxOfBitToEncode.pop(0)
+            result['subtree'] = full_abstract_tree(listOfIdxOfBitToEncode, hypothesis)
+        return result
+    
     tree = DecisionTreeClassifier().fit(X, y) # max_depth=2
     display_tree(tree)
     node_id=0
 
     if tree.tree_.children_left[node_id] == tree.tree_.children_right[node_id]:  # Leaf node
         listOfIdxOfBitToEncode.pop(0)  
-        max_idx = np.argmax(tree.tree_.value[node_id][0].tolist())          
         if len(listOfIdxOfBitToEncode) != 0:                
-            result = {'value': f"r{idxOfBitToEncode} = {max_idx}",
+            result = {'value': f"r{idxOfBitToEncode} = {y[0]}",
                         'subtree': full_abstract_tree(listOfIdxOfBitToEncode, hypothesis)
                         }
             # listOfIdxOfBitToEncode.insert(0, sav)  # Restore the index for the next call
@@ -135,34 +138,6 @@ def full_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis):
         return result
 
 
-def abstree_to_python_code(abstree, indent=0):
-    code_lines = []
-    ind = '  ' * indent
-    # Handle value assignment
-    if 'value' in abstree:
-        code_lines.append(f"{ind}{abstree['value']}")
-    
-    # If there is a subtree, process it recursively
-    if 'subtree' in abstree:
-        if 'feature' in abstree['subtree']:
-            var = f"a{abstree['subtree']['feature']}"
-            code_lines.append(f"{ind}if ({var} == 0):")
-            code_lines += abstree_to_python_code(abstree['subtree']['left'], indent + 1)   
-            code_lines.append(f"{ind}else:")     
-            code_lines += abstree_to_python_code(abstree['subtree']['right'], indent + 1)        
-        else:
-            code_lines += abstree_to_python_code(abstree['subtree'], indent)
-    else:
-        # If there is a feature, handle it
-        if 'feature' in abstree:
-            var = f"a{abstree['feature']}"
-            code_lines.append(f"{ind}if ({var} == 0):")
-            code_lines += abstree_to_python_code(abstree['left'], indent + 1)
-            code_lines.append(f"{ind}else:")
-            code_lines += abstree_to_python_code(abstree['right'], indent + 1)
-    return code_lines
-### value subtree feature left right
-
 def build_abstree_to_json():
     listOfIdxOfBitToEncode = [3, 2, 1, 0]  
     hypothesis = []
@@ -171,18 +146,49 @@ def build_abstree_to_json():
 
     print(json.dumps(json.loads(str(abstree).replace ("'",'"')), indent=2))
 
-    with open("abstree.json", "w") as f:
+    with open("retro/abstree.json", "w") as f:
         f.write(json.dumps(json.loads(str(abstree).replace ("'",'"')), indent=2))
 
+
+build_abstree_to_json()
+
+
 def read_abstree_from_json():
-    with open("abstree.json", "r") as fic_in:
+    with open("retro/abstree.json", "r") as fic_in:
         abstree = json.load(fic_in)
     return abstree
 
 
-build_abstree_to_json()
 abstree = read_abstree_from_json()
 
 
-for line in abstree_to_python_code(abstree, indent=0):
-    print(line)
+# def abstree_to_python_code(abstree, indent=0):
+#     code_lines = []
+#     ind = '  ' * indent
+#     # Handle value assignment
+#     if 'value' in abstree:
+#         code_lines.append(f"{ind}{abstree['value']}")
+    
+#     # If there is a subtree, process it recursively
+#     if 'subtree' in abstree:
+#         if 'feature' in abstree['subtree']:
+#             var = f"a{abstree['subtree']['feature']}"
+#             code_lines.append(f"{ind}if ({var} == 0):")
+#             code_lines += abstree_to_python_code(abstree['subtree']['left'], indent + 1)   
+#             code_lines.append(f"{ind}else:")     
+#             code_lines += abstree_to_python_code(abstree['subtree']['right'], indent + 1)        
+#         else:
+#             code_lines += abstree_to_python_code(abstree['subtree'], indent)
+#     else:
+#         # If there is a feature, handle it
+#         if 'feature' in abstree:
+#             var = f"a{abstree['feature']}"
+#             code_lines.append(f"{ind}if ({var} == 0):")
+#             code_lines += abstree_to_python_code(abstree['left'], indent + 1)
+#             code_lines.append(f"{ind}else:")
+#             code_lines += abstree_to_python_code(abstree['right'], indent + 1)
+#     return code_lines
+# ### value subtree feature left right
+
+# for line in abstree_to_python_code(abstree, indent=0):
+#     print(line)
