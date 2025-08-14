@@ -44,6 +44,7 @@ from sklearn.tree import export_text
 
 import numpy as np
 import math
+import pandas as pd
 
 from sympy.logic import POSform, SOPform
 from sympy import symbols
@@ -64,9 +65,50 @@ B = [b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15]
 def toBin (val, size):
     return list(reversed(list(map(lambda x: int(x),'{:0{}b}'.format(val, size)))))
 
-# NBITS = 4
+# Dummy function: implements round(math.sqrt(v1))
+def square_root_4_4(a3, a2, a1, a0):
+    # args: bits, most significant first (a3, a2, a1, a0)
+    bits = [a3, a2, a1, a0]
+    # Convert bits (MSB first) to int
+    v1 = 0
+    for i, b in enumerate(reversed(bits)):
+        v1 += b << i
+    mathval1 = round(math.sqrt(v1))
+    # Output as list of bits (LSB first)
+    return toBin(mathval1, 4)
+
+def square_root_8_8(a7, a6, a5, a4, a3, a2, a1, a0):
+    # args: bits, most significant first (a3, a2, a1, a0)
+    bits = [a7, a6, a5, a4, a3, a2, a1, a0]
+    # Convert bits (MSB first) to int
+    v1 = 0
+    for i, b in enumerate(reversed(bits)):
+        v1 += b << i
+    mathval1 = round(math.sqrt(v1))
+    # Output as list of bits (LSB first)
+    return toBin(mathval1, 8)
+
+def square_root_16_16(a15, a14, a13, a12, a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
+    # args: bits, most significant first (a3, a2, a1, a0)
+    bits = [a15, a14, a13, a12, a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0]
+    # Convert bits (MSB first) to int
+    v1 = 0
+    for i, b in enumerate(reversed(bits)):
+        v1 += b << i
+    mathval1 = round(math.sqrt(v1))
+    # Output as list of bits (LSB first)
+    return toBin(mathval1, 16)
+
 def uneFonction(a3, a2, a1, a0):
-    return [0, 1, 2, 3]
+    # args: bits, most significant first (a3, a2, a1, a0)
+    bits = [a3, a2, a1, a0]
+    # Convert bits (MSB first) to int
+    v1 = 0
+    for i, b in enumerate(reversed(bits)):
+        v1 += b << i
+    mathval1 = round(math.sqrt(v1))
+    # Output as list of bits (LSB first)
+    return toBin(mathval1, 4)
 
 
 
@@ -82,26 +124,36 @@ NBITS_INPUT, NBITS_OUTPUT = deduce_fonction_prototype(uneFonction)
 print (f"Nb input = {NBITS_INPUT}, Nb ouput = {NBITS_OUTPUT}")
 
 
-def build_X_y(idxOfBitToEncode, hypothesis):
-    X = []
-    y = []
+
+# Build a DataFrame with all possible input/output pairs for uneFonction
+def build_training_samples():
+    data = []
     for v1 in range(2**NBITS_INPUT):
         binv1 = toBin(v1, NBITS_INPUT)
-        include = True
-        for hyp in hypothesis:
-            if binv1[hyp[0]] != hyp[1]:
-                include = False
-                break
-        if not include:
-            continue
-        mathval1 = round(math.sqrt(v1))
-        binval1 = toBin(mathval1, NBITS_OUTPUT)
-        targetbit = binval1[idxOfBitToEncode]
-        # print(v1, binv1, mathval1, binval1, targetbit)
-        X.append(binv1)
-        y.append(targetbit)
-    # print(X)
-    # print(y)
+        # uneFonction expects MSB first
+        out_bits = uneFonction(*reversed(binv1))
+        row = {}
+        for i in range(NBITS_INPUT):
+            row[f'a{i}'] = binv1[i]
+        for i in range(NBITS_OUTPUT):
+            row[f'r{i}'] = out_bits[i]
+        data.append(row)
+    df = pd.DataFrame(data)
+    return df
+
+theDataframe = build_training_samples()
+
+# build_X_y now filters from the DataFrame
+def build_X_y(idxOfBitToEncode, hypothesis, df=None):
+    if df is None:
+        raise ValueError("A DataFrame of training samples must be provided.")
+    # Build filter mask
+    mask = pd.Series([True] * len(df))
+    for hyp in hypothesis:
+        mask &= (df[f'a{hyp[0]}'] == hyp[1])
+    filtered = df[mask]
+    X = filtered[[f'a{i}' for i in range(NBITS_INPUT)]].values.tolist()
+    y = filtered[f'r{idxOfBitToEncode}'].values.tolist()
     return X, y
 
 
@@ -113,7 +165,7 @@ def full_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis):
 
     idxOfBitToEncode = listOfIdxOfBitToEncode[0]
 
-    X, y = build_X_y( idxOfBitToEncode, hypothesis)
+    X, y = build_X_y( idxOfBitToEncode, hypothesis, theDataframe)
 
     if len(y) == 1:
         result = {'value': f"r{idxOfBitToEncode} = {y[0]}"}
@@ -123,7 +175,7 @@ def full_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis):
         return result
     
     tree = DecisionTreeClassifier().fit(X, y) # max_depth=2
-    display_tree(tree)
+    # display_tree(tree)
     node_id=0
 
     if tree.tree_.children_left[node_id] == tree.tree_.children_right[node_id]:  # Leaf node
