@@ -67,6 +67,7 @@ def toBin (val, size):
 
 # Dummy function: implements round(math.sqrt(v1))
 def square_root_4_4(a3, a2, a1, a0):
+#def uneFonction(a3, a2, a1, a0):
     # args: bits, most significant first (a3, a2, a1, a0)
     bits = [a3, a2, a1, a0]
     # Convert bits (MSB first) to int
@@ -77,7 +78,57 @@ def square_root_4_4(a3, a2, a1, a0):
     # Output as list of bits (LSB first)
     return toBin(mathval1, 4)
 
+def square_root_5_5(a4, a3, a2, a1, a0):
+# def uneFonction(a4, a3, a2, a1, a0):
+    # args: bits, most significant first (a3, a2, a1, a0)
+    bits = [a4, a3, a2, a1, a0]
+    # Convert bits (MSB first) to int
+    v1 = 0
+    for i, b in enumerate(reversed(bits)):
+        v1 += b << i
+    mathval1 = round(math.sqrt(v1))
+    # Output as list of bits (LSB first)
+    return toBin(mathval1, 5)
+
+def square_root_6_6(a5, a4, a3, a2, a1, a0):
+# def uneFonction(a5, a4, a3, a2, a1, a0):
+    # args: bits, most significant first (a5, a3, a2, a1, a0)
+    bits = [a5, a4, a3, a2, a1, a0]
+    # Convert bits (MSB first) to int
+    v1 = 0
+    for i, b in enumerate(reversed(bits)):
+        v1 += b << i
+    mathval1 = round(math.sqrt(v1))
+    # Output as list of bits (LSB first)
+    return toBin(mathval1, 6)
+
+def square_root_7_7(a6, a5, a4, a3, a2, a1, a0):
+# def uneFonction(a6, a5, a4, a3, a2, a1, a0):
+    # args: bits, most significant first (a6, a5, a3, a2, a1, a0)
+    bits = [a6, a5, a4, a3, a2, a1, a0]
+    # Convert bits (MSB first) to int
+    v1 = 0
+    for i, b in enumerate(reversed(bits)):
+        v1 += b << i
+    mathval1 = round(math.sqrt(v1))
+    # Output as list of bits (LSB first)
+    return toBin(mathval1, 7)
+
+def square_root_3_3(a2, a1, a0):
+#def uneFonction(a2, a1, a0):
+    # args: bits, most significant first (a2, a1, a0)
+    bits = [a2, a1, a0]
+    # Convert bits (MSB first) to int
+    v1 = 0
+    for i, b in enumerate(reversed(bits)):
+        v1 += b << i
+    mathval1 = round(math.sqrt(v1))
+    # Output as list of bits (LSB first)
+    return toBin(mathval1, 3)
+
+
 def square_root_8_8(a7, a6, a5, a4, a3, a2, a1, a0):
+# def uneFonction(a7, a6, a5, a4, a3, a2, a1, a0):
     # args: bits, most significant first (a3, a2, a1, a0)
     bits = [a7, a6, a5, a4, a3, a2, a1, a0]
     # Convert bits (MSB first) to int
@@ -87,6 +138,56 @@ def square_root_8_8(a7, a6, a5, a4, a3, a2, a1, a0):
     mathval1 = round(math.sqrt(v1))
     # Output as list of bits (LSB first)
     return toBin(mathval1, 8)
+
+def square_root_9_9(a8, a7, a6, a5, a4, a3, a2, a1, a0):
+# def uneFonction(a8, a7, a6, a5, a4, a3, a2, a1, a0):
+    # args: bits, most significant first (a3, a2, a1, a0)
+    bits = [a8, a7, a6, a5, a4, a3, a2, a1, a0]
+    # Convert bits (MSB first) to int
+    v1 = 0
+    for i, b in enumerate(reversed(bits)):
+        v1 += b << i
+    mathval1 = round(math.sqrt(v1))
+    # Output as list of bits (LSB first)
+    return toBin(mathval1, 9)
+
+def square_root_10_10(a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
+# def uneFonction(a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
+    # args: bits, most significant first (a3, a2, a1, a0)
+    bits = [a9, a8, a7, a6, a5, a4, a3, a2, a1, a0]
+    # Convert bits (MSB first) to int
+    v1 = 0
+    for i, b in enumerate(reversed(bits)):
+        v1 += b << i
+    mathval1 = round(math.sqrt(v1))
+    # Output as list of bits (LSB first)
+    return toBin(mathval1, 10)
+
+def square_root_11_11(a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
+# def uneFonction(a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
+    # args: bits, most significant first (a3, a2, a1, a0)
+    bits = [a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0]
+    # Convert bits (MSB first) to int
+    v1 = 0
+    for i, b in enumerate(reversed(bits)):
+        v1 += b << i
+    mathval1 = round(math.sqrt(v1))
+    # Output as list of bits (LSB first)
+    return toBin(mathval1, 11)
+
+# def square_root_12_12(a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
+def uneFonction(a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
+    # args: bits, most significant first (a3, a2, a1, a0)
+    bits = [a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0]
+    # Convert bits (MSB first) to int
+    v1 = 0
+    for i, b in enumerate(reversed(bits)):
+        v1 += b << i
+    mathval1 = round(math.sqrt(v1))
+    # Output as list of bits (LSB first)
+    return toBin(mathval1, 12)
+
+
 
 def square_root_16_16(a15, a14, a13, a12, a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
     # args: bits, most significant first (a3, a2, a1, a0)
@@ -99,7 +200,18 @@ def square_root_16_16(a15, a14, a13, a12, a11, a10, a9, a8, a7, a6, a5, a4, a3, 
     # Output as list of bits (LSB first)
     return toBin(mathval1, 16)
 
-def uneFonction(a3, a2, a1, a0):
+def uneFonctionLourde(a15, a14, a13, a12, a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
+    # args: bits, most significant first (a3, a2, a1, a0)
+    bits = [a15, a14, a13, a12, a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0]
+    # Convert bits (MSB first) to int
+    v1 = 0
+    for i, b in enumerate(reversed(bits)):
+        v1 += b << i
+    mathval1 = round(math.sqrt(v1))
+    # Output as list of bits (LSB first)
+    return toBin(mathval1, 16)
+
+def uneFonctionSimple(a3, a2, a1, a0):
     # args: bits, most significant first (a3, a2, a1, a0)
     bits = [a3, a2, a1, a0]
     # Convert bits (MSB first) to int
@@ -110,6 +222,16 @@ def uneFonction(a3, a2, a1, a0):
     # Output as list of bits (LSB first)
     return toBin(mathval1, 4)
 
+def uneFonction_treslight(a2, a1, a0):
+    # args: bits, most significant first (a2, a1, a0)
+    bits = [a2, a1, a0]
+    # Convert bits (MSB first) to int
+    v1 = 0
+    for i, b in enumerate(reversed(bits)):
+        v1 += b << i
+    mathval1 = round(math.sqrt(v1))
+    # Output as list of bits (LSB first)
+    return toBin(mathval1, 2)
 
 
 def deduce_fonction_prototype(fonction):
@@ -168,7 +290,10 @@ def full_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis):
     X, y = build_X_y( idxOfBitToEncode, hypothesis, theDataframe)
 
     if len(y) == 1:
-        result = {'value': f"r{idxOfBitToEncode} = {y[0]}"}
+        if (y[0] == 0):
+            result = {'value': 'pass'}
+        else: 
+            result = {'value': f"r{idxOfBitToEncode} = {y[0]}"}
         if (len(listOfIdxOfBitToEncode) != 1):
             listOfIdxOfBitToEncode.pop(0)
             result['subtree'] = full_abstract_tree(listOfIdxOfBitToEncode, hypothesis)
@@ -180,14 +305,20 @@ def full_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis):
 
     if tree.tree_.children_left[node_id] == tree.tree_.children_right[node_id]:  # Leaf node
         listOfIdxOfBitToEncode.pop(0)  
-        if len(listOfIdxOfBitToEncode) != 0:                
-            result = {'value': f"r{idxOfBitToEncode} = {y[0]}",
-                        'subtree': full_abstract_tree(listOfIdxOfBitToEncode, hypothesis)
-                        }
+        if len(listOfIdxOfBitToEncode) != 0:
+            if (y[0] == 0):
+                result = {'value': 'pass'}
+            else:
+                result = {'value': f"r{idxOfBitToEncode} = {y[0]}"}
+            result['subtree']= full_abstract_tree(listOfIdxOfBitToEncode, hypothesis)
+
             # listOfIdxOfBitToEncode.insert(0, sav)  # Restore the index for the next call
             return result
         else:
-            result = {'value': f"r{idxOfBitToEncode} = {y[0]}"}
+            if (y[0] == 0):
+                result = {'value': 'pass'}
+            else:
+                result = {'value': f"r{idxOfBitToEncode} = {y[0]}"}
             # listOfIdxOfBitToEncode.insert(0, sav)
             return result
     else:
@@ -204,17 +335,41 @@ def full_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis):
 
         return result
 
+def convert_numpy_types(obj):
+    if isinstance(obj, dict):
+        return {k: convert_numpy_types(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_numpy_types(v) for v in obj]
+    elif isinstance(obj, np.generic):
+        return obj.item()  # Convertit numpy scalar en type natif Python
+    else:
+        return obj
+
+def remove_pass_and_empty(d):
+    if isinstance(d, dict):
+        # Remove 'value': 'pass' at this level
+        d = {k: v for k, v in d.items() if not (k == 'value' and v == 'pass')}
+        # Recursively process sub-dictionaries
+        d = {k: remove_pass_and_empty(v) for k, v in d.items()}
+        # Remove keys with empty dicts
+        d = {k: v for k, v in d.items() if not (isinstance(v, dict) and len(v) == 0)}
+        return d
+    elif isinstance(d, list):
+        return [remove_pass_and_empty(item) for item in d]
+    else:
+        return d
 
 def build_abstree_to_json():
-    listOfIdxOfBitToEncode = list(reversed(range(NBITS_OUTPUT))) 
+    listOfIdxOfBitToEncode = list(reversed(range(NBITS_OUTPUT)))
     hypothesis = []
 
     abstree = full_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis)
-
-    print(json.dumps(json.loads(str(abstree).replace ("'",'"')), indent=2))
+    abstree_serializable = convert_numpy_types(abstree)
+    light_abstree = remove_pass_and_empty(abstree_serializable)
+    print(json.dumps(light_abstree, indent=2))
 
     with open("retro/abstree.json", "w") as f:
-        f.write(json.dumps(json.loads(str(abstree).replace ("'",'"')), indent=2))
+        f.write(json.dumps(light_abstree, indent=2))
 
 def read_abstree_from_json():
     with open("retro/abstree.json", "r") as fic_in:
@@ -232,20 +387,32 @@ def abstree_to_python_code(abstree, indent=0):
     if 'subtree' in abstree:
         if 'feature' in abstree['subtree']:
             var = f"a{abstree['subtree']['feature']}"
-            code_lines.append(f"{ind}if ({var} == 0):")
-            code_lines += abstree_to_python_code(abstree['subtree']['left'], indent + 1)   
-            code_lines.append(f"{ind}else:")     
-            code_lines += abstree_to_python_code(abstree['subtree']['right'], indent + 1)        
+            if 'left' in abstree['subtree']:
+                code_lines.append(f"{ind}if ({var} == 0):")
+                code_lines += abstree_to_python_code(abstree['subtree']['left'], indent + 1)   
+                if 'right' in abstree['subtree']:
+                    code_lines.append(f"{ind}else:")     
+                    code_lines += abstree_to_python_code(abstree['subtree']['right'], indent + 1)
+            else:
+                if 'right' in abstree['subtree']:  
+                    code_lines.append(f"{ind}if ({var} != 0):")       
+                    code_lines += abstree_to_python_code(abstree['subtree']['right'], indent + 1)
         else:
             code_lines += abstree_to_python_code(abstree['subtree'], indent)
     else:
         # If there is a feature, handle it
         if 'feature' in abstree:
             var = f"a{abstree['feature']}"
-            code_lines.append(f"{ind}if ({var} == 0):")
-            code_lines += abstree_to_python_code(abstree['left'], indent + 1)
-            code_lines.append(f"{ind}else:")
-            code_lines += abstree_to_python_code(abstree['right'], indent + 1)
+            if 'left' in abstree:
+                code_lines.append(f"{ind}if ({var} == 0):")
+                code_lines += abstree_to_python_code(abstree['left'], indent + 1)
+                if 'right' in abstree:
+                    code_lines.append(f"{ind}else:")
+                    code_lines += abstree_to_python_code(abstree['right'], indent + 1)
+            else:
+                if 'right' in abstree:
+                    code_lines.append(f"{ind}if ({var} != 0):")
+                    code_lines += abstree_to_python_code(abstree['right'], indent + 1)
     return code_lines
 
 
