@@ -119,63 +119,238 @@ def opt_remove_double_jumps(instructions):
         new_instrs.append(instr)
     return new_instrs
 
-def opt_merge_consecutive_assigns(instructions):
-    """Exemple : regroupe les affectations de plusieurs bits en une instruction ."""
-
+def opt_merge_consecutive_assigns(instructions): 
+    """Regroupe les affectations de plusieurs bits en une instruction unique.""" 
 
     def rewrite_code(list_of_instruction):
-        # TODO:
-        # Faire une fonction qui regroupe les bits
-        # Ainsi les lignes
-        #       ; r1 = 1
-        #       lda tmp7: ora #BIT_1: sta tmp7
-        #       ; r0 = 1
-        #       lda tmp7: ora #BIT_0: sta tmp7
-        # en:
-        #       ; [r0, r1] = [1, 1]
-        #       lda tmp7: ora #BIT_1+BIT_0: sta tmp7
+        # Récupère la variable (tmpX)
+        tmp_vars = {instr["var"] for instr in list_of_instruction if instr["type"] == "assign_or_bit"}
+        if len(tmp_vars) != 1:
+            # Ambigu, on ne fusionne pas
+            return list_of_instruction  
+        tmp_var = tmp_vars.pop()
 
-        return []
+        indent = list_of_instruction[0]["indent"]
+        indent_str = "  " * indent
 
+        # Collecter registres et valeurs
+        regs = []
+        for instr in list_of_instruction:
+            if instr["type"] == "comment_assign":
+                regs.append((int(instr["reg"]), int(instr["value"])))
+            elif instr["type"] == "comment_multi_assign":
+                regs.extend(instr["regs"])
+
+        # Collecter bits
+        bits = []
+        for instr in list_of_instruction:
+            if instr["type"] == "assign_or_bit":
+                bits.extend(instr["bits"])
+            elif instr["type"] == "assign_multi_or_bit":
+                bits.extend(instr["bits"])
+
+        # Construire nouvelle séquence fusionnée
+        new_instrs = []
+        if regs:
+            assigns_str = ", ".join([f"r{r} = {v}" for r, v in regs])
+            new_instrs.append({
+                "type": "comment_multi_assign",
+                "regs": regs,
+                "assigns": assigns_str,
+                "indent": indent,
+                "raw": f"{indent_str}; {assigns_str}"
+            })
+
+        if bits:
+            bits_str = "+".join([f"BIT_{b}" for b in sorted(bits, reverse=True)])
+            new_instrs.append({
+                "type": "assign_multi_or_bit",
+                "var": tmp_var,
+                "bits": bits,
+                "indent": indent,
+                "raw": f"{indent_str}lda {tmp_var}: ora #{bits_str}: sta {tmp_var}"
+            })
+
+        return new_instrs
 
     new_instrs = []
-    etat = 0 # 0:en attente première affectation, 1: en attente fin affectation
+    etat = 0 # 0: attente, 1: séquence d'affectations
     stack = []
     nb_assigment_to_merge = 0
+
     for i, instr in enumerate(instructions):
-        if (etat == 0):
+        if etat == 0:
             if instr["type"] in ['assign_or_bit', 'comment_assign']:                
                 etat = 1
                 stack.append(instr)
-                if (instr["type"] == 'assign_or_bit'):
+                if instr["type"] == 'assign_or_bit':
                     nb_assigment_to_merge += 1
             else:
                 new_instrs.append(instr)
-        elif (etat == 1):
+        elif etat == 1:
             if instr["type"] not in ['assign_or_bit', 'comment_assign']:
-                # TODO: Catch it here !!
-                if (nb_assigment_to_merge > 1):
-                    # print (stack)
+                if nb_assigment_to_merge > 1:
                     rewritten = rewrite_code(stack)
-                    while len(rewritten) != 0: new_instrs.append(stack.pop(0))
+                    new_instrs.extend(rewritten)
                     stack = []
                 else:
-                    while len(stack) != 0:
-                        new_instrs.append(stack.pop(0))
+                    new_instrs.extend(stack)
+                    stack = []
                 nb_assigment_to_merge = 0
                 etat = 0
                 new_instrs.append(instr)
             else:
-                if (instr["type"] == 'assign_or_bit'):
+                if instr["type"] == 'assign_or_bit':
                     nb_assigment_to_merge += 1
                 stack.append(instr)
+
+    # S’il reste un stack à la fin
+    if stack:
+        if nb_assigment_to_merge > 1:
+            rewritten = rewrite_code(stack)
+            new_instrs.extend(rewritten)
+        else:
+            new_instrs.extend(stack)
+
     return new_instrs
 
+# BUG: ligne 257, 441
+# BUG: ligne 543
+def opt_merge_consecutive_uncomplemented_conditions(instructions): 
+    """Regroupe les test de conditions sur plusieurs bits en une instruction unique.""" 
+
+    def rewrite_code(list_of_instruction):
+        return []
+    
+    new_instrs = []
+
+    nb_conditions_to_merge = 0
+    nb_assigment_to_merge = 0
+    nb_jumps_to_merge = 0
+    current_indentation = 0
+    # 0: attente comment_cond / and_bit_branch
+    # 1: attente comment_assign / comment_multi_assign / assign_or_bit/ assign_multi_or_bit
+    # 2: attente label / terminal_jmp
+    # 3: attente autre chose que label / terminal_jmp
+    etat = 0 
+    stack = []
+
+    for i, instr in enumerate(instructions):
+        if etat == 0:
+            if instr["type"] in ['comment_cond', 'and_bit_branch']:                
+                etat = 1
+                current_indentation = instr["indent"]
+                stack.append(instr)
+                if instr["type"] == 'and_bit_branch':
+                    nb_conditions_to_merge += 1
+            else:
+                new_instrs.append(instr)
+        elif etat == 1:
+            if instr["type"] in ['comment_assign', 'comment_multi_assign', 'assign_or_bit', 'assign_multi_or_bit']:                
+                etat = 2
+                stack.append(instr)
+                if instr["type"] == 'assign_or_bit':
+                    nb_assigment_to_merge += 1
+                if instr["type"] == 'and_bit_branch':
+                    nb_conditions_to_merge += 1
+            elif instr["type"] in ['comment_cond', 'and_bit_branch']:
+                stack.append(instr)
+                if instr["type"] == 'and_bit_branch':
+                    nb_conditions_to_merge += 1
+            # elif instr["type"] not in ['label','terminal_jmp']:
+            else:
+                new_instrs.append(instr)
+        elif etat == 2:
+            if instr["type"] in ['label','terminal_jmp']:
+                etat = 3
+                stack.append(instr)
+                nb_jumps_to_merge += 1
+                # if nb_assigment_to_merge > 1 or nb_conditions_to_merge > 1:
+                #     rewritten = rewrite_code(stack)
+                #     new_instrs.extend(rewritten)
+                #     stack = []
+                # else:
+                #     new_instrs.extend(stack)
+                #     stack = []
+                pass
+            elif instr["type"] in ['comment_assign', 'comment_multi_assign', 'assign_or_bit', 'assign_multi_or_bit']:
+                stack.append(instr)
+                if instr["type"] == 'assign_or_bit':
+                    nb_assigment_to_merge += 1
+                if instr["type"] == 'and_bit_branch':
+                    nb_conditions_to_merge += 1
+            elif instr["type"] in ['comment_cond', 'and_bit_branch']:
+                etat = 1
+                nb_assigment_to_merge = 0
+                nb_conditions_to_merge = 0
+                nb_jumps_to_merge = 0
+                new_instrs.extend(stack)
+                stack = []
+                stack.append(instr)
+            #elif instr["type"] in ['label']:
+            else:
+                print ("--== ERROR ==--")
+                pass
+
+        elif etat==3:
+            if instr["type"] in ['label','terminal_jmp']:
+                if instr["type"] == 'terminal_jmp': 
+                    if instr["indent"] >= current_indentation:
+                        nb_jumps_to_merge += 1
+                        stack.append(instr)
+                    else:
+                        etat = 0
+                        nb_assigment_to_merge = 0
+                        nb_conditions_to_merge = 0
+                        nb_jumps_to_merge = 0
+                        new_instrs.append(instr)
+                elif instr["type"] == 'label':
+                    stack.append(instr)
+            else:
+                if nb_assigment_to_merge > 1 or nb_conditions_to_merge > 1 or nb_jumps_to_merge > 1:
+                    while stack[0]["indent"] < instr["indent"]:
+                        new_instrs.append(stack.pop(0))
+                    rewritten = rewrite_code(stack)
+                    new_instrs.extend(rewritten)
+                    stack = []
+                else:
+                    new_instrs.extend(stack)
+                    stack = []
+
+                if instr["type"] in ['comment_assign', 'comment_multi_assign', 'assign_or_bit', 'assign_multi_or_bit']:
+                    print ("--== ERROR ==--")
+                    pass
+                elif instr["type"] in ['comment_else']:
+                    etat = 0
+                    nb_assigment_to_merge = 0
+                    nb_conditions_to_merge = 0
+                    nb_jumps_to_merge = 0
+                    new_instrs.append(instr)
+                elif instr["type"] in ['comment_cond', 'and_bit_branch']:
+                    etat = 1
+                    nb_assigment_to_merge = 0
+                    nb_conditions_to_merge = 0
+                    nb_jumps_to_merge = 0
+                    stack.append(instr)
+                else: 
+                    etat = 0
+                    new_instrs.append(instr)
+            
+
+    # S’il reste un stack à la fin
+    # if stack:
+    #     if nb_conditions_to_merge > 1:
+    #         rewritten = rewrite_code(stack)
+    #         new_instrs.extend(rewritten)
+    #     else:
+    #         new_instrs.extend(stack)
+    return new_instrs
 def apply_optimizations(instructions):
     """Chaîne de filtres, modifiable à volonté"""
     filters = [
-        opt_merge_consecutive_assigns,
-        opt_remove_double_jumps,
+        opt_merge_consecutive_uncomplemented_conditions,
+        # opt_merge_consecutive_assigns,
+        # opt_remove_double_jumps,
     ]
     for f in filters:
         instructions = f(instructions)

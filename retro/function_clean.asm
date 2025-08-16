@@ -1,32 +1,3 @@
-#define BIT_0    1
-#define BIT_1    2
-#define BIT_2    4
-#define BIT_3    8
-#define BIT_4   16
-#define BIT_5   32
-#define BIT_6   64
-#define BIT_7  128
-#define BIT_8    1
-#define BIT_9    2
-#define BIT_10   4
-#define BIT_11   8
-#define BIT_12  16
-#define BIT_13  32
-#define BIT_14  64
-#define BIT_15 128
-_function_input 		    .dsb	2
-_function_output 		.dsb	2
-sav_reg_0 		        .dsb	2
-sav_reg_7 		        .dsb	2
-_uneFonction:
-.(
-lda tmp0: sta sav_reg_0
-lda tmp0+1: sta sav_reg_0+1
-lda tmp7: sta sav_reg_7
-lda tmp7+1: sta sav_reg_7+1
-lda #0: sta tmp7: sta tmp7+1
-lda _function_input: sta tmp0
-lda _function_input+1: sta tmp0+1
   ; if (a9 == 0):
   lda tmp0+1 : and #BIT_9: .(:beq skip: jmp lbl_1: skip:.):
     ; if (a10 == 0):
@@ -47,16 +18,6 @@ lda _function_input+1: sta tmp0+1
                   lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_9: skip:.):
                     ; if (a2 == 0):
                     lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_10: skip:.):
-                      ; if (a0 == 0):
-                      lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_11: skip:.):
-                        ; if (a1 != 0):
-                        lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_12: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_12:
-                      jmp _unefonctionDone
-lbl_11:
                       ; else:
                         ; if (a1 == 0):
                         lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_14: skip:.):
@@ -72,39 +33,13 @@ lbl_10:
                     ; else:
                       ; r1 = 1
                       lda tmp7: ora #BIT_1: sta tmp7
-                      ; if (a1 != 0):
-                      lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_16: skip:.):
-                        ; if (a0 != 0):
-                        lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_17: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_17:
-                      jmp _unefonctionDone
-lbl_16:
                     jmp _unefonctionDone
                   jmp _unefonctionDone
 lbl_9:
                   ; else:
-                    ; if (a2 == 0):
-                    lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_19: skip:.):
-                      ; r1 = 1
-                      lda tmp7: ora #BIT_1: sta tmp7
-                      ; r0 = 1
-                      lda tmp7: ora #BIT_0: sta tmp7
-                    jmp _unefonctionDone
-lbl_19:
                     ; else:
                       ; if (a0 == 0):
                       lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_21: skip:.):
-                        ; if (a1 == 0):
-                        lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_22: skip:.):
-                          ; r1 = 1
-                          lda tmp7: ora #BIT_1: sta tmp7
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_22:
                         ; else:
                           ; r2 = 1
                           lda tmp7: ora #BIT_2: sta tmp7
@@ -118,29 +53,9 @@ lbl_8:
                 ; else:
                   ; r2 = 1
                   lda tmp7: ora #BIT_2: sta tmp7
-                  ; if (a2 == 0):
-                  lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_25: skip:.):
-                    ; if (a3 != 0):
-                    lda tmp0 : and #BIT_3: .(:bne skip: jmp lbl_26: skip:.):
-                      ; r0 = 1
-                      lda tmp7: ora #BIT_0: sta tmp7
-                    jmp _unefonctionDone
-lbl_26:
-                  jmp _unefonctionDone
-lbl_25:
                   ; else:
                     ; if (a0 == 0):
                     lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_27: skip:.):
-                      ; if (a1 == 0):
-                      lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_28: skip:.):
-                        ; if (a3 != 0):
-                        lda tmp0 : and #BIT_3: .(:bne skip: jmp lbl_29: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_29:
-                      jmp _unefonctionDone
-lbl_28:
                       ; else:
                         ; r0 = 1
                         lda tmp7: ora #BIT_0: sta tmp7
@@ -177,20 +92,6 @@ lbl_7:
                   lda tmp7: ora #BIT_1: sta tmp7
                   ; if (a3 != 0):
                   lda tmp0 : and #BIT_3: .(:bne skip: jmp lbl_37: skip:.):
-                    ; if (a2 == 0):
-                    lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_38: skip:.):
-                      ; if (a0 != 0):
-                      lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_39: skip:.):
-                        ; if (a1 != 0):
-                        lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_40: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_40:
-                      jmp _unefonctionDone
-lbl_39:
-                    jmp _unefonctionDone
-lbl_38:
                     ; else:
                       ; r0 = 1
                       lda tmp7: ora #BIT_0: sta tmp7
@@ -199,31 +100,11 @@ lbl_37:
                 jmp _unefonctionDone
 lbl_36:
                 ; else:
-                  ; if (a3 == 0):
-                  lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_43: skip:.):
-                    ; r2 = 1
-                    lda tmp7: ora #BIT_2: sta tmp7
-                    ; r1 = 1
-                    lda tmp7: ora #BIT_1: sta tmp7
-                    ; r0 = 1
-                    lda tmp7: ora #BIT_0: sta tmp7
-                  jmp _unefonctionDone
-lbl_43:
                   ; else:
                     ; if (a1 == 0):
                     lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_45: skip:.):
                       ; if (a0 == 0):
                       lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_46: skip:.):
-                        ; if (a2 == 0):
-                        lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_47: skip:.):
-                          ; r2 = 1
-                          lda tmp7: ora #BIT_2: sta tmp7
-                          ; r1 = 1
-                          lda tmp7: ora #BIT_1: sta tmp7
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_47:
                         ; else:
                           ; r3 = 1
                           lda tmp7: ora #BIT_3: sta tmp7
@@ -244,31 +125,11 @@ lbl_6:
               lda tmp7: ora #BIT_3: sta tmp7
               ; if (a5 == 0):
               lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_51: skip:.):
-                ; if (a3 == 0):
-                lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_52: skip:.):
-                  ; if (a4 != 0):
-                  lda tmp0 : and #BIT_4: .(:bne skip: jmp lbl_53: skip:.):
-                    ; r0 = 1
-                    lda tmp7: ora #BIT_0: sta tmp7
-                  jmp _unefonctionDone
-lbl_53:
-                jmp _unefonctionDone
-lbl_52:
                 ; else:
                   ; if (a4 == 0):
                   lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_55: skip:.):
                     ; if (a1 == 0):
                     lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_56: skip:.):
-                      ; if (a2 == 0):
-                      lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_57: skip:.):
-                        ; if (a0 != 0):
-                        lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_58: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_58:
-                      jmp _unefonctionDone
-lbl_57:
                       ; else:
                         ; r0 = 1
                         lda tmp7: ora #BIT_0: sta tmp7
@@ -283,12 +144,6 @@ lbl_55:
                   ; else:
                     ; if (a2 == 0):
                     lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_61: skip:.):
-                      ; if (a1 == 0):
-                      lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_62: skip:.):
-                        ; r0 = 1
-                        lda tmp7: ora #BIT_0: sta tmp7
-                      jmp _unefonctionDone
-lbl_62:
                       ; else:
                         ; if (a0 == 0):
                         lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_64: skip:.):
@@ -309,28 +164,6 @@ lbl_51:
               ; else:
                 ; r1 = 1
                 lda tmp7: ora #BIT_1: sta tmp7
-                ; if (a4 == 0):
-                lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_67: skip:.):
-                  ; if (a2 != 0):
-                  lda tmp0 : and #BIT_2: .(:bne skip: jmp lbl_68: skip:.):
-                    ; if (a3 != 0):
-                    lda tmp0 : and #BIT_3: .(:bne skip: jmp lbl_69: skip:.):
-                      ; if (a1 != 0):
-                      lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_70: skip:.):
-                        ; if (a0 != 0):
-                        lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_71: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_71:
-                      jmp _unefonctionDone
-lbl_70:
-                    jmp _unefonctionDone
-lbl_69:
-                  jmp _unefonctionDone
-lbl_68:
-                jmp _unefonctionDone
-lbl_67:
                 ; else:
                   ; r0 = 1
                   lda tmp7: ora #BIT_0: sta tmp7
@@ -350,25 +183,9 @@ lbl_5:
                 lda tmp0 : and #BIT_6: .(:beq skip: jmp lbl_75: skip:.):
                   ; if (a3 == 0):
                   lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_76: skip:.):
-                    ; if (a2 == 0):
-                    lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_77: skip:.):
-                      ; r1 = 1
-                      lda tmp7: ora #BIT_1: sta tmp7
-                      ; r0 = 1
-                      lda tmp7: ora #BIT_0: sta tmp7
-                    jmp _unefonctionDone
-lbl_77:
                     ; else:
                       ; if (a1 == 0):
                       lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_79: skip:.):
-                        ; if (a0 == 0):
-                        lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_80: skip:.):
-                          ; r1 = 1
-                          lda tmp7: ora #BIT_1: sta tmp7
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_80:
                         ; else:
                           ; r2 = 1
                           lda tmp7: ora #BIT_2: sta tmp7
@@ -400,16 +217,6 @@ lbl_74:
                   lda tmp0 : and #BIT_2: .(:bne skip: jmp lbl_86: skip:.):
                     ; if (a3 != 0):
                     lda tmp0 : and #BIT_3: .(:bne skip: jmp lbl_87: skip:.):
-                      ; if (a0 == 0):
-                      lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_88: skip:.):
-                        ; if (a1 != 0):
-                        lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_89: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_89:
-                      jmp _unefonctionDone
-lbl_88:
                       ; else:
                         ; r0 = 1
                         lda tmp7: ora #BIT_0: sta tmp7
@@ -424,20 +231,6 @@ lbl_85:
                   lda tmp7: ora #BIT_1: sta tmp7
                   ; if (a2 == 0):
                   lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_91: skip:.):
-                    ; if (a3 == 0):
-                    lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_92: skip:.):
-                      ; if (a0 != 0):
-                      lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_93: skip:.):
-                        ; if (a1 != 0):
-                        lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_94: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_94:
-                      jmp _unefonctionDone
-lbl_93:
-                    jmp _unefonctionDone
-lbl_92:
                     ; else:
                       ; r0 = 1
                       lda tmp7: ora #BIT_0: sta tmp7
@@ -467,12 +260,6 @@ lbl_98:
                 ; else:
                   ; if (a3 == 0):
                   lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_99: skip:.):
-                    ; if (a2 == 0):
-                    lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_100: skip:.):
-                      ; r0 = 1
-                      lda tmp7: ora #BIT_0: sta tmp7
-                    jmp _unefonctionDone
-lbl_100:
                     ; else:
                       ; if (a0 == 0):
                       lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_102: skip:.):
@@ -499,18 +286,6 @@ lbl_99:
               jmp _unefonctionDone
 lbl_97:
               ; else:
-                ; if (a4 == 0):
-                lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_108: skip:.):
-                  ; r3 = 1
-                  lda tmp7: ora #BIT_3: sta tmp7
-                  ; r2 = 1
-                  lda tmp7: ora #BIT_2: sta tmp7
-                  ; r1 = 1
-                  lda tmp7: ora #BIT_1: sta tmp7
-                  ; r0 = 1
-                  lda tmp7: ora #BIT_0: sta tmp7
-                jmp _unefonctionDone
-lbl_108:
                 ; else:
                   ; if (a1 == 0):
                   lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_110: skip:.):
@@ -518,18 +293,6 @@ lbl_108:
                     lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_111: skip:.):
                       ; if (a2 == 0):
                       lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_112: skip:.):
-                        ; if (a3 == 0):
-                        lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_113: skip:.):
-                          ; r3 = 1
-                          lda tmp7: ora #BIT_3: sta tmp7
-                          ; r2 = 1
-                          lda tmp7: ora #BIT_2: sta tmp7
-                          ; r1 = 1
-                          lda tmp7: ora #BIT_1: sta tmp7
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_113:
                         ; else:
                           ; r4 = 1
                           lda tmp7: ora #BIT_4: sta tmp7
@@ -557,29 +320,19 @@ lbl_4:
           lda tmp0 : and #BIT_7: .(:beq skip: jmp lbl_118: skip:.):
             ; if (a4 == 0):
             lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_119: skip:.):
-              ; if (a6 == 0):
-              lda tmp0 : and #BIT_6: .(:beq skip: jmp lbl_120: skip:.):
-                ; if (a5 != 0):
-                lda tmp0 : and #BIT_5: .(:bne skip: jmp lbl_121: skip:.):
-                  ; r0 = 1
-                  lda tmp7: ora #BIT_0: sta tmp7
-                jmp _unefonctionDone
-lbl_121:
-              jmp _unefonctionDone
-lbl_120:
               ; else:
                 ; r1 = 1
                 lda tmp7: ora #BIT_1: sta tmp7
+              jmp _unefonctionDone
+            jmp _unefonctionDone
+lbl_119:
+            ; else:
                 ; if (a5 != 0):
                 lda tmp0 : and #BIT_5: .(:bne skip: jmp lbl_122: skip:.):
                   ; r0 = 1
                   lda tmp7: ora #BIT_0: sta tmp7
                 jmp _unefonctionDone
 lbl_122:
-              jmp _unefonctionDone
-            jmp _unefonctionDone
-lbl_119:
-            ; else:
               ; if (a3 == 0):
               lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_124: skip:.):
                 ; if (a6 == 0):
@@ -588,16 +341,6 @@ lbl_119:
                   lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_126: skip:.):
                     ; if (a2 == 0):
                     lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_127: skip:.):
-                      ; if (a1 == 0):
-                      lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_128: skip:.):
-                        ; if (a0 != 0):
-                        lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_129: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_129:
-                      jmp _unefonctionDone
-lbl_128:
                       ; else:
                         ; r0 = 1
                         lda tmp7: ora #BIT_0: sta tmp7
@@ -612,12 +355,6 @@ lbl_126:
                   ; else:
                     ; if (a2 == 0):
                     lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_132: skip:.):
-                      ; if (a1 == 0):
-                      lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_133: skip:.):
-                        ; r0 = 1
-                        lda tmp7: ora #BIT_0: sta tmp7
-                      jmp _unefonctionDone
-lbl_133:
                       ; else:
                         ; if (a0 == 0):
                         lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_135: skip:.):
@@ -638,24 +375,6 @@ lbl_125:
                 ; else:
                   ; r1 = 1
                   lda tmp7: ora #BIT_1: sta tmp7
-                  ; if (a5 == 0):
-                  lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_138: skip:.):
-                    ; if (a1 != 0):
-                    lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_139: skip:.):
-                      ; if (a0 != 0):
-                      lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_140: skip:.):
-                        ; if (a2 != 0):
-                        lda tmp0 : and #BIT_2: .(:bne skip: jmp lbl_141: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_141:
-                      jmp _unefonctionDone
-lbl_140:
-                    jmp _unefonctionDone
-lbl_139:
-                  jmp _unefonctionDone
-lbl_138:
                   ; else:
                     ; r0 = 1
                     lda tmp7: ora #BIT_0: sta tmp7
@@ -666,12 +385,6 @@ lbl_124:
               ; else:
                 ; if (a5 == 0):
                 lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_143: skip:.):
-                  ; if (a6 == 0):
-                  lda tmp0 : and #BIT_6: .(:beq skip: jmp lbl_144: skip:.):
-                    ; r0 = 1
-                    lda tmp7: ora #BIT_0: sta tmp7
-                  jmp _unefonctionDone
-lbl_144:
                   ; else:
                     ; r1 = 1
                     lda tmp7: ora #BIT_1: sta tmp7
@@ -688,25 +401,9 @@ lbl_143:
                   jmp _unefonctionDone
 lbl_146:
                   ; else:
-                    ; if (a2 == 0):
-                    lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_148: skip:.):
-                      ; r1 = 1
-                      lda tmp7: ora #BIT_1: sta tmp7
-                      ; r0 = 1
-                      lda tmp7: ora #BIT_0: sta tmp7
-                    jmp _unefonctionDone
-lbl_148:
                     ; else:
                       ; if (a0 == 0):
                       lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_150: skip:.):
-                        ; if (a1 == 0):
-                        lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_151: skip:.):
-                          ; r1 = 1
-                          lda tmp7: ora #BIT_1: sta tmp7
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_151:
                         ; else:
                           ; r2 = 1
                           lda tmp7: ora #BIT_2: sta tmp7
@@ -730,16 +427,6 @@ lbl_118:
                   lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_157: skip:.):
                     ; if (a2 != 0):
                     lda tmp0 : and #BIT_2: .(:bne skip: jmp lbl_158: skip:.):
-                      ; if (a0 == 0):
-                      lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_159: skip:.):
-                        ; if (a1 != 0):
-                        lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_160: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_160:
-                      jmp _unefonctionDone
-lbl_159:
                       ; else:
                         ; r0 = 1
                         lda tmp7: ora #BIT_0: sta tmp7
@@ -764,12 +451,6 @@ lbl_154:
               lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_164: skip:.):
                 ; if (a4 == 0):
                 lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_165: skip:.):
-                  ; if (a0 == 0):
-                  lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_166: skip:.):
-                    ; r0 = 1
-                    lda tmp7: ora #BIT_0: sta tmp7
-                  jmp _unefonctionDone
-lbl_166:
                   ; else:
                     ; if (a1 == 0):
                     lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_168: skip:.):
@@ -808,20 +489,6 @@ lbl_164:
                 lda tmp0 : and #BIT_3: .(:bne skip: jmp lbl_176: skip:.):
                   ; if (a4 != 0):
                   lda tmp0 : and #BIT_4: .(:bne skip: jmp lbl_177: skip:.):
-                    ; if (a2 == 0):
-                    lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_178: skip:.):
-                      ; if (a1 != 0):
-                      lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_179: skip:.):
-                        ; if (a0 != 0):
-                        lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_180: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_180:
-                      jmp _unefonctionDone
-lbl_179:
-                    jmp _unefonctionDone
-lbl_178:
                     ; else:
                       ; r0 = 1
                       lda tmp7: ora #BIT_0: sta tmp7
@@ -849,21 +516,9 @@ lbl_3:
             lda tmp0 : and #BIT_6: .(:beq skip: jmp lbl_185: skip:.):
               ; if (a5 == 0):
               lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_186: skip:.):
-                ; if (a4 == 0):
-                lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_187: skip:.):
-                  ; r0 = 1
-                  lda tmp7: ora #BIT_0: sta tmp7
-                jmp _unefonctionDone
-lbl_187:
                 ; else:
                   ; if (a3 == 0):
                   lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_189: skip:.):
-                    ; if (a2 == 0):
-                    lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_190: skip:.):
-                      ; r0 = 1
-                      lda tmp7: ora #BIT_0: sta tmp7
-                    jmp _unefonctionDone
-lbl_190:
                     ; else:
                       ; if (a1 == 0):
                       lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_192: skip:.):
@@ -902,20 +557,6 @@ lbl_185:
                 lda tmp0 : and #BIT_5: .(:bne skip: jmp lbl_199: skip:.):
                   ; if (a2 == 0):
                   lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_200: skip:.):
-                    ; if (a3 == 0):
-                    lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_201: skip:.):
-                      ; if (a0 != 0):
-                      lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_202: skip:.):
-                        ; if (a1 != 0):
-                        lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_203: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_203:
-                      jmp _unefonctionDone
-lbl_202:
-                    jmp _unefonctionDone
-lbl_201:
                     ; else:
                       ; r0 = 1
                       lda tmp7: ora #BIT_0: sta tmp7
@@ -932,33 +573,9 @@ lbl_198:
           jmp _unefonctionDone
 lbl_184:
           ; else:
-            ; if (a6 == 0):
-            lda tmp0 : and #BIT_6: .(:beq skip: jmp lbl_207: skip:.):
-              ; r3 = 1
-              lda tmp7: ora #BIT_3: sta tmp7
-              ; r2 = 1
-              lda tmp7: ora #BIT_2: sta tmp7
-              ; r1 = 1
-              lda tmp7: ora #BIT_1: sta tmp7
-              ; r0 = 1
-              lda tmp7: ora #BIT_0: sta tmp7
-            jmp _unefonctionDone
-lbl_207:
             ; else:
               ; if (a5 == 0):
               lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_209: skip:.):
-                ; if (a4 == 0):
-                lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_210: skip:.):
-                  ; r3 = 1
-                  lda tmp7: ora #BIT_3: sta tmp7
-                  ; r2 = 1
-                  lda tmp7: ora #BIT_2: sta tmp7
-                  ; r1 = 1
-                  lda tmp7: ora #BIT_1: sta tmp7
-                  ; r0 = 1
-                  lda tmp7: ora #BIT_0: sta tmp7
-                jmp _unefonctionDone
-lbl_210:
                 ; else:
                   ; if (a2 == 0):
                   lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_212: skip:.):
@@ -966,18 +583,6 @@ lbl_210:
                     lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_213: skip:.):
                       ; if (a3 == 0):
                       lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_214: skip:.):
-                        ; if (a1 == 0):
-                        lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_215: skip:.):
-                          ; r3 = 1
-                          lda tmp7: ora #BIT_3: sta tmp7
-                          ; r2 = 1
-                          lda tmp7: ora #BIT_2: sta tmp7
-                          ; r1 = 1
-                          lda tmp7: ora #BIT_1: sta tmp7
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_215:
                         ; else:
                           ; r4 = 1
                           lda tmp7: ora #BIT_4: sta tmp7
@@ -1018,16 +623,6 @@ lbl_183:
                   lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_225: skip:.):
                     ; if (a0 == 0):
                     lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_226: skip:.):
-                      ; if (a3 == 0):
-                      lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_227: skip:.):
-                        ; if (a1 != 0):
-                        lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_228: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_228:
-                      jmp _unefonctionDone
-lbl_227:
                       ; else:
                         ; r0 = 1
                         lda tmp7: ora #BIT_0: sta tmp7
@@ -1058,23 +653,11 @@ lbl_221:
             lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_232: skip:.):
               ; if (a6 == 0):
               lda tmp0 : and #BIT_6: .(:beq skip: jmp lbl_233: skip:.):
-                ; if (a4 == 0):
-                lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_234: skip:.):
-                  ; r0 = 1
-                  lda tmp7: ora #BIT_0: sta tmp7
-                jmp _unefonctionDone
-lbl_234:
                 ; else:
                   ; if (a2 == 0):
                   lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_236: skip:.):
                     ; if (a3 == 0):
                     lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_237: skip:.):
-                      ; if (a1 == 0):
-                      lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_238: skip:.):
-                        ; r0 = 1
-                        lda tmp7: ora #BIT_0: sta tmp7
-                      jmp _unefonctionDone
-lbl_238:
                       ; else:
                         ; if (a0 == 0):
                         lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_240: skip:.):
@@ -1109,24 +692,6 @@ lbl_232:
               lda tmp0 : and #BIT_4: .(:bne skip: jmp lbl_246: skip:.):
                 ; if (a6 != 0):
                 lda tmp0 : and #BIT_6: .(:bne skip: jmp lbl_247: skip:.):
-                  ; if (a3 == 0):
-                  lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_248: skip:.):
-                    ; if (a2 != 0):
-                    lda tmp0 : and #BIT_2: .(:bne skip: jmp lbl_249: skip:.):
-                      ; if (a1 != 0):
-                      lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_250: skip:.):
-                        ; if (a0 != 0):
-                        lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_251: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_251:
-                      jmp _unefonctionDone
-lbl_250:
-                    jmp _unefonctionDone
-lbl_249:
-                  jmp _unefonctionDone
-lbl_248:
                   ; else:
                     ; r0 = 1
                     lda tmp7: ora #BIT_0: sta tmp7
@@ -1147,29 +712,19 @@ lbl_2:
         lda tmp0+1 : and #BIT_8: .(:beq skip: jmp lbl_254: skip:.):
           ; if (a5 == 0):
           lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_255: skip:.):
-            ; if (a7 == 0):
-            lda tmp0 : and #BIT_7: .(:beq skip: jmp lbl_256: skip:.):
-              ; if (a6 != 0):
-              lda tmp0 : and #BIT_6: .(:bne skip: jmp lbl_257: skip:.):
-                ; r0 = 1
-                lda tmp7: ora #BIT_0: sta tmp7
-              jmp _unefonctionDone
-lbl_257:
-            jmp _unefonctionDone
-lbl_256:
             ; else:
               ; r1 = 1
               lda tmp7: ora #BIT_1: sta tmp7
+            jmp _unefonctionDone
+          jmp _unefonctionDone
+lbl_255:
+          ; else:
               ; if (a6 != 0):
               lda tmp0 : and #BIT_6: .(:bne skip: jmp lbl_258: skip:.):
                 ; r0 = 1
                 lda tmp7: ora #BIT_0: sta tmp7
               jmp _unefonctionDone
 lbl_258:
-            jmp _unefonctionDone
-          jmp _unefonctionDone
-lbl_255:
-          ; else:
             ; if (a7 == 0):
             lda tmp0 : and #BIT_7: .(:beq skip: jmp lbl_260: skip:.):
               ; if (a6 == 0):
@@ -1180,16 +735,6 @@ lbl_255:
                   lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_263: skip:.):
                     ; if (a4 == 0):
                     lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_264: skip:.):
-                      ; if (a1 == 0):
-                      lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_265: skip:.):
-                        ; if (a0 != 0):
-                        lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_266: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_266:
-                      jmp _unefonctionDone
-lbl_265:
                       ; else:
                         ; r0 = 1
                         lda tmp7: ora #BIT_0: sta tmp7
@@ -1218,12 +763,6 @@ lbl_261:
                   lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_271: skip:.):
                     ; if (a2 == 0):
                     lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_272: skip:.):
-                      ; if (a0 == 0):
-                      lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_273: skip:.):
-                        ; r0 = 1
-                        lda tmp7: ora #BIT_0: sta tmp7
-                      jmp _unefonctionDone
-lbl_273:
                       ; else:
                         ; if (a1 == 0):
                         lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_275: skip:.):
@@ -1259,24 +798,6 @@ lbl_260:
                 lda tmp7: ora #BIT_1: sta tmp7
                 ; if (a4 == 0):
                 lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_282: skip:.):
-                  ; if (a3 == 0):
-                  lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_283: skip:.):
-                    ; if (a0 != 0):
-                    lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_284: skip:.):
-                      ; if (a2 != 0):
-                      lda tmp0 : and #BIT_2: .(:bne skip: jmp lbl_285: skip:.):
-                        ; if (a1 != 0):
-                        lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_286: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_286:
-                      jmp _unefonctionDone
-lbl_285:
-                    jmp _unefonctionDone
-lbl_284:
-                  jmp _unefonctionDone
-lbl_283:
                   ; else:
                     ; r0 = 1
                     lda tmp7: ora #BIT_0: sta tmp7
@@ -1291,34 +812,10 @@ lbl_281:
               ; else:
                 ; if (a4 == 0):
                 lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_289: skip:.):
-                  ; if (a2 == 0):
-                  lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_290: skip:.):
-                    ; r1 = 1
-                    lda tmp7: ora #BIT_1: sta tmp7
-                    ; r0 = 1
-                    lda tmp7: ora #BIT_0: sta tmp7
-                  jmp _unefonctionDone
-lbl_290:
                   ; else:
-                    ; if (a3 == 0):
-                    lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_292: skip:.):
-                      ; r1 = 1
-                      lda tmp7: ora #BIT_1: sta tmp7
-                      ; r0 = 1
-                      lda tmp7: ora #BIT_0: sta tmp7
-                    jmp _unefonctionDone
-lbl_292:
                     ; else:
                       ; if (a1 == 0):
                       lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_294: skip:.):
-                        ; if (a0 == 0):
-                        lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_295: skip:.):
-                          ; r1 = 1
-                          lda tmp7: ora #BIT_1: sta tmp7
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_295:
                         ; else:
                           ; r2 = 1
                           lda tmp7: ora #BIT_2: sta tmp7
@@ -1349,16 +846,6 @@ lbl_254:
                   lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_303: skip:.):
                     ; if (a2 != 0):
                     lda tmp0 : and #BIT_2: .(:bne skip: jmp lbl_304: skip:.):
-                      ; if (a1 == 0):
-                      lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_305: skip:.):
-                        ; if (a0 != 0):
-                        lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_306: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_306:
-                      jmp _unefonctionDone
-lbl_305:
                       ; else:
                         ; r0 = 1
                         lda tmp7: ora #BIT_0: sta tmp7
@@ -1433,20 +920,6 @@ lbl_299:
                 lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_324: skip:.):
                   ; if (a3 != 0):
                   lda tmp0 : and #BIT_3: .(:bne skip: jmp lbl_325: skip:.):
-                    ; if (a2 == 0):
-                    lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_326: skip:.):
-                      ; if (a1 != 0):
-                      lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_327: skip:.):
-                        ; if (a0 != 0):
-                        lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_328: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_328:
-                      jmp _unefonctionDone
-lbl_327:
-                    jmp _unefonctionDone
-lbl_326:
                     ; else:
                       ; r0 = 1
                       lda tmp7: ora #BIT_0: sta tmp7
@@ -1481,31 +954,11 @@ lbl_253:
               lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_335: skip:.):
                 ; if (a6 == 0):
                 lda tmp0 : and #BIT_6: .(:beq skip: jmp lbl_336: skip:.):
-                  ; if (a3 == 0):
-                  lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_337: skip:.):
-                    ; r2 = 1
-                    lda tmp7: ora #BIT_2: sta tmp7
-                    ; r1 = 1
-                    lda tmp7: ora #BIT_1: sta tmp7
-                    ; r0 = 1
-                    lda tmp7: ora #BIT_0: sta tmp7
-                  jmp _unefonctionDone
-lbl_337:
                   ; else:
                     ; if (a1 == 0):
                     lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_339: skip:.):
                       ; if (a2 == 0):
                       lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_340: skip:.):
-                        ; if (a0 == 0):
-                        lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_341: skip:.):
-                          ; r2 = 1
-                          lda tmp7: ora #BIT_2: sta tmp7
-                          ; r1 = 1
-                          lda tmp7: ora #BIT_1: sta tmp7
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_341:
                         ; else:
                           ; r3 = 1
                           lda tmp7: ora #BIT_3: sta tmp7
@@ -1542,16 +995,6 @@ lbl_334:
                   lda tmp0 : and #BIT_5: .(:bne skip: jmp lbl_350: skip:.):
                     ; if (a1 == 0):
                     lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_351: skip:.):
-                      ; if (a0 == 0):
-                      lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_352: skip:.):
-                        ; if (a2 != 0):
-                        lda tmp0 : and #BIT_2: .(:bne skip: jmp lbl_353: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_353:
-                      jmp _unefonctionDone
-lbl_352:
                       ; else:
                         ; r0 = 1
                         lda tmp7: ora #BIT_0: sta tmp7
@@ -1587,21 +1030,9 @@ lbl_358:
               ; else:
                 ; if (a4 == 0):
                 lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_360: skip:.):
-                  ; if (a3 == 0):
-                  lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_361: skip:.):
-                    ; r0 = 1
-                    lda tmp7: ora #BIT_0: sta tmp7
-                  jmp _unefonctionDone
-lbl_361:
                   ; else:
                     ; if (a2 == 0):
                     lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_363: skip:.):
-                      ; if (a1 == 0):
-                      lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_364: skip:.):
-                        ; r0 = 1
-                        lda tmp7: ora #BIT_0: sta tmp7
-                      jmp _unefonctionDone
-lbl_364:
                       ; else:
                         ; if (a0 == 0):
                         lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_366: skip:.):
@@ -1632,45 +1063,11 @@ lbl_332:
           lda tmp0 : and #BIT_6: .(:beq skip: jmp lbl_370: skip:.):
             ; r1 = 1
             lda tmp7: ora #BIT_1: sta tmp7
-            ; if (a7 != 0):
-            lda tmp0 : and #BIT_7: .(:bne skip: jmp lbl_371: skip:.):
-              ; r0 = 1
-              lda tmp7: ora #BIT_0: sta tmp7
-            jmp _unefonctionDone
-lbl_371:
-          jmp _unefonctionDone
-lbl_370:
           ; else:
             ; if (a7 == 0):
             lda tmp0 : and #BIT_7: .(:beq skip: jmp lbl_372: skip:.):
               ; r1 = 1
               lda tmp7: ora #BIT_1: sta tmp7
-              ; if (a5 == 0):
-              lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_373: skip:.):
-                ; if (a1 != 0):
-                lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_374: skip:.):
-                  ; if (a2 != 0):
-                  lda tmp0 : and #BIT_2: .(:bne skip: jmp lbl_375: skip:.):
-                    ; if (a0 != 0):
-                    lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_376: skip:.):
-                      ; if (a4 != 0):
-                      lda tmp0 : and #BIT_4: .(:bne skip: jmp lbl_377: skip:.):
-                        ; if (a3 != 0):
-                        lda tmp0 : and #BIT_3: .(:bne skip: jmp lbl_378: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_378:
-                      jmp _unefonctionDone
-lbl_377:
-                    jmp _unefonctionDone
-lbl_376:
-                  jmp _unefonctionDone
-lbl_375:
-                jmp _unefonctionDone
-lbl_374:
-              jmp _unefonctionDone
-lbl_373:
               ; else:
                 ; r0 = 1
                 lda tmp7: ora #BIT_0: sta tmp7
@@ -1680,36 +1077,12 @@ lbl_372:
             ; else:
               ; if (a5 == 0):
               lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_380: skip:.):
-                ; if (a4 == 0):
-                lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_381: skip:.):
-                  ; r1 = 1
-                  lda tmp7: ora #BIT_1: sta tmp7
-                  ; r0 = 1
-                  lda tmp7: ora #BIT_0: sta tmp7
-                jmp _unefonctionDone
-lbl_381:
                 ; else:
                   ; if (a3 == 0):
                   lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_383: skip:.):
-                    ; if (a2 == 0):
-                    lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_384: skip:.):
-                      ; r1 = 1
-                      lda tmp7: ora #BIT_1: sta tmp7
-                      ; r0 = 1
-                      lda tmp7: ora #BIT_0: sta tmp7
-                    jmp _unefonctionDone
-lbl_384:
                     ; else:
                       ; if (a1 == 0):
                       lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_386: skip:.):
-                        ; if (a0 == 0):
-                        lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_387: skip:.):
-                          ; r1 = 1
-                          lda tmp7: ora #BIT_1: sta tmp7
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_387:
                         ; else:
                           ; r2 = 1
                           lda tmp7: ora #BIT_2: sta tmp7
@@ -1747,44 +1120,14 @@ lbl_1:
           lda tmp0 : and #BIT_6: .(:beq skip: jmp lbl_395: skip:.):
             ; if (a8 == 0):
             lda tmp0+1 : and #BIT_8: .(:beq skip: jmp lbl_396: skip:.):
-              ; if (a5 == 0):
-              lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_397: skip:.):
-                ; r2 = 1
-                lda tmp7: ora #BIT_2: sta tmp7
-                ; r1 = 1
-                lda tmp7: ora #BIT_1: sta tmp7
-                ; r0 = 1
-                lda tmp7: ora #BIT_0: sta tmp7
-              jmp _unefonctionDone
-lbl_397:
               ; else:
                 ; if (a4 == 0):
                 lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_399: skip:.):
-                  ; if (a3 == 0):
-                  lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_400: skip:.):
-                    ; r2 = 1
-                    lda tmp7: ora #BIT_2: sta tmp7
-                    ; r1 = 1
-                    lda tmp7: ora #BIT_1: sta tmp7
-                    ; r0 = 1
-                    lda tmp7: ora #BIT_0: sta tmp7
-                  jmp _unefonctionDone
-lbl_400:
                   ; else:
                     ; if (a1 == 0):
                     lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_402: skip:.):
                       ; if (a0 == 0):
                       lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_403: skip:.):
-                        ; if (a2 == 0):
-                        lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_404: skip:.):
-                          ; r2 = 1
-                          lda tmp7: ora #BIT_2: sta tmp7
-                          ; r1 = 1
-                          lda tmp7: ora #BIT_1: sta tmp7
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_404:
                         ; else:
                           ; r3 = 1
                           lda tmp7: ora #BIT_3: sta tmp7
@@ -1818,16 +1161,6 @@ lbl_396:
                   lda tmp0 : and #BIT_2: .(:bne skip: jmp lbl_412: skip:.):
                     ; if (a3 != 0):
                     lda tmp0 : and #BIT_3: .(:bne skip: jmp lbl_413: skip:.):
-                      ; if (a0 == 0):
-                      lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_414: skip:.):
-                        ; if (a1 != 0):
-                        lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_415: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_415:
-                      jmp _unefonctionDone
-lbl_414:
                       ; else:
                         ; r0 = 1
                         lda tmp7: ora #BIT_0: sta tmp7
@@ -1857,16 +1190,6 @@ lbl_395:
                   lda tmp0 : and #BIT_4: .(:bne skip: jmp lbl_421: skip:.):
                     ; if (a2 == 0):
                     lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_422: skip:.):
-                      ; if (a0 == 0):
-                      lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_423: skip:.):
-                        ; if (a1 != 0):
-                        lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_424: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_424:
-                      jmp _unefonctionDone
-lbl_423:
                       ; else:
                         ; r0 = 1
                         lda tmp7: ora #BIT_0: sta tmp7
@@ -1901,12 +1224,6 @@ lbl_427:
                 lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_428: skip:.):
                   ; if (a3 == 0):
                   lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_429: skip:.):
-                    ; if (a0 == 0):
-                    lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_430: skip:.):
-                      ; r0 = 1
-                      lda tmp7: ora #BIT_0: sta tmp7
-                    jmp _unefonctionDone
-lbl_430:
                     ; else:
                       ; if (a2 == 0):
                       lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_432: skip:.):
@@ -1948,42 +1265,12 @@ lbl_394:
             lda tmp0+1 : and #BIT_8: .(:beq skip: jmp lbl_440: skip:.):
               ; if (a5 == 0):
               lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_441: skip:.):
-                ; if (a4 == 0):
-                lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_442: skip:.):
-                  ; r2 = 1
-                  lda tmp7: ora #BIT_2: sta tmp7
-                  ; r1 = 1
-                  lda tmp7: ora #BIT_1: sta tmp7
-                  ; r0 = 1
-                  lda tmp7: ora #BIT_0: sta tmp7
-                jmp _unefonctionDone
-lbl_442:
                 ; else:
-                  ; if (a3 == 0):
-                  lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_444: skip:.):
-                    ; r2 = 1
-                    lda tmp7: ora #BIT_2: sta tmp7
-                    ; r1 = 1
-                    lda tmp7: ora #BIT_1: sta tmp7
-                    ; r0 = 1
-                    lda tmp7: ora #BIT_0: sta tmp7
-                  jmp _unefonctionDone
-lbl_444:
                   ; else:
                     ; if (a2 == 0):
                     lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_446: skip:.):
                       ; if (a1 == 0):
                       lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_447: skip:.):
-                        ; if (a0 == 0):
-                        lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_448: skip:.):
-                          ; r2 = 1
-                          lda tmp7: ora #BIT_2: sta tmp7
-                          ; r1 = 1
-                          lda tmp7: ora #BIT_1: sta tmp7
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_448:
                         ; else:
                           ; r3 = 1
                           lda tmp7: ora #BIT_3: sta tmp7
@@ -2011,28 +1298,6 @@ lbl_440:
               lda tmp7: ora #BIT_1: sta tmp7
               ; if (a5 == 0):
               lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_454: skip:.):
-                ; if (a4 == 0):
-                lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_455: skip:.):
-                  ; if (a1 != 0):
-                  lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_456: skip:.):
-                    ; if (a3 != 0):
-                    lda tmp0 : and #BIT_3: .(:bne skip: jmp lbl_457: skip:.):
-                      ; if (a0 != 0):
-                      lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_458: skip:.):
-                        ; if (a2 != 0):
-                        lda tmp0 : and #BIT_2: .(:bne skip: jmp lbl_459: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_459:
-                      jmp _unefonctionDone
-lbl_458:
-                    jmp _unefonctionDone
-lbl_457:
-                  jmp _unefonctionDone
-lbl_456:
-                jmp _unefonctionDone
-lbl_455:
                 ; else:
                   ; r0 = 1
                   lda tmp7: ora #BIT_0: sta tmp7
@@ -2057,16 +1322,6 @@ lbl_439:
                   lda tmp0 : and #BIT_3: .(:bne skip: jmp lbl_464: skip:.):
                     ; if (a1 == 0):
                     lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_465: skip:.):
-                      ; if (a0 == 0):
-                      lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_466: skip:.):
-                        ; if (a2 != 0):
-                        lda tmp0 : and #BIT_2: .(:bne skip: jmp lbl_467: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_467:
-                      jmp _unefonctionDone
-lbl_466:
                       ; else:
                         ; r0 = 1
                         lda tmp7: ora #BIT_0: sta tmp7
@@ -2087,38 +1342,14 @@ lbl_462:
             jmp _unefonctionDone
 lbl_461:
             ; else:
-              ; if (a5 == 0):
-              lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_471: skip:.):
-                ; r1 = 1
-                lda tmp7: ora #BIT_1: sta tmp7
-                ; r0 = 1
-                lda tmp7: ora #BIT_0: sta tmp7
-              jmp _unefonctionDone
-lbl_471:
               ; else:
                 ; if (a3 == 0):
                 lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_473: skip:.):
                   ; if (a4 == 0):
                   lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_474: skip:.):
-                    ; if (a2 == 0):
-                    lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_475: skip:.):
-                      ; r1 = 1
-                      lda tmp7: ora #BIT_1: sta tmp7
-                      ; r0 = 1
-                      lda tmp7: ora #BIT_0: sta tmp7
-                    jmp _unefonctionDone
-lbl_475:
                     ; else:
                       ; if (a1 == 0):
                       lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_477: skip:.):
-                        ; if (a0 == 0):
-                        lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_478: skip:.):
-                          ; r1 = 1
-                          lda tmp7: ora #BIT_1: sta tmp7
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_478:
                         ; else:
                           ; r2 = 1
                           lda tmp7: ora #BIT_2: sta tmp7
@@ -2150,54 +1381,14 @@ lbl_393:
         lda tmp0+1 : and #BIT_10: .(:beq skip: jmp lbl_483: skip:.):
           ; if (a8 == 0):
           lda tmp0+1 : and #BIT_8: .(:beq skip: jmp lbl_484: skip:.):
-            ; if (a6 == 0):
-            lda tmp0 : and #BIT_6: .(:beq skip: jmp lbl_485: skip:.):
-              ; r1 = 1
-              lda tmp7: ora #BIT_1: sta tmp7
-              ; r0 = 1
-              lda tmp7: ora #BIT_0: sta tmp7
-            jmp _unefonctionDone
-lbl_485:
             ; else:
               ; if (a5 == 0):
               lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_487: skip:.):
-                ; if (a3 == 0):
-                lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_488: skip:.):
-                  ; r1 = 1
-                  lda tmp7: ora #BIT_1: sta tmp7
-                  ; r0 = 1
-                  lda tmp7: ora #BIT_0: sta tmp7
-                jmp _unefonctionDone
-lbl_488:
                 ; else:
-                  ; if (a4 == 0):
-                  lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_490: skip:.):
-                    ; r1 = 1
-                    lda tmp7: ora #BIT_1: sta tmp7
-                    ; r0 = 1
-                    lda tmp7: ora #BIT_0: sta tmp7
-                  jmp _unefonctionDone
-lbl_490:
                   ; else:
-                    ; if (a2 == 0):
-                    lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_492: skip:.):
-                      ; r1 = 1
-                      lda tmp7: ora #BIT_1: sta tmp7
-                      ; r0 = 1
-                      lda tmp7: ora #BIT_0: sta tmp7
-                    jmp _unefonctionDone
-lbl_492:
                     ; else:
                       ; if (a0 == 0):
                       lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_494: skip:.):
-                        ; if (a1 == 0):
-                        lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_495: skip:.):
-                          ; r1 = 1
-                          lda tmp7: ora #BIT_1: sta tmp7
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_495:
                         ; else:
                           ; r2 = 1
                           lda tmp7: ora #BIT_2: sta tmp7
@@ -2218,21 +1409,9 @@ lbl_484:
             lda tmp7: ora #BIT_2: sta tmp7
             ; if (a6 == 0):
             lda tmp0 : and #BIT_6: .(:beq skip: jmp lbl_499: skip:.):
-              ; if (a5 == 0):
-              lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_500: skip:.):
-                ; r0 = 1
-                lda tmp7: ora #BIT_0: sta tmp7
-              jmp _unefonctionDone
-lbl_500:
               ; else:
                 ; if (a4 == 0):
                 lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_502: skip:.):
-                  ; if (a1 == 0):
-                  lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_503: skip:.):
-                    ; r0 = 1
-                    lda tmp7: ora #BIT_0: sta tmp7
-                  jmp _unefonctionDone
-lbl_503:
                   ; else:
                     ; if (a2 == 0):
                     lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_505: skip:.):
@@ -2288,16 +1467,6 @@ lbl_483:
                   lda tmp0 : and #BIT_2: .(:bne skip: jmp lbl_516: skip:.):
                     ; if (a3 != 0):
                     lda tmp0 : and #BIT_3: .(:bne skip: jmp lbl_517: skip:.):
-                      ; if (a0 == 0):
-                      lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_518: skip:.):
-                        ; if (a1 != 0):
-                        lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_519: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_519:
-                      jmp _unefonctionDone
-lbl_518:
                       ; else:
                         ; r0 = 1
                         lda tmp7: ora #BIT_0: sta tmp7
@@ -2330,20 +1499,6 @@ lbl_512:
                 lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_525: skip:.):
                   ; if (a4 == 0):
                   lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_526: skip:.):
-                    ; if (a3 == 0):
-                    lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_527: skip:.):
-                      ; if (a1 != 0):
-                      lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_528: skip:.):
-                        ; if (a0 != 0):
-                        lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_529: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_529:
-                      jmp _unefonctionDone
-lbl_528:
-                    jmp _unefonctionDone
-lbl_527:
                     ; else:
                       ; r0 = 1
                       lda tmp7: ora #BIT_0: sta tmp7
@@ -2386,21 +1541,9 @@ lbl_392:
               lda tmp0 : and #BIT_6: .(:beq skip: jmp lbl_539: skip:.):
                 ; if (a5 == 0):
                 lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_540: skip:.):
-                  ; if (a3 == 0):
-                  lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_541: skip:.):
-                    ; r0 = 1
-                    lda tmp7: ora #BIT_0: sta tmp7
-                  jmp _unefonctionDone
-lbl_541:
                   ; else:
                     ; if (a2 == 0):
                     lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_543: skip:.):
-                      ; if (a0 == 0):
-                      lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_544: skip:.):
-                        ; r0 = 1
-                        lda tmp7: ora #BIT_0: sta tmp7
-                      jmp _unefonctionDone
-lbl_544:
                       ; else:
                         ; if (a1 == 0):
                         lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_546: skip:.):
@@ -2436,61 +1579,17 @@ lbl_538:
               lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_550: skip:.):
                 ; r1 = 1
                 lda tmp7: ora #BIT_1: sta tmp7
-                ; if (a6 != 0):
-                lda tmp0 : and #BIT_6: .(:bne skip: jmp lbl_551: skip:.):
-                  ; r0 = 1
-                  lda tmp7: ora #BIT_0: sta tmp7
-                jmp _unefonctionDone
-lbl_551:
-              jmp _unefonctionDone
-lbl_550:
               ; else:
                 ; if (a6 == 0):
                 lda tmp0 : and #BIT_6: .(:beq skip: jmp lbl_553: skip:.):
                   ; r1 = 1
                   lda tmp7: ora #BIT_1: sta tmp7
-                  ; if (a1 != 0):
-                  lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_554: skip:.):
-                    ; if (a3 != 0):
-                    lda tmp0 : and #BIT_3: .(:bne skip: jmp lbl_555: skip:.):
-                      ; if (a2 != 0):
-                      lda tmp0 : and #BIT_2: .(:bne skip: jmp lbl_556: skip:.):
-                        ; if (a0 != 0):
-                        lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_557: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_557:
-                      jmp _unefonctionDone
-lbl_556:
-                    jmp _unefonctionDone
-lbl_555:
-                  jmp _unefonctionDone
-lbl_554:
-                jmp _unefonctionDone
-lbl_553:
                 ; else:
                   ; if (a3 == 0):
                   lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_559: skip:.):
-                    ; if (a2 == 0):
-                    lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_560: skip:.):
-                      ; r1 = 1
-                      lda tmp7: ora #BIT_1: sta tmp7
-                      ; r0 = 1
-                      lda tmp7: ora #BIT_0: sta tmp7
-                    jmp _unefonctionDone
-lbl_560:
                     ; else:
                       ; if (a1 == 0):
                       lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_562: skip:.):
-                        ; if (a0 == 0):
-                        lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_563: skip:.):
-                          ; r1 = 1
-                          lda tmp7: ora #BIT_1: sta tmp7
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_563:
                         ; else:
                           ; r2 = 1
                           lda tmp7: ora #BIT_2: sta tmp7
@@ -2514,12 +1613,6 @@ lbl_537:
             lda tmp7: ora #BIT_3: sta tmp7
             ; if (a6 == 0):
             lda tmp0 : and #BIT_6: .(:beq skip: jmp lbl_568: skip:.):
-              ; if (a4 == 0):
-              lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_569: skip:.):
-                ; r0 = 1
-                lda tmp7: ora #BIT_0: sta tmp7
-              jmp _unefonctionDone
-lbl_569:
               ; else:
                 ; if (a5 == 0):
                 lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_571: skip:.):
@@ -2537,12 +1630,6 @@ lbl_573:
                   ; else:
                     ; if (a2 == 0):
                     lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_575: skip:.):
-                      ; if (a0 == 0):
-                      lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_576: skip:.):
-                        ; r0 = 1
-                        lda tmp7: ora #BIT_0: sta tmp7
-                      jmp _unefonctionDone
-lbl_576:
                       ; else:
                         ; if (a1 == 0):
                         lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_578: skip:.):
@@ -2585,16 +1672,6 @@ lbl_536:
                   lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_585: skip:.):
                     ; if (a2 != 0):
                     lda tmp0 : and #BIT_2: .(:bne skip: jmp lbl_586: skip:.):
-                      ; if (a1 == 0):
-                      lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_587: skip:.):
-                        ; if (a0 != 0):
-                        lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_588: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_588:
-                      jmp _unefonctionDone
-lbl_587:
                       ; else:
                         ; r0 = 1
                         lda tmp7: ora #BIT_0: sta tmp7
@@ -2637,12 +1714,6 @@ lbl_593:
                 lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_595: skip:.):
                   ; if (a4 == 0):
                   lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_596: skip:.):
-                    ; if (a0 == 0):
-                    lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_597: skip:.):
-                      ; r0 = 1
-                      lda tmp7: ora #BIT_0: sta tmp7
-                    jmp _unefonctionDone
-lbl_597:
                     ; else:
                       ; if (a1 == 0):
                       lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_599: skip:.):
@@ -2701,20 +1772,6 @@ lbl_535:
                 lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_611: skip:.):
                   ; if (a4 == 0):
                   lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_612: skip:.):
-                    ; if (a3 == 0):
-                    lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_613: skip:.):
-                      ; if (a0 != 0):
-                      lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_614: skip:.):
-                        ; if (a1 != 0):
-                        lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_615: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_615:
-                      jmp _unefonctionDone
-lbl_614:
-                    jmp _unefonctionDone
-lbl_613:
                     ; else:
                       ; r0 = 1
                       lda tmp7: ora #BIT_0: sta tmp7
@@ -2747,16 +1804,6 @@ lbl_609:
                   lda tmp0 : and #BIT_5: .(:bne skip: jmp lbl_622: skip:.):
                     ; if (a3 != 0):
                     lda tmp0 : and #BIT_3: .(:bne skip: jmp lbl_623: skip:.):
-                      ; if (a1 == 0):
-                      lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_624: skip:.):
-                        ; if (a0 != 0):
-                        lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_625: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_625:
-                      jmp _unefonctionDone
-lbl_624:
                       ; else:
                         ; r0 = 1
                         lda tmp7: ora #BIT_0: sta tmp7
@@ -2787,20 +1834,6 @@ lbl_608:
                 lda tmp0 : and #BIT_4: .(:bne skip: jmp lbl_629: skip:.):
                   ; if (a3 != 0):
                   lda tmp0 : and #BIT_3: .(:bne skip: jmp lbl_630: skip:.):
-                    ; if (a2 == 0):
-                    lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_631: skip:.):
-                      ; if (a0 != 0):
-                      lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_632: skip:.):
-                        ; if (a1 != 0):
-                        lda tmp0 : and #BIT_1: .(:bne skip: jmp lbl_633: skip:.):
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_633:
-                      jmp _unefonctionDone
-lbl_632:
-                    jmp _unefonctionDone
-lbl_631:
                     ; else:
                       ; r0 = 1
                       lda tmp7: ora #BIT_0: sta tmp7
@@ -2834,20 +1867,6 @@ lbl_607:
           lda tmp0+1 : and #BIT_10: .(:beq skip: jmp lbl_636: skip:.):
             ; if (a11 == 0):
             lda tmp0+1 : and #BIT_11: .(:beq skip: jmp lbl_637: skip:.):
-              ; if (a5 == 0):
-              lda tmp0 : and #BIT_5: .(:beq skip: jmp lbl_638: skip:.):
-                ; r4 = 1
-                lda tmp7: ora #BIT_4: sta tmp7
-                ; r3 = 1
-                lda tmp7: ora #BIT_3: sta tmp7
-                ; r2 = 1
-                lda tmp7: ora #BIT_2: sta tmp7
-                ; r1 = 1
-                lda tmp7: ora #BIT_1: sta tmp7
-                ; r0 = 1
-                lda tmp7: ora #BIT_0: sta tmp7
-              jmp _unefonctionDone
-lbl_638:
               ; else:
                 ; if (a1 == 0):
                 lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_640: skip:.):
@@ -2857,20 +1876,6 @@ lbl_638:
                     lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_642: skip:.):
                       ; if (a0 == 0):
                       lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_643: skip:.):
-                        ; if (a3 == 0):
-                        lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_644: skip:.):
-                          ; r4 = 1
-                          lda tmp7: ora #BIT_4: sta tmp7
-                          ; r3 = 1
-                          lda tmp7: ora #BIT_3: sta tmp7
-                          ; r2 = 1
-                          lda tmp7: ora #BIT_2: sta tmp7
-                          ; r1 = 1
-                          lda tmp7: ora #BIT_1: sta tmp7
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_644:
                         ; else:
                           ; r5 = 1
                           lda tmp7: ora #BIT_5: sta tmp7
@@ -2911,18 +1916,6 @@ lbl_637:
           jmp _unefonctionDone
 lbl_636:
           ; else:
-            ; if (a11 == 0):
-            lda tmp0+1 : and #BIT_11: .(:beq skip: jmp lbl_651: skip:.):
-              ; r5 = 1
-              lda tmp7: ora #BIT_5: sta tmp7
-              ; r3 = 1
-              lda tmp7: ora #BIT_3: sta tmp7
-              ; r2 = 1
-              lda tmp7: ora #BIT_2: sta tmp7
-              ; r0 = 1
-              lda tmp7: ora #BIT_0: sta tmp7
-            jmp _unefonctionDone
-lbl_651:
             ; else:
               ; if (a0 == 0):
               lda tmp0 : and #BIT_0: .(:beq skip: jmp lbl_653: skip:.):
@@ -2934,22 +1927,6 @@ lbl_651:
                     lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_656: skip:.):
                       ; if (a2 == 0):
                       lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_657: skip:.):
-                        ; if (a4 == 0):
-                        lda tmp0 : and #BIT_4: .(:beq skip: jmp lbl_658: skip:.):
-                          ; r5 = 1
-                          lda tmp7: ora #BIT_5: sta tmp7
-                          ; r4 = 1
-                          lda tmp7: ora #BIT_4: sta tmp7
-                          ; r3 = 1
-                          lda tmp7: ora #BIT_3: sta tmp7
-                          ; r2 = 1
-                          lda tmp7: ora #BIT_2: sta tmp7
-                          ; r1 = 1
-                          lda tmp7: ora #BIT_1: sta tmp7
-                          ; r0 = 1
-                          lda tmp7: ora #BIT_0: sta tmp7
-                        jmp _unefonctionDone
-lbl_658:
                         ; else:
                           ; r6 = 1
                           lda tmp7: ora #BIT_6: sta tmp7
@@ -2979,12 +1956,3 @@ lbl_653:
                 ; r6 = 1
                 lda tmp7: ora #BIT_6: sta tmp7
   jmp _unefonctionDone
-_unefonctionDone
-lda tmp7: sta _function_output
-lda tmp7+1: sta _function_output+1
-lda sav_reg_0: sta tmp0: 
-lda sav_reg_0+1: sta tmp0+1: 
-lda sav_reg_7: sta tmp7: 
-lda sav_reg_7+1: sta tmp7+1: 
-.):
-rts

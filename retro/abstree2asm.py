@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 NBITS_INPUT = 3
 NBITS_OUTPUT  = 2
 def read_abstree_from_json():
@@ -25,7 +26,8 @@ def abstree_to_asm6502_code(abstree, indent=0):
         comment(f"{ind}; {abstree['value']}")
         
         [bitnum, bitval] = [int(v.strip().replace('r','')) for v in abstree['value'].strip().split("=")]
-        code_lines.append(f"{ind}lda tmp7: ora #BIT_{bitnum}: sta tmp7")
+        offset = "+1" if ((bitnum%16)//8 != 0) else ""
+        code_lines.append(f"{ind}lda tmp7{offset}: ora #BIT_{bitnum}: sta tmp7{offset}")
     # If there is a subtree, process it recursively
     if 'subtree' in abstree:
         if 'feature' in abstree['subtree']:
@@ -100,6 +102,15 @@ def abstree_to_asm6502_code(abstree, indent=0):
                     code_lines += abstree_to_asm6502_code(abstree['right'], indent + 1)
                     code_lines.append(f"{ind}jmp _unefonctionDone")
                     code_lines.append(f"lbl_{new_label}:")
+    # Sauvegarde des lignes dans function_raw.asm
+    raw_file_path = Path("retro/function_raw.asm")
+    with raw_file_path.open("w", encoding="utf-8") as raw_ficout:
+        for line in code_lines:
+            raw_ficout.write(line + "\n")
+
+    return code_lines
+
+def optim_asm_code(code_lines):
     return code_lines
 
 def generate_function_asm_code(abstree, indent=0):
