@@ -59,6 +59,44 @@ def normalize_label(value: str) -> str:
 def classify_and_extract(line: str):
     indent = len(line) - len(line.lstrip(" "))
     indent_level = indent // 2
+    stripped = line.strip("\n")
+
+    # # 1. Comment multi-if
+    # if stripped.startswith("; if (") and "and" in stripped:
+    #     conds_raw = re.findall(r"\((a\d+) *([!=]=) *(\d+)\)", stripped)
+    #     conditions = []
+    #     for reg, op, val in conds_raw:
+    #         conditions.append({
+    #             "reg": int(reg[1:]),  # a3 -> 3
+    #             "op": op,
+    #             "value": int(val)
+    #         })
+    #     return {
+    #         "type": "comment_multi_if",
+    #         "conditions": conditions,
+    #         "indent": indent,
+    #         "raw": line.rstrip("\n")
+    #     }
+
+    # # 2. Multi-bit AND + CMP branch
+    # m = re.match(
+    #     r"lda (\w+): and #((?:BIT_\d+\+?)+): cmp #((?:BIT_\d+\+?)+): .\(:beq skip: jmp lbl_(\d+): skip:.\)",
+    #     stripped
+    # )
+    # if m:
+    #     var, and_bits_raw, cmp_bits_raw, label = m.groups()
+    #     and_bits = [int(b.replace("BIT_", "")) for b in and_bits_raw.split("+")]
+    #     cmp_bits = [int(b.replace("BIT_", "")) for b in cmp_bits_raw.split("+")]
+    #     return {
+    #         "type": "and_multi_bit_branch",
+    #         "var": var,
+    #         "and_bits": and_bits,
+    #         "cmp_bits": cmp_bits,
+    #         "label": int(label),
+    #         "indent": indent,
+    #         "raw": line.rstrip("\n")
+    #     }
+    
     for name, rx in patterns.items():
         m = rx.match(line)
         if m:
@@ -101,7 +139,61 @@ def classify_and_extract(line: str):
 
 def regenerate_line(instr: dict) -> str:
     """Reprend strictement la ligne originale"""
-    return instr.get("raw", "")
+    result = ""
+    indent = "  " * instr.get("indent", 0)
+
+    if instr["type"] == "comment_if":
+        result = f"{indent}; if ({instr['reg']} {instr['op']} {instr['value']}):"
+
+    elif instr["type"] == "assign_or_bit":
+        result = f"{indent}lda {instr['var']}: ora #BIT_{instr['bit']}: sta {instr['var']}"
+
+    elif instr["type"] == "comment_multi_assign":
+        regs = [f"r{a}" for a,b in instr["regs"]]
+        vals = [f"{b}" for a,b in instr["regs"]]
+        lst = ", ".join(f"{r} = {v}" for r, v in zip(regs, vals))
+        result = f"{indent}; {lst}"
+
+    elif instr["type"] == "assign_multi_or_bit":
+        bits = "+".join([f"BIT_{b}" for b in instr["bits"]])
+        result = f"{indent}lda {instr['var']}: ora #{bits}: sta {instr['var']}"
+
+    elif instr["type"] == "comment_assign":
+        result = f"{indent}; r{instr['reg']} = {instr['value']}"
+
+    elif instr["type"] == "and_bit_branch":
+        result = (
+            f"{indent}lda {instr['var']} : and #BIT_{instr['bit']}: "
+            f".(:{instr['branch']} skip: jmp lbl_{instr['label']}: skip:.):"
+        )
+
+    elif instr["type"] == "comment_multi_if":
+        conds = []
+        for cond in instr["conditions"]:
+            conds.append(f"({ 'a'+str(cond['reg']) } {cond['op']} {cond['value']})")
+        joined = " and ".join(conds)
+        result = f"{indent}; if {joined}:"
+
+    elif instr["type"] == "and_multi_bit_branch":
+        and_bits = "+".join([f"BIT_{b}" for b in instr["and_bits"]])
+        cmp_bits = "+".join([f"BIT_{b}" for b in instr["cmp_bits"]])
+        result = (
+            f"{indent}lda {instr['var']}: and #{and_bits}: "
+            f"cmp #{cmp_bits}: "
+            f".(:beq skip: jmp lbl_{instr['label']}: skip:.)"
+        )
+
+    elif instr["type"] == "label":
+        result = f"{indent}lbl_{instr['label']}:"
+
+    elif instr["type"] == "raw":
+        result = instr["raw"]
+
+    else:
+        # fallback
+        result = instr.get("raw", "")
+
+    return result # instr.get("raw", "")
 
 
 # === Filtres d’optimisation ===
@@ -219,8 +311,94 @@ def opt_merge_consecutive_assigns(instructions):
 def opt_merge_consecutive_uncomplemented_conditions(instructions): 
     """Regroupe les test de conditions sur plusieurs bits en une instruction unique.""" 
 
+    def fuse_nested_ifs(instrs):
+        """
+        Transforme une séquence imbriquée de comment_if + and_bit_branch
+        en un seul comment_multi_if + and_multi_bit_branch.
+        """
+
+        # [
+        #     {
+        #         "type": "comment_multi_if",
+        #         "conditions": [
+        #             {"reg": 5, "op": "==", "value": 0},
+        #             {"reg": 1, "op": "!=", "value": 0},
+        #             {"reg": 2, "op": "!=", "value": 0},
+        #             {"reg": 0, "op": "!=", "value": 0},
+        #             {"reg": 4, "op": "!=", "value": 0},
+        #             {"reg": 3, "op": "!=", "value": 0},
+        #         ],
+        #         "indent": 3
+        #     },
+        #     {
+        #         "type": "and_multi_bit_branch",
+        #         "var": "tmp0",
+        #         "and_bits": [5,1,2,0,4,3],
+        #         "cmp_bits": [1,2,0,3],
+        #         "label": 373,
+        #         "indent": 3
+        #     }
+        # ]
+
+        new_instrs = []
+        i = 0
+
+        while i < len(instrs):
+            instr = instrs[i]
+
+            # détecter début séquence imbriquée
+            if instr["type"] == "comment_if":
+                conditions = []
+                and_bits = []
+                cmp_bits = []
+                var = None
+                main_label = None
+                indent = instr["indent"]
+
+                # explorer la séquence imbriquée
+                while i < len(instrs) and instrs[i]["type"] in ("comment_if", "and_bit_branch"):
+                    if instrs[i]["type"] == "comment_if":
+                        conditions.append({
+                            "reg": instrs[i]["reg"],
+                            "op": instrs[i]["op"],
+                            "value": instrs[i]["value"]
+                        })
+                    elif instrs[i]["type"] == "and_bit_branch":
+                        var = instrs[i]["var"]
+                        and_bits.append(instrs[i]["bit"])
+                        if instrs[i]["cmp_bit"] != 0:  # si on compare à 1, alors ce bit doit être présent
+                            cmp_bits.append(instrs[i]["cmp_bit"])
+                        if main_label is None:
+                            main_label = instrs[i]["label"]
+                    i += 1
+
+                # créer les nouvelles instructions compactes
+                new_instrs.append({
+                    "type": "comment_multi_if",
+                    "conditions": conditions,
+                    "indent": indent
+                })
+                new_instrs.append({
+                    "type": "and_multi_bit_branch",
+                    "var": var,
+                    "and_bits": and_bits,
+                    "cmp_bits": cmp_bits,
+                    "label": main_label,
+                    "indent": indent
+                })
+
+            else:
+                # recopier tel quel
+                new_instrs.append(instr)
+                i += 1
+
+        return new_instrs
+
     def rewrite_code(list_of_instruction):
-        return []
+        if len(list_of_instruction) <=  6:
+            return list_of_instruction
+        else:
+            return [] # fuse_nested_ifs(list_of_instruction)
     
     new_instrs = []
 
@@ -264,7 +442,8 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
             if instr["type"] in ['label','terminal_jmp']:
                 etat = 3
                 stack.append(instr)
-                nb_jumps_to_merge += 1
+                if instr["type"] == 'terminal_jmp':
+                    nb_jumps_to_merge += 1
                 # if nb_assigment_to_merge > 1 or nb_conditions_to_merge > 1:
                 #     rewritten = rewrite_code(stack)
                 #     new_instrs.extend(rewritten)
@@ -291,7 +470,6 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
             else:
                 print ("--== ERROR ==--")
                 pass
-
         elif etat==3:
             if instr["type"] in ['label','terminal_jmp']:
                 if instr["type"] == 'terminal_jmp': 
@@ -299,6 +477,11 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
                         nb_jumps_to_merge += 1
                         stack.append(instr)
                     else:
+                        while stack[0]["indent"] < instr["indent"]:
+                            new_instrs.append(stack.pop(0))
+                        rewritten = rewrite_code(stack)
+                        new_instrs.extend(rewritten)
+                        stack = []
                         etat = 0
                         nb_assigment_to_merge = 0
                         nb_conditions_to_merge = 0
@@ -348,8 +531,8 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
 def apply_optimizations(instructions):
     """Chaîne de filtres, modifiable à volonté"""
     filters = [
+        opt_merge_consecutive_assigns,
         opt_merge_consecutive_uncomplemented_conditions,
-        # opt_merge_consecutive_assigns,
         # opt_remove_double_jumps,
     ]
     for f in filters:
