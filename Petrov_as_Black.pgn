@@ -1,0 +1,1404 @@
+[Event "?"]
+[Site "?"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Various"]
+[Black "Various"]
+[Result "*"]
+
+{ {"nb_occ":371 } 1. e4 { {"nb_occ": 371, "prob": 1.0 } 1... e5
+{ {"nb_occ": 371, "prob": 1.0 } 2. Nf3 { {"nb_occ": 371, "prob": 1.0 } 2... Nf6
+{ {"nb_occ": 371, "prob": 1.0 } 3. Nxe5
+{ {"nb_occ": 304, "prob": 0.8194070080862533 } ( 3. d4
+{ {"nb_occ": 62, "prob": 0.16711590296495957 } 3... Nxe4
+{ {"nb_occ": 62, "prob": 1.0 } 4. Bd3
+{ {"nb_occ": 36, "prob": 0.5806451612903226 } ( 4. dxe5
+{ {"nb_occ": 26, "prob": 0.41935483870967744 } 4... d5
+{ {"nb_occ": 22, "prob": 0.8461538461538461 } ( 4... Bc5
+{ {"nb_occ": 4, "prob": 0.15384615384615385 } 5. Bc4
+{ {"nb_occ": 4, "prob": 1.0 } 5... Nxf2 { {"nb_occ": 4, "prob": 1.0 } 6. Bxf7+
+{ {"nb_occ": 4, "prob": 1.0 } 6... Kxf7 { {"nb_occ": 4, "prob": 1.0 } 7. Qd5+
+{ {"nb_occ": 4, "prob": 1.0 } 7... Kg6 { {"nb_occ": 4, "prob": 1.0 } 8. Qxc5
+{ {"nb_occ": 4, "prob": 1.0 } 8... Nxh1 { {"nb_occ": 4, "prob": 1.0 } 9. Nc3
+{ {"nb_occ": 4, "prob": 1.0 } 9... h6 { {"nb_occ": 4, "prob": 1.0 } 10. Bf4
+{ {"nb_occ": 1, "prob": 0.25 } ( 10. Qc4 { {"nb_occ": 3, "prob": 0.75 } 10...
+Nc6 { {"nb_occ": 2, "prob": 0.6666666666666666 } ( 10... d5
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 11. Nxd5
+{ {"nb_occ": 1, "prob": 1.0 } 11... Nc6 { {"nb_occ": 1, "prob": 1.0 } 12. Be3
+{ {"nb_occ": 1, "prob": 1.0 } 12... Kh7 { {"nb_occ": 1, "prob": 1.0 } ) 11. Nd5
+{ {"nb_occ": 2, "prob": 1.0 } 11... d6 { {"nb_occ": 2, "prob": 1.0 } 12. Nf4+
+{ {"nb_occ": 1, "prob": 0.5 } ( 12. e6 { {"nb_occ": 1, "prob": 0.5 } 12... Kh7
+{ {"nb_occ": 1, "prob": 1.0 } ) 12... Kh7 { {"nb_occ": 1, "prob": 1.0 } ) 10...
+Nc6 { {"nb_occ": 1, "prob": 1.0 } 11. O-O-O { {"nb_occ": 1, "prob": 1.0 } 11...
+Rf8 { {"nb_occ": 1, "prob": 1.0 } 12. Qe3 { {"nb_occ": 1, "prob": 1.0 } 12...
+Nf2 { {"nb_occ": 1, "prob": 1.0 } ) 5. Nbd2 { {"nb_occ": 22, "prob": 1.0 } 5...
+Nxd2 { {"nb_occ": 12, "prob": 0.5454545454545454 } ( 5... Qd7
+{ {"nb_occ": 4, "prob": 0.18181818181818182 } 6. Bd3
+{ {"nb_occ": 2, "prob": 0.5 } ( 6. Nd4 { {"nb_occ": 1, "prob": 0.25 } 6... Qe7
+{ {"nb_occ": 1, "prob": 1.0 } 7. N2f3 { {"nb_occ": 1, "prob": 1.0 } 7... c5
+{ {"nb_occ": 1, "prob": 1.0 } 8. Nb5 { {"nb_occ": 1, "prob": 1.0 } 8... Be6
+{ {"nb_occ": 1, "prob": 1.0 } 9. Bd3 { {"nb_occ": 1, "prob": 1.0 } 9... Qd7
+{ {"nb_occ": 1, "prob": 1.0 } 10. O-O { {"nb_occ": 1, "prob": 1.0 } 10... a6
+{ {"nb_occ": 1, "prob": 1.0 } 11. Nc3 { {"nb_occ": 1, "prob": 1.0 } 11... Nxc3
+{ {"nb_occ": 1, "prob": 1.0 } 12. bxc3 { {"nb_occ": 1, "prob": 1.0 } 12... Nc6
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 6. Be2 { {"nb_occ": 1, "prob": 0.25 } 6...
+Nc6 { {"nb_occ": 1, "prob": 1.0 } 7. O-O { {"nb_occ": 1, "prob": 1.0 } 7... Be7
+{ {"nb_occ": 1, "prob": 1.0 } 8. c4 { {"nb_occ": 1, "prob": 1.0 } 8... Nxd2
+{ {"nb_occ": 1, "prob": 1.0 } 9. Bxd2 { {"nb_occ": 1, "prob": 1.0 } 9... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 10. Qc2 { {"nb_occ": 1, "prob": 1.0 } 10... dxc4
+{ {"nb_occ": 1, "prob": 1.0 } 11. Bxc4 { {"nb_occ": 1, "prob": 1.0 } 11... Qf5
+{ {"nb_occ": 1, "prob": 1.0 } 12. Bd3 { {"nb_occ": 1, "prob": 1.0 } 12... Qh5
+{ {"nb_occ": 1, "prob": 1.0 } ) 6... Nc5 { {"nb_occ": 2, "prob": 1.0 } 7. Be2
+{ {"nb_occ": 2, "prob": 1.0 } 7... g6 { {"nb_occ": 1, "prob": 0.5 } ( 7... Ne6
+{ {"nb_occ": 1, "prob": 0.5 } 8. O-O { {"nb_occ": 1, "prob": 1.0 } 8... Be7
+{ {"nb_occ": 1, "prob": 1.0 } 9. Re1 { {"nb_occ": 1, "prob": 1.0 } 9... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 10. Nf1 { {"nb_occ": 1, "prob": 1.0 } 10... c5
+{ {"nb_occ": 1, "prob": 1.0 } 11. Bd3 { {"nb_occ": 1, "prob": 1.0 } 11... Rd8
+{ {"nb_occ": 1, "prob": 1.0 } 12. Ng3 { {"nb_occ": 1, "prob": 1.0 } 12... g6
+{ {"nb_occ": 1, "prob": 1.0 } ) 8. Nb3 { {"nb_occ": 1, "prob": 1.0 } 8... Ne6
+{ {"nb_occ": 1, "prob": 1.0 } 9. Be3 { {"nb_occ": 1, "prob": 1.0 } 9... c5
+{ {"nb_occ": 1, "prob": 1.0 } 10. Ng5 { {"nb_occ": 1, "prob": 1.0 } 10... b6
+{ {"nb_occ": 1, "prob": 1.0 } 11. Nxe6 { {"nb_occ": 1, "prob": 1.0 } 11... fxe6
+{ {"nb_occ": 1, "prob": 1.0 } 12. a4 { {"nb_occ": 1, "prob": 1.0 } 12... Bb7
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 5... Be7
+{ {"nb_occ": 2, "prob": 0.09090909090909091 } 6. c4
+{ {"nb_occ": 1, "prob": 0.5 } ( 6. Nxe4 { {"nb_occ": 1, "prob": 0.5 } 6... dxe4
+{ {"nb_occ": 1, "prob": 1.0 } 7. Qxd8+ { {"nb_occ": 1, "prob": 1.0 } 7... Bxd8
+{ {"nb_occ": 1, "prob": 1.0 } 8. Nd4 { {"nb_occ": 1, "prob": 1.0 } 8... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 9. Bf4 { {"nb_occ": 1, "prob": 1.0 } 9... Nd7
+{ {"nb_occ": 1, "prob": 1.0 } 10. Bc4 { {"nb_occ": 1, "prob": 1.0 } 10... Nb6
+{ {"nb_occ": 1, "prob": 1.0 } 11. Be2 { {"nb_occ": 1, "prob": 1.0 } 11... Nd5
+{ {"nb_occ": 1, "prob": 1.0 } 12. Bg3 { {"nb_occ": 1, "prob": 1.0 } 12... Bg5
+{ {"nb_occ": 1, "prob": 1.0 } ) 6... O-O { {"nb_occ": 1, "prob": 1.0 } 7. cxd5
+{ {"nb_occ": 1, "prob": 1.0 } 7... Qxd5 { {"nb_occ": 1, "prob": 1.0 } 8. Bc4
+{ {"nb_occ": 1, "prob": 1.0 } 8... Qc5 { {"nb_occ": 1, "prob": 1.0 } 9. Qe2
+{ {"nb_occ": 1, "prob": 1.0 } 9... Nxd2 { {"nb_occ": 1, "prob": 1.0 } 10. Bxd2
+{ {"nb_occ": 1, "prob": 1.0 } 10... Nc6 { {"nb_occ": 1, "prob": 1.0 } 11. Rc1
+{ {"nb_occ": 1, "prob": 1.0 } 11... Qb6 { {"nb_occ": 1, "prob": 1.0 } 12. Bc3
+{ {"nb_occ": 1, "prob": 1.0 } 12... Bg4 { {"nb_occ": 1, "prob": 1.0 } ) ( 5...
+Nc5 { {"nb_occ": 4, "prob": 0.18181818181818182 } 6. Nb3
+{ {"nb_occ": 2, "prob": 0.5 } ( 6. c3 { {"nb_occ": 1, "prob": 0.25 } 6... Be7
+{ {"nb_occ": 1, "prob": 1.0 } 7. b4 { {"nb_occ": 1, "prob": 1.0 } 7... Ne6
+{ {"nb_occ": 1, "prob": 1.0 } 8. Nb3 { {"nb_occ": 1, "prob": 1.0 } 8... f6
+{ {"nb_occ": 1, "prob": 1.0 } 9. Bd3 { {"nb_occ": 1, "prob": 1.0 } 9... Nd7
+{ {"nb_occ": 1, "prob": 1.0 } 10. O-O { {"nb_occ": 1, "prob": 1.0 } 10... fxe5
+{ {"nb_occ": 1, "prob": 1.0 } 11. Bf5 { {"nb_occ": 1, "prob": 1.0 } 11... Nf6
+{ {"nb_occ": 1, "prob": 1.0 } 12. Nxe5 { {"nb_occ": 1, "prob": 1.0 } 12... O-O
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 6. a3 { {"nb_occ": 1, "prob": 0.25 } 6... a5
+{ {"nb_occ": 1, "prob": 1.0 } 7. Be2 { {"nb_occ": 1, "prob": 1.0 } 7... Be7
+{ {"nb_occ": 1, "prob": 1.0 } 8. O-O { {"nb_occ": 1, "prob": 1.0 } 8... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 9. Re1 { {"nb_occ": 1, "prob": 1.0 } 9... Nc6
+{ {"nb_occ": 1, "prob": 1.0 } 10. Nf1 { {"nb_occ": 1, "prob": 1.0 } 10... Bf5
+{ {"nb_occ": 1, "prob": 1.0 } 11. Ng3 { {"nb_occ": 1, "prob": 1.0 } 11... Bg6
+{ {"nb_occ": 1, "prob": 1.0 } 12. Be3 { {"nb_occ": 1, "prob": 1.0 } 12... a4
+{ {"nb_occ": 1, "prob": 1.0 } ) 6... Ne6 { {"nb_occ": 1, "prob": 0.5 } ( 6...
+Nxb3 { {"nb_occ": 1, "prob": 0.5 } 7. axb3 { {"nb_occ": 1, "prob": 1.0 } 7...
+Be7 { {"nb_occ": 1, "prob": 1.0 } 8. Bd3 { {"nb_occ": 1, "prob": 1.0 } 8... c5
+{ {"nb_occ": 1, "prob": 1.0 } 9. c3 { {"nb_occ": 1, "prob": 1.0 } 9... Nc6
+{ {"nb_occ": 1, "prob": 1.0 } 10. Ra4 { {"nb_occ": 1, "prob": 1.0 } 10... Be6
+{ {"nb_occ": 1, "prob": 1.0 } 11. O-O { {"nb_occ": 1, "prob": 1.0 } 11... h6
+{ {"nb_occ": 1, "prob": 1.0 } 12. Re1 { {"nb_occ": 1, "prob": 1.0 } 12... Qd7
+{ {"nb_occ": 1, "prob": 1.0 } ) 7. Nbd4 { {"nb_occ": 1, "prob": 1.0 } 7... Nxd4
+{ {"nb_occ": 1, "prob": 1.0 } 8. Qxd4 { {"nb_occ": 1, "prob": 1.0 } 8... h6
+{ {"nb_occ": 1, "prob": 1.0 } 9. Bd2 { {"nb_occ": 1, "prob": 1.0 } 9... Be6
+{ {"nb_occ": 1, "prob": 1.0 } 10. h4 { {"nb_occ": 1, "prob": 1.0 } 10... c5
+{ {"nb_occ": 1, "prob": 1.0 } 11. Qf4 { {"nb_occ": 1, "prob": 1.0 } 11... Nc6
+{ {"nb_occ": 1, "prob": 1.0 } 12. h5 { {"nb_occ": 1, "prob": 1.0 } 12... Qd7
+{ {"nb_occ": 1, "prob": 1.0 } ) 6. Bxd2
+{ {"nb_occ": 7, "prob": 0.5833333333333334 } ( 6. Qxd2
+{ {"nb_occ": 5, "prob": 0.4166666666666667 } 6... c5
+{ {"nb_occ": 1, "prob": 0.2 } ( 6... Be7 { {"nb_occ": 4, "prob": 0.8 } 7. Qf4
+{ {"nb_occ": 2, "prob": 0.5 } ( 7. Bd3 { {"nb_occ": 1, "prob": 0.25 } 7... Nc6
+{ {"nb_occ": 1, "prob": 1.0 } 8. Qf4 { {"nb_occ": 1, "prob": 1.0 } 8... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 9. O-O { {"nb_occ": 1, "prob": 1.0 } 9... f6
+{ {"nb_occ": 1, "prob": 1.0 } 10. exf6 { {"nb_occ": 1, "prob": 1.0 } 10... Bxf6
+{ {"nb_occ": 1, "prob": 1.0 } 11. Qg3 { {"nb_occ": 1, "prob": 1.0 } 11... Nb4
+{ {"nb_occ": 1, "prob": 1.0 } 12. Bf4 { {"nb_occ": 1, "prob": 1.0 } 12... Rf7
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 7. Bb5+ { {"nb_occ": 1, "prob": 0.25 } 7...
+c6 { {"nb_occ": 1, "prob": 1.0 } 8. Be2 { {"nb_occ": 1, "prob": 1.0 } 8... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 9. O-O { {"nb_occ": 1, "prob": 1.0 } 9... f6
+{ {"nb_occ": 1, "prob": 1.0 } 10. c4 { {"nb_occ": 1, "prob": 1.0 } 10... fxe5
+{ {"nb_occ": 1, "prob": 1.0 } 11. cxd5 { {"nb_occ": 1, "prob": 1.0 } 11... cxd5
+{ {"nb_occ": 1, "prob": 1.0 } 12. Nxe5 { {"nb_occ": 1, "prob": 1.0 } 12... Nc6
+{ {"nb_occ": 1, "prob": 1.0 } ) 7... c5 { {"nb_occ": 1, "prob": 0.5 } ( 7...
+Qd7 { {"nb_occ": 1, "prob": 0.5 } 8. c4 { {"nb_occ": 1, "prob": 1.0 } 8... Bb4+
+{ {"nb_occ": 1, "prob": 1.0 } 9. Bd2 { {"nb_occ": 1, "prob": 1.0 } 9... Bxd2+
+{ {"nb_occ": 1, "prob": 1.0 } 10. Qxd2 { {"nb_occ": 1, "prob": 1.0 } 10... dxc4
+{ {"nb_occ": 1, "prob": 1.0 } 11. Bxc4 { {"nb_occ": 1, "prob": 1.0 } 11...
+Qxd2+ { {"nb_occ": 1, "prob": 1.0 } 12. Kxd2 { {"nb_occ": 1, "prob": 1.0 }
+12... Nc6 { {"nb_occ": 1, "prob": 1.0 } ) 8. c4 { {"nb_occ": 1, "prob": 1.0 }
+8... Be6 { {"nb_occ": 1, "prob": 1.0 } 9. Qg3 { {"nb_occ": 1, "prob": 1.0 }
+9... dxc4 { {"nb_occ": 1, "prob": 1.0 } 10. Qxg7 { {"nb_occ": 1, "prob": 1.0 }
+10... Rf8 { {"nb_occ": 1, "prob": 1.0 } 11. Be2 { {"nb_occ": 1, "prob": 1.0 }
+11... Nc6 { {"nb_occ": 1, "prob": 1.0 } 12. O-O { {"nb_occ": 1, "prob": 1.0 }
+12... Qd7 { {"nb_occ": 1, "prob": 1.0 } ) 7. c3 { {"nb_occ": 1, "prob": 1.0 }
+7... Nc6 { {"nb_occ": 1, "prob": 1.0 } 8. Qf4 { {"nb_occ": 1, "prob": 1.0 }
+8... h6 { {"nb_occ": 1, "prob": 1.0 } 9. Bd3 { {"nb_occ": 1, "prob": 1.0 } 9...
+Be6 { {"nb_occ": 1, "prob": 1.0 } 10. O-O { {"nb_occ": 1, "prob": 1.0 } 10...
+g5 { {"nb_occ": 1, "prob": 1.0 } 11. Qe3 { {"nb_occ": 1, "prob": 1.0 } 11...
+Qc7 { {"nb_occ": 1, "prob": 1.0 } 12. b4 { {"nb_occ": 1, "prob": 1.0 } 12... g4
+{ {"nb_occ": 1, "prob": 1.0 } ) 6... Be7
+{ {"nb_occ": 4, "prob": 0.5714285714285714 } ( 6... c5
+{ {"nb_occ": 3, "prob": 0.42857142857142855 } 7. c4
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } ( 7. Bg5
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 7... Qa5+
+{ {"nb_occ": 1, "prob": 1.0 } 8. c3 { {"nb_occ": 1, "prob": 1.0 } 8... Be6
+{ {"nb_occ": 1, "prob": 1.0 } 9. Bd3 { {"nb_occ": 1, "prob": 1.0 } 9... Nc6
+{ {"nb_occ": 1, "prob": 1.0 } 10. O-O { {"nb_occ": 1, "prob": 1.0 } 10... h6
+{ {"nb_occ": 1, "prob": 1.0 } 11. Bd2 { {"nb_occ": 1, "prob": 1.0 } 11... Qc7
+{ {"nb_occ": 1, "prob": 1.0 } 12. Re1 { {"nb_occ": 1, "prob": 1.0 } 12... Be7
+{ {"nb_occ": 1, "prob": 1.0 } ) 7... Nc6 { {"nb_occ": 2, "prob": 1.0 } 8. Bd3
+{ {"nb_occ": 1, "prob": 0.5 } ( 8. Qc2 { {"nb_occ": 1, "prob": 0.5 } 8... Be6
+{ {"nb_occ": 1, "prob": 1.0 } 9. cxd5 { {"nb_occ": 1, "prob": 1.0 } 9... Qxd5
+{ {"nb_occ": 1, "prob": 1.0 } 10. Bc3 { {"nb_occ": 1, "prob": 1.0 } 10... Be7
+{ {"nb_occ": 1, "prob": 1.0 } 11. Bd3 { {"nb_occ": 1, "prob": 1.0 } 11... Rc8
+{ {"nb_occ": 1, "prob": 1.0 } 12. O-O { {"nb_occ": 1, "prob": 1.0 } 12... Nb4
+{ {"nb_occ": 1, "prob": 1.0 } ) 8... Be7 { {"nb_occ": 1, "prob": 1.0 } 9. h3
+{ {"nb_occ": 1, "prob": 1.0 } 9... Be6 { {"nb_occ": 1, "prob": 1.0 } 10. Qc2
+{ {"nb_occ": 1, "prob": 1.0 } 10... dxc4 { {"nb_occ": 1, "prob": 1.0 } 11. Bxc4
+{ {"nb_occ": 1, "prob": 1.0 } 11... Bxc4 { {"nb_occ": 1, "prob": 1.0 } 12. Qxc4
+{ {"nb_occ": 1, "prob": 1.0 } 12... Qd7 { {"nb_occ": 1, "prob": 1.0 } ) 7. Bd3
+{ {"nb_occ": 1, "prob": 0.25 } ( 7. c4 { {"nb_occ": 2, "prob": 0.5 } 7... O-O
+{ {"nb_occ": 1, "prob": 0.5 } ( 7... Nc6 { {"nb_occ": 1, "prob": 0.5 } 8. Qc2
+{ {"nb_occ": 1, "prob": 1.0 } 8... Be6 { {"nb_occ": 1, "prob": 1.0 } 9. O-O-O
+{ {"nb_occ": 1, "prob": 1.0 } 9... a5 { {"nb_occ": 1, "prob": 1.0 } 10. a3
+{ {"nb_occ": 1, "prob": 1.0 } 10... O-O { {"nb_occ": 1, "prob": 1.0 } 11. Be3
+{ {"nb_occ": 1, "prob": 1.0 } 11... Nb4 { {"nb_occ": 1, "prob": 1.0 } 12. axb4
+{ {"nb_occ": 1, "prob": 1.0 } 12... axb4 { {"nb_occ": 1, "prob": 1.0 } ) 8. Qc2
+{ {"nb_occ": 1, "prob": 1.0 } 8... c6 { {"nb_occ": 1, "prob": 1.0 } 9. Bd3
+{ {"nb_occ": 1, "prob": 1.0 } 9... h6 { {"nb_occ": 1, "prob": 1.0 } 10. O-O
+{ {"nb_occ": 1, "prob": 1.0 } 10... Bg4 { {"nb_occ": 1, "prob": 1.0 } 11. cxd5
+{ {"nb_occ": 1, "prob": 1.0 } 11... Bxf3 { {"nb_occ": 1, "prob": 1.0 } 12. gxf3
+{ {"nb_occ": 1, "prob": 1.0 } 12... Qxd5 { {"nb_occ": 1, "prob": 1.0 } ) ( 7.
+Be2 { {"nb_occ": 1, "prob": 0.25 } 7... O-O { {"nb_occ": 1, "prob": 1.0 } 8.
+O-O { {"nb_occ": 1, "prob": 1.0 } 8... c5 { {"nb_occ": 1, "prob": 1.0 } 9. Bf4
+{ {"nb_occ": 1, "prob": 1.0 } 9... Nc6 { {"nb_occ": 1, "prob": 1.0 } 10. Qd2
+{ {"nb_occ": 1, "prob": 1.0 } 10... Be6 { {"nb_occ": 1, "prob": 1.0 } 11. c3
+{ {"nb_occ": 1, "prob": 1.0 } 11... Qd7 { {"nb_occ": 1, "prob": 1.0 } 12. h3
+{ {"nb_occ": 1, "prob": 1.0 } 12... Rad8 { {"nb_occ": 1, "prob": 1.0 } ) 7...
+c5 { {"nb_occ": 1, "prob": 1.0 } 8. c3 { {"nb_occ": 1, "prob": 1.0 } 8... Nc6
+{ {"nb_occ": 1, "prob": 1.0 } 9. O-O { {"nb_occ": 1, "prob": 1.0 } 9... Bg4
+{ {"nb_occ": 1, "prob": 1.0 } 10. Re1 { {"nb_occ": 1, "prob": 1.0 } 10... Qd7
+{ {"nb_occ": 1, "prob": 1.0 } 11. h3 { {"nb_occ": 1, "prob": 1.0 } 11... Bh5
+{ {"nb_occ": 1, "prob": 1.0 } 12. Bf4 { {"nb_occ": 1, "prob": 1.0 } 12... Qe6
+{ {"nb_occ": 1, "prob": 1.0 } ) 4... d5
+{ {"nb_occ": 35, "prob": 0.9722222222222222 } ( 4... Nc6
+{ {"nb_occ": 1, "prob": 0.027777777777777776 } 5. dxe5
+{ {"nb_occ": 1, "prob": 1.0 } 5... d5 { {"nb_occ": 1, "prob": 1.0 } 6. exd6
+{ {"nb_occ": 1, "prob": 1.0 } 6... Nxd6 { {"nb_occ": 1, "prob": 1.0 } 7. O-O
+{ {"nb_occ": 1, "prob": 1.0 } 7... Be7 { {"nb_occ": 1, "prob": 1.0 } 8. Nc3
+{ {"nb_occ": 1, "prob": 1.0 } 8... Be6 { {"nb_occ": 1, "prob": 1.0 } 9. Re1
+{ {"nb_occ": 1, "prob": 1.0 } 9... O-O { {"nb_occ": 1, "prob": 1.0 } 10. Bf4
+{ {"nb_occ": 1, "prob": 1.0 } 10... Bf6 { {"nb_occ": 1, "prob": 1.0 } 11. Bxd6
+{ {"nb_occ": 1, "prob": 1.0 } 11... cxd6 { {"nb_occ": 1, "prob": 1.0 } 12. Ne4
+{ {"nb_occ": 1, "prob": 1.0 } 12... Be7 { {"nb_occ": 1, "prob": 1.0 } ) 5. Nxe5
+{ {"nb_occ": 33, "prob": 0.9428571428571428 } ( 5. dxe5
+{ {"nb_occ": 2, "prob": 0.05714285714285714 } 5... Nc6
+{ {"nb_occ": 1, "prob": 0.5 } ( 5... Nc5 { {"nb_occ": 1, "prob": 0.5 } 6. Nc3
+{ {"nb_occ": 1, "prob": 1.0 } 6... c6 { {"nb_occ": 1, "prob": 1.0 } 7. Nd4
+{ {"nb_occ": 1, "prob": 1.0 } 7... Be7 { {"nb_occ": 1, "prob": 1.0 } 8. O-O
+{ {"nb_occ": 1, "prob": 1.0 } 8... O-O { {"nb_occ": 1, "prob": 1.0 } 9. f4
+{ {"nb_occ": 1, "prob": 1.0 } 9... Nxd3 { {"nb_occ": 1, "prob": 1.0 } 10. Qxd3
+{ {"nb_occ": 1, "prob": 1.0 } 10... f5 { {"nb_occ": 1, "prob": 1.0 } 11. Nb3
+{ {"nb_occ": 1, "prob": 1.0 } 11... Na6 { {"nb_occ": 1, "prob": 1.0 } 12. Be3
+{ {"nb_occ": 1, "prob": 1.0 } 12... Nc7 { {"nb_occ": 1, "prob": 1.0 } ) 6. O-O
+{ {"nb_occ": 1, "prob": 1.0 } 6... Be7 { {"nb_occ": 1, "prob": 1.0 } 7. Nbd2
+{ {"nb_occ": 1, "prob": 1.0 } 7... Nc5 { {"nb_occ": 1, "prob": 1.0 } 8. Re1
+{ {"nb_occ": 1, "prob": 1.0 } 8... Nxd3 { {"nb_occ": 1, "prob": 1.0 } 9. cxd3
+{ {"nb_occ": 1, "prob": 1.0 } 9... O-O { {"nb_occ": 1, "prob": 1.0 } 10. Nf1
+{ {"nb_occ": 1, "prob": 1.0 } 10... Bf5 { {"nb_occ": 1, "prob": 1.0 } 11. Ng3
+{ {"nb_occ": 1, "prob": 1.0 } 11... Bg6 { {"nb_occ": 1, "prob": 1.0 } 12. d4
+{ {"nb_occ": 1, "prob": 1.0 } 12... Nb4 { {"nb_occ": 1, "prob": 1.0 } ) 5...
+Nd7 { {"nb_occ": 33, "prob": 1.0 } 6. Nxd7
+{ {"nb_occ": 17, "prob": 0.5151515151515151 } ( 6. O-O
+{ {"nb_occ": 5, "prob": 0.15151515151515152 } 6... Nxe5
+{ {"nb_occ": 5, "prob": 1.0 } 7. dxe5 { {"nb_occ": 5, "prob": 1.0 } 7... Nc5
+{ {"nb_occ": 5, "prob": 1.0 } 8. Be3 { {"nb_occ": 2, "prob": 0.4 } ( 8. Nc3
+{ {"nb_occ": 2, "prob": 0.4 } 8... c6 { {"nb_occ": 2, "prob": 1.0 } 9. f4
+{ {"nb_occ": 1, "prob": 0.5 } ( 9. Ne2 { {"nb_occ": 1, "prob": 0.5 } 9... Be7
+{ {"nb_occ": 1, "prob": 1.0 } 10. f4 { {"nb_occ": 1, "prob": 1.0 } 10... f6
+{ {"nb_occ": 1, "prob": 1.0 } 11. Be3 { {"nb_occ": 1, "prob": 1.0 } 11... Nxd3
+{ {"nb_occ": 1, "prob": 1.0 } 12. Qxd3 { {"nb_occ": 1, "prob": 1.0 } 12... O-O
+{ {"nb_occ": 1, "prob": 1.0 } ) 9... g6 { {"nb_occ": 1, "prob": 1.0 } 10. Ne2
+{ {"nb_occ": 1, "prob": 1.0 } 10... Bg7 { {"nb_occ": 1, "prob": 1.0 } 11. Be3
+{ {"nb_occ": 1, "prob": 1.0 } 11... Nxd3 { {"nb_occ": 1, "prob": 1.0 } 12. cxd3
+{ {"nb_occ": 1, "prob": 1.0 } 12... O-O { {"nb_occ": 1, "prob": 1.0 } ) ( 8.
+Be2 { {"nb_occ": 1, "prob": 0.2 } 8... c6 { {"nb_occ": 1, "prob": 1.0 } 9. Be3
+{ {"nb_occ": 1, "prob": 1.0 } 9... Ne6 { {"nb_occ": 1, "prob": 1.0 } 10. c3
+{ {"nb_occ": 1, "prob": 1.0 } 10... Bc5 { {"nb_occ": 1, "prob": 1.0 } 11. Bxc5
+{ {"nb_occ": 1, "prob": 1.0 } 11... Nxc5 { {"nb_occ": 1, "prob": 1.0 } 12. Nd2
+{ {"nb_occ": 1, "prob": 1.0 } 12... O-O { {"nb_occ": 1, "prob": 1.0 } ) 8... c6
+{ {"nb_occ": 2, "prob": 1.0 } 9. f4 { {"nb_occ": 2, "prob": 1.0 } 9... Nxd3
+{ {"nb_occ": 1, "prob": 0.5 } ( 9... g6 { {"nb_occ": 1, "prob": 0.5 } 10. Be2
+{ {"nb_occ": 1, "prob": 1.0 } 10... Bf5 { {"nb_occ": 1, "prob": 1.0 } 11. c3
+{ {"nb_occ": 1, "prob": 1.0 } 11... Ne6 { {"nb_occ": 1, "prob": 1.0 } 12. Nd2
+{ {"nb_occ": 1, "prob": 1.0 } 12... Bc5 { {"nb_occ": 1, "prob": 1.0 } ) 10.
+Qxd3 { {"nb_occ": 1, "prob": 1.0 } 10... g6 { {"nb_occ": 1, "prob": 1.0 } 11.
+Nc3 { {"nb_occ": 1, "prob": 1.0 } 11... b6 { {"nb_occ": 1, "prob": 1.0 } 12.
+Rad1 { {"nb_occ": 1, "prob": 1.0 } 12... Bg7 { {"nb_occ": 1, "prob": 1.0 } ) (
+6. Nc3 { {"nb_occ": 11, "prob": 0.3333333333333333 } 6... Nxe5
+{ {"nb_occ": 5, "prob": 0.45454545454545453 } ( 6... Nxc3
+{ {"nb_occ": 6, "prob": 0.5454545454545454 } 7. bxc3
+{ {"nb_occ": 6, "prob": 1.0 } 7... Nxe5
+{ {"nb_occ": 4, "prob": 0.6666666666666666 } ( 7... Bd6
+{ {"nb_occ": 2, "prob": 0.3333333333333333 } 8. O-O
+{ {"nb_occ": 2, "prob": 1.0 } 8... O-O { {"nb_occ": 2, "prob": 1.0 } 9. Re1
+{ {"nb_occ": 1, "prob": 0.5 } ( 9. Nxd7 { {"nb_occ": 1, "prob": 0.5 } 9... Bxd7
+{ {"nb_occ": 1, "prob": 1.0 } 10. Qh5 { {"nb_occ": 1, "prob": 1.0 } 10... f5
+{ {"nb_occ": 1, "prob": 1.0 } 11. Bg5 { {"nb_occ": 1, "prob": 1.0 } 11... Qe8
+{ {"nb_occ": 1, "prob": 1.0 } 12. Qf3 { {"nb_occ": 1, "prob": 1.0 } 12... Qg6
+{ {"nb_occ": 1, "prob": 1.0 } ) 9... c5 { {"nb_occ": 1, "prob": 1.0 } 10. Qf3
+{ {"nb_occ": 1, "prob": 1.0 } 10... c4 { {"nb_occ": 1, "prob": 1.0 } 11. Bf5
+{ {"nb_occ": 1, "prob": 1.0 } 11... Nxe5 { {"nb_occ": 1, "prob": 1.0 } 12. dxe5
+{ {"nb_occ": 1, "prob": 1.0 } 12... Re8 { {"nb_occ": 1, "prob": 1.0 } ) 8. dxe5
+{ {"nb_occ": 4, "prob": 1.0 } 8... Bc5 { {"nb_occ": 2, "prob": 0.5 } ( 8... c5
+{ {"nb_occ": 1, "prob": 0.25 } 9. Qf3 { {"nb_occ": 1, "prob": 1.0 } 9... c4
+{ {"nb_occ": 1, "prob": 1.0 } 10. Bf5 { {"nb_occ": 1, "prob": 1.0 } 10... Bxf5
+{ {"nb_occ": 1, "prob": 1.0 } 11. Qxf5 { {"nb_occ": 1, "prob": 1.0 } 11... Qd7
+{ {"nb_occ": 1, "prob": 1.0 } 12. Qf3 { {"nb_occ": 1, "prob": 1.0 } 12... Be7
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 8... Be7 { {"nb_occ": 1, "prob": 0.25 } 9.
+Qh5 { {"nb_occ": 1, "prob": 1.0 } 9... Be6 { {"nb_occ": 1, "prob": 1.0 } 10.
+Rb1 { {"nb_occ": 1, "prob": 1.0 } 10... Qd7 { {"nb_occ": 1, "prob": 1.0 } 11.
+Bg5 { {"nb_occ": 1, "prob": 1.0 } 11... c6 { {"nb_occ": 1, "prob": 1.0 } 12.
+O-O { {"nb_occ": 1, "prob": 1.0 } 12... Bxg5 { {"nb_occ": 1, "prob": 1.0 } ) 9.
+Qh5 { {"nb_occ": 1, "prob": 0.5 } ( 9. O-O { {"nb_occ": 1, "prob": 0.5 } 9...
+O-O { {"nb_occ": 1, "prob": 1.0 } 10. Rb1 { {"nb_occ": 1, "prob": 1.0 } 10...
+Qh4 { {"nb_occ": 1, "prob": 1.0 } 11. Qf3 { {"nb_occ": 1, "prob": 1.0 } 11...
+b6 { {"nb_occ": 1, "prob": 1.0 } 12. Qxd5 { {"nb_occ": 1, "prob": 1.0 } 12...
+Be6 { {"nb_occ": 1, "prob": 1.0 } ) 9... g6 { {"nb_occ": 1, "prob": 1.0 } 10.
+Qh6 { {"nb_occ": 1, "prob": 1.0 } 10... Bf8 { {"nb_occ": 1, "prob": 1.0 } 11.
+Qe3 { {"nb_occ": 1, "prob": 1.0 } 11... Qe7 { {"nb_occ": 1, "prob": 1.0 } 12.
+a4 { {"nb_occ": 1, "prob": 1.0 } 12... Qc5 { {"nb_occ": 1, "prob": 1.0 } ) 7.
+dxe5 { {"nb_occ": 5, "prob": 1.0 } 7... Nxc3 { {"nb_occ": 4, "prob": 0.8 } (
+7... Bb4 { {"nb_occ": 1, "prob": 0.2 } 8. O-O { {"nb_occ": 1, "prob": 1.0 }
+8... Nxc3 { {"nb_occ": 1, "prob": 1.0 } 9. bxc3 { {"nb_occ": 1, "prob": 1.0 }
+9... Bxc3 { {"nb_occ": 1, "prob": 1.0 } 10. Rb1 { {"nb_occ": 1, "prob": 1.0 }
+10... O-O { {"nb_occ": 1, "prob": 1.0 } 11. Bxh7+ { {"nb_occ": 1, "prob": 1.0 }
+11... Kxh7 { {"nb_occ": 1, "prob": 1.0 } 12. Qd3+ { {"nb_occ": 1, "prob": 1.0 }
+12... Kg8 { {"nb_occ": 1, "prob": 1.0 } ) 8. bxc3 { {"nb_occ": 4, "prob": 1.0 }
+8... Bc5 { {"nb_occ": 4, "prob": 1.0 } 9. O-O { {"nb_occ": 3, "prob": 0.75 } (
+9. Qh5 { {"nb_occ": 1, "prob": 0.25 } 9... Be6 { {"nb_occ": 1, "prob": 1.0 }
+10. O-O { {"nb_occ": 1, "prob": 1.0 } 10... Qd7 { {"nb_occ": 1, "prob": 1.0 }
+11. Bg5 { {"nb_occ": 1, "prob": 1.0 } 11... h6 { {"nb_occ": 1, "prob": 1.0 }
+12. Rab1 { {"nb_occ": 1, "prob": 1.0 } 12... Rg8 { {"nb_occ": 1, "prob": 1.0 }
+) 9... O-O { {"nb_occ": 3, "prob": 1.0 } 10. Qh5 { {"nb_occ": 3, "prob": 1.0 }
+10... g6 { {"nb_occ": 3, "prob": 1.0 } 11. Qh6 { {"nb_occ": 3, "prob": 1.0 }
+11... Re8 { {"nb_occ": 2, "prob": 0.6666666666666666 } ( 11... Qe7
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 12. Bf4
+{ {"nb_occ": 1, "prob": 1.0 } 12... f5 { {"nb_occ": 1, "prob": 1.0 } ) 12. Bg5
+{ {"nb_occ": 2, "prob": 1.0 } 12... Bf8 { {"nb_occ": 2, "prob": 1.0 } ) 6...
+Bxd7 { {"nb_occ": 17, "prob": 1.0 } 7. O-O
+{ {"nb_occ": 15, "prob": 0.8823529411764706 } ( 7. Nd2
+{ {"nb_occ": 2, "prob": 0.11764705882352941 } 7... Nxd2
+{ {"nb_occ": 2, "prob": 1.0 } 8. Bxd2 { {"nb_occ": 2, "prob": 1.0 } 8... Bd6
+{ {"nb_occ": 1, "prob": 0.5 } ( 8... Qe7+ { {"nb_occ": 1, "prob": 0.5 } 9. Qe2
+{ {"nb_occ": 1, "prob": 1.0 } 9... Qxe2+ { {"nb_occ": 1, "prob": 1.0 } 10. Kxe2
+{ {"nb_occ": 1, "prob": 1.0 } 10... Bd6 { {"nb_occ": 1, "prob": 1.0 } 11. Rhe1
+{ {"nb_occ": 1, "prob": 1.0 } 11... f6 { {"nb_occ": 1, "prob": 1.0 } 12. f3
+{ {"nb_occ": 1, "prob": 1.0 } 12... Kf7 { {"nb_occ": 1, "prob": 1.0 } ) 9. O-O
+{ {"nb_occ": 1, "prob": 1.0 } 9... h5 { {"nb_occ": 1, "prob": 1.0 } 10. Qe1+
+{ {"nb_occ": 1, "prob": 1.0 } 10... Kf8 { {"nb_occ": 1, "prob": 1.0 } 11. Bb4
+{ {"nb_occ": 1, "prob": 1.0 } 11... Qe7 { {"nb_occ": 1, "prob": 1.0 } 12. Bxd6
+{ {"nb_occ": 1, "prob": 1.0 } 12... Qxd6 { {"nb_occ": 1, "prob": 1.0 } ) 7...
+Bd6 { {"nb_occ": 15, "prob": 1.0 } 8. Qh5
+{ {"nb_occ": 2, "prob": 0.13333333333333333 } ( 8. c4
+{ {"nb_occ": 8, "prob": 0.5333333333333333 } 8... c6
+{ {"nb_occ": 8, "prob": 1.0 } 9. Nc3 { {"nb_occ": 2, "prob": 0.25 } ( 9. cxd5
+{ {"nb_occ": 6, "prob": 0.75 } 9... cxd5 { {"nb_occ": 6, "prob": 1.0 } 10. Qh5
+{ {"nb_occ": 2, "prob": 0.3333333333333333 } ( 10. Nc3
+{ {"nb_occ": 4, "prob": 0.6666666666666666 } 10... Nxc3
+{ {"nb_occ": 4, "prob": 1.0 } 11. bxc3 { {"nb_occ": 4, "prob": 1.0 } 11... O-O
+{ {"nb_occ": 4, "prob": 1.0 } 12. Qh5 { {"nb_occ": 4, "prob": 1.0 } 12... g6
+{ {"nb_occ": 4, "prob": 1.0 } ) 10... O-O { {"nb_occ": 2, "prob": 1.0 } 11.
+Qxd5 { {"nb_occ": 2, "prob": 1.0 } 11... Bc6 { {"nb_occ": 2, "prob": 1.0 } 12.
+Qh5 { {"nb_occ": 2, "prob": 1.0 } 12... g6 { {"nb_occ": 2, "prob": 1.0 } ) 9...
+O-O { {"nb_occ": 2, "prob": 1.0 } 10. cxd5 { {"nb_occ": 2, "prob": 1.0 } 10...
+Nxc3 { {"nb_occ": 2, "prob": 1.0 } 11. bxc3 { {"nb_occ": 2, "prob": 1.0 } 11...
+cxd5 { {"nb_occ": 2, "prob": 1.0 } 12. Qh5 { {"nb_occ": 2, "prob": 1.0 } 12...
+g6 { {"nb_occ": 2, "prob": 1.0 } ) ( 8. Nc3
+{ {"nb_occ": 5, "prob": 0.3333333333333333 } 8... Nxc3
+{ {"nb_occ": 3, "prob": 0.6 } ( 8... Qh4 { {"nb_occ": 2, "prob": 0.4 } 9. g3
+{ {"nb_occ": 2, "prob": 1.0 } 9... Nxc3 { {"nb_occ": 2, "prob": 1.0 } 10. bxc3
+{ {"nb_occ": 2, "prob": 1.0 } 10... Qh3 { {"nb_occ": 1, "prob": 0.5 } ( 10...
+Qg4 { {"nb_occ": 1, "prob": 0.5 } 11. Re1+ { {"nb_occ": 1, "prob": 1.0 } 11...
+Kf8 { {"nb_occ": 1, "prob": 1.0 } 12. Be2 { {"nb_occ": 1, "prob": 1.0 } 12...
+Qg6 { {"nb_occ": 1, "prob": 1.0 } ) 11. Re1+ { {"nb_occ": 1, "prob": 1.0 }
+11... Be6 { {"nb_occ": 1, "prob": 1.0 } 12. Bf1 { {"nb_occ": 1, "prob": 1.0 }
+12... Qf5 { {"nb_occ": 1, "prob": 1.0 } ) 9. bxc3 { {"nb_occ": 3, "prob": 1.0 }
+9... O-O { {"nb_occ": 3, "prob": 1.0 } 10. Qh5 { {"nb_occ": 3, "prob": 1.0 }
+10... f5 { {"nb_occ": 3, "prob": 1.0 } 11. Re1
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } ( 11. Rb1
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } 11... b6
+{ {"nb_occ": 2, "prob": 1.0 } 12. Qf3 { {"nb_occ": 1, "prob": 0.5 } ( 12. Re1
+{ {"nb_occ": 1, "prob": 0.5 } 12... c6 { {"nb_occ": 1, "prob": 1.0 } ) 12... c6
+{ {"nb_occ": 1, "prob": 1.0 } ) 11... c6 { {"nb_occ": 1, "prob": 1.0 } 12. Bg5
+{ {"nb_occ": 1, "prob": 1.0 } 12... Qc7 { {"nb_occ": 1, "prob": 1.0 } ) 8...
+Nf6 { {"nb_occ": 1, "prob": 0.5 } ( 8... Qf6 { {"nb_occ": 1, "prob": 0.5 } 9.
+Nc3 { {"nb_occ": 1, "prob": 1.0 } 9... Qxd4 { {"nb_occ": 1, "prob": 1.0 } 10.
+Nxd5 { {"nb_occ": 1, "prob": 1.0 } 10... Bc6 { {"nb_occ": 1, "prob": 1.0 } 11.
+Ne3 { {"nb_occ": 1, "prob": 1.0 } 11... g6 { {"nb_occ": 1, "prob": 1.0 } 12.
+Qh3 { {"nb_occ": 1, "prob": 1.0 } 12... Ng5 { {"nb_occ": 1, "prob": 1.0 } ) 9.
+Re1+ { {"nb_occ": 1, "prob": 1.0 } 9... Kf8 { {"nb_occ": 1, "prob": 1.0 } 10.
+Qe2 { {"nb_occ": 1, "prob": 1.0 } 10... Ng4 { {"nb_occ": 1, "prob": 1.0 } 11.
+h3 { {"nb_occ": 1, "prob": 1.0 } 11... Qh4 { {"nb_occ": 1, "prob": 1.0 } 12.
+Qf3 { {"nb_occ": 1, "prob": 1.0 } 12... Nf6 { {"nb_occ": 1, "prob": 1.0 } ) (
+3. d3 { {"nb_occ": 4, "prob": 0.01078167115902965 } 3... Nc6
+{ {"nb_occ": 4, "prob": 1.0 } 4. g3 { {"nb_occ": 4, "prob": 1.0 } 4... d5
+{ {"nb_occ": 3, "prob": 0.75 } ( 4... Be7 { {"nb_occ": 1, "prob": 0.25 } 5. Bg2
+{ {"nb_occ": 1, "prob": 1.0 } 5... O-O { {"nb_occ": 1, "prob": 1.0 } 6. O-O
+{ {"nb_occ": 1, "prob": 1.0 } 6... Re8 { {"nb_occ": 1, "prob": 1.0 } 7. Nc3
+{ {"nb_occ": 1, "prob": 1.0 } 7... h6 { {"nb_occ": 1, "prob": 1.0 } 8. h3
+{ {"nb_occ": 1, "prob": 1.0 } 8... Bf8 { {"nb_occ": 1, "prob": 1.0 } 9. Nh2
+{ {"nb_occ": 1, "prob": 1.0 } 9... d6 { {"nb_occ": 1, "prob": 1.0 } 10. f4
+{ {"nb_occ": 1, "prob": 1.0 } 10... Nd4 { {"nb_occ": 1, "prob": 1.0 } 11. Nf3
+{ {"nb_occ": 1, "prob": 1.0 } 11... c5 { {"nb_occ": 1, "prob": 1.0 } 12. Kh2
+{ {"nb_occ": 1, "prob": 1.0 } 12... Rb8 { {"nb_occ": 1, "prob": 1.0 } ) 5. exd5
+{ {"nb_occ": 3, "prob": 1.0 } 5... Nxd5
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } ( 5... Qxd5
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 6. Bg2
+{ {"nb_occ": 1, "prob": 1.0 } 6... Bg4 { {"nb_occ": 1, "prob": 1.0 } 7. h3
+{ {"nb_occ": 1, "prob": 1.0 } 7... Bxf3 { {"nb_occ": 1, "prob": 1.0 } 8. Qxf3
+{ {"nb_occ": 1, "prob": 1.0 } 8... Qxf3 { {"nb_occ": 1, "prob": 1.0 } 9. Bxf3
+{ {"nb_occ": 1, "prob": 1.0 } 9... Nd4 { {"nb_occ": 1, "prob": 1.0 } 10. Bd1
+{ {"nb_occ": 1, "prob": 1.0 } 10... O-O-O { {"nb_occ": 1, "prob": 1.0 } 11. Nd2
+{ {"nb_occ": 1, "prob": 1.0 } 11... Nc6 { {"nb_occ": 1, "prob": 1.0 } 12. a3
+{ {"nb_occ": 1, "prob": 1.0 } 12... g6 { {"nb_occ": 1, "prob": 1.0 } ) 6. Bg2
+{ {"nb_occ": 2, "prob": 1.0 } 6... Bd6 { {"nb_occ": 1, "prob": 0.5 } ( 6... Be7
+{ {"nb_occ": 1, "prob": 0.5 } 7. O-O { {"nb_occ": 1, "prob": 1.0 } 7... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 8. Re1 { {"nb_occ": 1, "prob": 1.0 } 8... f6
+{ {"nb_occ": 1, "prob": 1.0 } 9. c3 { {"nb_occ": 1, "prob": 1.0 } 9... Nb6
+{ {"nb_occ": 1, "prob": 1.0 } 10. a4 { {"nb_occ": 1, "prob": 1.0 } 10... a5
+{ {"nb_occ": 1, "prob": 1.0 } 11. d4 { {"nb_occ": 1, "prob": 1.0 } 11... exd4
+{ {"nb_occ": 1, "prob": 1.0 } 12. Nxd4 { {"nb_occ": 1, "prob": 1.0 } 12... Nxd4
+{ {"nb_occ": 1, "prob": 1.0 } ) 7. O-O { {"nb_occ": 1, "prob": 1.0 } 7... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 8. a3 { {"nb_occ": 1, "prob": 1.0 } 8... Re8
+{ {"nb_occ": 1, "prob": 1.0 } 9. b4 { {"nb_occ": 1, "prob": 1.0 } 9... Bg4
+{ {"nb_occ": 1, "prob": 1.0 } 10. h3 { {"nb_occ": 1, "prob": 1.0 } 10... Bh5
+{ {"nb_occ": 1, "prob": 1.0 } 11. Bb2 { {"nb_occ": 1, "prob": 1.0 } 11... f5
+{ {"nb_occ": 1, "prob": 1.0 } 12. c4 { {"nb_occ": 1, "prob": 1.0 } 12... Nf6
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 3. Nc3
+{ {"nb_occ": 1, "prob": 0.0026954177897574125 } 3... Bb4
+{ {"nb_occ": 1, "prob": 1.0 } 4. Nxe5 { {"nb_occ": 1, "prob": 1.0 } 4... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 5. Nd3 { {"nb_occ": 1, "prob": 1.0 } 5... Bxc3
+{ {"nb_occ": 1, "prob": 1.0 } 6. dxc3 { {"nb_occ": 1, "prob": 1.0 } 6... Nxe4
+{ {"nb_occ": 1, "prob": 1.0 } 7. Be2 { {"nb_occ": 1, "prob": 1.0 } 7... d6
+{ {"nb_occ": 1, "prob": 1.0 } 8. O-O { {"nb_occ": 1, "prob": 1.0 } 8... Nd7
+{ {"nb_occ": 1, "prob": 1.0 } 9. f3 { {"nb_occ": 1, "prob": 1.0 } 9... Nec5
+{ {"nb_occ": 1, "prob": 1.0 } 10. Nf2 { {"nb_occ": 1, "prob": 1.0 } 10... Re8
+{ {"nb_occ": 1, "prob": 1.0 } 11. b3 { {"nb_occ": 1, "prob": 1.0 } 11... b6
+{ {"nb_occ": 1, "prob": 1.0 } 12. Bb2 { {"nb_occ": 1, "prob": 1.0 } 12... Bb7
+{ {"nb_occ": 1, "prob": 1.0 } ) 3... d6
+{ {"nb_occ": 301, "prob": 0.9901315789473685 } ( 3... Nc6
+{ {"nb_occ": 1, "prob": 0.003289473684210526 } 4. Nxc6
+{ {"nb_occ": 1, "prob": 1.0 } 4... dxc6 { {"nb_occ": 1, "prob": 1.0 } 5. Nc3
+{ {"nb_occ": 1, "prob": 1.0 } 5... Bc5 { {"nb_occ": 1, "prob": 1.0 } 6. Be2
+{ {"nb_occ": 1, "prob": 1.0 } 6... h5 { {"nb_occ": 1, "prob": 1.0 } 7. d3
+{ {"nb_occ": 1, "prob": 1.0 } 7... Ng4 { {"nb_occ": 1, "prob": 1.0 } 8. Bxg4
+{ {"nb_occ": 1, "prob": 1.0 } 8... hxg4 { {"nb_occ": 1, "prob": 1.0 } 9. Bf4
+{ {"nb_occ": 1, "prob": 1.0 } 9... Be6 { {"nb_occ": 1, "prob": 1.0 } 10. Qd2
+{ {"nb_occ": 1, "prob": 1.0 } 10... Qe7 { {"nb_occ": 1, "prob": 1.0 } 11. O-O-O
+{ {"nb_occ": 1, "prob": 1.0 } 11... O-O-O { {"nb_occ": 1, "prob": 1.0 } 12. Kb1
+{ {"nb_occ": 1, "prob": 1.0 } 12... b6 { {"nb_occ": 1, "prob": 1.0 } ) ( 3...
+Nxe4 { {"nb_occ": 2, "prob": 0.006578947368421052 } 4. Qe2
+{ {"nb_occ": 2, "prob": 1.0 } 4... Qe7 { {"nb_occ": 2, "prob": 1.0 } 5. Qxe4
+{ {"nb_occ": 2, "prob": 1.0 } 5... d6 { {"nb_occ": 2, "prob": 1.0 } 6. d4
+{ {"nb_occ": 2, "prob": 1.0 } 6... dxe5 { {"nb_occ": 2, "prob": 1.0 } 7. dxe5
+{ {"nb_occ": 2, "prob": 1.0 } 7... Nc6 { {"nb_occ": 2, "prob": 1.0 } 8. Bb5
+{ {"nb_occ": 1, "prob": 0.5 } ( 8. Nc3 { {"nb_occ": 1, "prob": 0.5 } 8... Qxe5
+{ {"nb_occ": 1, "prob": 1.0 } 9. Qxe5+ { {"nb_occ": 1, "prob": 1.0 } 9... Nxe5
+{ {"nb_occ": 1, "prob": 1.0 } 10. Bf4 { {"nb_occ": 1, "prob": 1.0 } 10... Bd6
+{ {"nb_occ": 1, "prob": 1.0 } 11. Bg3 { {"nb_occ": 1, "prob": 1.0 } 11... h5
+{ {"nb_occ": 1, "prob": 1.0 } 12. h4 { {"nb_occ": 1, "prob": 1.0 } 12... Bg4
+{ {"nb_occ": 1, "prob": 1.0 } ) 8... Bd7 { {"nb_occ": 1, "prob": 1.0 } 9. Nc3
+{ {"nb_occ": 1, "prob": 1.0 } 9... O-O-O { {"nb_occ": 1, "prob": 1.0 } 10. Bf4
+{ {"nb_occ": 1, "prob": 1.0 } 10... Qb4 { {"nb_occ": 1, "prob": 1.0 } 11. O-O-O
+{ {"nb_occ": 1, "prob": 1.0 } 11... Qxe4 { {"nb_occ": 1, "prob": 1.0 } 12. Nxe4
+{ {"nb_occ": 1, "prob": 1.0 } 12... Nxe5 { {"nb_occ": 1, "prob": 1.0 } ) 4. Nf3
+{ {"nb_occ": 287, "prob": 0.9534883720930233 } ( 4. Nd3
+{ {"nb_occ": 10, "prob": 0.03322259136212625 } 4... Nxe4
+{ {"nb_occ": 10, "prob": 1.0 } 5. Qe2 { {"nb_occ": 10, "prob": 1.0 } 5... Qe7
+{ {"nb_occ": 10, "prob": 1.0 } 6. Nc3 { {"nb_occ": 1, "prob": 0.1 } ( 6. Nf4
+{ {"nb_occ": 9, "prob": 0.9 } 6... Nc6
+{ {"nb_occ": 5, "prob": 0.5555555555555556 } ( 6... Nf6
+{ {"nb_occ": 4, "prob": 0.4444444444444444 } 7. d4
+{ {"nb_occ": 3, "prob": 0.75 } 7... Nc6
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } ( 7... Qxe2+
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } 8. Bxe2
+{ {"nb_occ": 2, "prob": 1.0 } 8... Nc6 { {"nb_occ": 2, "prob": 1.0 } 9. c3
+{ {"nb_occ": 2, "prob": 1.0 } 9... d5 { {"nb_occ": 2, "prob": 1.0 } 10. f3
+{ {"nb_occ": 2, "prob": 1.0 } 10... Nd8 { {"nb_occ": 2, "prob": 1.0 } 11. Kf2
+{ {"nb_occ": 2, "prob": 1.0 } 11... Bd6 { {"nb_occ": 2, "prob": 1.0 } 12. Na3
+{ {"nb_occ": 2, "prob": 1.0 } 12... c6 { {"nb_occ": 2, "prob": 1.0 } ) 8. c3
+{ {"nb_occ": 1, "prob": 1.0 } 8... d5 { {"nb_occ": 1, "prob": 1.0 } 9. Nd2
+{ {"nb_occ": 1, "prob": 1.0 } 9... Nd8 { {"nb_occ": 1, "prob": 1.0 } 10. Nf3
+{ {"nb_occ": 1, "prob": 1.0 } 10... Qxe2+ { {"nb_occ": 1, "prob": 1.0 } 11.
+Bxe2 { {"nb_occ": 1, "prob": 1.0 } 11... Bd6 { {"nb_occ": 1, "prob": 1.0 } 12.
+O-O { {"nb_occ": 1, "prob": 1.0 } 12... O-O { {"nb_occ": 1, "prob": 1.0 } ) 7.
+Nd5 { {"nb_occ": 3, "prob": 0.6 } ( 7. c3 { {"nb_occ": 2, "prob": 0.4 } 7...
+Nc5 { {"nb_occ": 1, "prob": 0.5 } ( 7... Nf6 { {"nb_occ": 1, "prob": 0.5 } 8.
+h4 { {"nb_occ": 1, "prob": 1.0 } 8... h5 { {"nb_occ": 1, "prob": 1.0 } 9. d4
+{ {"nb_occ": 1, "prob": 1.0 } 9... g6 { {"nb_occ": 1, "prob": 1.0 } 10. Na3
+{ {"nb_occ": 1, "prob": 1.0 } 10... a6 { {"nb_occ": 1, "prob": 1.0 } 11. Nc4
+{ {"nb_occ": 1, "prob": 1.0 } 11... Bg7 { {"nb_occ": 1, "prob": 1.0 } 12. f3
+{ {"nb_occ": 1, "prob": 1.0 } 12... O-O { {"nb_occ": 1, "prob": 1.0 } ) 8. d4
+{ {"nb_occ": 1, "prob": 1.0 } 8... Qxe2+ { {"nb_occ": 1, "prob": 1.0 } 9. Bxe2
+{ {"nb_occ": 1, "prob": 1.0 } 9... Ne6 { {"nb_occ": 1, "prob": 1.0 } 10. d5
+{ {"nb_occ": 1, "prob": 1.0 } 10... Nxf4 { {"nb_occ": 1, "prob": 1.0 } 11. Bxf4
+{ {"nb_occ": 1, "prob": 1.0 } 11... Ne5 { {"nb_occ": 1, "prob": 1.0 } 12. Na3
+{ {"nb_occ": 1, "prob": 1.0 } 12... Bf5 { {"nb_occ": 1, "prob": 1.0 } ) 7...
+Nd4 { {"nb_occ": 3, "prob": 1.0 } 8. Nxe7 { {"nb_occ": 3, "prob": 1.0 } 8...
+Nxe2 { {"nb_occ": 3, "prob": 1.0 } 9. Nd5
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } ( 9. Bxe2
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 9... Bxe7
+{ {"nb_occ": 1, "prob": 1.0 } 10. d3 { {"nb_occ": 1, "prob": 1.0 } 10... Nf6
+{ {"nb_occ": 1, "prob": 1.0 } 11. O-O { {"nb_occ": 1, "prob": 1.0 } 11... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 12. Re1 { {"nb_occ": 1, "prob": 1.0 } 12... Re8
+{ {"nb_occ": 1, "prob": 1.0 } ) 9... Nd4 { {"nb_occ": 2, "prob": 1.0 } 10. Na3
+{ {"nb_occ": 2, "prob": 1.0 } 10... Ne6 { {"nb_occ": 1, "prob": 0.5 } ( 10...
+Kd8 { {"nb_occ": 1, "prob": 0.5 } 11. c3 { {"nb_occ": 1, "prob": 1.0 } 11... c6
+{ {"nb_occ": 1, "prob": 1.0 } 12. Ne3 { {"nb_occ": 1, "prob": 1.0 } 12... Nf5
+{ {"nb_occ": 1, "prob": 1.0 } ) 11. f3 { {"nb_occ": 1, "prob": 1.0 } 11... N4c5
+{ {"nb_occ": 1, "prob": 1.0 } 12. d4 { {"nb_occ": 1, "prob": 1.0 } 12... Nd7
+{ {"nb_occ": 1, "prob": 1.0 } ) 6... Nf6 { {"nb_occ": 1, "prob": 1.0 } 7. b3
+{ {"nb_occ": 1, "prob": 1.0 } 7... Nc6 { {"nb_occ": 1, "prob": 1.0 } 8. Bb2
+{ {"nb_occ": 1, "prob": 1.0 } 8... Bf5 { {"nb_occ": 1, "prob": 1.0 } 9. Nf4
+{ {"nb_occ": 1, "prob": 1.0 } 9... O-O-O { {"nb_occ": 1, "prob": 1.0 } 10. Qxe7
+{ {"nb_occ": 1, "prob": 1.0 } 10... Nxe7 { {"nb_occ": 1, "prob": 1.0 } 11.
+O-O-O { {"nb_occ": 1, "prob": 1.0 } 11... Ng6 { {"nb_occ": 1, "prob": 1.0 } 12.
+Bd3 { {"nb_occ": 1, "prob": 1.0 } 12... Bd7 { {"nb_occ": 1, "prob": 1.0 } ) (
+4. Nc4 { {"nb_occ": 3, "prob": 0.009966777408637873 } 4... Nxe4
+{ {"nb_occ": 3, "prob": 1.0 } 5. Qe2
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } ( 5. Nc3
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 5... Nxc3
+{ {"nb_occ": 1, "prob": 1.0 } 6. bxc3 { {"nb_occ": 1, "prob": 1.0 } 6... g6
+{ {"nb_occ": 1, "prob": 1.0 } 7. d4 { {"nb_occ": 1, "prob": 1.0 } 7... Bg7
+{ {"nb_occ": 1, "prob": 1.0 } 8. Bd3 { {"nb_occ": 1, "prob": 1.0 } 8... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 9. O-O { {"nb_occ": 1, "prob": 1.0 } 9... Nd7
+{ {"nb_occ": 1, "prob": 1.0 } 10. Qf3 { {"nb_occ": 1, "prob": 1.0 } 10... Nb6
+{ {"nb_occ": 1, "prob": 1.0 } 11. Ne3 { {"nb_occ": 1, "prob": 1.0 } 11... c5
+{ {"nb_occ": 1, "prob": 1.0 } 12. dxc5 { {"nb_occ": 1, "prob": 1.0 } 12... dxc5
+{ {"nb_occ": 1, "prob": 1.0 } ) 5... Qe7 { {"nb_occ": 2, "prob": 1.0 } 6. Ne3
+{ {"nb_occ": 1, "prob": 0.5 } ( 6. Nc3 { {"nb_occ": 1, "prob": 0.5 } 6... Nxc3
+{ {"nb_occ": 1, "prob": 1.0 } 7. bxc3 { {"nb_occ": 1, "prob": 1.0 } 7... Bg4
+{ {"nb_occ": 1, "prob": 1.0 } 8. Qxe7+ { {"nb_occ": 1, "prob": 1.0 } 8... Bxe7
+{ {"nb_occ": 1, "prob": 1.0 } 9. Rb1 { {"nb_occ": 1, "prob": 1.0 } 9... b6
+{ {"nb_occ": 1, "prob": 1.0 } 10. d4 { {"nb_occ": 1, "prob": 1.0 } 10... Be6
+{ {"nb_occ": 1, "prob": 1.0 } 11. a4 { {"nb_occ": 1, "prob": 1.0 } 11... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 12. Ne3 { {"nb_occ": 1, "prob": 1.0 } 12... Bg5
+{ {"nb_occ": 1, "prob": 1.0 } ) 6... Nc6 { {"nb_occ": 1, "prob": 1.0 } 7. Nd5
+{ {"nb_occ": 1, "prob": 1.0 } 7... Nd4 { {"nb_occ": 1, "prob": 1.0 } 8. Nxe7
+{ {"nb_occ": 1, "prob": 1.0 } 8... Nxe2 { {"nb_occ": 1, "prob": 1.0 } 9. Nd5
+{ {"nb_occ": 1, "prob": 1.0 } 9... c6 { {"nb_occ": 1, "prob": 1.0 } 10. Bxe2
+{ {"nb_occ": 1, "prob": 1.0 } 10... cxd5 { {"nb_occ": 1, "prob": 1.0 } 11. Nc3
+{ {"nb_occ": 1, "prob": 1.0 } 11... Be6 { {"nb_occ": 1, "prob": 1.0 } 12. Nb5
+{ {"nb_occ": 1, "prob": 1.0 } 12... Kd7 { {"nb_occ": 1, "prob": 1.0 } ) ( 4.
+Nxf7 { {"nb_occ": 1, "prob": 0.0033222591362126247 } 4... Kxf7
+{ {"nb_occ": 1, "prob": 1.0 } 5. Nc3 { {"nb_occ": 1, "prob": 1.0 } 5... c5
+{ {"nb_occ": 1, "prob": 1.0 } 6. Bc4+ { {"nb_occ": 1, "prob": 1.0 } 6... Be6
+{ {"nb_occ": 1, "prob": 1.0 } 7. Bxe6+ { {"nb_occ": 1, "prob": 1.0 } 7... Kxe6
+{ {"nb_occ": 1, "prob": 1.0 } 8. d4 { {"nb_occ": 1, "prob": 1.0 } 8... Kf7
+{ {"nb_occ": 1, "prob": 1.0 } 9. dxc5 { {"nb_occ": 1, "prob": 1.0 } 9... Nc6
+{ {"nb_occ": 1, "prob": 1.0 } 10. Qe2 { {"nb_occ": 1, "prob": 1.0 } 10... Qd7
+{ {"nb_occ": 1, "prob": 1.0 } 11. Be3 { {"nb_occ": 1, "prob": 1.0 } 11... dxc5
+{ {"nb_occ": 1, "prob": 1.0 } 12. f4 { {"nb_occ": 1, "prob": 1.0 } 12... Re8
+{ {"nb_occ": 1, "prob": 1.0 } ) 4... Nxe4 { {"nb_occ": 287, "prob": 1.0 } 5. c4
+{ {"nb_occ": 6, "prob": 0.020905923344947737 } ( 5. d4
+{ {"nb_occ": 155, "prob": 0.5400696864111498 } 5... d5
+{ {"nb_occ": 155, "prob": 1.0 } 6. Bd3
+{ {"nb_occ": 154, "prob": 0.9935483870967742 } 6... Bd6
+{ {"nb_occ": 56, "prob": 0.36363636363636365 } ( 6... Nc6
+{ {"nb_occ": 73, "prob": 0.474025974025974 } 7. O-O
+{ {"nb_occ": 73, "prob": 1.0 } 7... Be7 { {"nb_occ": 73, "prob": 1.0 } 8. Nc3
+{ {"nb_occ": 5, "prob": 0.0684931506849315 } ( 8. Re1
+{ {"nb_occ": 12, "prob": 0.1643835616438356 } 8... Bg4
+{ {"nb_occ": 11, "prob": 0.9166666666666666 } ( 8... Bf5
+{ {"nb_occ": 1, "prob": 0.08333333333333333 } 9. Nbd2
+{ {"nb_occ": 1, "prob": 1.0 } 9... Nxd2 { {"nb_occ": 1, "prob": 1.0 } 10. Qxd2
+{ {"nb_occ": 1, "prob": 1.0 } 10... Qd7 { {"nb_occ": 1, "prob": 1.0 } 11. Bb5
+{ {"nb_occ": 1, "prob": 1.0 } 11... O-O { {"nb_occ": 1, "prob": 1.0 } 12. Ne5
+{ {"nb_occ": 1, "prob": 1.0 } 12... Qd6 { {"nb_occ": 1, "prob": 1.0 } ) 9. c4
+{ {"nb_occ": 4, "prob": 0.36363636363636365 } ( 9. Bxe4
+{ {"nb_occ": 1, "prob": 0.09090909090909091 } 9... dxe4
+{ {"nb_occ": 1, "prob": 1.0 } 10. Rxe4 { {"nb_occ": 1, "prob": 1.0 } 10... Bxf3
+{ {"nb_occ": 1, "prob": 1.0 } 11. Qxf3 { {"nb_occ": 1, "prob": 1.0 } 11... Nxd4
+{ {"nb_occ": 1, "prob": 1.0 } 12. Qd3 { {"nb_occ": 1, "prob": 1.0 } 12... Ne6
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 9. c3
+{ {"nb_occ": 6, "prob": 0.5454545454545454 } 9... f5
+{ {"nb_occ": 6, "prob": 1.0 } 10. Qb3
+{ {"nb_occ": 5, "prob": 0.8333333333333334 } ( 10. Nbd2
+{ {"nb_occ": 1, "prob": 0.16666666666666666 } 10... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 11. Qb3 { {"nb_occ": 1, "prob": 1.0 } 11... Na5
+{ {"nb_occ": 1, "prob": 1.0 } 12. Qb5 { {"nb_occ": 1, "prob": 1.0 } 12... c6
+{ {"nb_occ": 1, "prob": 1.0 } ) 10... O-O { {"nb_occ": 5, "prob": 1.0 } 11.
+Nbd2 { {"nb_occ": 5, "prob": 1.0 } 11... Na5 { {"nb_occ": 5, "prob": 1.0 } 12.
+Qa4 { {"nb_occ": 4, "prob": 0.8 } ( 12. Qc2 { {"nb_occ": 1, "prob": 0.2 } 12...
+Nc6 { {"nb_occ": 1, "prob": 1.0 } ) 12... Nc6 { {"nb_occ": 4, "prob": 1.0 } )
+9... Nf6 { {"nb_occ": 4, "prob": 1.0 } 10. Nc3 { {"nb_occ": 4, "prob": 1.0 }
+10... Bxf3 { {"nb_occ": 4, "prob": 1.0 } 11. Qxf3 { {"nb_occ": 4, "prob": 1.0 }
+11... Nxd4 { {"nb_occ": 4, "prob": 1.0 } 12. Qh3 { {"nb_occ": 1, "prob": 0.25 }
+( 12. Qd1 { {"nb_occ": 3, "prob": 0.75 } 12... Ne6
+{ {"nb_occ": 3, "prob": 1.0 } ) 12... dxc4 { {"nb_occ": 1, "prob": 1.0 } ) ( 8.
+Nbd2 { {"nb_occ": 9, "prob": 0.1232876712328767 } 8... Nxd2
+{ {"nb_occ": 2, "prob": 0.2222222222222222 } ( 8... Bf5
+{ {"nb_occ": 7, "prob": 0.7777777777777778 } 9. Qe2
+{ {"nb_occ": 2, "prob": 0.2857142857142857 } ( 9. Re1
+{ {"nb_occ": 5, "prob": 0.7142857142857143 } 9... Nxd2
+{ {"nb_occ": 5, "prob": 1.0 } 10. Qxd2 { {"nb_occ": 5, "prob": 1.0 } 10... Qd7
+{ {"nb_occ": 3, "prob": 0.6 } ( 10... Bxd3 { {"nb_occ": 2, "prob": 0.4 } 11.
+Qxd3 { {"nb_occ": 2, "prob": 1.0 } 11... O-O { {"nb_occ": 2, "prob": 1.0 } 12.
+Re2 { {"nb_occ": 1, "prob": 0.5 } ( 12. c3 { {"nb_occ": 1, "prob": 0.5 } 12...
+h6 { {"nb_occ": 1, "prob": 1.0 } ) 12... Qd7 { {"nb_occ": 1, "prob": 1.0 } )
+11. Bb5 { {"nb_occ": 1, "prob": 0.3333333333333333 } ( 11. Bxf5
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } 11... Qxf5
+{ {"nb_occ": 2, "prob": 1.0 } 12. Ne5 { {"nb_occ": 2, "prob": 1.0 } 12... Nd8
+{ {"nb_occ": 2, "prob": 1.0 } ) 11... O-O { {"nb_occ": 1, "prob": 1.0 } 12. Ne5
+{ {"nb_occ": 1, "prob": 1.0 } 12... Qd6 { {"nb_occ": 1, "prob": 1.0 } ) 9...
+Nd6 { {"nb_occ": 2, "prob": 1.0 } 10. Bxf5 { {"nb_occ": 2, "prob": 1.0 } 10...
+Nxf5 { {"nb_occ": 2, "prob": 1.0 } 11. Qd3 { {"nb_occ": 2, "prob": 1.0 } 11...
+Qd7 { {"nb_occ": 2, "prob": 1.0 } 12. Nb3 { {"nb_occ": 2, "prob": 1.0 } 12...
+O-O { {"nb_occ": 2, "prob": 1.0 } ) 9. Bxd2 { {"nb_occ": 2, "prob": 1.0 } 9...
+Bg4 { {"nb_occ": 2, "prob": 1.0 } 10. c3 { {"nb_occ": 2, "prob": 1.0 } 10...
+O-O { {"nb_occ": 2, "prob": 1.0 } 11. h3 { {"nb_occ": 1, "prob": 0.5 } ( 11.
+Bf4 { {"nb_occ": 1, "prob": 0.5 } 11... Bd6 { {"nb_occ": 1, "prob": 1.0 } 12.
+Bxd6 { {"nb_occ": 1, "prob": 1.0 } 12... Qxd6 { {"nb_occ": 1, "prob": 1.0 } )
+11... Bh5 { {"nb_occ": 1, "prob": 1.0 } 12. g3 { {"nb_occ": 1, "prob": 1.0 }
+12... Qd7 { {"nb_occ": 1, "prob": 1.0 } ) ( 8. c4
+{ {"nb_occ": 47, "prob": 0.6438356164383562 } 8... Nb4
+{ {"nb_occ": 44, "prob": 0.9361702127659575 } ( 8... Nf6
+{ {"nb_occ": 3, "prob": 0.06382978723404255 } 9. Nc3
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } ( 9. h3
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 9... Nb4
+{ {"nb_occ": 1, "prob": 1.0 } 10. Be2 { {"nb_occ": 1, "prob": 1.0 } 10... dxc4
+{ {"nb_occ": 1, "prob": 1.0 } 11. Bxc4 { {"nb_occ": 1, "prob": 1.0 } 11... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 12. Nc3 { {"nb_occ": 1, "prob": 1.0 } 12... Nbd5
+{ {"nb_occ": 1, "prob": 1.0 } ) 9... O-O { {"nb_occ": 2, "prob": 1.0 } 10. Re1
+{ {"nb_occ": 1, "prob": 0.5 } ( 10. h3 { {"nb_occ": 1, "prob": 0.5 } 10... Nb4
+{ {"nb_occ": 1, "prob": 1.0 } 11. Be2 { {"nb_occ": 1, "prob": 1.0 } 11... dxc4
+{ {"nb_occ": 1, "prob": 1.0 } 12. Bxc4 { {"nb_occ": 1, "prob": 1.0 } 12... c6
+{ {"nb_occ": 1, "prob": 1.0 } ) 10... Be6 { {"nb_occ": 1, "prob": 1.0 } 11. c5
+{ {"nb_occ": 1, "prob": 1.0 } 11... Bg4 { {"nb_occ": 1, "prob": 1.0 } 12. Be2
+{ {"nb_occ": 1, "prob": 1.0 } 12... Ne4 { {"nb_occ": 1, "prob": 1.0 } ) 9. Be2
+{ {"nb_occ": 35, "prob": 0.7954545454545454 } ( 9. Re1
+{ {"nb_occ": 4, "prob": 0.09090909090909091 } 9... Nxd3
+{ {"nb_occ": 4, "prob": 1.0 } 10. Qxd3 { {"nb_occ": 4, "prob": 1.0 } 10... Nf6
+{ {"nb_occ": 1, "prob": 0.25 } ( 10... c6 { {"nb_occ": 3, "prob": 0.75 } 11.
+cxd5 { {"nb_occ": 3, "prob": 1.0 } 11... cxd5 { {"nb_occ": 3, "prob": 1.0 } 12.
+Qb5+ { {"nb_occ": 3, "prob": 1.0 } 12... Qd7 { {"nb_occ": 3, "prob": 1.0 } )
+11. c5 { {"nb_occ": 1, "prob": 1.0 } 11... O-O { {"nb_occ": 1, "prob": 1.0 }
+12. Nc3 { {"nb_occ": 1, "prob": 1.0 } 12... c6 { {"nb_occ": 1, "prob": 1.0 } )
+( 9. cxd5 { {"nb_occ": 5, "prob": 0.11363636363636363 } 9... Nxd3
+{ {"nb_occ": 5, "prob": 1.0 } 10. Qxd3 { {"nb_occ": 5, "prob": 1.0 } 10... Qxd5
+{ {"nb_occ": 5, "prob": 1.0 } 11. Re1 { {"nb_occ": 5, "prob": 1.0 } 11... Bf5
+{ {"nb_occ": 5, "prob": 1.0 } 12. g4 { {"nb_occ": 3, "prob": 0.6 } ( 12. Ne5
+{ {"nb_occ": 1, "prob": 0.2 } 12... g6 { {"nb_occ": 1, "prob": 1.0 } ) ( 12.
+Nc3 { {"nb_occ": 1, "prob": 0.2 } 12... Nxc3 { {"nb_occ": 1, "prob": 1.0 } )
+12... Bg6 { {"nb_occ": 3, "prob": 1.0 } ) 9... O-O
+{ {"nb_occ": 34, "prob": 0.9714285714285714 } ( 9... Be6
+{ {"nb_occ": 1, "prob": 0.02857142857142857 } 10. Nc3
+{ {"nb_occ": 1, "prob": 1.0 } 10... O-O { {"nb_occ": 1, "prob": 1.0 } 11. Be3
+{ {"nb_occ": 1, "prob": 1.0 } 11... Bf5 { {"nb_occ": 1, "prob": 1.0 } 12. Rc1
+{ {"nb_occ": 1, "prob": 1.0 } 12... dxc4 { {"nb_occ": 1, "prob": 1.0 } ) 10.
+Nc3 { {"nb_occ": 30, "prob": 0.8823529411764706 } ( 10. a3
+{ {"nb_occ": 4, "prob": 0.11764705882352941 } 10... Nc6
+{ {"nb_occ": 4, "prob": 1.0 } 11. cxd5 { {"nb_occ": 4, "prob": 1.0 } 11... Qxd5
+{ {"nb_occ": 4, "prob": 1.0 } 12. Nc3 { {"nb_occ": 4, "prob": 1.0 } 12... Nxc3
+{ {"nb_occ": 4, "prob": 1.0 } ) 10... Be6 { {"nb_occ": 9, "prob": 0.3 } ( 10...
+Bf5 { {"nb_occ": 20, "prob": 0.6666666666666666 } 11. a3
+{ {"nb_occ": 20, "prob": 1.0 } 11... Nxc3 { {"nb_occ": 20, "prob": 1.0 } 12.
+bxc3 { {"nb_occ": 20, "prob": 1.0 } 12... Nc6 { {"nb_occ": 20, "prob": 1.0 } )
+( 10... b6 { {"nb_occ": 1, "prob": 0.03333333333333333 } 11. a3
+{ {"nb_occ": 1, "prob": 1.0 } 11... Nxc3 { {"nb_occ": 1, "prob": 1.0 } 12. bxc3
+{ {"nb_occ": 1, "prob": 1.0 } 12... Nc6 { {"nb_occ": 1, "prob": 1.0 } ) 11. Ne5
+{ {"nb_occ": 6, "prob": 0.6666666666666666 } ( 11. Be3
+{ {"nb_occ": 2, "prob": 0.2222222222222222 } 11... Bf5
+{ {"nb_occ": 2, "prob": 1.0 } 12. Qb3 { {"nb_occ": 1, "prob": 0.5 } ( 12. Rc1
+{ {"nb_occ": 1, "prob": 0.5 } 12... dxc4 { {"nb_occ": 1, "prob": 1.0 } ) 12...
+c6 { {"nb_occ": 1, "prob": 1.0 } ) ( 11. a3
+{ {"nb_occ": 1, "prob": 0.1111111111111111 } 11... Nxc3
+{ {"nb_occ": 1, "prob": 1.0 } 12. bxc3 { {"nb_occ": 1, "prob": 1.0 } 12... Nc6
+{ {"nb_occ": 1, "prob": 1.0 } ) 11... c5
+{ {"nb_occ": 2, "prob": 0.3333333333333333 } ( 11... f6
+{ {"nb_occ": 4, "prob": 0.6666666666666666 } 12. Bg4
+{ {"nb_occ": 3, "prob": 0.75 } ( 12. Nf3 { {"nb_occ": 1, "prob": 0.25 } 12...
+Kh8 { {"nb_occ": 1, "prob": 1.0 } ) 12... Bc8
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } ( 12... Bxg4
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } ) ) 12. Bf3
+{ {"nb_occ": 1, "prob": 0.5 } ( 12. Nxe4 { {"nb_occ": 1, "prob": 0.5 } 12...
+dxe4 { {"nb_occ": 1, "prob": 1.0 } ) 12... cxd4 { {"nb_occ": 1, "prob": 1.0 } )
+8... Bf5 { {"nb_occ": 2, "prob": 0.4 } ( 8... Nxc3
+{ {"nb_occ": 3, "prob": 0.6 } 9. bxc3 { {"nb_occ": 3, "prob": 1.0 } 9... O-O
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } ( 9... Bg4
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } 10. Re1
+{ {"nb_occ": 2, "prob": 1.0 } 10... O-O { {"nb_occ": 2, "prob": 1.0 } 11. Bf4
+{ {"nb_occ": 2, "prob": 1.0 } 11... Bh5 { {"nb_occ": 1, "prob": 0.5 } ( 11...
+Bd6 { {"nb_occ": 1, "prob": 0.5 } 12. Bxd6 { {"nb_occ": 1, "prob": 1.0 } 12...
+Bxf3 { {"nb_occ": 1, "prob": 1.0 } ) 12. Rb1 { {"nb_occ": 1, "prob": 1.0 }
+12... Rb8 { {"nb_occ": 1, "prob": 1.0 } ) 10. h3 { {"nb_occ": 1, "prob": 1.0 }
+10... Re8 { {"nb_occ": 1, "prob": 1.0 } 11. Rb1 { {"nb_occ": 1, "prob": 1.0 }
+11... b6 { {"nb_occ": 1, "prob": 1.0 } 12. Re1 { {"nb_occ": 1, "prob": 1.0 }
+12... Bd6 { {"nb_occ": 1, "prob": 1.0 } ) 9. Qe1 { {"nb_occ": 1, "prob": 0.5 }
+( 9. Re1 { {"nb_occ": 1, "prob": 0.5 } 9... Nxc3 { {"nb_occ": 1, "prob": 1.0 }
+10. bxc3 { {"nb_occ": 1, "prob": 1.0 } 10... Bxd3 { {"nb_occ": 1, "prob": 1.0 }
+11. Qxd3 { {"nb_occ": 1, "prob": 1.0 } 11... O-O { {"nb_occ": 1, "prob": 1.0 }
+12. Rb1 { {"nb_occ": 1, "prob": 1.0 } 12... Rb8 { {"nb_occ": 1, "prob": 1.0 } )
+9... Bb4 { {"nb_occ": 1, "prob": 1.0 } 10. Qe3 { {"nb_occ": 1, "prob": 1.0 }
+10... Bxc3 { {"nb_occ": 1, "prob": 1.0 } 11. bxc3 { {"nb_occ": 1, "prob": 1.0 }
+11... O-O { {"nb_occ": 1, "prob": 1.0 } 12. c4 { {"nb_occ": 1, "prob": 1.0 }
+12... Re8 { {"nb_occ": 1, "prob": 1.0 } ) ( 6... Be7
+{ {"nb_occ": 9, "prob": 0.05844155844155844 } 7. c4
+{ {"nb_occ": 1, "prob": 0.1111111111111111 } ( 7. O-O
+{ {"nb_occ": 8, "prob": 0.8888888888888888 } 7... Bf5
+{ {"nb_occ": 4, "prob": 0.5 } ( 7... Nc6 { {"nb_occ": 3, "prob": 0.375 } 8.
+Nbd2 { {"nb_occ": 2, "prob": 0.6666666666666666 } ( 8. c4
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 8... Nf6
+{ {"nb_occ": 1, "prob": 1.0 } 9. Nc3 { {"nb_occ": 1, "prob": 1.0 } 9... Be6
+{ {"nb_occ": 1, "prob": 1.0 } 10. cxd5 { {"nb_occ": 1, "prob": 1.0 } 10... Nxd5
+{ {"nb_occ": 1, "prob": 1.0 } 11. Re1 { {"nb_occ": 1, "prob": 1.0 } 11... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 12. h3 { {"nb_occ": 1, "prob": 1.0 } 12... Bf6
+{ {"nb_occ": 1, "prob": 1.0 } ) 8... Bf5 { {"nb_occ": 1, "prob": 0.5 } ( 8...
+Nd6 { {"nb_occ": 1, "prob": 0.5 } 9. c3 { {"nb_occ": 1, "prob": 1.0 } 9... Bf5
+{ {"nb_occ": 1, "prob": 1.0 } 10. Bxf5 { {"nb_occ": 1, "prob": 1.0 } 10... Nxf5
+{ {"nb_occ": 1, "prob": 1.0 } 11. Qb3 { {"nb_occ": 1, "prob": 1.0 } 11... b6
+{ {"nb_occ": 1, "prob": 1.0 } 12. Re1 { {"nb_occ": 1, "prob": 1.0 } 12... O-O
+{ {"nb_occ": 1, "prob": 1.0 } ) 9. Re1 { {"nb_occ": 1, "prob": 1.0 } 9... Nxd2
+{ {"nb_occ": 1, "prob": 1.0 } 10. Qxd2 { {"nb_occ": 1, "prob": 1.0 } 10... Bg6
+{ {"nb_occ": 1, "prob": 1.0 } 11. Bb5 { {"nb_occ": 1, "prob": 1.0 } 11... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 12. Bxc6 { {"nb_occ": 1, "prob": 1.0 } 12... bxc6
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 7... Nd6 { {"nb_occ": 1, "prob": 0.125 } 8.
+Re1 { {"nb_occ": 1, "prob": 1.0 } 8... O-O { {"nb_occ": 1, "prob": 1.0 } 9. Bf4
+{ {"nb_occ": 1, "prob": 1.0 } 9... Re8 { {"nb_occ": 1, "prob": 1.0 } 10. b3
+{ {"nb_occ": 1, "prob": 1.0 } 10... Bg4 { {"nb_occ": 1, "prob": 1.0 } 11. Nbd2
+{ {"nb_occ": 1, "prob": 1.0 } 11... Nc6 { {"nb_occ": 1, "prob": 1.0 } 12. c3
+{ {"nb_occ": 1, "prob": 1.0 } 12... Qd7 { {"nb_occ": 1, "prob": 1.0 } ) 8. Re1
+{ {"nb_occ": 3, "prob": 0.75 } ( 8. Nc3 { {"nb_occ": 1, "prob": 0.25 } 8... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 9. Re1 { {"nb_occ": 1, "prob": 1.0 } 9... Nxc3
+{ {"nb_occ": 1, "prob": 1.0 } 10. bxc3 { {"nb_occ": 1, "prob": 1.0 } 10... Bxd3
+{ {"nb_occ": 1, "prob": 1.0 } 11. Qxd3 { {"nb_occ": 1, "prob": 1.0 } 11... Nd7
+{ {"nb_occ": 1, "prob": 1.0 } 12. Rb1 { {"nb_occ": 1, "prob": 1.0 } 12... Nb6
+{ {"nb_occ": 1, "prob": 1.0 } ) 8... O-O { {"nb_occ": 3, "prob": 1.0 } 9. Nbd2
+{ {"nb_occ": 3, "prob": 1.0 } 9... Nd6 { {"nb_occ": 3, "prob": 1.0 } 10. Nf1
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } ( 10. Bxf5
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 10... Nxf5
+{ {"nb_occ": 1, "prob": 1.0 } 11. Nf1 { {"nb_occ": 1, "prob": 1.0 } 11... Nc6
+{ {"nb_occ": 1, "prob": 1.0 } 12. Qd3 { {"nb_occ": 1, "prob": 1.0 } 12... Qd7
+{ {"nb_occ": 1, "prob": 1.0 } ) 10... Bxd3 { {"nb_occ": 2, "prob": 1.0 } 11.
+Qxd3 { {"nb_occ": 2, "prob": 1.0 } 11... c6 { {"nb_occ": 2, "prob": 1.0 } 12.
+Bf4 { {"nb_occ": 2, "prob": 1.0 } 12... Na6 { {"nb_occ": 2, "prob": 1.0 } )
+7... Bb4+ { {"nb_occ": 1, "prob": 1.0 } 8. Nbd2 { {"nb_occ": 1, "prob": 1.0 }
+8... O-O { {"nb_occ": 1, "prob": 1.0 } 9. O-O { {"nb_occ": 1, "prob": 1.0 }
+9... Bf5 { {"nb_occ": 1, "prob": 1.0 } 10. Nb3 { {"nb_occ": 1, "prob": 1.0 }
+10... dxc4 { {"nb_occ": 1, "prob": 1.0 } 11. Bxc4 { {"nb_occ": 1, "prob": 1.0 }
+11... Nc6 { {"nb_occ": 1, "prob": 1.0 } 12. Bd3 { {"nb_occ": 1, "prob": 1.0 }
+12... Bg6 { {"nb_occ": 1, "prob": 1.0 } ) ( 6... Bf5
+{ {"nb_occ": 15, "prob": 0.09740259740259741 } 7. O-O
+{ {"nb_occ": 14, "prob": 0.9333333333333333 } ( 7. Nbd2
+{ {"nb_occ": 1, "prob": 0.06666666666666667 } 7... Be7
+{ {"nb_occ": 1, "prob": 1.0 } 8. Nf1 { {"nb_occ": 1, "prob": 1.0 } 8... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 9. Ne3 { {"nb_occ": 1, "prob": 1.0 } 9... Bg6
+{ {"nb_occ": 1, "prob": 1.0 } 10. O-O { {"nb_occ": 1, "prob": 1.0 } 10... c6
+{ {"nb_occ": 1, "prob": 1.0 } 11. c4 { {"nb_occ": 1, "prob": 1.0 } 11... dxc4
+{ {"nb_occ": 1, "prob": 1.0 } 12. Nxc4 { {"nb_occ": 1, "prob": 1.0 } 12... Nd7
+{ {"nb_occ": 1, "prob": 1.0 } ) 7... Be7 { {"nb_occ": 14, "prob": 1.0 } 8. c4
+{ {"nb_occ": 2, "prob": 0.14285714285714285 } ( 8. Nc3
+{ {"nb_occ": 1, "prob": 0.07142857142857142 } 8... Nc6
+{ {"nb_occ": 1, "prob": 1.0 } 9. Re1 { {"nb_occ": 1, "prob": 1.0 } 9... Nxc3
+{ {"nb_occ": 1, "prob": 1.0 } 10. bxc3 { {"nb_occ": 1, "prob": 1.0 } 10... Bxd3
+{ {"nb_occ": 1, "prob": 1.0 } 11. Qxd3 { {"nb_occ": 1, "prob": 1.0 } 11... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 12. Re2 { {"nb_occ": 1, "prob": 1.0 } 12... Qd7
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 8. Re1
+{ {"nb_occ": 11, "prob": 0.7857142857142857 } 8... O-O
+{ {"nb_occ": 11, "prob": 1.0 } 9. Nbd2
+{ {"nb_occ": 7, "prob": 0.6363636363636364 } ( 9. Nc3
+{ {"nb_occ": 4, "prob": 0.36363636363636365 } 9... Nxc3
+{ {"nb_occ": 4, "prob": 1.0 } 10. bxc3 { {"nb_occ": 4, "prob": 1.0 } 10... Bxd3
+{ {"nb_occ": 4, "prob": 1.0 } 11. Qxd3 { {"nb_occ": 4, "prob": 1.0 } 11... Nc6
+{ {"nb_occ": 1, "prob": 0.25 } ( 11... Nd7 { {"nb_occ": 3, "prob": 0.75 } 12.
+a4 { {"nb_occ": 3, "prob": 1.0 } 12... c6 { {"nb_occ": 3, "prob": 1.0 } ) 12.
+Re2 { {"nb_occ": 1, "prob": 1.0 } 12... a6 { {"nb_occ": 1, "prob": 1.0 } ) 9...
+Nd6 { {"nb_occ": 7, "prob": 1.0 } 10. Nf1
+{ {"nb_occ": 5, "prob": 0.7142857142857143 } ( 10. Bxf5
+{ {"nb_occ": 1, "prob": 0.14285714285714285 } 10... Nxf5
+{ {"nb_occ": 1, "prob": 1.0 } 11. Nf1 { {"nb_occ": 1, "prob": 1.0 } 11... c6
+{ {"nb_occ": 1, "prob": 1.0 } 12. Qd3 { {"nb_occ": 1, "prob": 1.0 } 12... g6
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 10. Nb3
+{ {"nb_occ": 1, "prob": 0.14285714285714285 } 10... c6
+{ {"nb_occ": 1, "prob": 1.0 } 11. Bf4 { {"nb_occ": 1, "prob": 1.0 } 11... Bxd3
+{ {"nb_occ": 1, "prob": 1.0 } 12. Qxd3 { {"nb_occ": 1, "prob": 1.0 } 12... Ne4
+{ {"nb_occ": 1, "prob": 1.0 } ) 10... c6 { {"nb_occ": 3, "prob": 0.6 } ( 10...
+Bxd3 { {"nb_occ": 1, "prob": 0.2 } 11. Qxd3 { {"nb_occ": 1, "prob": 1.0 } 11...
+c6 { {"nb_occ": 1, "prob": 1.0 } 12. Bf4 { {"nb_occ": 1, "prob": 1.0 } 12...
+Na6 { {"nb_occ": 1, "prob": 1.0 } ) ( 10... Bg6 { {"nb_occ": 1, "prob": 0.2 }
+11. b3 { {"nb_occ": 1, "prob": 1.0 } 11... Nd7 { {"nb_occ": 1, "prob": 1.0 }
+12. Ne3 { {"nb_occ": 1, "prob": 1.0 } 12... Nf6 { {"nb_occ": 1, "prob": 1.0 } )
+11. Bf4 { {"nb_occ": 3, "prob": 1.0 } 11... Bxd3 { {"nb_occ": 3, "prob": 1.0 }
+12. Qxd3 { {"nb_occ": 3, "prob": 1.0 } 12... Na6 { {"nb_occ": 3, "prob": 1.0 }
+) 8... dxc4 { {"nb_occ": 2, "prob": 1.0 } 9. Bxc4 { {"nb_occ": 2, "prob": 1.0 }
+9... O-O { {"nb_occ": 2, "prob": 1.0 } 10. Re1 { {"nb_occ": 2, "prob": 1.0 }
+10... Nc6 { {"nb_occ": 2, "prob": 1.0 } 11. d5 { {"nb_occ": 1, "prob": 0.5 } (
+11. Nc3 { {"nb_occ": 1, "prob": 0.5 } 11... Nd6 { {"nb_occ": 1, "prob": 1.0 }
+12. Bb3 { {"nb_occ": 1, "prob": 1.0 } 12... Nb4 { {"nb_occ": 1, "prob": 1.0 } )
+11... Nb8 { {"nb_occ": 1, "prob": 1.0 } 12. Nd4 { {"nb_occ": 1, "prob": 1.0 }
+12... Bg6 { {"nb_occ": 1, "prob": 1.0 } ) ( 6... Be6
+{ {"nb_occ": 1, "prob": 0.006493506493506494 } 7. O-O
+{ {"nb_occ": 1, "prob": 1.0 } 7... f5 { {"nb_occ": 1, "prob": 1.0 } 8. Qe2
+{ {"nb_occ": 1, "prob": 1.0 } 8... Be7 { {"nb_occ": 1, "prob": 1.0 } 9. Ne5
+{ {"nb_occ": 1, "prob": 1.0 } 9... Nd7 { {"nb_occ": 1, "prob": 1.0 } 10. Nxd7
+{ {"nb_occ": 1, "prob": 1.0 } 10... Qxd7 { {"nb_occ": 1, "prob": 1.0 } 11. f3
+{ {"nb_occ": 1, "prob": 1.0 } 11... O-O { {"nb_occ": 1, "prob": 1.0 } 12. Bf4
+{ {"nb_occ": 1, "prob": 1.0 } 12... Bf6 { {"nb_occ": 1, "prob": 1.0 } ) 7. O-O
+{ {"nb_occ": 55, "prob": 0.9821428571428571 } ( 7. Nbd2
+{ {"nb_occ": 1, "prob": 0.017857142857142856 } 7... Bf5
+{ {"nb_occ": 1, "prob": 1.0 } 8. O-O { {"nb_occ": 1, "prob": 1.0 } 8... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 9. Re1 { {"nb_occ": 1, "prob": 1.0 } 9... Re8
+{ {"nb_occ": 1, "prob": 1.0 } 10. Nf1 { {"nb_occ": 1, "prob": 1.0 } 10... Bg6
+{ {"nb_occ": 1, "prob": 1.0 } 11. Ne3 { {"nb_occ": 1, "prob": 1.0 } 11... c6
+{ {"nb_occ": 1, "prob": 1.0 } 12. c4 { {"nb_occ": 1, "prob": 1.0 } 12... Nf6
+{ {"nb_occ": 1, "prob": 1.0 } ) 7... O-O { {"nb_occ": 55, "prob": 1.0 } 8. c4
+{ {"nb_occ": 52, "prob": 0.9454545454545454 } ( 8. Re1
+{ {"nb_occ": 3, "prob": 0.05454545454545454 } 8... Bf5
+{ {"nb_occ": 3, "prob": 1.0 } 9. Nbd2
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } ( 9. c4
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 9... c6
+{ {"nb_occ": 1, "prob": 1.0 } 10. Qb3 { {"nb_occ": 1, "prob": 1.0 } 10... Qd7
+{ {"nb_occ": 1, "prob": 1.0 } 11. c5 { {"nb_occ": 1, "prob": 1.0 } 11... Bc7
+{ {"nb_occ": 1, "prob": 1.0 } 12. Nbd2 { {"nb_occ": 1, "prob": 1.0 } 12... Re8
+{ {"nb_occ": 1, "prob": 1.0 } ) 9... Re8 { {"nb_occ": 2, "prob": 1.0 } 10. g3
+{ {"nb_occ": 2, "prob": 1.0 } 10... h6 { {"nb_occ": 2, "prob": 1.0 } 11. Nh4
+{ {"nb_occ": 2, "prob": 1.0 } 11... Bh7 { {"nb_occ": 2, "prob": 1.0 } 12. Qf3
+{ {"nb_occ": 2, "prob": 1.0 } 12... Nc6 { {"nb_occ": 2, "prob": 1.0 } ) 8... c6
+{ {"nb_occ": 52, "prob": 1.0 } 9. cxd5
+{ {"nb_occ": 3, "prob": 0.057692307692307696 } ( 9. Qc2
+{ {"nb_occ": 7, "prob": 0.1346153846153846 } 9... Na6
+{ {"nb_occ": 5, "prob": 0.7142857142857143 } ( 9... h6
+{ {"nb_occ": 1, "prob": 0.14285714285714285 } 10. c5
+{ {"nb_occ": 1, "prob": 1.0 } 10... Bc7 { {"nb_occ": 1, "prob": 1.0 } 11. Nc3
+{ {"nb_occ": 1, "prob": 1.0 } 11... Nxc3 { {"nb_occ": 1, "prob": 1.0 } 12. Qxc3
+{ {"nb_occ": 1, "prob": 1.0 } 12... Qf6 { {"nb_occ": 1, "prob": 1.0 } ) ( 9...
+Nd7 { {"nb_occ": 1, "prob": 0.14285714285714285 } 10. Nc3
+{ {"nb_occ": 1, "prob": 1.0 } 10... Ndf6 { {"nb_occ": 1, "prob": 1.0 } 11. h3
+{ {"nb_occ": 1, "prob": 1.0 } 11... Re8 { {"nb_occ": 1, "prob": 1.0 } 12. cxd5
+{ {"nb_occ": 1, "prob": 1.0 } 12... Nxc3 { {"nb_occ": 1, "prob": 1.0 } ) 10. a3
+{ {"nb_occ": 5, "prob": 1.0 } 10... f5 { {"nb_occ": 1, "prob": 0.2 } ( 10...
+Bg4 { {"nb_occ": 4, "prob": 0.8 } 11. Ne5 { {"nb_occ": 4, "prob": 1.0 } 11...
+Bf5 { {"nb_occ": 2, "prob": 0.5 } ( 11... Bxe5 { {"nb_occ": 2, "prob": 0.5 }
+12. dxe5 { {"nb_occ": 2, "prob": 1.0 } 12... Nac5 { {"nb_occ": 2, "prob": 1.0 }
+) 12. b4 { {"nb_occ": 1, "prob": 0.5 } ( 12. Nc3 { {"nb_occ": 1, "prob": 0.5 }
+12... Bxe5 { {"nb_occ": 1, "prob": 1.0 } ) 12... Nc7
+{ {"nb_occ": 1, "prob": 1.0 } ) 11. Nc3 { {"nb_occ": 1, "prob": 1.0 } 11... Nc7
+{ {"nb_occ": 1, "prob": 1.0 } 12. b4 { {"nb_occ": 1, "prob": 1.0 } 12... Kh8
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 9. Re1 { {"nb_occ": 26, "prob": 0.5 } 9...
+Bf5 { {"nb_occ": 26, "prob": 1.0 } 10. Nc3
+{ {"nb_occ": 2, "prob": 0.07692307692307693 } ( 10. Qb3
+{ {"nb_occ": 20, "prob": 0.7692307692307693 } 10... Qd7
+{ {"nb_occ": 19, "prob": 0.95 } ( 10... Na6 { {"nb_occ": 1, "prob": 0.05 } 11.
+Nc3 { {"nb_occ": 1, "prob": 1.0 } 11... dxc4 { {"nb_occ": 1, "prob": 1.0 } 12.
+Bxc4 { {"nb_occ": 1, "prob": 1.0 } 12... Nxc3 { {"nb_occ": 1, "prob": 1.0 } )
+11. Nc3 { {"nb_occ": 11, "prob": 0.5789473684210527 } ( 11. Nh4
+{ {"nb_occ": 3, "prob": 0.15789473684210525 } 11... Be6
+{ {"nb_occ": 3, "prob": 1.0 } 12. Qc2 { {"nb_occ": 3, "prob": 1.0 } 12... Na6
+{ {"nb_occ": 3, "prob": 1.0 } ) ( 11. Be3
+{ {"nb_occ": 2, "prob": 0.10526315789473684 } 11... dxc4
+{ {"nb_occ": 1, "prob": 0.5 } ( 11... Re8 { {"nb_occ": 1, "prob": 0.5 } 12. Nc3
+{ {"nb_occ": 1, "prob": 1.0 } 12... dxc4 { {"nb_occ": 1, "prob": 1.0 } ) 12.
+Bxc4 { {"nb_occ": 1, "prob": 1.0 } 12... b5 { {"nb_occ": 1, "prob": 1.0 } ) (
+11. a3 { {"nb_occ": 1, "prob": 0.05263157894736842 } 11... dxc4
+{ {"nb_occ": 1, "prob": 1.0 } 12. Bxc4 { {"nb_occ": 1, "prob": 1.0 } 12... b5
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 11. c5
+{ {"nb_occ": 2, "prob": 0.10526315789473684 } 11... Bc7
+{ {"nb_occ": 2, "prob": 1.0 } 12. Nc3 { {"nb_occ": 1, "prob": 0.5 } ( 12. g3
+{ {"nb_occ": 1, "prob": 0.5 } 12... a5 { {"nb_occ": 1, "prob": 1.0 } ) 12...
+Re8 { {"nb_occ": 1, "prob": 1.0 } ) 11... Nxc3 { {"nb_occ": 11, "prob": 1.0 }
+12. Bxf5 { {"nb_occ": 11, "prob": 1.0 } 12... Qxf5
+{ {"nb_occ": 11, "prob": 1.0 } ) ( 10. Qc2
+{ {"nb_occ": 3, "prob": 0.11538461538461539 } 10... Bg6
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } ( 10... Na6
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } 11. a3
+{ {"nb_occ": 2, "prob": 1.0 } 11... Bg6 { {"nb_occ": 2, "prob": 1.0 } 12. c5
+{ {"nb_occ": 1, "prob": 0.5 } ( 12. Be3 { {"nb_occ": 1, "prob": 0.5 } 12... Rc8
+{ {"nb_occ": 1, "prob": 1.0 } ) 12... Bb8 { {"nb_occ": 1, "prob": 1.0 } ) 11.
+c5 { {"nb_occ": 1, "prob": 1.0 } 11... Bc7 { {"nb_occ": 1, "prob": 1.0 } 12.
+Nbd2 { {"nb_occ": 1, "prob": 1.0 } 12... f5 { {"nb_occ": 1, "prob": 1.0 } ) (
+10. c5 { {"nb_occ": 1, "prob": 0.038461538461538464 } 10... Bc7
+{ {"nb_occ": 1, "prob": 1.0 } 11. Nc3 { {"nb_occ": 1, "prob": 1.0 } 11... Nd7
+{ {"nb_occ": 1, "prob": 1.0 } 12. Qc2 { {"nb_occ": 1, "prob": 1.0 } 12... Re8
+{ {"nb_occ": 1, "prob": 1.0 } ) 10... Nxc3 { {"nb_occ": 2, "prob": 1.0 } 11.
+bxc3 { {"nb_occ": 2, "prob": 1.0 } 11... Bxd3 { {"nb_occ": 2, "prob": 1.0 } 12.
+Qxd3 { {"nb_occ": 2, "prob": 1.0 } 12... dxc4 { {"nb_occ": 2, "prob": 1.0 } ) (
+9. Nc3 { {"nb_occ": 15, "prob": 0.28846153846153844 } 9... Nxc3
+{ {"nb_occ": 15, "prob": 1.0 } 10. bxc3 { {"nb_occ": 15, "prob": 1.0 } 10...
+dxc4 { {"nb_occ": 15, "prob": 1.0 } 11. Bxc4 { {"nb_occ": 15, "prob": 1.0 }
+11... Bf5 { {"nb_occ": 12, "prob": 0.8 } ( 11... Bg4
+{ {"nb_occ": 3, "prob": 0.2 } 12. h3 { {"nb_occ": 3, "prob": 1.0 } 12... Bh5
+{ {"nb_occ": 3, "prob": 1.0 } ) 12. Re1
+{ {"nb_occ": 2, "prob": 0.16666666666666666 } ( 12. Bg5
+{ {"nb_occ": 7, "prob": 0.5833333333333334 } 12... Qa5
+{ {"nb_occ": 6, "prob": 0.8571428571428571 } ( 12... Qc7
+{ {"nb_occ": 1, "prob": 0.14285714285714285 } ) ) ( 12. Ng5
+{ {"nb_occ": 2, "prob": 0.16666666666666666 } 12... h6
+{ {"nb_occ": 2, "prob": 1.0 } ) ( 12. Bd3
+{ {"nb_occ": 1, "prob": 0.08333333333333333 } 12... Bxd3
+{ {"nb_occ": 1, "prob": 1.0 } ) 12... Nd7 { {"nb_occ": 2, "prob": 1.0 } ) ( 9.
+Qb3 { {"nb_occ": 1, "prob": 0.019230769230769232 } 9... Bg4
+{ {"nb_occ": 1, "prob": 1.0 } 10. Bxe4 { {"nb_occ": 1, "prob": 1.0 } 10... dxe4
+{ {"nb_occ": 1, "prob": 1.0 } 11. Ng5 { {"nb_occ": 1, "prob": 1.0 } 11... Be7
+{ {"nb_occ": 1, "prob": 1.0 } 12. Nxe4 { {"nb_occ": 1, "prob": 1.0 } 12... Qxd4
+{ {"nb_occ": 1, "prob": 1.0 } ) 9... cxd5 { {"nb_occ": 3, "prob": 1.0 } 10. Nc3
+{ {"nb_occ": 3, "prob": 1.0 } 10... Nxc3 { {"nb_occ": 3, "prob": 1.0 } 11. bxc3
+{ {"nb_occ": 3, "prob": 1.0 } 11... Bg4 { {"nb_occ": 3, "prob": 1.0 } 12. Rb1
+{ {"nb_occ": 3, "prob": 1.0 } 12... Nd7 { {"nb_occ": 3, "prob": 1.0 } ) ( 5.
+Nc3 { {"nb_occ": 87, "prob": 0.30313588850174217 } 5... Nxc3
+{ {"nb_occ": 82, "prob": 0.9425287356321839 } ( 5... Nf6
+{ {"nb_occ": 5, "prob": 0.05747126436781609 } 6. d4
+{ {"nb_occ": 5, "prob": 1.0 } 6... Be7 { {"nb_occ": 5, "prob": 1.0 } 7. Bd3
+{ {"nb_occ": 5, "prob": 1.0 } 7... O-O { {"nb_occ": 5, "prob": 1.0 } 8. O-O
+{ {"nb_occ": 2, "prob": 0.4 } ( 8. h3 { {"nb_occ": 3, "prob": 0.6 } 8... Nc6
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } ( 8... Re8
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } 9. O-O
+{ {"nb_occ": 2, "prob": 1.0 } 9... Nbd7 { {"nb_occ": 2, "prob": 1.0 } 10. Ne2
+{ {"nb_occ": 1, "prob": 0.5 } ( 10. Re1 { {"nb_occ": 1, "prob": 0.5 } 10... Nf8
+{ {"nb_occ": 1, "prob": 1.0 } 11. Bg5 { {"nb_occ": 1, "prob": 1.0 } 11... Be6
+{ {"nb_occ": 1, "prob": 1.0 } 12. Qd2 { {"nb_occ": 1, "prob": 1.0 } 12... Ng6
+{ {"nb_occ": 1, "prob": 1.0 } ) 10... Nf8 { {"nb_occ": 1, "prob": 1.0 } 11. c4
+{ {"nb_occ": 1, "prob": 1.0 } 11... Ng6 { {"nb_occ": 1, "prob": 1.0 } 12. b3
+{ {"nb_occ": 1, "prob": 1.0 } 12... d5 { {"nb_occ": 1, "prob": 1.0 } ) 9. a3
+{ {"nb_occ": 1, "prob": 1.0 } 9... Re8 { {"nb_occ": 1, "prob": 1.0 } 10. O-O
+{ {"nb_occ": 1, "prob": 1.0 } 10... h6 { {"nb_occ": 1, "prob": 1.0 } 11. Ne2
+{ {"nb_occ": 1, "prob": 1.0 } 11... d5 { {"nb_occ": 1, "prob": 1.0 } 12. Ne5
+{ {"nb_occ": 1, "prob": 1.0 } 12... Nxe5 { {"nb_occ": 1, "prob": 1.0 } ) 8...
+Nc6 { {"nb_occ": 1, "prob": 0.5 } ( 8... Re8 { {"nb_occ": 1, "prob": 0.5 } 9.
+Re1 { {"nb_occ": 1, "prob": 1.0 } 9... Nbd7 { {"nb_occ": 1, "prob": 1.0 } 10.
+Ne2 { {"nb_occ": 1, "prob": 1.0 } 10... b6 { {"nb_occ": 1, "prob": 1.0 } 11. c4
+{ {"nb_occ": 1, "prob": 1.0 } 11... Bb7 { {"nb_occ": 1, "prob": 1.0 } 12. Nc3
+{ {"nb_occ": 1, "prob": 1.0 } 12... d5 { {"nb_occ": 1, "prob": 1.0 } ) 9. d5
+{ {"nb_occ": 1, "prob": 1.0 } 9... Nb4 { {"nb_occ": 1, "prob": 1.0 } 10. Be2
+{ {"nb_occ": 1, "prob": 1.0 } 10... c6 { {"nb_occ": 1, "prob": 1.0 } 11. dxc6
+{ {"nb_occ": 1, "prob": 1.0 } 11... bxc6 { {"nb_occ": 1, "prob": 1.0 } 12. a3
+{ {"nb_occ": 1, "prob": 1.0 } 12... Nbd5 { {"nb_occ": 1, "prob": 1.0 } ) 6.
+dxc3 { {"nb_occ": 82, "prob": 1.0 } 6... Be7
+{ {"nb_occ": 81, "prob": 0.9878048780487805 } ( 6... Nc6
+{ {"nb_occ": 1, "prob": 0.012195121951219513 } 7. Be3
+{ {"nb_occ": 1, "prob": 1.0 } 7... Be7 { {"nb_occ": 1, "prob": 1.0 } 8. Qd2
+{ {"nb_occ": 1, "prob": 1.0 } 8... Be6 { {"nb_occ": 1, "prob": 1.0 } 9. O-O-O
+{ {"nb_occ": 1, "prob": 1.0 } 9... Qd7 { {"nb_occ": 1, "prob": 1.0 } 10. a3
+{ {"nb_occ": 1, "prob": 1.0 } 10... h6 { {"nb_occ": 1, "prob": 1.0 } 11. Nd4
+{ {"nb_occ": 1, "prob": 1.0 } 11... Nxd4 { {"nb_occ": 1, "prob": 1.0 } 12. Bxd4
+{ {"nb_occ": 1, "prob": 1.0 } 12... Rg8 { {"nb_occ": 1, "prob": 1.0 } ) 7. Be3
+{ {"nb_occ": 61, "prob": 0.7530864197530864 } ( 7. Bd3
+{ {"nb_occ": 1, "prob": 0.012345679012345678 } 7... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 8. O-O { {"nb_occ": 1, "prob": 1.0 } 8... Nd7
+{ {"nb_occ": 1, "prob": 1.0 } 9. Re1 { {"nb_occ": 1, "prob": 1.0 } 9... Nc5
+{ {"nb_occ": 1, "prob": 1.0 } 10. Bf4 { {"nb_occ": 1, "prob": 1.0 } 10... Nxd3
+{ {"nb_occ": 1, "prob": 1.0 } 11. Qxd3 { {"nb_occ": 1, "prob": 1.0 } 11... Re8
+{ {"nb_occ": 1, "prob": 1.0 } 12. h3 { {"nb_occ": 1, "prob": 1.0 } 12... h6
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 7. Bf4
+{ {"nb_occ": 19, "prob": 0.2345679012345679 } 7... Nc6
+{ {"nb_occ": 7, "prob": 0.3684210526315789 } ( 7... O-O
+{ {"nb_occ": 10, "prob": 0.5263157894736842 } 8. Qd2
+{ {"nb_occ": 10, "prob": 1.0 } 8... Nd7 { {"nb_occ": 10, "prob": 1.0 } 9. O-O-O
+{ {"nb_occ": 10, "prob": 1.0 } 9... Nc5 { {"nb_occ": 10, "prob": 1.0 } 10. Be3
+{ {"nb_occ": 6, "prob": 0.6 } ( 10. Kb1 { {"nb_occ": 1, "prob": 0.1 } 10... Re8
+{ {"nb_occ": 1, "prob": 1.0 } 11. Be3 { {"nb_occ": 1, "prob": 1.0 } 11... Ne4
+{ {"nb_occ": 1, "prob": 1.0 } 12. Qc1 { {"nb_occ": 1, "prob": 1.0 } 12... Bf6
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 10. Nd4 { {"nb_occ": 2, "prob": 0.2 } 10...
+Ne6 { {"nb_occ": 1, "prob": 0.5 } ( 10... Re8 { {"nb_occ": 1, "prob": 0.5 } 11.
+f3 { {"nb_occ": 1, "prob": 1.0 } 11... Ne6 { {"nb_occ": 1, "prob": 1.0 } 12.
+Be3 { {"nb_occ": 1, "prob": 1.0 } 12... Bg5 { {"nb_occ": 1, "prob": 1.0 } ) 11.
+Be3 { {"nb_occ": 1, "prob": 1.0 } 11... Nxd4 { {"nb_occ": 1, "prob": 1.0 } 12.
+cxd4 { {"nb_occ": 1, "prob": 1.0 } 12... Bf5 { {"nb_occ": 1, "prob": 1.0 } ) (
+10. h4 { {"nb_occ": 1, "prob": 0.1 } 10... Re8 { {"nb_occ": 1, "prob": 1.0 }
+11. Ng5 { {"nb_occ": 1, "prob": 1.0 } 11... h6 { {"nb_occ": 1, "prob": 1.0 }
+12. Bc4 { {"nb_occ": 1, "prob": 1.0 } 12... hxg5 { {"nb_occ": 1, "prob": 1.0 }
+) 10... Be6 { {"nb_occ": 1, "prob": 0.16666666666666666 } ( 10... Re8
+{ {"nb_occ": 4, "prob": 0.6666666666666666 } 11. Bc4
+{ {"nb_occ": 4, "prob": 1.0 } 11... Be6 { {"nb_occ": 4, "prob": 1.0 } 12. Bxe6
+{ {"nb_occ": 4, "prob": 1.0 } 12... Nxe6 { {"nb_occ": 4, "prob": 1.0 } ) (
+10... c6 { {"nb_occ": 1, "prob": 0.16666666666666666 } 11. Bxc5
+{ {"nb_occ": 1, "prob": 1.0 } 11... dxc5 { {"nb_occ": 1, "prob": 1.0 } 12. Qf4
+{ {"nb_occ": 1, "prob": 1.0 } 12... Qa5 { {"nb_occ": 1, "prob": 1.0 } ) 11. Kb1
+{ {"nb_occ": 1, "prob": 1.0 } 11... Bf6 { {"nb_occ": 1, "prob": 1.0 } 12. Nd4
+{ {"nb_occ": 1, "prob": 1.0 } 12... Qd7 { {"nb_occ": 1, "prob": 1.0 } ) ( 7...
+Nd7 { {"nb_occ": 2, "prob": 0.10526315789473684 } 8. Qd2
+{ {"nb_occ": 2, "prob": 1.0 } 8... O-O { {"nb_occ": 2, "prob": 1.0 } 9. O-O-O
+{ {"nb_occ": 2, "prob": 1.0 } 9... Nc5 { {"nb_occ": 2, "prob": 1.0 } 10. h4
+{ {"nb_occ": 2, "prob": 1.0 } 10... Bg4 { {"nb_occ": 1, "prob": 0.5 } ( 10...
+Re8 { {"nb_occ": 1, "prob": 0.5 } 11. Ng5 { {"nb_occ": 1, "prob": 1.0 } 11...
+h6 { {"nb_occ": 1, "prob": 1.0 } 12. Bc4 { {"nb_occ": 1, "prob": 1.0 } 12...
+Be6 { {"nb_occ": 1, "prob": 1.0 } ) 11. Re1 { {"nb_occ": 1, "prob": 1.0 } 11...
+Re8 { {"nb_occ": 1, "prob": 1.0 } 12. Nd4 { {"nb_occ": 1, "prob": 1.0 } 12...
+Bf8 { {"nb_occ": 1, "prob": 1.0 } ) 8. Qd2 { {"nb_occ": 7, "prob": 1.0 } 8...
+Bf5 { {"nb_occ": 1, "prob": 0.14285714285714285 } ( 8... Bg4
+{ {"nb_occ": 2, "prob": 0.2857142857142857 } 9. Be2
+{ {"nb_occ": 2, "prob": 1.0 } 9... Qd7 { {"nb_occ": 2, "prob": 1.0 } 10. O-O-O
+{ {"nb_occ": 2, "prob": 1.0 } 10... O-O-O { {"nb_occ": 1, "prob": 0.5 } ( 10...
+a6 { {"nb_occ": 1, "prob": 0.5 } 11. Rhe1 { {"nb_occ": 1, "prob": 1.0 } 11...
+O-O-O { {"nb_occ": 1, "prob": 1.0 } 12. h3 { {"nb_occ": 1, "prob": 1.0 } 12...
+Be6 { {"nb_occ": 1, "prob": 1.0 } ) 11. h3 { {"nb_occ": 1, "prob": 1.0 } 11...
+Be6 { {"nb_occ": 1, "prob": 1.0 } 12. Rhe1 { {"nb_occ": 1, "prob": 1.0 } 12...
+a6 { {"nb_occ": 1, "prob": 1.0 } ) ( 8... Be6
+{ {"nb_occ": 4, "prob": 0.5714285714285714 } 9. O-O-O
+{ {"nb_occ": 4, "prob": 1.0 } 9... Qd7 { {"nb_occ": 4, "prob": 1.0 } 10. h4
+{ {"nb_occ": 1, "prob": 0.25 } ( 10. Kb1 { {"nb_occ": 3, "prob": 0.75 } 10...
+a6 { {"nb_occ": 1, "prob": 0.3333333333333333 } ( 10... O-O-O
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } 11. Bb5
+{ {"nb_occ": 1, "prob": 0.5 } ( 11. Ng5 { {"nb_occ": 1, "prob": 0.5 } 11...
+Bxg5 { {"nb_occ": 1, "prob": 1.0 } 12. Bxg5 { {"nb_occ": 1, "prob": 1.0 } 12...
+f6 { {"nb_occ": 1, "prob": 1.0 } ) 11... a6 { {"nb_occ": 1, "prob": 1.0 } 12.
+Ba4 { {"nb_occ": 1, "prob": 1.0 } 12... Bf6 { {"nb_occ": 1, "prob": 1.0 } ) 11.
+Ng5 { {"nb_occ": 1, "prob": 1.0 } 11... Bxg5 { {"nb_occ": 1, "prob": 1.0 } 12.
+Bxg5 { {"nb_occ": 1, "prob": 1.0 } 12... f6 { {"nb_occ": 1, "prob": 1.0 } )
+10... h6 { {"nb_occ": 1, "prob": 1.0 } 11. Bb5 { {"nb_occ": 1, "prob": 1.0 }
+11... a6 { {"nb_occ": 1, "prob": 1.0 } 12. Ba4 { {"nb_occ": 1, "prob": 1.0 }
+12... b5 { {"nb_occ": 1, "prob": 1.0 } ) 9. O-O-O { {"nb_occ": 1, "prob": 1.0 }
+9... Qd7 { {"nb_occ": 1, "prob": 1.0 } 10. Bc4 { {"nb_occ": 1, "prob": 1.0 }
+10... O-O { {"nb_occ": 1, "prob": 1.0 } 11. Kb1 { {"nb_occ": 1, "prob": 1.0 }
+11... Rae8 { {"nb_occ": 1, "prob": 1.0 } 12. h3 { {"nb_occ": 1, "prob": 1.0 }
+12... Be6 { {"nb_occ": 1, "prob": 1.0 } ) 7... Nc6
+{ {"nb_occ": 24, "prob": 0.39344262295081966 } ( 7... O-O
+{ {"nb_occ": 30, "prob": 0.4918032786885246 } 8. Qd2
+{ {"nb_occ": 28, "prob": 0.9333333333333333 } ( 8. Bd3
+{ {"nb_occ": 1, "prob": 0.03333333333333333 } 8... Nd7
+{ {"nb_occ": 1, "prob": 1.0 } 9. Qe2 { {"nb_occ": 1, "prob": 1.0 } 9... b6
+{ {"nb_occ": 1, "prob": 1.0 } 10. O-O-O { {"nb_occ": 1, "prob": 1.0 } 10... Bb7
+{ {"nb_occ": 1, "prob": 1.0 } 11. Nd4 { {"nb_occ": 1, "prob": 1.0 } 11... Bf6
+{ {"nb_occ": 1, "prob": 1.0 } 12. h4 { {"nb_occ": 1, "prob": 1.0 } 12... Nc5
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 8. h4
+{ {"nb_occ": 1, "prob": 0.03333333333333333 } 8... Nd7
+{ {"nb_occ": 1, "prob": 1.0 } 9. Ng5 { {"nb_occ": 1, "prob": 1.0 } 9... Ne5
+{ {"nb_occ": 1, "prob": 1.0 } 10. Qd2 { {"nb_occ": 1, "prob": 1.0 } 10... c6
+{ {"nb_occ": 1, "prob": 1.0 } 11. O-O-O { {"nb_occ": 1, "prob": 1.0 } 11... Qa5
+{ {"nb_occ": 1, "prob": 1.0 } 12. a3 { {"nb_occ": 1, "prob": 1.0 } 12... f6
+{ {"nb_occ": 1, "prob": 1.0 } ) 8... Nd7
+{ {"nb_occ": 23, "prob": 0.8214285714285714 } ( 8... b6
+{ {"nb_occ": 2, "prob": 0.07142857142857142 } 9. O-O-O
+{ {"nb_occ": 2, "prob": 1.0 } 9... Bb7 { {"nb_occ": 2, "prob": 1.0 } 10. Nd4
+{ {"nb_occ": 1, "prob": 0.5 } ( 10. h4 { {"nb_occ": 1, "prob": 0.5 } 10... Nd7
+{ {"nb_occ": 1, "prob": 1.0 } 11. Bd3 { {"nb_occ": 1, "prob": 1.0 } 11... Re8
+{ {"nb_occ": 1, "prob": 1.0 } 12. Kb1 { {"nb_occ": 1, "prob": 1.0 } 12... Bf6
+{ {"nb_occ": 1, "prob": 1.0 } ) 10... Nc6 { {"nb_occ": 1, "prob": 1.0 } 11. Nf5
+{ {"nb_occ": 1, "prob": 1.0 } 11... Bf6 { {"nb_occ": 1, "prob": 1.0 } 12. Ng3
+{ {"nb_occ": 1, "prob": 1.0 } 12... Ne7 { {"nb_occ": 1, "prob": 1.0 } ) ( 8...
+Qe8 { {"nb_occ": 1, "prob": 0.03571428571428571 } 9. h4
+{ {"nb_occ": 1, "prob": 1.0 } 9... Qa4 { {"nb_occ": 1, "prob": 1.0 } 10. h5
+{ {"nb_occ": 1, "prob": 1.0 } 10... h6 { {"nb_occ": 1, "prob": 1.0 } 11. Bd3
+{ {"nb_occ": 1, "prob": 1.0 } 11... Re8 { {"nb_occ": 1, "prob": 1.0 } 12. Kf1
+{ {"nb_occ": 1, "prob": 1.0 } 12... Bf8 { {"nb_occ": 1, "prob": 1.0 } ) ( 8...
+Nc6 { {"nb_occ": 2, "prob": 0.07142857142857142 } 9. O-O-O
+{ {"nb_occ": 2, "prob": 1.0 } 9... Ne5 { {"nb_occ": 2, "prob": 1.0 } 10. Nd4
+{ {"nb_occ": 1, "prob": 0.5 } ( 10. h4 { {"nb_occ": 1, "prob": 0.5 } 10... Re8
+{ {"nb_occ": 1, "prob": 1.0 } 11. h5 { {"nb_occ": 1, "prob": 1.0 } 11... Bf6
+{ {"nb_occ": 1, "prob": 1.0 } 12. Kb1 { {"nb_occ": 1, "prob": 1.0 } 12... a6
+{ {"nb_occ": 1, "prob": 1.0 } ) 10... c5 { {"nb_occ": 1, "prob": 1.0 } 11. Nb5
+{ {"nb_occ": 1, "prob": 1.0 } 11... Qa5 { {"nb_occ": 1, "prob": 1.0 } 12. a3
+{ {"nb_occ": 1, "prob": 1.0 } 12... Be6 { {"nb_occ": 1, "prob": 1.0 } ) 9.
+O-O-O { {"nb_occ": 23, "prob": 1.0 } 9... Re8
+{ {"nb_occ": 3, "prob": 0.13043478260869565 } ( 9... Ne5
+{ {"nb_occ": 2, "prob": 0.08695652173913043 } 10. h4
+{ {"nb_occ": 2, "prob": 1.0 } 10... c6 { {"nb_occ": 2, "prob": 1.0 } 11. Bg5
+{ {"nb_occ": 1, "prob": 0.5 } ( 11. c4 { {"nb_occ": 1, "prob": 0.5 } 11... Be6
+{ {"nb_occ": 1, "prob": 1.0 } 12. Ng5 { {"nb_occ": 1, "prob": 1.0 } 12... Bf5
+{ {"nb_occ": 1, "prob": 1.0 } ) 11... f6 { {"nb_occ": 1, "prob": 1.0 } 12. Bf4
+{ {"nb_occ": 1, "prob": 1.0 } 12... Qa5 { {"nb_occ": 1, "prob": 1.0 } ) ( 9...
+Nf6 { {"nb_occ": 12, "prob": 0.5217391304347826 } 10. h3
+{ {"nb_occ": 1, "prob": 0.08333333333333333 } ( 10. Bd3
+{ {"nb_occ": 11, "prob": 0.9166666666666666 } 10... c5
+{ {"nb_occ": 7, "prob": 0.6363636363636364 } ( 10... Re8
+{ {"nb_occ": 3, "prob": 0.2727272727272727 } 11. Kb1
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } ( 11. Rhe1
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 11... Bg4
+{ {"nb_occ": 1, "prob": 1.0 } 12. Bg5 { {"nb_occ": 1, "prob": 1.0 } 12... Qd7
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 11. h3
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 11... c5
+{ {"nb_occ": 1, "prob": 1.0 } 12. g4 { {"nb_occ": 1, "prob": 1.0 } 12... Qa5
+{ {"nb_occ": 1, "prob": 1.0 } ) 11... Bd7 { {"nb_occ": 1, "prob": 1.0 } 12.
+Rhe1 { {"nb_occ": 1, "prob": 1.0 } 12... c5 { {"nb_occ": 1, "prob": 1.0 } ) (
+10... d5 { {"nb_occ": 1, "prob": 0.09090909090909091 } 11. Rhe1
+{ {"nb_occ": 1, "prob": 1.0 } 11... Bg4 { {"nb_occ": 1, "prob": 1.0 } 12. Bg5
+{ {"nb_occ": 1, "prob": 1.0 } 12... Ne4 { {"nb_occ": 1, "prob": 1.0 } ) 11.
+Rhe1 { {"nb_occ": 7, "prob": 1.0 } 11... Be6 { {"nb_occ": 7, "prob": 1.0 } 12.
+Kb1 { {"nb_occ": 4, "prob": 0.5714285714285714 } ( 12. Bf4
+{ {"nb_occ": 1, "prob": 0.14285714285714285 } 12... d5
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 12. a3
+{ {"nb_occ": 1, "prob": 0.14285714285714285 } 12... c4
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 12. Ng5
+{ {"nb_occ": 1, "prob": 0.14285714285714285 } 12... Bxa2
+{ {"nb_occ": 1, "prob": 1.0 } ) 12... Qa5 { {"nb_occ": 4, "prob": 1.0 } ) 10...
+c5 { {"nb_occ": 1, "prob": 1.0 } 11. Bf4 { {"nb_occ": 1, "prob": 1.0 } 11...
+Be6 { {"nb_occ": 1, "prob": 1.0 } 12. a3 { {"nb_occ": 1, "prob": 1.0 } 12... d5
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 9... c6
+{ {"nb_occ": 5, "prob": 0.21739130434782608 } 10. Kb1
+{ {"nb_occ": 3, "prob": 0.6 } ( 10. h4 { {"nb_occ": 2, "prob": 0.4 } 10... d5
+{ {"nb_occ": 2, "prob": 1.0 } 11. Kb1 { {"nb_occ": 2, "prob": 1.0 } 11... Re8
+{ {"nb_occ": 2, "prob": 1.0 } 12. Bd3 { {"nb_occ": 2, "prob": 1.0 } 12... Bc5
+{ {"nb_occ": 2, "prob": 1.0 } ) 10... d5
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } ( 10... Re8
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 11. h4
+{ {"nb_occ": 1, "prob": 1.0 } 11... Ne5 { {"nb_occ": 1, "prob": 1.0 } 12. Nxe5
+{ {"nb_occ": 1, "prob": 1.0 } 12... dxe5 { {"nb_occ": 1, "prob": 1.0 } ) 11. c4
+{ {"nb_occ": 1, "prob": 0.5 } ( 11. Bd3 { {"nb_occ": 1, "prob": 0.5 } 11... Nc5
+{ {"nb_occ": 1, "prob": 1.0 } 12. h4 { {"nb_occ": 1, "prob": 1.0 } 12... Nxd3
+{ {"nb_occ": 1, "prob": 1.0 } ) 11... Nb6 { {"nb_occ": 1, "prob": 1.0 } 12.
+cxd5 { {"nb_occ": 1, "prob": 1.0 } 12... Nxd5 { {"nb_occ": 1, "prob": 1.0 } ) (
+9... c5 { {"nb_occ": 1, "prob": 0.043478260869565216 } 10. Bc4
+{ {"nb_occ": 1, "prob": 1.0 } 10... Nb6 { {"nb_occ": 1, "prob": 1.0 } 11. Bd3
+{ {"nb_occ": 1, "prob": 1.0 } 11... Be6 { {"nb_occ": 1, "prob": 1.0 } 12. Kb1
+{ {"nb_occ": 1, "prob": 1.0 } 12... Nc4 { {"nb_occ": 1, "prob": 1.0 } ) 10. h4
+{ {"nb_occ": 3, "prob": 1.0 } 10... c6 { {"nb_occ": 3, "prob": 1.0 } 11. Bd3
+{ {"nb_occ": 3, "prob": 1.0 } 11... Qa5
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } ( 11... Nf6
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 12. Rde1
+{ {"nb_occ": 1, "prob": 1.0 } 12... d5 { {"nb_occ": 1, "prob": 1.0 } ) 12. Kb1
+{ {"nb_occ": 2, "prob": 1.0 } 12... Ne5 { {"nb_occ": 2, "prob": 1.0 } ) ( 7...
+Nd7 { {"nb_occ": 7, "prob": 0.11475409836065574 } 8. Qd2
+{ {"nb_occ": 6, "prob": 0.8571428571428571 } ( 8. Qe2
+{ {"nb_occ": 1, "prob": 0.14285714285714285 } 8... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 9. O-O-O { {"nb_occ": 1, "prob": 1.0 } 9... Bf6
+{ {"nb_occ": 1, "prob": 1.0 } 10. g4 { {"nb_occ": 1, "prob": 1.0 } 10... Re8
+{ {"nb_occ": 1, "prob": 1.0 } 11. g5 { {"nb_occ": 1, "prob": 1.0 } 11... Be5
+{ {"nb_occ": 1, "prob": 1.0 } 12. Qc4 { {"nb_occ": 1, "prob": 1.0 } 12... Nb6
+{ {"nb_occ": 1, "prob": 1.0 } ) 8... O-O { {"nb_occ": 6, "prob": 1.0 } 9. O-O-O
+{ {"nb_occ": 6, "prob": 1.0 } 9... Nf6
+{ {"nb_occ": 5, "prob": 0.8333333333333334 } ( 9... c6
+{ {"nb_occ": 1, "prob": 0.16666666666666666 } 10. h4
+{ {"nb_occ": 1, "prob": 1.0 } 10... Ne5 { {"nb_occ": 1, "prob": 1.0 } 11. Nxe5
+{ {"nb_occ": 1, "prob": 1.0 } 11... dxe5 { {"nb_occ": 1, "prob": 1.0 } 12. Bd3
+{ {"nb_occ": 1, "prob": 1.0 } 12... Be6 { {"nb_occ": 1, "prob": 1.0 } ) 10. Bd3
+{ {"nb_occ": 5, "prob": 1.0 } 10... Be6 { {"nb_occ": 1, "prob": 0.2 } ( 10...
+c5 { {"nb_occ": 1, "prob": 0.2 } 11. Rhg1 { {"nb_occ": 1, "prob": 1.0 } 11...
+b5 { {"nb_occ": 1, "prob": 1.0 } 12. g4 { {"nb_occ": 1, "prob": 1.0 } 12... Bb7
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 10... Re8 { {"nb_occ": 3, "prob": 0.6 } 11.
+h3 { {"nb_occ": 1, "prob": 0.3333333333333333 } ( 11. Rhe1
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 11... Bg4
+{ {"nb_occ": 1, "prob": 1.0 } 12. h3 { {"nb_occ": 1, "prob": 1.0 } 12... Bxf3
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 11. c4
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 11... a6
+{ {"nb_occ": 1, "prob": 1.0 } 12. Kb1 { {"nb_occ": 1, "prob": 1.0 } 12... c5
+{ {"nb_occ": 1, "prob": 1.0 } ) 11... d5 { {"nb_occ": 1, "prob": 1.0 } 12. c4
+{ {"nb_occ": 1, "prob": 1.0 } 12... dxc4 { {"nb_occ": 1, "prob": 1.0 } ) 11.
+Nd4 { {"nb_occ": 1, "prob": 1.0 } 11... Bd7 { {"nb_occ": 1, "prob": 1.0 } 12.
+c4 { {"nb_occ": 1, "prob": 1.0 } 12... Re8 { {"nb_occ": 1, "prob": 1.0 } ) 8.
+Qd2 { {"nb_occ": 23, "prob": 0.9583333333333334 } ( 8. Bc4
+{ {"nb_occ": 1, "prob": 0.041666666666666664 } 8... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 9. Qd2 { {"nb_occ": 1, "prob": 1.0 } 9... Bf5
+{ {"nb_occ": 1, "prob": 1.0 } 10. O-O-O { {"nb_occ": 1, "prob": 1.0 } 10... Qd7
+{ {"nb_occ": 1, "prob": 1.0 } 11. Kb1 { {"nb_occ": 1, "prob": 1.0 } 11... Rfe8
+{ {"nb_occ": 1, "prob": 1.0 } 12. h4 { {"nb_occ": 1, "prob": 1.0 } 12... Bf8
+{ {"nb_occ": 1, "prob": 1.0 } ) 8... O-O
+{ {"nb_occ": 7, "prob": 0.30434782608695654 } ( 8... Be6
+{ {"nb_occ": 13, "prob": 0.5652173913043478 } 9. O-O-O
+{ {"nb_occ": 13, "prob": 1.0 } 9... Qd7
+{ {"nb_occ": 12, "prob": 0.9230769230769231 } ( 9... a6
+{ {"nb_occ": 1, "prob": 0.07692307692307693 } 10. h3
+{ {"nb_occ": 1, "prob": 1.0 } 10... Qd7 { {"nb_occ": 1, "prob": 1.0 } 11. g4
+{ {"nb_occ": 1, "prob": 1.0 } 11... O-O-O { {"nb_occ": 1, "prob": 1.0 } 12. Bg2
+{ {"nb_occ": 1, "prob": 1.0 } 12... Ne5 { {"nb_occ": 1, "prob": 1.0 } ) 10. Kb1
+{ {"nb_occ": 5, "prob": 0.4166666666666667 } ( 10. h4
+{ {"nb_occ": 4, "prob": 0.3333333333333333 } 10... h6
+{ {"nb_occ": 4, "prob": 1.0 } 11. Kb1 { {"nb_occ": 1, "prob": 0.25 } ( 11. a3
+{ {"nb_occ": 1, "prob": 0.25 } 11... Rg8 { {"nb_occ": 1, "prob": 1.0 } 12. Nd4
+{ {"nb_occ": 1, "prob": 1.0 } 12... Nxd4 { {"nb_occ": 1, "prob": 1.0 } ) ( 11.
+Nd4 { {"nb_occ": 2, "prob": 0.5 } 11... Nxd4 { {"nb_occ": 2, "prob": 1.0 } 12.
+Bxd4 { {"nb_occ": 2, "prob": 1.0 } 12... Rg8 { {"nb_occ": 2, "prob": 1.0 } )
+11... a6 { {"nb_occ": 1, "prob": 1.0 } 12. Bd3 { {"nb_occ": 1, "prob": 1.0 }
+12... Bf6 { {"nb_occ": 1, "prob": 1.0 } ) ( 10. b3
+{ {"nb_occ": 1, "prob": 0.08333333333333333 } 10... O-O-O
+{ {"nb_occ": 1, "prob": 1.0 } 11. Nd4 { {"nb_occ": 1, "prob": 1.0 } 11... a6
+{ {"nb_occ": 1, "prob": 1.0 } 12. Nxe6 { {"nb_occ": 1, "prob": 1.0 } 12... fxe6
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 10. h3
+{ {"nb_occ": 1, "prob": 0.08333333333333333 } 10... a6
+{ {"nb_occ": 1, "prob": 1.0 } 11. Ng5 { {"nb_occ": 1, "prob": 1.0 } 11... Bxg5
+{ {"nb_occ": 1, "prob": 1.0 } 12. Bxg5 { {"nb_occ": 1, "prob": 1.0 } 12... f6
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 10. Ng5
+{ {"nb_occ": 1, "prob": 0.08333333333333333 } 10... Bf5
+{ {"nb_occ": 1, "prob": 1.0 } 11. h3 { {"nb_occ": 1, "prob": 1.0 } 11... h6
+{ {"nb_occ": 1, "prob": 1.0 } 12. Nf3 { {"nb_occ": 1, "prob": 1.0 } 12... O-O
+{ {"nb_occ": 1, "prob": 1.0 } ) 10... Bf6 { {"nb_occ": 4, "prob": 0.8 } ( 10...
+a6 { {"nb_occ": 1, "prob": 0.2 } 11. Ng5 { {"nb_occ": 1, "prob": 1.0 } 11...
+Bf5 { {"nb_occ": 1, "prob": 1.0 } 12. h3 { {"nb_occ": 1, "prob": 1.0 } 12...
+O-O { {"nb_occ": 1, "prob": 1.0 } ) 11. h4 { {"nb_occ": 3, "prob": 0.75 } ( 11.
+h3 { {"nb_occ": 1, "prob": 0.25 } 11... h6 { {"nb_occ": 1, "prob": 1.0 } 12. b3
+{ {"nb_occ": 1, "prob": 1.0 } 12... a6 { {"nb_occ": 1, "prob": 1.0 } ) 11... h6
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } ( 11... O-O-O
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } 12. Ng5
+{ {"nb_occ": 1, "prob": 0.5 } ( 12. Nd4 { {"nb_occ": 1, "prob": 0.5 } 12...
+Nxd4 { {"nb_occ": 1, "prob": 1.0 } ) 12... Bf5 { {"nb_occ": 1, "prob": 1.0 } )
+12. Nd4 { {"nb_occ": 1, "prob": 1.0 } 12... Nxd4 { {"nb_occ": 1, "prob": 1.0 }
+) ( 8... Bf5 { {"nb_occ": 2, "prob": 0.08695652173913043 } 9. O-O-O
+{ {"nb_occ": 2, "prob": 1.0 } 9... Qd7 { {"nb_occ": 2, "prob": 1.0 } 10. h3
+{ {"nb_occ": 2, "prob": 1.0 } 10... O-O { {"nb_occ": 2, "prob": 1.0 } 11. Kb1
+{ {"nb_occ": 1, "prob": 0.5 } ( 11. Rg1 { {"nb_occ": 1, "prob": 0.5 } 11...
+Rae8 { {"nb_occ": 1, "prob": 1.0 } 12. g4 { {"nb_occ": 1, "prob": 1.0 } 12...
+Be4 { {"nb_occ": 1, "prob": 1.0 } ) 11... Rfe8 { {"nb_occ": 1, "prob": 1.0 }
+12. Nd4 { {"nb_occ": 1, "prob": 1.0 } 12... Nxd4 { {"nb_occ": 1, "prob": 1.0 }
+) ( 8... Ne5 { {"nb_occ": 1, "prob": 0.043478260869565216 } 9. O-O-O
+{ {"nb_occ": 1, "prob": 1.0 } 9... O-O { {"nb_occ": 1, "prob": 1.0 } 10. Kb1
+{ {"nb_occ": 1, "prob": 1.0 } 10... Re8 { {"nb_occ": 1, "prob": 1.0 } 11. Nd4
+{ {"nb_occ": 1, "prob": 1.0 } 11... a6 { {"nb_occ": 1, "prob": 1.0 } 12. f3
+{ {"nb_occ": 1, "prob": 1.0 } 12... c5 { {"nb_occ": 1, "prob": 1.0 } ) 9. O-O-O
+{ {"nb_occ": 7, "prob": 1.0 } 9... Ne5 { {"nb_occ": 7, "prob": 1.0 } 10. h4
+{ {"nb_occ": 4, "prob": 0.5714285714285714 } ( 10. Nxe5
+{ {"nb_occ": 1, "prob": 0.14285714285714285 } 10... dxe5
+{ {"nb_occ": 1, "prob": 1.0 } 11. Bd3 { {"nb_occ": 1, "prob": 1.0 } 11... Be6
+{ {"nb_occ": 1, "prob": 1.0 } 12. Qe2 { {"nb_occ": 1, "prob": 1.0 } 12... Qe8
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 10. Kb1
+{ {"nb_occ": 1, "prob": 0.14285714285714285 } 10... a6
+{ {"nb_occ": 1, "prob": 1.0 } 11. Be2 { {"nb_occ": 1, "prob": 1.0 } 11... Be6
+{ {"nb_occ": 1, "prob": 1.0 } 12. Nd4 { {"nb_occ": 1, "prob": 1.0 } 12... Nc4
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 10. Be2
+{ {"nb_occ": 1, "prob": 0.14285714285714285 } 10... Ng4
+{ {"nb_occ": 1, "prob": 1.0 } 11. Bd4 { {"nb_occ": 1, "prob": 1.0 } 11... c5
+{ {"nb_occ": 1, "prob": 1.0 } 12. h3 { {"nb_occ": 1, "prob": 1.0 } 12... cxd4
+{ {"nb_occ": 1, "prob": 1.0 } ) 10... Bg4 { {"nb_occ": 2, "prob": 0.5 } ( 10...
+Re8 { {"nb_occ": 1, "prob": 0.25 } 11. Nxe5 { {"nb_occ": 1, "prob": 1.0 } 11...
+dxe5 { {"nb_occ": 1, "prob": 1.0 } 12. Bd3 { {"nb_occ": 1, "prob": 1.0 } 12...
+Bd6 { {"nb_occ": 1, "prob": 1.0 } ) ( 10... c6 { {"nb_occ": 1, "prob": 0.25 }
+11. Kb1 { {"nb_occ": 1, "prob": 1.0 } 11... Qa5 { {"nb_occ": 1, "prob": 1.0 }
+12. Nxe5 { {"nb_occ": 1, "prob": 1.0 } 12... dxe5 { {"nb_occ": 1, "prob": 1.0 }
+) 11. Be2 { {"nb_occ": 2, "prob": 1.0 } 11... Qc8 { {"nb_occ": 2, "prob": 1.0 }
+12. h5 { {"nb_occ": 1, "prob": 0.5 } ( 12. b3 { {"nb_occ": 1, "prob": 0.5 }
+12... Re8 { {"nb_occ": 1, "prob": 1.0 } ) 12... h6
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 5. d3
+{ {"nb_occ": 19, "prob": 0.06620209059233449 } 5... Nf6
+{ {"nb_occ": 19, "prob": 1.0 } 6. d4 { {"nb_occ": 19, "prob": 1.0 } 6... d5
+{ {"nb_occ": 16, "prob": 0.8421052631578947 } ( 6... g6
+{ {"nb_occ": 1, "prob": 0.05263157894736842 } 7. Bd3
+{ {"nb_occ": 1, "prob": 1.0 } 7... Bg7 { {"nb_occ": 1, "prob": 1.0 } 8. O-O
+{ {"nb_occ": 1, "prob": 1.0 } 8... O-O { {"nb_occ": 1, "prob": 1.0 } 9. h3
+{ {"nb_occ": 1, "prob": 1.0 } 9... Re8 { {"nb_occ": 1, "prob": 1.0 } 10. c3
+{ {"nb_occ": 1, "prob": 1.0 } 10... b6 { {"nb_occ": 1, "prob": 1.0 } 11. a4
+{ {"nb_occ": 1, "prob": 1.0 } 11... a6 { {"nb_occ": 1, "prob": 1.0 } 12. Bf4
+{ {"nb_occ": 1, "prob": 1.0 } 12... Bb7 { {"nb_occ": 1, "prob": 1.0 } ) ( 6...
+Be7 { {"nb_occ": 2, "prob": 0.10526315789473684 } 7. Bd3
+{ {"nb_occ": 2, "prob": 1.0 } 7... O-O { {"nb_occ": 2, "prob": 1.0 } 8. O-O
+{ {"nb_occ": 2, "prob": 1.0 } 8... Bg4 { {"nb_occ": 2, "prob": 1.0 } 9. Nbd2
+{ {"nb_occ": 1, "prob": 0.5 } ( 9. h3 { {"nb_occ": 1, "prob": 0.5 } 9... Bh5
+{ {"nb_occ": 1, "prob": 1.0 } 10. Re1 { {"nb_occ": 1, "prob": 1.0 } 10... Re8
+{ {"nb_occ": 1, "prob": 1.0 } 11. c4 { {"nb_occ": 1, "prob": 1.0 } 11... Nc6
+{ {"nb_occ": 1, "prob": 1.0 } 12. g4 { {"nb_occ": 1, "prob": 1.0 } 12... Bg6
+{ {"nb_occ": 1, "prob": 1.0 } ) 9... c5 { {"nb_occ": 1, "prob": 1.0 } 10. h3
+{ {"nb_occ": 1, "prob": 1.0 } 10... Bh5 { {"nb_occ": 1, "prob": 1.0 } 11. dxc5
+{ {"nb_occ": 1, "prob": 1.0 } 11... dxc5 { {"nb_occ": 1, "prob": 1.0 } 12. Ne4
+{ {"nb_occ": 1, "prob": 1.0 } 12... Nc6 { {"nb_occ": 1, "prob": 1.0 } ) 7. Bd3
+{ {"nb_occ": 15, "prob": 0.9375 } ( 7. h3 { {"nb_occ": 1, "prob": 0.0625 } 7...
+Nc6 { {"nb_occ": 1, "prob": 1.0 } 8. Bd3 { {"nb_occ": 1, "prob": 1.0 } 8... Nb4
+{ {"nb_occ": 1, "prob": 1.0 } 9. Bb5+ { {"nb_occ": 1, "prob": 1.0 } 9... c6
+{ {"nb_occ": 1, "prob": 1.0 } 10. Ba4 { {"nb_occ": 1, "prob": 1.0 } 10... Bd6
+{ {"nb_occ": 1, "prob": 1.0 } 11. O-O { {"nb_occ": 1, "prob": 1.0 } 11... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 12. c3 { {"nb_occ": 1, "prob": 1.0 } 12... Na6
+{ {"nb_occ": 1, "prob": 1.0 } ) 7... Bd6
+{ {"nb_occ": 14, "prob": 0.9333333333333333 } ( 7... c5
+{ {"nb_occ": 1, "prob": 0.06666666666666667 } 8. O-O
+{ {"nb_occ": 1, "prob": 1.0 } 8... c4 { {"nb_occ": 1, "prob": 1.0 } 9. Be2
+{ {"nb_occ": 1, "prob": 1.0 } 9... Nc6 { {"nb_occ": 1, "prob": 1.0 } 10. b3
+{ {"nb_occ": 1, "prob": 1.0 } 10... cxb3 { {"nb_occ": 1, "prob": 1.0 } 11. axb3
+{ {"nb_occ": 1, "prob": 1.0 } 11... Bd6 { {"nb_occ": 1, "prob": 1.0 } 12. c4
+{ {"nb_occ": 1, "prob": 1.0 } 12... O-O { {"nb_occ": 1, "prob": 1.0 } ) 8. Qe2+
+{ {"nb_occ": 9, "prob": 0.6428571428571429 } ( 8. O-O
+{ {"nb_occ": 5, "prob": 0.35714285714285715 } 8... O-O
+{ {"nb_occ": 5, "prob": 1.0 } 9. Bg5 { {"nb_occ": 4, "prob": 0.8 } ( 9. h3
+{ {"nb_occ": 1, "prob": 0.2 } 9... Nbd7 { {"nb_occ": 1, "prob": 1.0 } 10. Bg5
+{ {"nb_occ": 1, "prob": 1.0 } 10... Re8 { {"nb_occ": 1, "prob": 1.0 } 11. Nc3
+{ {"nb_occ": 1, "prob": 1.0 } 11... c6 { {"nb_occ": 1, "prob": 1.0 } 12. Qd2
+{ {"nb_occ": 1, "prob": 1.0 } 12... Nf8 { {"nb_occ": 1, "prob": 1.0 } ) 9... h6
+{ {"nb_occ": 2, "prob": 0.5 } ( 9... Bg4 { {"nb_occ": 2, "prob": 0.5 } 10. Nbd2
+{ {"nb_occ": 2, "prob": 1.0 } 10... Nbd7 { {"nb_occ": 2, "prob": 1.0 } 11. c4
+{ {"nb_occ": 1, "prob": 0.5 } ( 11. h3 { {"nb_occ": 1, "prob": 0.5 } 11... Bh5
+{ {"nb_occ": 1, "prob": 1.0 } 12. c4 { {"nb_occ": 1, "prob": 1.0 } 12... c6
+{ {"nb_occ": 1, "prob": 1.0 } ) 11... h6 { {"nb_occ": 1, "prob": 1.0 } 12. Bh4
+{ {"nb_occ": 1, "prob": 1.0 } 12... Bf4 { {"nb_occ": 1, "prob": 1.0 } ) 10. Bh4
+{ {"nb_occ": 2, "prob": 1.0 } 10... Nc6 { {"nb_occ": 1, "prob": 0.5 } ( 10...
+c6 { {"nb_occ": 1, "prob": 0.5 } 11. Nbd2 { {"nb_occ": 1, "prob": 1.0 } 11...
+Re8 { {"nb_occ": 1, "prob": 1.0 } 12. c3 { {"nb_occ": 1, "prob": 1.0 } 12...
+Bg4 { {"nb_occ": 1, "prob": 1.0 } ) 11. c3 { {"nb_occ": 1, "prob": 1.0 } 11...
+g5 { {"nb_occ": 1, "prob": 1.0 } 12. Bg3 { {"nb_occ": 1, "prob": 1.0 } 12...
+Ne4 { {"nb_occ": 1, "prob": 1.0 } ) 8... Be6
+{ {"nb_occ": 4, "prob": 0.4444444444444444 } ( 8... Qe7
+{ {"nb_occ": 5, "prob": 0.5555555555555556 } 9. Qxe7+
+{ {"nb_occ": 3, "prob": 0.6 } ( 9. Nc3 { {"nb_occ": 2, "prob": 0.4 } 9... c6
+{ {"nb_occ": 1, "prob": 0.5 } ( 9... Qxe2+ { {"nb_occ": 1, "prob": 0.5 } 10.
+Nxe2 { {"nb_occ": 1, "prob": 1.0 } 10... O-O { {"nb_occ": 1, "prob": 1.0 } 11.
+O-O { {"nb_occ": 1, "prob": 1.0 } 11... Nc6 { {"nb_occ": 1, "prob": 1.0 } 12.
+c3 { {"nb_occ": 1, "prob": 1.0 } 12... Bg4 { {"nb_occ": 1, "prob": 1.0 } ) 10.
+Qxe7+ { {"nb_occ": 1, "prob": 1.0 } 10... Kxe7 { {"nb_occ": 1, "prob": 1.0 }
+11. O-O { {"nb_occ": 1, "prob": 1.0 } 11... Nbd7 { {"nb_occ": 1, "prob": 1.0 }
+12. Re1+ { {"nb_occ": 1, "prob": 1.0 } 12... Kf8 { {"nb_occ": 1, "prob": 1.0 }
+) 9... Kxe7 { {"nb_occ": 3, "prob": 1.0 } 10. O-O { {"nb_occ": 3, "prob": 1.0 }
+10... Nc6 { {"nb_occ": 3, "prob": 1.0 } 11. c3
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } ( 11. Re1+
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } 11... Kf8
+{ {"nb_occ": 2, "prob": 1.0 } 12. c3 { {"nb_occ": 2, "prob": 1.0 } 12... Ne7
+{ {"nb_occ": 1, "prob": 0.5 } ( 12... Bg4 { {"nb_occ": 1, "prob": 0.5 } ) )
+11... h6 { {"nb_occ": 1, "prob": 1.0 } 12. Nh4 { {"nb_occ": 1, "prob": 1.0 }
+12... Re8 { {"nb_occ": 1, "prob": 1.0 } ) 9. c4 { {"nb_occ": 1, "prob": 0.25 }
+( 9. Ng5 { {"nb_occ": 3, "prob": 0.75 } 9... Qe7 { {"nb_occ": 3, "prob": 1.0 }
+10. O-O { {"nb_occ": 1, "prob": 0.3333333333333333 } ( 10. Nxe6
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } 10... fxe6
+{ {"nb_occ": 2, "prob": 1.0 } 11. c3 { {"nb_occ": 2, "prob": 1.0 } 11... O-O
+{ {"nb_occ": 2, "prob": 1.0 } 12. O-O { {"nb_occ": 1, "prob": 0.5 } ( 12. f4
+{ {"nb_occ": 1, "prob": 0.5 } 12... c5 { {"nb_occ": 1, "prob": 1.0 } ) 12... c5
+{ {"nb_occ": 1, "prob": 1.0 } ) 10... O-O { {"nb_occ": 1, "prob": 1.0 } 11.
+Nxe6 { {"nb_occ": 1, "prob": 1.0 } 11... fxe6 { {"nb_occ": 1, "prob": 1.0 } 12.
+Nd2 { {"nb_occ": 1, "prob": 1.0 } 12... c5 { {"nb_occ": 1, "prob": 1.0 } ) 9...
+dxc4 { {"nb_occ": 1, "prob": 1.0 } 10. Bxc4 { {"nb_occ": 1, "prob": 1.0 } 10...
+Qe7 { {"nb_occ": 1, "prob": 1.0 } 11. O-O { {"nb_occ": 1, "prob": 1.0 } 11...
+O-O { {"nb_occ": 1, "prob": 1.0 } 12. Nc3 { {"nb_occ": 1, "prob": 1.0 } 12...
+h6 { {"nb_occ": 1, "prob": 1.0 } ) ( 5. Qe2
+{ {"nb_occ": 9, "prob": 0.0313588850174216 } 5... Qe7
+{ {"nb_occ": 9, "prob": 1.0 } 6. d3
+{ {"nb_occ": 7, "prob": 0.7777777777777778 } ( 6. Nc3
+{ {"nb_occ": 2, "prob": 0.2222222222222222 } 6... Nxc3
+{ {"nb_occ": 2, "prob": 1.0 } 7. dxc3 { {"nb_occ": 2, "prob": 1.0 } 7... Qxe2+
+{ {"nb_occ": 2, "prob": 1.0 } 8. Bxe2 { {"nb_occ": 2, "prob": 1.0 } 8... Nc6
+{ {"nb_occ": 2, "prob": 1.0 } 9. Be3 { {"nb_occ": 2, "prob": 1.0 } 9... Be7
+{ {"nb_occ": 2, "prob": 1.0 } 10. O-O-O { {"nb_occ": 2, "prob": 1.0 } 10... O-O
+{ {"nb_occ": 2, "prob": 1.0 } 11. Rhe1 { {"nb_occ": 2, "prob": 1.0 } 11... Bf6
+{ {"nb_occ": 2, "prob": 1.0 } 12. Nd2 { {"nb_occ": 2, "prob": 1.0 } 12... Re8
+{ {"nb_occ": 2, "prob": 1.0 } ) 6... Nf6 { {"nb_occ": 7, "prob": 1.0 } 7. Nc3
+{ {"nb_occ": 4, "prob": 0.5714285714285714 } ( 7. Bg5
+{ {"nb_occ": 3, "prob": 0.42857142857142855 } 7... Nbd7
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } ( 7... Qxe2+
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 8. Bxe2
+{ {"nb_occ": 1, "prob": 1.0 } 8... Be7 { {"nb_occ": 1, "prob": 1.0 } 9. Nc3
+{ {"nb_occ": 1, "prob": 1.0 } 9... Nc6 { {"nb_occ": 1, "prob": 1.0 } 10. O-O-O
+{ {"nb_occ": 1, "prob": 1.0 } 10... O-O { {"nb_occ": 1, "prob": 1.0 } 11. h3
+{ {"nb_occ": 1, "prob": 1.0 } 11... h6 { {"nb_occ": 1, "prob": 1.0 } 12. Bd2
+{ {"nb_occ": 1, "prob": 1.0 } 12... Be6 { {"nb_occ": 1, "prob": 1.0 } ) 8. Nc3
+{ {"nb_occ": 2, "prob": 1.0 } 8... h6 { {"nb_occ": 1, "prob": 0.5 } ( 8...
+Qxe2+ { {"nb_occ": 1, "prob": 0.5 } 9. Bxe2 { {"nb_occ": 1, "prob": 1.0 } 9...
+h6 { {"nb_occ": 1, "prob": 1.0 } 10. Bd2 { {"nb_occ": 1, "prob": 1.0 } 10...
+Nb6 { {"nb_occ": 1, "prob": 1.0 } 11. Nb5 { {"nb_occ": 1, "prob": 1.0 } 11...
+Nbd5 { {"nb_occ": 1, "prob": 1.0 } 12. c4 { {"nb_occ": 1, "prob": 1.0 } 12...
+c6 { {"nb_occ": 1, "prob": 1.0 } ) 9. Bh4 { {"nb_occ": 1, "prob": 1.0 } 9...
+Qxe2+ { {"nb_occ": 1, "prob": 1.0 } 10. Bxe2 { {"nb_occ": 1, "prob": 1.0 }
+10... g6 { {"nb_occ": 1, "prob": 1.0 } 11. O-O-O { {"nb_occ": 1, "prob": 1.0 }
+11... Bg7 { {"nb_occ": 1, "prob": 1.0 } 12. d4 { {"nb_occ": 1, "prob": 1.0 }
+12... a6 { {"nb_occ": 1, "prob": 1.0 } ) 7... Qxe2+
+{ {"nb_occ": 4, "prob": 1.0 } 8. Bxe2 { {"nb_occ": 4, "prob": 1.0 } 8... g6
+{ {"nb_occ": 3, "prob": 0.75 } ( 8... Be7 { {"nb_occ": 1, "prob": 0.25 } 9. Bd2
+{ {"nb_occ": 1, "prob": 1.0 } 9... O-O { {"nb_occ": 1, "prob": 1.0 } 10. O-O-O
+{ {"nb_occ": 1, "prob": 1.0 } 10... a6 { {"nb_occ": 1, "prob": 1.0 } 11. Rhe1
+{ {"nb_occ": 1, "prob": 1.0 } 11... Re8 { {"nb_occ": 1, "prob": 1.0 } 12. d4
+{ {"nb_occ": 1, "prob": 1.0 } 12... h6 { {"nb_occ": 1, "prob": 1.0 } ) 9. Nd4
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } ( 9. Bg5
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 9... Bg7
+{ {"nb_occ": 1, "prob": 1.0 } 10. O-O-O { {"nb_occ": 1, "prob": 1.0 } 10... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 11. Rhe1 { {"nb_occ": 1, "prob": 1.0 } 11... h6
+{ {"nb_occ": 1, "prob": 1.0 } 12. Bh4 { {"nb_occ": 1, "prob": 1.0 } 12... Nc6
+{ {"nb_occ": 1, "prob": 1.0 } ) 9... a6 { {"nb_occ": 2, "prob": 1.0 } 10. Bf4
+{ {"nb_occ": 1, "prob": 0.5 } ( 10. h3 { {"nb_occ": 1, "prob": 0.5 } 10... Bg7
+{ {"nb_occ": 1, "prob": 1.0 } 11. g4 { {"nb_occ": 1, "prob": 1.0 } 11... Bd7
+{ {"nb_occ": 1, "prob": 1.0 } 12. Bf3 { {"nb_occ": 1, "prob": 1.0 } 12... Nc6
+{ {"nb_occ": 1, "prob": 1.0 } ) 10... Bg7 { {"nb_occ": 1, "prob": 1.0 } 11. h3
+{ {"nb_occ": 1, "prob": 1.0 } 11... Bd7 { {"nb_occ": 1, "prob": 1.0 } 12. Bf3
+{ {"nb_occ": 1, "prob": 1.0 } 12... Nc6 { {"nb_occ": 1, "prob": 1.0 } ) ( 5.
+Bd3 { {"nb_occ": 11, "prob": 0.03832752613240418 } 5... d5
+{ {"nb_occ": 7, "prob": 0.6363636363636364 } ( 5... Nf6
+{ {"nb_occ": 4, "prob": 0.36363636363636365 } 6. O-O
+{ {"nb_occ": 4, "prob": 1.0 } 6... Be7 { {"nb_occ": 4, "prob": 1.0 } 7. h3
+{ {"nb_occ": 1, "prob": 0.25 } ( 7. Re1 { {"nb_occ": 2, "prob": 0.5 } 7... O-O
+{ {"nb_occ": 2, "prob": 1.0 } 8. Bf1 { {"nb_occ": 1, "prob": 0.5 } ( 8. h3
+{ {"nb_occ": 1, "prob": 0.5 } 8... d5 { {"nb_occ": 1, "prob": 1.0 } 9. c3
+{ {"nb_occ": 1, "prob": 1.0 } 9... Bd6 { {"nb_occ": 1, "prob": 1.0 } 10. Bc2
+{ {"nb_occ": 1, "prob": 1.0 } 10... Nbd7 { {"nb_occ": 1, "prob": 1.0 } 11. d4
+{ {"nb_occ": 1, "prob": 1.0 } 11... h6 { {"nb_occ": 1, "prob": 1.0 } 12. Nbd2
+{ {"nb_occ": 1, "prob": 1.0 } 12... Re8 { {"nb_occ": 1, "prob": 1.0 } ) 8...
+Bg4 { {"nb_occ": 1, "prob": 1.0 } 9. h3 { {"nb_occ": 1, "prob": 1.0 } 9... Bh5
+{ {"nb_occ": 1, "prob": 1.0 } 10. d4 { {"nb_occ": 1, "prob": 1.0 } 10... d5
+{ {"nb_occ": 1, "prob": 1.0 } 11. c4 { {"nb_occ": 1, "prob": 1.0 } 11... Nc6
+{ {"nb_occ": 1, "prob": 1.0 } 12. Be3 { {"nb_occ": 1, "prob": 1.0 } 12... Re8
+{ {"nb_occ": 1, "prob": 1.0 } ) ( 7. c3 { {"nb_occ": 1, "prob": 0.25 } 7... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 8. Bc2 { {"nb_occ": 1, "prob": 1.0 } 8... b6
+{ {"nb_occ": 1, "prob": 1.0 } 9. d4 { {"nb_occ": 1, "prob": 1.0 } 9... Bb7
+{ {"nb_occ": 1, "prob": 1.0 } 10. Re1 { {"nb_occ": 1, "prob": 1.0 } 10... Nbd7
+{ {"nb_occ": 1, "prob": 1.0 } 11. Nbd2 { {"nb_occ": 1, "prob": 1.0 } 11... Re8
+{ {"nb_occ": 1, "prob": 1.0 } 12. Nf1 { {"nb_occ": 1, "prob": 1.0 } 12... Bf8
+{ {"nb_occ": 1, "prob": 1.0 } ) 7... O-O { {"nb_occ": 1, "prob": 1.0 } 8. c3
+{ {"nb_occ": 1, "prob": 1.0 } 8... d5 { {"nb_occ": 1, "prob": 1.0 } 9. Bc2
+{ {"nb_occ": 1, "prob": 1.0 } 9... Bd6 { {"nb_occ": 1, "prob": 1.0 } 10. d4
+{ {"nb_occ": 1, "prob": 1.0 } 10... h6 { {"nb_occ": 1, "prob": 1.0 } 11. Re1
+{ {"nb_occ": 1, "prob": 1.0 } 11... Re8 { {"nb_occ": 1, "prob": 1.0 } 12. Rxe8+
+{ {"nb_occ": 1, "prob": 1.0 } 12... Qxe8 { {"nb_occ": 1, "prob": 1.0 } ) 6. O-O
+{ {"nb_occ": 3, "prob": 0.42857142857142855 } ( 6. Qe2
+{ {"nb_occ": 4, "prob": 0.5714285714285714 } 6... Be7
+{ {"nb_occ": 2, "prob": 0.5 } ( 6... Qe7 { {"nb_occ": 2, "prob": 0.5 } 7. O-O
+{ {"nb_occ": 2, "prob": 1.0 } 7... Nd6 { {"nb_occ": 2, "prob": 1.0 } 8. Re1
+{ {"nb_occ": 1, "prob": 0.5 } ( 8. Qd1 { {"nb_occ": 1, "prob": 0.5 } 8... Qd8
+{ {"nb_occ": 1, "prob": 1.0 } 9. Nc3 { {"nb_occ": 1, "prob": 1.0 } 9... c6
+{ {"nb_occ": 1, "prob": 1.0 } 10. Re1+ { {"nb_occ": 1, "prob": 1.0 } 10... Be7
+{ {"nb_occ": 1, "prob": 1.0 } 11. Qe2 { {"nb_occ": 1, "prob": 1.0 } 11... Bg4
+{ {"nb_occ": 1, "prob": 1.0 } 12. b3 { {"nb_occ": 1, "prob": 1.0 } 12... Nd7
+{ {"nb_occ": 1, "prob": 1.0 } ) 8... Qxe2 { {"nb_occ": 1, "prob": 1.0 } 9.
+Rxe2+ { {"nb_occ": 1, "prob": 1.0 } 9... Be7 { {"nb_occ": 1, "prob": 1.0 } 10.
+Nc3 { {"nb_occ": 1, "prob": 1.0 } 10... Be6 { {"nb_occ": 1, "prob": 1.0 } 11.
+Nd4 { {"nb_occ": 1, "prob": 1.0 } 11... Kd7 { {"nb_occ": 1, "prob": 1.0 } 12.
+Nxe6 { {"nb_occ": 1, "prob": 1.0 } 12... fxe6 { {"nb_occ": 1, "prob": 1.0 } )
+7. Bxe4 { {"nb_occ": 2, "prob": 1.0 } 7... dxe4 { {"nb_occ": 2, "prob": 1.0 }
+8. Qxe4 { {"nb_occ": 2, "prob": 1.0 } 8... O-O { {"nb_occ": 2, "prob": 1.0 } 9.
+O-O { {"nb_occ": 2, "prob": 1.0 } 9... c5 { {"nb_occ": 2, "prob": 1.0 } 10. Nc3
+{ {"nb_occ": 1, "prob": 0.5 } ( 10. d4 { {"nb_occ": 1, "prob": 0.5 } 10... cxd4
+{ {"nb_occ": 1, "prob": 1.0 } 11. Qxd4 { {"nb_occ": 1, "prob": 1.0 } 11... Qxd4
+{ {"nb_occ": 1, "prob": 1.0 } 12. Nxd4 { {"nb_occ": 1, "prob": 1.0 } 12... Rd8
+{ {"nb_occ": 1, "prob": 1.0 } ) 10... Nc6 { {"nb_occ": 1, "prob": 1.0 } 11. d3
+{ {"nb_occ": 1, "prob": 1.0 } 11... Re8 { {"nb_occ": 1, "prob": 1.0 } 12. Re1
+{ {"nb_occ": 1, "prob": 1.0 } 12... Bd7 { {"nb_occ": 1, "prob": 1.0 } ) 6...
+Be7 { {"nb_occ": 3, "prob": 1.0 } 7. Re1 { {"nb_occ": 3, "prob": 1.0 } 7... Nd6
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } ( 7... O-O
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 8. Bxe4
+{ {"nb_occ": 1, "prob": 1.0 } 8... dxe4 { {"nb_occ": 1, "prob": 1.0 } 9. Rxe4
+{ {"nb_occ": 1, "prob": 1.0 } 9... c5 { {"nb_occ": 1, "prob": 1.0 } 10. Nc3
+{ {"nb_occ": 1, "prob": 1.0 } 10... Nc6 { {"nb_occ": 1, "prob": 1.0 } 11. d3
+{ {"nb_occ": 1, "prob": 1.0 } 11... b6 { {"nb_occ": 1, "prob": 1.0 } 12. Bf4
+{ {"nb_occ": 1, "prob": 1.0 } 12... Bb7 { {"nb_occ": 1, "prob": 1.0 } ) 8. c3
+{ {"nb_occ": 1, "prob": 0.5 } ( 8. Nc3 { {"nb_occ": 1, "prob": 0.5 } 8... c6
+{ {"nb_occ": 1, "prob": 1.0 } 9. b3 { {"nb_occ": 1, "prob": 1.0 } 9... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 10. Ba3 { {"nb_occ": 1, "prob": 1.0 } 10... Bg4
+{ {"nb_occ": 1, "prob": 1.0 } 11. h3 { {"nb_occ": 1, "prob": 1.0 } 11... Bh5
+{ {"nb_occ": 1, "prob": 1.0 } 12. Qe2 { {"nb_occ": 1, "prob": 1.0 } 12... Bf6
+{ {"nb_occ": 1, "prob": 1.0 } ) 8... O-O { {"nb_occ": 1, "prob": 1.0 } 9. Bc2
+{ {"nb_occ": 1, "prob": 1.0 } 9... c6 { {"nb_occ": 1, "prob": 1.0 } 10. d4
+{ {"nb_occ": 1, "prob": 1.0 } 10... Bf5 { {"nb_occ": 1, "prob": 1.0 } 11. Bf4
+{ {"nb_occ": 1, "prob": 1.0 } 11... Bxc2 { {"nb_occ": 1, "prob": 1.0 } 12. Qxc2
+{ {"nb_occ": 1, "prob": 1.0 } 12... Na6 { {"nb_occ": 1, "prob": 1.0 } ) 5...
+Be7 { {"nb_occ": 3, "prob": 0.5 } ( 5... Nc6 { {"nb_occ": 3, "prob": 0.5 } 6.
+d4 { {"nb_occ": 2, "prob": 0.6666666666666666 } ( 6. d3
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } 6... Nf6
+{ {"nb_occ": 1, "prob": 1.0 } 7. d4 { {"nb_occ": 1, "prob": 1.0 } 7... Be7
+{ {"nb_occ": 1, "prob": 1.0 } 8. d5 { {"nb_occ": 1, "prob": 1.0 } 8... Ne5
+{ {"nb_occ": 1, "prob": 1.0 } 9. Nd4 { {"nb_occ": 1, "prob": 1.0 } 9... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 10. Nc3 { {"nb_occ": 1, "prob": 1.0 } 10... Bg4
+{ {"nb_occ": 1, "prob": 1.0 } 11. f3 { {"nb_occ": 1, "prob": 1.0 } 11... Bd7
+{ {"nb_occ": 1, "prob": 1.0 } 12. Be2 { {"nb_occ": 1, "prob": 1.0 } 12... c6
+{ {"nb_occ": 1, "prob": 1.0 } ) 6... d5 { {"nb_occ": 2, "prob": 1.0 } 7. c5
+{ {"nb_occ": 1, "prob": 0.5 } ( 7. Nc3 { {"nb_occ": 1, "prob": 0.5 } 7... Bb4
+{ {"nb_occ": 1, "prob": 1.0 } 8. Qc2 { {"nb_occ": 1, "prob": 1.0 } 8... Bg4
+{ {"nb_occ": 1, "prob": 1.0 } 9. Be3 { {"nb_occ": 1, "prob": 1.0 } 9... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 10. a3 { {"nb_occ": 1, "prob": 1.0 } 10... Bxc3+
+{ {"nb_occ": 1, "prob": 1.0 } 11. bxc3 { {"nb_occ": 1, "prob": 1.0 } 11... Re8
+{ {"nb_occ": 1, "prob": 1.0 } 12. Be2 { {"nb_occ": 1, "prob": 1.0 } 12... dxc4
+{ {"nb_occ": 1, "prob": 1.0 } ) 7... Be7 { {"nb_occ": 1, "prob": 1.0 } 8. Bb5
+{ {"nb_occ": 1, "prob": 1.0 } 8... O-O { {"nb_occ": 1, "prob": 1.0 } 9. O-O
+{ {"nb_occ": 1, "prob": 1.0 } 9... Bg4 { {"nb_occ": 1, "prob": 1.0 } 10. Bxc6
+{ {"nb_occ": 1, "prob": 1.0 } 10... bxc6 { {"nb_occ": 1, "prob": 1.0 } 11. h3
+{ {"nb_occ": 1, "prob": 1.0 } 11... Bh5 { {"nb_occ": 1, "prob": 1.0 } 12. g4
+{ {"nb_occ": 1, "prob": 1.0 } 12... Bg6 { {"nb_occ": 1, "prob": 1.0 } ) 6. d4
+{ {"nb_occ": 3, "prob": 1.0 } 6... Bf5
+{ {"nb_occ": 1, "prob": 0.3333333333333333 } ( 6... O-O
+{ {"nb_occ": 2, "prob": 0.6666666666666666 } 7. Bd3
+{ {"nb_occ": 2, "prob": 1.0 } 7... Ng5 { {"nb_occ": 1, "prob": 0.5 } ( 7... d5
+{ {"nb_occ": 1, "prob": 0.5 } 8. O-O { {"nb_occ": 1, "prob": 1.0 } 8... Nf6
+{ {"nb_occ": 1, "prob": 1.0 } 9. Nc3 { {"nb_occ": 1, "prob": 1.0 } 9... dxc4
+{ {"nb_occ": 1, "prob": 1.0 } 10. Bxc4 { {"nb_occ": 1, "prob": 1.0 } 10... Bg4
+{ {"nb_occ": 1, "prob": 1.0 } 11. h3 { {"nb_occ": 1, "prob": 1.0 } 11... Bxf3
+{ {"nb_occ": 1, "prob": 1.0 } 12. Qxf3 { {"nb_occ": 1, "prob": 1.0 } 12... Nc6
+{ {"nb_occ": 1, "prob": 1.0 } ) 8. Nc3 { {"nb_occ": 1, "prob": 1.0 } 8... Bg4
+{ {"nb_occ": 1, "prob": 1.0 } 9. Bxg5 { {"nb_occ": 1, "prob": 1.0 } 9... Bxg5
+{ {"nb_occ": 1, "prob": 1.0 } 10. Bxh7+ { {"nb_occ": 1, "prob": 1.0 } 10...
+Kxh7 { {"nb_occ": 1, "prob": 1.0 } 11. h4 { {"nb_occ": 1, "prob": 1.0 } 11...
+Bd2+ { {"nb_occ": 1, "prob": 1.0 } 12. Qxd2 { {"nb_occ": 1, "prob": 1.0 } 12...
+Re8+ { {"nb_occ": 1, "prob": 1.0 } ) 7. Bd3 { {"nb_occ": 1, "prob": 1.0 } 7...
+Bg6 { {"nb_occ": 1, "prob": 1.0 } 8. O-O { {"nb_occ": 1, "prob": 1.0 } 8... O-O
+{ {"nb_occ": 1, "prob": 1.0 } 9. Re1 { {"nb_occ": 1, "prob": 1.0 } 9... Nf6
+{ {"nb_occ": 1, "prob": 1.0 } 10. Bxg6 { {"nb_occ": 1, "prob": 1.0 } 10... hxg6
+{ {"nb_occ": 1, "prob": 1.0 } 11. Qb3 { {"nb_occ": 1, "prob": 1.0 } 11... b6
+{ {"nb_occ": 1, "prob": 1.0 } 12. Nc3 { {"nb_occ": 1, "prob": 1.0 } 12... Re8
+{ {"nb_occ": 1, "prob": 1.0 } *
+

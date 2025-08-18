@@ -25,6 +25,19 @@
             margin-top: 1px;
             font-size: 14px;
             font-style: italic;
+            display: none;
+        }
+        #possibleMoves {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            display: none;
+        }
+        #possibleMoves button {
+            margin: 2px;
+            padding: 5px 10px;
+            font-size: 14px;
         }
         .promotion-choice {
             display: none;
@@ -57,11 +70,17 @@
         <button data-piece="b">Bishop</button>
         <button data-piece="n">Knight</button>
     </div>
+    <button id="toggleMoveList">Move List</button>
+    <div id="possibleMoves"></div>
     <div id="info">
         <button id="Study">Study</button>
         <button id="Game">Game</button>
         <p id="evaluation">Evaluation: N/A</p>
+        
+        
+        <button id="toggleBestLine">Best Line</button>
         <p id="bestLine">Best line: N/A</p>
+
         <p id="book">Book: N/A</p>
     </div>
     <!--input type="text" id="moveInput" placeholder="e2e4">
@@ -86,8 +105,27 @@
         let playButton = document.getElementById('Play');
         let studyButton = document.getElementById('Study');
         let promotionDiv = document.getElementById('promotion');
+        let toggleBestLineBtn = document.getElementById('toggleBestLine');
+        let toggleMoveListBtn = document.getElementById('toggleMoveList');
+        let possibleMovesElement = document.getElementById('possibleMoves');
         document.getElementById('Game').addEventListener('click', startNewGame);
-        
+
+        function toggleBestLine() {
+            if (bestLineElement.style.display === 'none') {
+                bestLineElement.style.display = 'block';
+            } else {
+                bestLineElement.style.display = 'none';
+            }
+        }        
+        function toggleMoveList() {
+            if (possibleMovesElement.style.display === 'none') {
+                possibleMovesElement.style.display = 'block';
+            } else {
+                possibleMovesElement.style.display = 'none';
+            }
+        }        
+        toggleBestLineBtn.addEventListener('click', toggleBestLine); 
+        toggleMoveListBtn.addEventListener('click', toggleMoveList); 
         // submitMove.addEventListener('click', handleUserMove);
         backButton.addEventListener('click', backMove);
         resetButton.addEventListener('click', resetPosition);

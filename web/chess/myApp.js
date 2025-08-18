@@ -3,6 +3,8 @@
 // 
 
 
+// list_piece_place = game.SQUARES.map(function (sq) {return (game.get(sq))?{"sq":sq, "color":game.get(sq).color, "type":game.get(sq).type}:null}).filter(x=>x)
+// 
 console.log("myApp.js")
 
 const DEFAULT_POSITION='rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
@@ -145,6 +147,26 @@ function formatTheoryMoveList(theory){
     return algebraicMoves.join(', ');
 
 }
+
+
+function updatePossibleMoves() {
+    const moves = game.moves();
+    possibleMovesElement.innerHTML = '';
+    moves.forEach(move => {
+        const button = document.createElement('button');
+        button.innerText = move;
+        button.addEventListener('click', () => {
+            makeMove(move);
+            // game.move(move);
+            // board.position(game.fen());
+            // updateEvaluation();
+            // updatePossibleMoves();
+            // setTimeout(makeMove, 500);
+        });
+        possibleMovesElement.appendChild(button);
+    });
+}
+
 // isGameOver() Returns true if the game has ended via checkmate, stalemate, draw, threefold repetition, or insufficient material. Otherwise, returns false
 // isInsufficientMaterial() Returns true if the game is drawn due to insufficient material (K vs. K, K vs. KB, or K vs. KN) otherwise false.
 // isStalemate() Returns true or false if the side to move has been stalemated.
@@ -205,6 +227,7 @@ function makeMove(theMove){
                         // update book content
                         updateBookMoveList();
                         updateEvaluation();
+                        updatePossibleMoves();
                     } else {
                         alert("Invalid move from Opening book ???");
                     }
@@ -225,6 +248,7 @@ function makeMove(theMove){
             bookElement.innerText = "Book: empty" 
 
         }
+        // updatePossibleMoves();
         return true
     } else {
         return false
@@ -252,6 +276,7 @@ function onBoardDrop (source, target, piece, newPos, oldPos, orientation) {
         }
 
     }
+    updatePossibleMoves();
 }
 
 function onDragStart (source, piece, position, orientation) {
@@ -304,6 +329,7 @@ function makePromotionMove(piece) {
         promotionDiv.style.display = 'none';
         makeMove(theMove);
         updateEvaluation();
+        updatePossibleMoves();
         setTimeout(makeStockfishMove, 500);
     }
 }
@@ -317,6 +343,7 @@ function refreshBoard(){
     board = Chessboard('board', chessboard_parameters);    
     board.position(game.fen());
     updateEvaluation();
+    updatePossibleMoves();
 }
 
 
@@ -522,9 +549,10 @@ function resetPosition() {
     }
 }
 
+stockfish.postMessage('uci');
 stockfish.onmessage = function(event) {
     const message = event.data;
-    // console.log("stockfish.onmessage "+message)
+    console.log("stockfish.onmessage "+message)
     if (message.startsWith("Total Evaluation")) {
         console.log('Total Evaluation')
         const evaluation = message.split(': ')[1];
@@ -541,6 +569,7 @@ stockfish.onmessage = function(event) {
             if ((res = checkGameState()) != 'ongoing') {alert(res);return};
             updateBookMoveList();
             updateEvaluation();
+            updatePossibleMoves();
         } else {
             console.log('XXXXXXX ===== >>unable to play bestmove = ' + bestMove)
         }
@@ -557,8 +586,20 @@ stockfish.onmessage = function(event) {
 };
 
 function makeStockfishMove() {
+    depth = 3;
+    level = 0;
+    elo = 1320;
+    stockfish.postMessage('setoption name Skill Level value '+level);
+    // stockfish.postMessage('setoption name Skill Level Maximum Error value 600');
+    // stockfish.postMessage('setoption name Skill Level Probability value 128');
+    // UCI_LimitStrength    type check default false
+    stockfish.postMessage('setoption name UCI_LimitStrength value true');
+    // UCI_Elo              type spin default 1320 min 1320 max 3190
+    stockfish.postMessage('setoption name UCI_Elo value '+ elo);
+    
     stockfish.postMessage(`position fen ${game.fen()}`);
-    stockfish.postMessage('go depth 15');
+    // stockfish.postMessage("setoption name Skill Level value " + level);
+    stockfish.postMessage('go depth '+depth);
 }
 
 // let evaluationElement = document.getElementById('evaluation');
