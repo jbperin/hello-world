@@ -1,6 +1,38 @@
 $(document).ready(function() {
     // Initialiser DataTable avec un tri initial sur la colonne "Date de fabrication" en ordre décroissant
     var table = $('#componentsTable').DataTable({
+        // pagingType: 'simple_numbers',
+        buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+        layout: {
+            // top2Start: 'pageLength',
+            // top2End: 'search',
+            // // topStart: 'info',
+            // topEnd: 'paging',
+            // bottomStart: 'pageLength',
+            // bottomEnd: 'search',
+            // bottom2Start: 'info',
+            // bottom2End: 'paging',
+            topStart:'buttons',
+        },
+        // buttons: [
+        //     {
+        //         extend: 'copyHtml5',
+        //         exportOptions: {
+        //             columns: ':visible',
+        //             rows: ':visible'
+        //         }
+        //     },
+        //     {
+        //         extend: 'excelHtml5',
+        //         exportOptions: {
+        //             columns: ':visible',
+        //             rows: ':visible'
+        //         }
+        //     },
+        //     'colvis'
+        // ],
+    
+
         data: components,
         columns: [
             { title: "Identifiant", data: "id", visible: true },
@@ -9,7 +41,8 @@ $(document).ready(function() {
             { title: "Nombre d'utilisation", data: "nombre_utilisation", visible: true },
             { title: "Pays d'installation", data: "pays_installation", visible: false } // Exemple de colonne masquée par défaut
         ],
-        order: [[1, 'desc']] // Tri initial sur la colonne "Date de fabrication" (index 1) en ordre décroissant
+        order: [[1, 'desc']], // Tri initial sur la colonne "Date de fabrication" (index 1) en ordre décroissant
+        // autoWidth: true, // Activer autoWidth
     });
 
     // Fonction pour afficher les données dans la table
@@ -61,18 +94,16 @@ $(document).ready(function() {
         var visibleColumns = [];
 
         // Get the headers
-        $('#componentsTable thead th').each(function(index) {
-            if (table.column(index).visible()) {
-                headers.push($(this).text());
-                visibleColumns.push(index);
-            }
+        table.columns(':visible').every(function() {
+            headers.push(this.header().textContent.trim());
+            visibleColumns.push(this.index());
         });
         csv.push(headers.join(','));
 
         // Get the data from visible rows
-        table.rows({ search: 'applied' }).every(function(rowIdx, tableLoop, rowLoop) {
-            var row = this.data();
+        table.rows({ search: 'applied' }).every(function() {
             var rowData = [];
+            var row = this.data();
             visibleColumns.forEach(function(index) {
                 rowData.push(row[index]);
             });
