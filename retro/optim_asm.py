@@ -353,7 +353,7 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
 
 
         new_instrs = []
-        i = 0
+        num_line = 0
 
         # 0: waiting for "comment_cond", "and_bit_branch"
         # 1: waiting for 'comment_assign', 'comment_multi_assign', 'assign_or_bit', 'assign_multi_or_bit'
@@ -406,25 +406,41 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
                         if not main_indent : main_indent = instr["indent"]
                         and_bits.append(instr["bit"])
                         if (instr["branch"] == 'bne'): cmp_bits.append(instr["bit"])
-
                 else:
                     pass
             elif (etat == 2):
                 if instr["type"] in ['label', 'terminal_jmp']:
                     etat = 3
-                    print ("COUCOU")
                 elif instr["type"] in ['comment_assign', 'comment_multi_assign', 'assign_or_bit', 'assign_multi_or_bit']:
                     # TODO: réduire l'indentation des assigns
                     assigns.append(instr)
+                elif instr["type"] in ["comment_cond", "and_bit_branch"]:
+                    etat = 1
+                    if instr["type"] == "comment_cond":
+                        comment_conditions.append(f"(a{instr['abit']} {instr['op']} 0)")
+                    elif instr["type"] == "and_bit_branch":
+                        instr['branch']
+                        bitnum = int(var[1:])
+                        regnum = bitnum // 16
+                        offset = "+1" if ((bitnum%16)//8 != 0) else ""
+
+                        if not main_label: main_label = instr["label"]
+                        conditions.append({
+                            "reg": "tmp{regnum}{offset}",
+                            "var": instr["var"],
+                            "bit": instr["bit"],
+                            'branch': instr["branch"],
+                            "label": instr["label"],
+                        })
                 else:
                     pass
             elif (etat == 3):
                 for reg in ['tmp0']:
                     conds = [c for c in conditions if c['var'] == 'tmp0']
                     if len(conds) != 0:
-                        print (f"assigns = {assigns}")
-                        print (f"conditions = {conditions}")
-                        print (f"comment_conditions = {comment_conditions}")
+                        # print (f"assigns = {assigns}")
+                        # print (f"conditions = {conditions}")
+                        # print (f"comment_conditions = {comment_conditions}")
                         new_instrs.append({
                             "type": "comment_multi_if",
                             "conditions": comment_conditions,
@@ -451,6 +467,7 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
 
 
                 return new_instrs
+            num_line += 1
         return new_instrs
 
     def rewrite_code(list_of_instruction):
@@ -461,16 +478,16 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
     
     new_instrs = []
 
-    nb_conditions_to_merge = 0
-    nb_assigment_to_merge = 0
-    nb_jumps_to_merge = 0
-    current_indentation = 0
+    nb_conditions_to_merge      = 0
+    nb_assigment_to_merge       = 0
+    nb_jumps_to_merge           = 0
+    current_indentation         = 0
     # 0: attente comment_cond / and_bit_branch
     # 1: attente comment_assign / comment_multi_assign / assign_or_bit/ assign_multi_or_bit
     # 2: attente label / terminal_jmp
     # 3: attente autre chose que label / terminal_jmp
-    etat = 0 
-    stack = []
+    etat                        = 0 
+    stack                       = []
 
     for i, instr in enumerate(instructions):
         if etat == 0:
@@ -503,14 +520,6 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
                 stack.append(instr)
                 if instr["type"] == 'terminal_jmp':
                     nb_jumps_to_merge += 1
-                # if nb_assigment_to_merge > 1 or nb_conditions_to_merge > 1:
-                #     rewritten = rewrite_code(stack)
-                #     new_instrs.extend(rewritten)
-                #     stack = []
-                # else:
-                #     new_instrs.extend(stack)
-                #     stack = []
-                pass
             elif instr["type"] in ['comment_assign', 'comment_multi_assign', 'assign_or_bit', 'assign_multi_or_bit']:
                 stack.append(instr)
                 if instr["type"] == 'assign_or_bit':
@@ -522,10 +531,10 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
                 nb_assigment_to_merge = 0
                 nb_conditions_to_merge = 0
                 nb_jumps_to_merge = 0
+                current_indentation         = instr["indent"]
                 new_instrs.extend(stack)
                 stack = []
                 stack.append(instr)
-            #elif instr["type"] in ['label']:
             else:
                 print ("--== ERROR ==--")
                 pass
@@ -587,6 +596,8 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
     #     else:
     #         new_instrs.extend(stack)
     return new_instrs
+
+
 def apply_optimizations(instructions):
     """Chaîne de filtres, modifiable à volonté"""
     filters = [
@@ -602,7 +613,7 @@ def apply_optimizations(instructions):
 # ——— Main ———
 if __name__ == "__main__":
     # lecture du fichier function_raw.asm
-    file_path = Path("retro/function_raw.asm")
+    file_path = Path("retro/brute_code/function_core.s")
     with file_path.open(encoding="utf-8") as f:
         lines = f.readlines()
 
@@ -616,7 +627,7 @@ if __name__ == "__main__":
     new_lines = [regenerate_line(instr) for instr in optimized_instructions]
 
     # Écriture dans function_clean.asm
-    out_path = Path("retro/function_clean.asm")
+    out_path = Path("retro/brute_code/function_core_opt.s")
     with out_path.open("w", encoding="utf-8") as f:
         f.write("\n".join(new_lines))
 

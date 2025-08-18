@@ -148,8 +148,8 @@ def generate_function_asm_code(abstree, indent=0):
                   #"  [r0, r1, r2, r3] = [0, 0, 0, 0]",
                   # f"  [{', '.join([f'r{i}' for i in range(NBITS_OUTPUT)])}] = [{', '.join([f'0' for i in range(NBITS_OUTPUT)])}]",
                  ]  # Function header
-    code_lines += abstree_to_asm6502_code(abstree, indent=indent+1)
-
+    # code_lines += abstree_to_asm6502_code(abstree, indent=indent+1)
+    code_lines += ['#include "function_core.s"']
     code_lines += [
                   "_unefonctionDone",
                   "lda tmp7: sta _function_output",

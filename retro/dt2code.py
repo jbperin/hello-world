@@ -1,3 +1,6 @@
+
+import os
+
 # recherche r3:
 # 	r3 = 0
 
@@ -62,177 +65,7 @@ A = [a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15]
 
 B = [b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15]
 
-def toBin (val, size):
-    return list(reversed(list(map(lambda x: int(x),'{:0{}b}'.format(val, size)))))
-
-# Dummy function: implements round(math.sqrt(v1))
-def square_root_4_4(a3, a2, a1, a0):
-#def uneFonction(a3, a2, a1, a0):
-    # args: bits, most significant first (a3, a2, a1, a0)
-    bits = [a3, a2, a1, a0]
-    # Convert bits (MSB first) to int
-    v1 = 0
-    for i, b in enumerate(reversed(bits)):
-        v1 += b << i
-    mathval1 = round(math.sqrt(v1))
-    # Output as list of bits (LSB first)
-    return toBin(mathval1, 4)
-
-def square_root_5_5(a4, a3, a2, a1, a0):
-# def uneFonction(a4, a3, a2, a1, a0):
-    # args: bits, most significant first (a3, a2, a1, a0)
-    bits = [a4, a3, a2, a1, a0]
-    # Convert bits (MSB first) to int
-    v1 = 0
-    for i, b in enumerate(reversed(bits)):
-        v1 += b << i
-    mathval1 = round(math.sqrt(v1))
-    # Output as list of bits (LSB first)
-    return toBin(mathval1, 5)
-
-def square_root_6_6(a5, a4, a3, a2, a1, a0):
-# def uneFonction(a5, a4, a3, a2, a1, a0):
-    # args: bits, most significant first (a5, a3, a2, a1, a0)
-    bits = [a5, a4, a3, a2, a1, a0]
-    # Convert bits (MSB first) to int
-    v1 = 0
-    for i, b in enumerate(reversed(bits)):
-        v1 += b << i
-    mathval1 = round(math.sqrt(v1))
-    # Output as list of bits (LSB first)
-    return toBin(mathval1, 6)
-
-def square_root_7_7(a6, a5, a4, a3, a2, a1, a0):
-# def uneFonction(a6, a5, a4, a3, a2, a1, a0):
-    # args: bits, most significant first (a6, a5, a3, a2, a1, a0)
-    bits = [a6, a5, a4, a3, a2, a1, a0]
-    # Convert bits (MSB first) to int
-    v1 = 0
-    for i, b in enumerate(reversed(bits)):
-        v1 += b << i
-    mathval1 = round(math.sqrt(v1))
-    # Output as list of bits (LSB first)
-    return toBin(mathval1, 7)
-
-def square_root_3_3(a2, a1, a0):
-#def uneFonction(a2, a1, a0):
-    # args: bits, most significant first (a2, a1, a0)
-    bits = [a2, a1, a0]
-    # Convert bits (MSB first) to int
-    v1 = 0
-    for i, b in enumerate(reversed(bits)):
-        v1 += b << i
-    mathval1 = round(math.sqrt(v1))
-    # Output as list of bits (LSB first)
-    return toBin(mathval1, 3)
-
-
-def square_root_8_8(a7, a6, a5, a4, a3, a2, a1, a0):
-# def uneFonction(a7, a6, a5, a4, a3, a2, a1, a0):
-    # args: bits, most significant first (a3, a2, a1, a0)
-    bits = [a7, a6, a5, a4, a3, a2, a1, a0]
-    # Convert bits (MSB first) to int
-    v1 = 0
-    for i, b in enumerate(reversed(bits)):
-        v1 += b << i
-    mathval1 = round(math.sqrt(v1))
-    # Output as list of bits (LSB first)
-    return toBin(mathval1, 8)
-
-def square_root_9_9(a8, a7, a6, a5, a4, a3, a2, a1, a0):
-# def uneFonction(a8, a7, a6, a5, a4, a3, a2, a1, a0):
-    # args: bits, most significant first (a3, a2, a1, a0)
-    bits = [a8, a7, a6, a5, a4, a3, a2, a1, a0]
-    # Convert bits (MSB first) to int
-    v1 = 0
-    for i, b in enumerate(reversed(bits)):
-        v1 += b << i
-    mathval1 = round(math.sqrt(v1))
-    # Output as list of bits (LSB first)
-    return toBin(mathval1, 9)
-
-def square_root_10_10(a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
-# def uneFonction(a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
-    # args: bits, most significant first (a3, a2, a1, a0)
-    bits = [a9, a8, a7, a6, a5, a4, a3, a2, a1, a0]
-    # Convert bits (MSB first) to int
-    v1 = 0
-    for i, b in enumerate(reversed(bits)):
-        v1 += b << i
-    mathval1 = round(math.sqrt(v1))
-    # Output as list of bits (LSB first)
-    return toBin(mathval1, 10)
-
-def square_root_11_11(a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
-# def uneFonction(a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
-    # args: bits, most significant first (a3, a2, a1, a0)
-    bits = [a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0]
-    # Convert bits (MSB first) to int
-    v1 = 0
-    for i, b in enumerate(reversed(bits)):
-        v1 += b << i
-    mathval1 = round(math.sqrt(v1))
-    # Output as list of bits (LSB first)
-    return toBin(mathval1, 11)
-
-# def square_root_12_12(a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
-def uneFonction(a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
-    # args: bits, most significant first (a3, a2, a1, a0)
-    bits = [a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0]
-    # Convert bits (MSB first) to int
-    v1 = 0
-    for i, b in enumerate(reversed(bits)):
-        v1 += b << i
-    mathval1 = round(math.sqrt(v1))
-    # Output as list of bits (LSB first)
-    return toBin(mathval1, 12)
-
-
-
-def square_root_16_16(a15, a14, a13, a12, a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
-    # args: bits, most significant first (a3, a2, a1, a0)
-    bits = [a15, a14, a13, a12, a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0]
-    # Convert bits (MSB first) to int
-    v1 = 0
-    for i, b in enumerate(reversed(bits)):
-        v1 += b << i
-    mathval1 = round(math.sqrt(v1))
-    # Output as list of bits (LSB first)
-    return toBin(mathval1, 16)
-
-def uneFonctionLourde(a15, a14, a13, a12, a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
-    # args: bits, most significant first (a3, a2, a1, a0)
-    bits = [a15, a14, a13, a12, a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0]
-    # Convert bits (MSB first) to int
-    v1 = 0
-    for i, b in enumerate(reversed(bits)):
-        v1 += b << i
-    mathval1 = round(math.sqrt(v1))
-    # Output as list of bits (LSB first)
-    return toBin(mathval1, 16)
-
-def uneFonctionSimple(a3, a2, a1, a0):
-    # args: bits, most significant first (a3, a2, a1, a0)
-    bits = [a3, a2, a1, a0]
-    # Convert bits (MSB first) to int
-    v1 = 0
-    for i, b in enumerate(reversed(bits)):
-        v1 += b << i
-    mathval1 = round(math.sqrt(v1))
-    # Output as list of bits (LSB first)
-    return toBin(mathval1, 4)
-
-def uneFonction_treslight(a2, a1, a0):
-    # args: bits, most significant first (a2, a1, a0)
-    bits = [a2, a1, a0]
-    # Convert bits (MSB first) to int
-    v1 = 0
-    for i, b in enumerate(reversed(bits)):
-        v1 += b << i
-    mathval1 = round(math.sqrt(v1))
-    # Output as list of bits (LSB first)
-    return toBin(mathval1, 2)
-
+import sample_functions
 
 def deduce_fonction_prototype(fonction):
     nb_input = len (inspect.signature(fonction).parameters)
@@ -240,8 +73,10 @@ def deduce_fonction_prototype(fonction):
     nb_output = len(fonction(*fake_parametres))
     return nb_input, nb_output
 
+theFunction = sample_functions.square_root_4_4
 
-NBITS_INPUT, NBITS_OUTPUT = deduce_fonction_prototype(uneFonction)
+
+NBITS_INPUT, NBITS_OUTPUT = deduce_fonction_prototype(theFunction)
 
 print (f"Nb input = {NBITS_INPUT}, Nb ouput = {NBITS_OUTPUT}")
 
@@ -251,9 +86,9 @@ print (f"Nb input = {NBITS_INPUT}, Nb ouput = {NBITS_OUTPUT}")
 def build_training_samples():
     data = []
     for v1 in range(2**NBITS_INPUT):
-        binv1 = toBin(v1, NBITS_INPUT)
+        binv1 = sample_functions.toBin(v1, NBITS_INPUT)
         # uneFonction expects MSB first
-        out_bits = uneFonction(*reversed(binv1))
+        out_bits = theFunction(*reversed(binv1))
         row = {}
         for i in range(NBITS_INPUT):
             row[f'a{i}'] = binv1[i]
@@ -444,21 +279,92 @@ def load_and_run_function(filename):
     return getattr(module, "compute_r")
 
 
+def check_results():
+    with open (f"{os.getenv('OSDK')}\Oricutron\printer_out.txt", "w") as ficout:
+        pass
+
+    a=input("Taper pour analyser le résultat ")
+
+    with open (f"{os.getenv('OSDK')}\Oricutron\printer_out.txt", "r") as ficin:
+        for li in ficin.readlines():
+            [v, sqv] = li.strip().split(',')
+            if round(math.sqrt(int(v))) != int(sqv):
+                print (v, sqv)
+                print ("--== ERROR ==--")
+                break
+
+
+# Génère un arbre abstrait dans "retro/abstree.json"
 build_abstree_to_json()
 
 
+# Lit l'arbre abstrait depuis "retro/abstree.json"
 abstree = read_abstree_from_json()
 
+# Génère le code python d'une fonction depuis l'arbre abstrait et l'enregistre dans retro/abstree.py
 function_code = generate_function_code(abstree)
 save_function_to_file(function_code, 'retro/abstree.py')
 
 
-# Load and run the function
+# Load and run the function from retro/abstree.py
 compute_r = load_and_run_function('retro/abstree.py')
 
+def toBin (val, size):
+    return list(reversed(list(map(lambda x: int(x),'{:0{}b}'.format(val, size)))))
+
+
+# Check that 
 for v1 in range(2**NBITS_INPUT):
     binv1 = toBin(v1, NBITS_INPUT)
     mathval1 = round(math.sqrt(v1))
     binval1 = toBin(mathval1, NBITS_OUTPUT)
     bf_result = compute_r(binv1)
     print(v1, binv1, binval1, bf_result, bf_result == binval1 )
+    
+    if (bf_result != binval1):
+        print(v1, binv1, binval1, bf_result, bf_result == binval1 )
+        print ("--== ERROR ==--")
+        break
+
+from abstree2asm import generate_function_asm_code, abstree_to_asm6502_code
+# Génère le code assembleur d'une fonction et l'enregistre dans "retro\\brute_code\\fonction.s"
+with open ("retro\\brute_code\\fonction.s", "w") as ficout:
+    for line in generate_function_asm_code(read_abstree_from_json()):
+        print (line)
+        ficout.write(line+"\n")
+
+# Génère le code assembleur depuis l'arbre abstrait et l'enregistre dans retro\\brute_code\\function_core.s appelé depuis fonction.s
+with open ("retro\\brute_code\\function_core.s", "w") as ficout:
+    for line in abstree_to_asm6502_code(abstree, indent=1):
+        print (line)
+        ficout.write(line+"\n")
+
+check_results()
+
+from optim_asm import classify_and_extract, apply_optimizations, regenerate_line
+from pathlib import Path
+
+def optimize_ASM_code():
+    # lecture du fichier function_raw.asm
+    file_path = Path("retro/brute_code/function_core.s")
+    with file_path.open(encoding="utf-8") as f:
+        lines = f.readlines()
+
+
+    # Extraction
+    instructions = [classify_and_extract(l.rstrip("\n")) for l in lines]
+
+    # Application des optimisations
+    optimized_instructions = apply_optimizations(instructions)
+
+    # Régénération
+    new_lines = [regenerate_line(instr) for instr in optimized_instructions]
+
+    # Écriture dans function_clean.asm
+    out_path = Path("retro/brute_code/function_core_opt.s")
+    with out_path.open("w", encoding="utf-8") as f:
+        f.write("\n".join(new_lines))
+
+optimize_ASM_code()
+
+check_results()
