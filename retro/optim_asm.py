@@ -142,8 +142,8 @@ def regenerate_line(instr: dict) -> str:
     result = ""
     indent = "  " * instr.get("indent", 0)
 
-    if instr["type"] == "comment_if":
-        result = f"{indent}; if ({instr['reg']} {instr['op']} {instr['value']}):"
+    if instr["type"] == "comment_cond":
+        result = f"{indent}; if ({instr['var']} {instr['op']} 0):"
 
     elif instr["type"] == "assign_or_bit":
         result = f"{indent}lda {instr['var']}: ora #BIT_{instr['bit']}: sta {instr['var']}"
@@ -168,10 +168,9 @@ def regenerate_line(instr: dict) -> str:
         )
 
     elif instr["type"] == "comment_multi_if":
-        conds = []
-        for cond in instr["conditions"]:
-            conds.append(f"({ 'a'+str(cond['reg']) } {cond['op']} {cond['value']})")
-        joined = " and ".join(conds)
+        # for cond in instr["conditions"]:
+        #     conds.append(f"({ 'a'+str(cond['reg']) } {cond['op']} {cond['value']})")
+        joined = " and ".join(instr["conditions"])
         result = f"{indent}; if {joined}:"
 
     elif instr["type"] == "and_multi_bit_branch":
@@ -188,7 +187,8 @@ def regenerate_line(instr: dict) -> str:
 
     elif instr["type"] == "raw":
         result = instr["raw"]
-
+    elif instr["type"] == "terminal_jmp":
+        result = f"{indent}jmp _unefonctionDone"
     else:
         # fallback
         result = instr.get("raw", "")
@@ -306,14 +306,13 @@ def opt_merge_consecutive_assigns(instructions):
 
     return new_instrs
 
-# BUG: ligne 257, 441
-# BUG: ligne 543
+# BUG: ligne 145
 def opt_merge_consecutive_uncomplemented_conditions(instructions): 
     """Regroupe les test de conditions sur plusieurs bits en une instruction unique.""" 
 
     def fuse_nested_ifs(instrs):
         """
-        Transforme une séquence imbriquée de comment_if + and_bit_branch
+        Transforme une séquence imbriquée de comment_cond + and_bit_branch
         en un seul comment_multi_if + and_multi_bit_branch.
         """
 
@@ -340,65 +339,125 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
         #     }
         # ]
 
+        comment_conditions = []
+        conditions = []
+        comment_assigns = []
+        assigns = []
+        and_bits = []
+        cmp_bits = []
+        var = None
+        main_label = None
+        main_indent = None
+    
+
+
+
         new_instrs = []
         i = 0
 
-        while i < len(instrs):
-            instr = instrs[i]
+        # 0: waiting for "comment_cond", "and_bit_branch"
+        # 1: waiting for 'comment_assign', 'comment_multi_assign', 'assign_or_bit', 'assign_multi_or_bit'
+        # 2: waiting for 'label','terminal_jmp'
+        # 3: waiting for end
+        etat = 0
 
-            # détecter début séquence imbriquée
-            if instr["type"] == "comment_if":
-                conditions = []
-                and_bits = []
-                cmp_bits = []
-                var = None
-                main_label = None
-                indent = instr["indent"]
+        for instr in instrs:
 
-                # explorer la séquence imbriquée
-                while i < len(instrs) and instrs[i]["type"] in ("comment_if", "and_bit_branch"):
-                    if instrs[i]["type"] == "comment_if":
+            # instr = instrs[i]
+            indent = instr["indent"]
+
+            if (etat == 0):
+                if instr["type"] in ["comment_cond", "and_bit_branch"]:
+                    etat = 1
+                    if instr["type"] == "comment_cond":
+                        comment_conditions.append(f"(a{instr['abit']} {instr['op']} 0)")
+                    elif instr["type"] == "and_bit_branch":
+                        instr['branch']
+                        bitnum = int(var[1:])
+                        regnum = bitnum // 16
+                        offset = "+1" if ((bitnum%16)//8 != 0) else ""
+
+                        if not main_label: main_label = instr["label"]
                         conditions.append({
-                            "reg": instrs[i]["reg"],
-                            "op": instrs[i]["op"],
-                            "value": instrs[i]["value"]
+                            "reg": "tmp{regnum}{offset}",
+                            "var": instr["var"],
+                            "bit": instr["bit"],
+                            'branch': instr["branch"],
+                            "label": instr["label"],
                         })
-                    elif instrs[i]["type"] == "and_bit_branch":
-                        var = instrs[i]["var"]
-                        and_bits.append(instrs[i]["bit"])
-                        if instrs[i]["cmp_bit"] != 0:  # si on compare à 1, alors ce bit doit être présent
-                            cmp_bits.append(instrs[i]["cmp_bit"])
-                        if main_label is None:
-                            main_label = instrs[i]["label"]
-                    i += 1
 
-                # créer les nouvelles instructions compactes
+                else:
+                    pass
+            elif (etat == 1):
+                if instr["type"] in ['comment_assign', 'comment_multi_assign', 'assign_or_bit', 'assign_multi_or_bit']:
+                    etat = 2
+                    assigns.append(instr)
+                elif instr["type"] in ["comment_cond", "and_bit_branch"]:
+                    if instr["type"] == "comment_cond":
+                        comment_conditions.append(f"(a{instr['abit']} {instr['op']} 0)")
+                    elif instr["type"] == "and_bit_branch":
+                        conditions.append({
+                            "var": instr["var"],
+                            "bit": instr["bit"],
+                            'branch': instr["branch"],
+                            "label": instr["label"],
+                        })
+                        if not main_label: main_label = instr["label"]
+                        if not main_indent : main_indent = instr["indent"]
+                        and_bits.append(instr["bit"])
+                        if (instr["branch"] == 'bne'): cmp_bits.append(instr["bit"])
+
+                else:
+                    pass
+            elif (etat == 2):
+                if instr["type"] in ['label', 'terminal_jmp']:
+                    etat = 3
+                    print ("COUCOU")
+                elif instr["type"] in ['comment_assign', 'comment_multi_assign', 'assign_or_bit', 'assign_multi_or_bit']:
+                    # TODO: réduire l'indentation des assigns
+                    assigns.append(instr)
+                else:
+                    pass
+            elif (etat == 3):
+                for reg in ['tmp0']:
+                    conds = [c for c in conditions if c['var'] == 'tmp0']
+                    if len(conds) != 0:
+                        print (f"assigns = {assigns}")
+                        print (f"conditions = {conditions}")
+                        print (f"comment_conditions = {comment_conditions}")
+                        new_instrs.append({
+                            "type": "comment_multi_if",
+                            "conditions": comment_conditions,
+                            "indent": main_indent
+                        })
+                        new_instrs.append({
+                            "type": "and_multi_bit_branch",
+                            "var": reg,
+                            "and_bits": and_bits,
+                            "cmp_bits": cmp_bits,
+                            "label": main_label,
+                            "indent": main_indent
+                        })
+                # TODO: réduire l'indentation des assigns
+                new_instrs += assigns
                 new_instrs.append({
-                    "type": "comment_multi_if",
-                    "conditions": conditions,
-                    "indent": indent
+                    "type": "terminal_jmp",
+                    "indent": main_indent,
                 })
                 new_instrs.append({
-                    "type": "and_multi_bit_branch",
-                    "var": var,
-                    "and_bits": and_bits,
-                    "cmp_bits": cmp_bits,
+                    "type": "label",
                     "label": main_label,
-                    "indent": indent
                 })
 
-            else:
-                # recopier tel quel
-                new_instrs.append(instr)
-                i += 1
 
+                return new_instrs
         return new_instrs
 
     def rewrite_code(list_of_instruction):
         if len(list_of_instruction) <=  6:
             return list_of_instruction
         else:
-            return [] # fuse_nested_ifs(list_of_instruction)
+            return fuse_nested_ifs(list_of_instruction)
     
     new_instrs = []
 
