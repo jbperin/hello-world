@@ -2,10 +2,14 @@
   lda tmp0 : and #BIT_3: .(:beq skip: jmp lbl_1: skip:.):
     ; if (a2 == 0):
     lda tmp0 : and #BIT_2: .(:beq skip: jmp lbl_2: skip:.):
-      ; if (a1 == 0) and (a0 != 0):
-      lda tmp0: and #BIT_1+BIT_0: cmp #BIT_0: .(:beq skip: jmp lbl_3: skip:.)
+      ; if (a1 == 0):
+      lda tmp0 : and #BIT_1: .(:beq skip: jmp lbl_3: skip:.):
+        ; if (a0 != 0):
+        lda tmp0 : and #BIT_0: .(:bne skip: jmp lbl_4: skip:.):
           ; r0 = 1
           lda tmp7: ora #BIT_0: sta tmp7
+        jmp _unefonctionDone
+lbl_4:
       jmp _unefonctionDone
 lbl_3:
       ; else:

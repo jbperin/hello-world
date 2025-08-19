@@ -471,7 +471,9 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
         return new_instrs
 
     def rewrite_code(list_of_instruction):
-        if len(list_of_instruction) <=  6:
+        # Cet optimiseur ne s'applique qu'à des sections contenant plusieurs conditions imbriquées
+        nb_condition = len([ins for ins in list_of_instruction if ins["type"] == "and_bit_branch"])
+        if nb_condition < 2:
             return list_of_instruction
         else:
             return fuse_nested_ifs(list_of_instruction)
@@ -545,7 +547,8 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
                         nb_jumps_to_merge += 1
                         stack.append(instr)
                     else:
-                        while stack[0]["indent"] < instr["indent"]:
+                        # we cannot optimise at the level of the "else" we are on. So indent level + 1
+                        while stack[0]["indent"] < instr["indent"]+1:
                             new_instrs.append(stack.pop(0))
                         rewritten = rewrite_code(stack)
                         new_instrs.extend(rewritten)
@@ -559,7 +562,8 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
                     stack.append(instr)
             else:
                 if nb_assigment_to_merge > 1 or nb_conditions_to_merge > 1 or nb_jumps_to_merge > 1:
-                    while stack[0]["indent"] < instr["indent"]:
+                    # we cannot optimise at the level of the "else" we are on. So indent level + 1
+                    while stack[0]["indent"] < instr["indent"]+1:
                         new_instrs.append(stack.pop(0))
                     rewritten = rewrite_code(stack)
                     new_instrs.extend(rewritten)

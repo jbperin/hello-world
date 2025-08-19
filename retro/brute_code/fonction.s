@@ -27,7 +27,7 @@ lda tmp7+1: sta sav_reg_7+1
 lda #0: sta tmp7: sta tmp7+1
 lda _function_input: sta tmp0
 lda _function_input+1: sta tmp0+1
-#include "function_core.s"
+#include "function_core_opt.s"
 _unefonctionDone
 lda tmp7: sta _function_output
 lda tmp7+1: sta _function_output+1
