@@ -176,11 +176,17 @@ def regenerate_line(instr: dict) -> str:
     elif instr["type"] == "and_multi_bit_branch":
         and_bits = "+".join([f"BIT_{b}" for b in instr["and_bits"]])
         cmp_bits = "+".join([f"BIT_{b}" for b in instr["cmp_bits"]])
-        result = (
-            f"{indent}lda {instr['var']}: and #{and_bits}: "
-            f"cmp #{cmp_bits}: "
-            f".(:beq skip: jmp lbl_{instr['label']}: skip:.)"
-        )
+        if len(cmp_bits) != 0:
+            result = (
+                f"{indent}lda {instr['var']}: and #{and_bits}: "
+                f"cmp #{cmp_bits}: "
+                f".(:beq skip: jmp lbl_{instr['label']}: skip:.)"
+            )
+        else:
+            result = (
+                f"{indent}lda {instr['var']}: and #{and_bits}: "
+                f".(:beq skip: jmp lbl_{instr['label']}: skip:.)"
+            )
 
     elif instr["type"] == "label":
         result = f"{indent}lbl_{instr['label']}:"
@@ -310,34 +316,46 @@ def opt_merge_consecutive_assigns(instructions):
 def opt_merge_consecutive_uncomplemented_conditions(instructions): 
     """Regroupe les test de conditions sur plusieurs bits en une instruction unique.""" 
 
+
+    def multi_reg_condition_merge(instrs):
+        new_instrs = []
+
+        list_of_different_register = list(set([ins['addr'] for ins in instrs if ins["type"] == "and_bit_branch"]))
+        list_of_bit_4_and_on_tmp0 = [ins['bit'] for ins in instrs if (ins["type"] == "and_bit_branch") and (ins["addr"] == "tmp0")] 
+        list_of_bit_4_and_on_tmp0p1 = [ins['bit'] for ins in instrs if (ins["type"] == "and_bit_branch") and (ins["addr"] == "tmp0+1")] 
+        list_of_bit_4_cmp_on_tmp0 = [ins['bit'] for ins in instrs if (ins["type"] == "and_bit_branch") and (ins["addr"] == "tmp0") and (ins["branch"] == "bne")] 
+        list_of_bit_4_cmp_on_tmp0p1 = [ins['bit'] for ins in instrs if (ins["type"] == "and_bit_branch") and (ins["addr"] == "tmp0+1") and (ins["branch"] == "bne")] 
+        list_of_assigns_related = [ins for ins in instrs if ins["type"] in ["assign_multi_or_bit", "comment_multi_assign",'assign_or_bit', 'comment_assign']]
+        ins_cond_tmp0={
+                            "type": "and_multi_bit_branch",
+                            "var": "tmp0",
+                            "and_bits": list_of_bit_4_and_on_tmp0,
+                            "cmp_bits": list_of_bit_4_cmp_on_tmp0,
+                            "label": instrs[1]["label"], # FIXME : find the label of the first branch condition rather than hardcoded '1'
+                            "indent": instrs[0]["indent"]
+                        }
+        ins_cond_tmp0p1={
+                            "type": "and_multi_bit_branch",
+                            "var": "tmp0+1",
+                            "and_bits": list_of_bit_4_and_on_tmp0p1,
+                            "cmp_bits": list_of_bit_4_cmp_on_tmp0p1,
+                            "label": instrs[1]["label"], # FIXME : find the label of the first branch condition rather than hardcoded '1'
+                            "indent": instrs[0]["indent"]
+                        }
+        new_instrs.append (ins_cond_tmp0)
+        new_instrs.append (ins_cond_tmp0p1)
+        new_instrs.extend(list_of_assigns_related)
+        new_instrs.append ({
+            "type": "label",
+            "label": instrs[1]["label"]
+        })
+        return new_instrs
+    
     def fuse_nested_ifs(instrs):
         """
         Transforme une séquence imbriquée de comment_cond + and_bit_branch
         en un seul comment_multi_if + and_multi_bit_branch.
         """
-
-        # [
-        #     {
-        #         "type": "comment_multi_if",
-        #         "conditions": [
-        #             {"reg": 5, "op": "==", "value": 0},
-        #             {"reg": 1, "op": "!=", "value": 0},
-        #             {"reg": 2, "op": "!=", "value": 0},
-        #             {"reg": 0, "op": "!=", "value": 0},
-        #             {"reg": 4, "op": "!=", "value": 0},
-        #             {"reg": 3, "op": "!=", "value": 0},
-        #         ],
-        #         "indent": 3
-        #     },
-        #     {
-        #         "type": "and_multi_bit_branch",
-        #         "var": "tmp0",
-        #         "and_bits": [5,1,2,0,4,3],
-        #         "cmp_bits": [1,2,0,3],
-        #         "label": 373,
-        #         "indent": 3
-        #     }
-        # ]
 
         comment_conditions = []
         conditions = []
@@ -349,9 +367,6 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
         main_label = None
         main_indent = None
     
-
-
-
         new_instrs = []
         num_line = 0
 
@@ -477,7 +492,12 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
         if nb_condition < 2:
             return list_of_instruction
         else:
-            return fuse_nested_ifs(list_of_instruction)
+            list_of_different_register = list(set([ins['addr'] for ins in list_of_instruction if ins["type"] == "and_bit_branch"]))
+            if len(list_of_different_register) == 1:
+                return fuse_nested_ifs(list_of_instruction)
+            else:
+                return multi_reg_condition_merge(list_of_instruction)
+                
     
     new_instrs = []
 
@@ -594,12 +614,12 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
             
 
     # S’il reste un stack à la fin
-    # if stack:
-    #     if nb_conditions_to_merge > 1:
-    #         rewritten = rewrite_code(stack)
-    #         new_instrs.extend(rewritten)
-    #     else:
-    #         new_instrs.extend(stack)
+    if len(stack):
+        if nb_conditions_to_merge > 1:
+            rewritten = rewrite_code(stack)
+            new_instrs.extend(rewritten)
+        else:
+            new_instrs.extend(stack)
     return new_instrs
 
 

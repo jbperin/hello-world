@@ -73,7 +73,7 @@ def deduce_fonction_prototype(fonction):
     nb_output = len(fonction(*fake_parametres))
     return nb_input, nb_output
 
-theFunction = sample_functions.log2_8_8
+theFunction = sample_functions.test_function
 
 
 NBITS_INPUT, NBITS_OUTPUT = deduce_fonction_prototype(theFunction)
