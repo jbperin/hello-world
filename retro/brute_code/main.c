@@ -27,7 +27,7 @@ void main()
 
 	SimplePrint("Hello World !");
 
-	for (input = 0; input < (1<<5); input++) {
+	for (input = 0; input < (1<<8); input++) {
 		lprintf("%d,%d\r", input , mysqrt (input));	
 	}
 }

@@ -73,7 +73,7 @@ def deduce_fonction_prototype(fonction):
     nb_output = len(fonction(*fake_parametres))
     return nb_input, nb_output
 
-theFunction = sample_functions.square_root_5_5
+theFunction = sample_functions.square_root_8_8
 
 
 NBITS_INPUT, NBITS_OUTPUT = deduce_fonction_prototype(theFunction)
