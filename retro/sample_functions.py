@@ -16,6 +16,32 @@ def square_root_4_4(a3, a2, a1, a0):
     # Output as list of bits (LSB first)
     return toBin(mathval1, 4)
 
+
+# math.log2((2**4) - 1)*(2**4)/4
+def log2_4_4(a3, a2, a1, a0):
+    bits = [a3, a2, a1, a0]
+    
+    def f(i): return min((2**4)-1,round(math.log2((i))*(2**4)/4)) if i != 0 else 0
+
+    v1 = 0
+    for i, b in enumerate(reversed(bits)):
+        v1 += b << i
+    mathval1 = f(v1)
+    # Output as list of bits (LSB first)
+    return toBin(mathval1, 4)
+
+def log2_8_8(a7, a6, a5, a4, a3, a2, a1, a0):
+    bits = [a7, a6, a5, a4, a3, a2, a1, a0]
+    
+    def f(i): return min((2**8)-1,round(math.log2((i))*(2**5))) if i != 0 else 0
+
+    v1 = 0
+    for i, b in enumerate(reversed(bits)):
+        v1 += b << i
+    mathval1 = f(v1)
+    # Output as list of bits (LSB first)
+    return toBin(mathval1, 8)
+
 def square_root_5_5(a4, a3, a2, a1, a0):
 # def uneFonction(a4, a3, a2, a1, a0):
     # args: bits, most significant first (a3, a2, a1, a0)
