@@ -167,5 +167,5 @@ def generate_function_asm_code(abstree, indent=0):
 
 with open ("retro\\brute_code\\fonction.s", "w") as ficout:
     for line in generate_function_asm_code(read_abstree_from_json()):
-        print (line)
+        # print (line)
         ficout.write(line+"\n")

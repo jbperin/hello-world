@@ -287,9 +287,15 @@ def check_results():
 
     with open (f"{os.getenv('OSDK')}\Oricutron\printer_out.txt", "r") as ficin:
         for li in ficin.readlines():
-            [v, sqv] = li.strip().split(',')
-            if round(math.sqrt(int(v))) != int(sqv):
-                print (v, sqv)
+            [v, fv] = li.strip().split(',')
+            binv1 = sample_functions.toBin(int(v), NBITS_INPUT)
+            res = sample_functions.toBin(int(fv), NBITS_OUTPUT)
+# uneFonction expects MSB first
+            out_bits = theFunction(*reversed(binv1))
+
+            # if round(math.sqrt(int(v))) != int(sqv):
+            if (res != out_bits):
+                print (v, fv, res)
                 print ("--== ERROR ==--")
                 break
 
@@ -313,11 +319,11 @@ def toBin (val, size):
     return list(reversed(list(map(lambda x: int(x),'{:0{}b}'.format(val, size)))))
 
 
-# Check that 
+# Check that generated python code from abstract tree work as the input function
 for v1 in range(2**NBITS_INPUT):
     binv1 = toBin(v1, NBITS_INPUT)
-    mathval1 = round(math.sqrt(v1))
-    binval1 = toBin(mathval1, NBITS_OUTPUT)
+    binval1 = theFunction(*reversed(binv1))
+
     bf_result = compute_r(binv1)
     print(v1, binv1, binval1, bf_result, bf_result == binval1 )
     
@@ -330,13 +336,13 @@ from abstree2asm import generate_function_asm_code, abstree_to_asm6502_code
 # Génère le code assembleur d'une fonction et l'enregistre dans "retro\\brute_code\\fonction.s"
 with open ("retro\\brute_code\\fonction.s", "w") as ficout:
     for line in generate_function_asm_code(read_abstree_from_json()):
-        print (line)
+        # print (line)
         ficout.write(line+"\n")
 
 # Génère le code assembleur depuis l'arbre abstrait et l'enregistre dans retro\\brute_code\\function_core.s appelé depuis fonction.s
 with open ("retro\\brute_code\\function_core.s", "w") as ficout:
     for line in abstree_to_asm6502_code(abstree, indent=1):
-        print (line)
+        # print (line)
         ficout.write(line+"\n")
 
 check_results()
