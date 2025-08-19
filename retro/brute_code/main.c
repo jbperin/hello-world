@@ -26,8 +26,8 @@ void main()
 	int ouptput;
 
 	SimplePrint("Hello World !");
-	input = 3;
-	for (input = 0; input < (1<<4); input++) {
+
+	for (input = 0; input < (1<<5); input++) {
 		lprintf("%d,%d\r", input , mysqrt (input));	
 	}
 }

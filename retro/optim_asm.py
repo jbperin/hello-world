@@ -306,7 +306,7 @@ def opt_merge_consecutive_assigns(instructions):
 
     return new_instrs
 
-# BUG: ligne 145
+# BUG line 81
 def opt_merge_consecutive_uncomplemented_conditions(instructions): 
     """Regroupe les test de conditions sur plusieurs bits en une instruction unique.""" 
 
@@ -456,14 +456,15 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
                         })
                 # TODO: réduire l'indentation des assigns
                 new_instrs += assigns
-                new_instrs.append({
-                    "type": "terminal_jmp",
-                    "indent": main_indent,
-                })
-                new_instrs.append({
-                    "type": "label",
-                    "label": main_label,
-                })
+                new_instrs += instrs[num_line+1:]
+                # new_instrs.append({
+                #     "type": "terminal_jmp",
+                #     "indent": main_indent,
+                # })
+                # new_instrs.append({
+                #     "type": "label",
+                #     "label": main_label,
+                # })
 
 
                 return new_instrs
@@ -491,7 +492,7 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
     etat                        = 0 
     stack                       = []
 
-    for i, instr in enumerate(instructions):
+    for num_line, instr in enumerate(instructions):
         if etat == 0:
             if instr["type"] in ['comment_cond', 'and_bit_branch']:                
                 etat = 1
