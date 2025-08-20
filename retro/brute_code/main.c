@@ -5,7 +5,7 @@
 // an assembly code routine to display
 // the message
 //
-
+#include "config.h"
 
 // Declare the assembly code function
 void SimplePrint(const char *ptr_message);
@@ -14,7 +14,7 @@ extern void uneFonction();
 extern int function_input;
 extern int function_output;
 
-int mysqrt (int val) {
+int myFunction (int val) {
 	function_input = val;
 	uneFonction();
 	return function_output;
@@ -27,7 +27,7 @@ void main()
 
 	SimplePrint("Hello World !");
 
-	for (input = 0; input < (1<<8); input++) {
-		lprintf("%d,%d\r", input , mysqrt (input));	
+	for (input = 0; input < (1<<NBITS_INPUT); input++) {
+		lprintf("%d,%d\r", input , myFunction (input));	
 	}
 }

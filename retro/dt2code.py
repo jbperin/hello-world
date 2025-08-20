@@ -1,45 +1,6 @@
 
 import os
 
-# recherche r3:
-# 	r3 = 0
-
-# recherche r2:
-# 	(a3 == 0) ==> r2 = 0
-#                       recherche r1 (sachant que a3 == 0):
-#                               (a2 == 0) ==> (a1 == 0) ==> r1 = 0
-#                                                           recherche r0 (sachant que a3 == 0, a2 == 0, a1 == 0)
-#                                                           (a0 == 0) ==> r0 = 0
-#                                                           (a0 == 1) ==> r0 = 1
-#                                             (a1 == 1) ==> (a0 == 0) ==> r1 = 0
-#                                                                         recherche r0 (sachant que a3 == 0, a2 == 0, a1 == 1, a0 == 0)
-#                                                                         r0 = 0
-#                                                           (a0 == 1) ==> r1 = 1 
-#                                                                         recherche r0 (sachant que a3 == 0, a2 == 0, a1 == 0, a0 == 1)
-#                                                                         r0 = 0
-#                               (a2 == 1) ==> r1 = 1
-#                                             recherche r0 (sachant que a3 == 0, a2 == 1)
-#                                             (a1 == 0) ==> r0 = 0 
-#                                             (a1 == 1) ==> (a0 == 0) ==> r0 = 0
-#                                                           (a0 == 1) ==> r0 = 1
-# 	(a3 == 1) ==> (a2 == 0) ==> r2 = 0
-#                                     recherche r1 (sachant que a3 == 1, a2 == 0):
-#                       (a2 == 1) ==> (a0 == 0) ==> (a1 == 0) ==> r2 = 0
-#                                                                 recherche r1 (sachant que a3 == 1, a2 == 1, a0 == 0, a1 == 0)):
-#                                                                 r1 = 0
-#                                                                 r0 = 0
-#                                                   (a1 == 1) ==> r2 = 1
-#                                                                 recherche r1 (sachant que a3 == 1, a2 == 1, a0 == 0, a1 == 1)):
-#                                                                 r1 = 0
-#                                                                 r0 = 0
-#                                     (a0 == 1) ==> r2 = 1
-#                                                   recherche r1 (sachant que a3 == 1, a2 == 1, a0 == 1)):
-#                                                   r1 = 0
-#                                                   r0 = 0
-
-
-
-
 import sklearn
 
 from sklearn.tree import DecisionTreeClassifier
@@ -73,11 +34,14 @@ def deduce_fonction_prototype(fonction):
     nb_output = len(fonction(*fake_parametres))
     return nb_input, nb_output
 
-theFunction = sample_functions.test_function
-
+theFunction = sample_functions.not_log2_12_to_high_6
+# theFunction = sample_functions.not_log2_12_to_low_6
+# theFunction = sample_functions.not_log2_10_10
 
 NBITS_INPUT, NBITS_OUTPUT = deduce_fonction_prototype(theFunction)
-
+with open ("retro/brute_code/config.h", "w") as ficout:
+    ficout.write (f"#define NBITS_INPUT {min (12,NBITS_INPUT)}\n")
+    ficout.write (f"#define NBITS_OUTPUT {NBITS_OUTPUT}\n")
 print (f"Nb input = {NBITS_INPUT}, Nb ouput = {NBITS_OUTPUT}")
 
 
