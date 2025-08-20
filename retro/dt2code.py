@@ -288,7 +288,7 @@ def optimize_ASM_code(path_to_assembly_file="retro/brute_code/function_core.s"):
 # ——— Main ———
 if __name__ == "__main__":
 
-    theFunction = sample_functions.log2_9_9
+    theFunction = sample_functions.test_function_18bits
     # theFunction = sample_functions.not_log2_12_to_low_6
     # theFunction = sample_functions.not_log2_10_10
 

@@ -1,2 +1,2 @@
-#define NBITS_INPUT 9
+#define NBITS_INPUT 12
 #define NBITS_OUTPUT 9

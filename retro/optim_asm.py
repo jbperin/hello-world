@@ -221,53 +221,72 @@ def opt_merge_consecutive_assigns(instructions):
     """Regroupe les affectations de plusieurs bits en une instruction unique.""" 
 
     def rewrite_code(list_of_instruction):
-        # Récupère la variable (tmpX)
-        tmp_vars = {instr["var"] for instr in list_of_instruction if instr["type"] == "assign_or_bit"}
-        if len(tmp_vars) != 1:
-            # Ambigu, on ne fusionne pas
-            return list_of_instruction  
-        tmp_var = tmp_vars.pop()
+
+        new_instrs = []
 
         indent = list_of_instruction[0]["indent"]
         indent_str = "  " * indent
 
-        # Collecter registres et valeurs
-        regs = []
-        for instr in list_of_instruction:
-            if instr["type"] == "comment_assign":
-                regs.append((int(instr["reg"]), int(instr["value"])))
-            elif instr["type"] == "comment_multi_assign":
-                regs.extend(instr["regs"])
+        regs = [(ins['reg'], ins['value']) for ins in list_of_instruction if ins["type"] == "comment_assign"]
+        assigns_str = ", ".join([f"r{r} = {v}" for r, v in regs])
+        new_instrs.append({
+            "type": "comment_multi_assign",
+            "regs": regs,
+            "assigns": assigns_str,
+            "indent": indent,
+            "raw": f"{indent_str}; {assigns_str}"
+        })
 
-        # Collecter bits
-        bits = []
-        for instr in list_of_instruction:
-            if instr["type"] == "assign_or_bit":
-                bits.extend(instr["bits"])
-            elif instr["type"] == "assign_multi_or_bit":
-                bits.extend(instr["bits"])
 
-        # Construire nouvelle séquence fusionnée
-        new_instrs = []
-        if regs:
-            assigns_str = ", ".join([f"r{r} = {v}" for r, v in regs])
-            new_instrs.append({
-                "type": "comment_multi_assign",
-                "regs": regs,
-                "assigns": assigns_str,
-                "indent": indent,
-                "raw": f"{indent_str}; {assigns_str}"
-            })
+        list_of_different_register = list(set([ins['tmp'] for ins in list_of_instruction if ins["type"] == "assign_or_bit"]))
+        for reg in list_of_different_register:
+            # list_of_assign = [ins for ins in list_of_instruction if ins["type"] == "assign_or_bit" and ins["tmp"] == reg]
+            bits = [ins["bit"] for ins in list_of_instruction if ins["type"] == "assign_or_bit" and ins["tmp"] == reg]
 
-        if bits:
-            bits_str = "+".join([f"BIT_{b}" for b in sorted(bits, reverse=True)])
-            new_instrs.append({
-                "type": "assign_multi_or_bit",
-                "var": tmp_var,
-                "bits": bits,
-                "indent": indent,
-                "raw": f"{indent_str}lda {tmp_var}: ora #{bits_str}: sta {tmp_var}"
-            })
+
+
+            # # Collecter registres et valeurs
+            # regs = []
+            # for instr in list_of_instruction:
+            #     if instr["type"] == "comment_assign":
+            #         regs.append((int(instr["reg"]), int(instr["value"])))
+            #     elif instr["type"] == "comment_multi_assign" and instr["tmp"] == reg:
+            #         regs.extend(instr["regs"])
+
+            # Collecter bits
+            # bits = []
+            # for instr in list_of_instruction:
+            #     if instr["type"] == "assign_or_bit":
+            #         bits.extend(instr["bits"])
+            #     elif instr["type"] == "assign_multi_or_bit":
+            #         bits.extend(instr["bits"])
+
+            # Construire nouvelle séquence fusionnée
+
+            if bits:
+                nb_bits = len(bits)
+                if nb_bits == 0:
+                    pass
+                elif nb_bits == 1:
+                    # instr['var']}: ora #BIT_{instr['bit']
+                    bits_str = f"BIT_{bits[0]}" 
+
+                    new_instrs.append({
+                        "type": "assign_or_bit",
+                        "var": reg,
+                        "bit": bits[0],
+                        "indent": indent,
+                        "raw": f"{indent_str}lda {reg}: ora #{bits_str}: sta {reg}"
+                    })
+                else:
+                    bits_str = "+".join([f"BIT_{b}" for b in sorted(bits, reverse=True)])
+                    new_instrs.append({
+                        "type": "assign_multi_or_bit",
+                        "var": reg,
+                        "bits": bits,
+                        "indent": indent,
+                        "raw": f"{indent_str}lda {reg}: ora #{bits_str}: sta {reg}"
+                    })
 
         return new_instrs
 
@@ -319,14 +338,20 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
 
     def multi_reg_condition_merge(instrs):
         new_instrs = []
-
+        list_of_condition = [ins for ins in instrs if ins["type"] == "and_bit_branch"]
         list_of_different_register = list(set([ins['addr'] for ins in instrs if ins["type"] == "and_bit_branch"]))
         list_of_bit_4_and_on_tmp0 = [ins['bit'] for ins in instrs if (ins["type"] == "and_bit_branch") and (ins["addr"] == "tmp0")] 
         list_of_bit_4_and_on_tmp0p1 = [ins['bit'] for ins in instrs if (ins["type"] == "and_bit_branch") and (ins["addr"] == "tmp0+1")] 
         list_of_bit_4_cmp_on_tmp0 = [ins['bit'] for ins in instrs if (ins["type"] == "and_bit_branch") and (ins["addr"] == "tmp0") and (ins["branch"] == "bne")] 
         list_of_bit_4_cmp_on_tmp0p1 = [ins['bit'] for ins in instrs if (ins["type"] == "and_bit_branch") and (ins["addr"] == "tmp0+1") and (ins["branch"] == "bne")] 
+        list_of_bit_4_and_on_tmp1 = [ins['bit'] for ins in instrs if (ins["type"] == "and_bit_branch") and (ins["addr"] == "tmp1")] 
+        list_of_bit_4_and_on_tmp1p1 = [ins['bit'] for ins in instrs if (ins["type"] == "and_bit_branch") and (ins["addr"] == "tmp1+1")] 
+        list_of_bit_4_cmp_on_tmp1 = [ins['bit'] for ins in instrs if (ins["type"] == "and_bit_branch") and (ins["addr"] == "tmp1") and (ins["branch"] == "bne")] 
+        list_of_bit_4_cmp_on_tmp1p1 = [ins['bit'] for ins in instrs if (ins["type"] == "and_bit_branch") and (ins["addr"] == "tmp1+1") and (ins["branch"] == "bne")] 
         list_of_assigns_related = [ins for ins in instrs if ins["type"] in ["assign_multi_or_bit", "comment_multi_assign",'assign_or_bit', 'comment_assign']]
-        ins_cond_tmp0={
+        list_of_endif_related = [ins for ins in instrs if ins["type"] in ["label", "terminal_jmp"]]
+        if (len(list_of_bit_4_and_on_tmp0)!=0): 
+            ins_cond_tmp0={
                             "type": "and_multi_bit_branch",
                             "var": "tmp0",
                             "and_bits": list_of_bit_4_and_on_tmp0,
@@ -334,7 +359,9 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
                             "label": instrs[1]["label"], # FIXME : find the label of the first branch condition rather than hardcoded '1'
                             "indent": instrs[0]["indent"]
                         }
-        ins_cond_tmp0p1={
+            new_instrs.append (ins_cond_tmp0)
+        if (len(list_of_bit_4_and_on_tmp0p1)!=0): 
+            ins_cond_tmp0p1={
                             "type": "and_multi_bit_branch",
                             "var": "tmp0+1",
                             "and_bits": list_of_bit_4_and_on_tmp0p1,
@@ -342,13 +369,36 @@ def opt_merge_consecutive_uncomplemented_conditions(instructions):
                             "label": instrs[1]["label"], # FIXME : find the label of the first branch condition rather than hardcoded '1'
                             "indent": instrs[0]["indent"]
                         }
-        new_instrs.append (ins_cond_tmp0)
-        new_instrs.append (ins_cond_tmp0p1)
+            new_instrs.append (ins_cond_tmp0p1)
+        if (len(list_of_bit_4_and_on_tmp1)!=0): 
+            ins_cond_tmp1={
+                            "type": "and_multi_bit_branch",
+                            "var": "tmp1",
+                            "and_bits": list_of_bit_4_and_on_tmp1,
+                            "cmp_bits": list_of_bit_4_cmp_on_tmp1,
+                            "label": instrs[1]["label"], # FIXME : find the label of the first branch condition rather than hardcoded '1'
+                            "indent": instrs[0]["indent"]
+                        }
+            new_instrs.append (ins_cond_tmp1)
+        if (len(list_of_bit_4_and_on_tmp1p1)!=0): 
+            ins_cond_tmp1p1={
+                            "type": "and_multi_bit_branch",
+                            "var": "tmp1+1",
+                            "and_bits": list_of_bit_4_and_on_tmp1p1,
+                            "cmp_bits": list_of_bit_4_cmp_on_tmp1p1,
+                            "label": instrs[1]["label"], # FIXME : find the label of the first branch condition rather than hardcoded '1'
+                            "indent": instrs[0]["indent"]
+                        }
+            new_instrs.append (ins_cond_tmp1p1)
+        
+        
         new_instrs.extend(list_of_assigns_related)
         new_instrs.append ({
             "type": "label",
             "label": instrs[1]["label"]
         })
+        nb_remaining_instr = len(list_of_endif_related) -  2 * len(list_of_condition)
+        if (nb_remaining_instr != 0): new_instrs.extend(list_of_endif_related[-nb_remaining_instr:])
         return new_instrs
     
     def fuse_nested_ifs(instrs):
