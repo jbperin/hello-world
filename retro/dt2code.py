@@ -34,7 +34,7 @@ def deduce_fonction_prototype(fonction):
     nb_output = len(fonction(*fake_parametres))
     return nb_input, nb_output
 
-theFunction = sample_functions.not_log2_12_to_high_6
+theFunction = sample_functions.log2_9_9
 # theFunction = sample_functions.not_log2_12_to_low_6
 # theFunction = sample_functions.not_log2_10_10
 
