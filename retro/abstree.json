@@ -15,11 +15,11 @@
                 "feature": 2,
                 "left": {
                   "subtree": {
-                    "feature": 1,
-                    "right": {
-                      "feature": 0,
-                      "left": {
-                        "subtree": {
+                    "feature": 0,
+                    "left": {
+                      "subtree": {
+                        "feature": 1,
+                        "right": {
                           "value": "r5 = 1",
                           "subtree": {
                             "value": "r4 = 1",
@@ -35,7 +35,10 @@
                             }
                           }
                         }
-                      },
+                      }
+                    },
+                    "right": {
+                      "feature": 1,
                       "right": {
                         "value": "r6 = 1",
                         "subtree": {
@@ -56,9 +59,9 @@
                   }
                 },
                 "right": {
-                  "feature": 0,
+                  "feature": 1,
                   "left": {
-                    "feature": 1,
+                    "feature": 0,
                     "left": {
                       "subtree": {
                         "value": "r6 = 1",
@@ -82,15 +85,9 @@
                       "subtree": {
                         "subtree": {
                           "subtree": {
-                            "value": "r4 = 1",
                             "subtree": {
                               "subtree": {
-                                "subtree": {
-                                  "value": "r1 = 1",
-                                  "subtree": {
-                                    "value": "r0 = 1"
-                                  }
-                                }
+                                "value": "r2 = 1"
                               }
                             }
                           }
@@ -103,17 +100,20 @@
                     "subtree": {
                       "subtree": {
                         "subtree": {
-                          "feature": 1,
-                          "left": {
-                            "subtree": {
+                          "value": "r4 = 1",
+                          "subtree": {
+                            "feature": 0,
+                            "left": {
                               "subtree": {
-                                "value": "r2 = 1"
+                                "subtree": {
+                                  "value": "r1 = 1",
+                                  "subtree": {
+                                    "value": "r0 = 1"
+                                  }
+                                }
                               }
-                            }
-                          },
-                          "right": {
-                            "value": "r4 = 1",
-                            "subtree": {
+                            },
+                            "right": {
                               "value": "r3 = 1",
                               "subtree": {
                                 "value": "r2 = 1",
@@ -137,12 +137,12 @@
                 "subtree": {
                   "feature": 2,
                   "left": {
-                    "feature": 1,
+                    "feature": 0,
                     "left": {
                       "subtree": {
                         "value": "r5 = 1",
                         "subtree": {
-                          "feature": 0,
+                          "feature": 1,
                           "left": {
                             "subtree": {
                               "value": "r3 = 1",
@@ -156,22 +156,6 @@
                           "right": {
                             "value": "r4 = 1",
                             "subtree": {
-                              "subtree": {
-                                "value": "r2 = 1"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "right": {
-                      "feature": 0,
-                      "left": {
-                        "subtree": {
-                          "value": "r5 = 1",
-                          "subtree": {
-                            "value": "r4 = 1",
-                            "subtree": {
                               "value": "r3 = 1",
                               "subtree": {
                                 "value": "r2 = 1",
@@ -180,6 +164,22 @@
                                     "value": "r0 = 1"
                                   }
                                 }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "right": {
+                      "feature": 1,
+                      "left": {
+                        "subtree": {
+                          "value": "r5 = 1",
+                          "subtree": {
+                            "value": "r4 = 1",
+                            "subtree": {
+                              "subtree": {
+                                "value": "r2 = 1"
                               }
                             }
                           }
@@ -502,11 +502,11 @@
               "feature": 4,
               "left": {
                 "subtree": {
-                  "feature": 3,
+                  "feature": 2,
                   "left": {
-                    "feature": 1,
+                    "feature": 3,
                     "left": {
-                      "feature": 2,
+                      "feature": 1,
                       "left": {
                         "subtree": {
                           "value": "r4 = 1",
@@ -528,28 +528,6 @@
                         "value": "r5 = 1",
                         "subtree": {
                           "subtree": {
-                            "feature": 0,
-                            "left": {
-                              "subtree": {
-                                "value": "r2 = 1",
-                                "subtree": {
-                                  "value": "r1 = 1"
-                                }
-                              }
-                            },
-                            "right": {
-                              "value": "r3 = 1"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "right": {
-                      "value": "r5 = 1",
-                      "subtree": {
-                        "subtree": {
-                          "feature": 2,
-                          "left": {
                             "subtree": {
                               "subtree": {
                                 "feature": 0,
@@ -566,30 +544,13 @@
                                 }
                               }
                             }
-                          },
-                          "right": {
-                            "value": "r3 = 1",
-                            "subtree": {
-                              "feature": 0,
-                              "left": {
-                                "subtree": {
-                                  "value": "r1 = 1"
-                                }
-                              },
-                              "right": {
-                                "value": "r2 = 1"
-                              }
-                            }
                           }
                         }
                       }
-                    }
-                  },
-                  "right": {
-                    "value": "r5 = 1",
-                    "subtree": {
-                      "feature": 2,
-                      "left": {
+                    },
+                    "right": {
+                      "value": "r5 = 1",
+                      "subtree": {
                         "feature": 1,
                         "left": {
                           "feature": 0,
@@ -624,13 +585,18 @@
                             }
                           }
                         }
-                      },
-                      "right": {
-                        "value": "r4 = 1",
+                      }
+                    }
+                  },
+                  "right": {
+                    "value": "r5 = 1",
+                    "subtree": {
+                      "feature": 3,
+                      "left": {
                         "subtree": {
-                          "feature": 0,
+                          "feature": 1,
                           "left": {
-                            "feature": 1,
+                            "feature": 0,
                             "left": {
                               "subtree": {
                                 "value": "r2 = 1",
@@ -640,22 +606,51 @@
                               }
                             },
                             "right": {
-                              "value": "r3 = 1",
+                              "value": "r3 = 1"
+                            }
+                          },
+                          "right": {
+                            "value": "r3 = 1",
+                            "subtree": {
+                              "feature": 0,
+                              "left": {
+                                "subtree": {
+                                  "value": "r1 = 1"
+                                }
+                              },
+                              "right": {
+                                "value": "r2 = 1"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "right": {
+                        "value": "r4 = 1",
+                        "subtree": {
+                          "feature": 1,
+                          "left": {
+                            "feature": 0,
+                            "left": {
                               "subtree": {
+                                "value": "r2 = 1",
                                 "subtree": {
                                   "value": "r1 = 1"
                                 }
                               }
+                            },
+                            "right": {
+                              "value": "r3 = 1"
                             }
                           },
                           "right": {
                             "value": "r3 = 1",
                             "subtree": {
                               "subtree": {
-                                "feature": 1,
-                                "right": {
-                                  "value": "r1 = 1",
-                                  "subtree": {
+                                "value": "r1 = 1",
+                                "subtree": {
+                                  "feature": 0,
+                                  "right": {
                                     "value": "r0 = 1"
                                   }
                                 }
@@ -669,11 +664,11 @@
                 }
               },
               "right": {
-                "feature": 2,
+                "feature": 3,
                 "left": {
-                  "feature": 3,
+                  "feature": 1,
                   "left": {
-                    "feature": 1,
+                    "feature": 2,
                     "left": {
                       "subtree": {
                         "value": "r5 = 1",
@@ -708,10 +703,13 @@
                         "subtree": {
                           "subtree": {
                             "subtree": {
+                              "value": "r2 = 1",
                               "subtree": {
-                                "feature": 0,
-                                "right": {
-                                  "value": "r1 = 1"
+                                "subtree": {
+                                  "feature": 0,
+                                  "right": {
+                                    "value": "r0 = 1"
+                                  }
                                 }
                               }
                             }
@@ -724,6 +722,46 @@
                     "value": "r6 = 1",
                     "subtree": {
                       "subtree": {
+                        "subtree": {
+                          "feature": 2,
+                          "left": {
+                            "subtree": {
+                              "subtree": {
+                                "feature": 0,
+                                "right": {
+                                  "value": "r1 = 1"
+                                }
+                              }
+                            }
+                          },
+                          "right": {
+                            "feature": 0,
+                            "left": {
+                              "subtree": {
+                                "value": "r2 = 1",
+                                "subtree": {
+                                  "value": "r1 = 1",
+                                  "subtree": {
+                                    "value": "r0 = 1"
+                                  }
+                                }
+                              }
+                            },
+                            "right": {
+                              "value": "r3 = 1"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "value": "r6 = 1",
+                  "subtree": {
+                    "subtree": {
+                      "feature": 2,
+                      "left": {
                         "subtree": {
                           "value": "r3 = 1",
                           "subtree": {
@@ -752,49 +790,6 @@
                                   "value": "r1 = 1"
                                 }
                               }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "right": {
-                  "value": "r6 = 1",
-                  "subtree": {
-                    "subtree": {
-                      "feature": 3,
-                      "left": {
-                        "subtree": {
-                          "feature": 1,
-                          "left": {
-                            "subtree": {
-                              "value": "r2 = 1",
-                              "subtree": {
-                                "subtree": {
-                                  "feature": 0,
-                                  "right": {
-                                    "value": "r0 = 1"
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "right": {
-                            "feature": 0,
-                            "left": {
-                              "subtree": {
-                                "value": "r2 = 1",
-                                "subtree": {
-                                  "value": "r1 = 1",
-                                  "subtree": {
-                                    "value": "r0 = 1"
-                                  }
-                                }
-                              }
-                            },
-                            "right": {
-                              "value": "r3 = 1"
                             }
                           }
                         }
@@ -875,28 +870,22 @@
                           "subtree": {
                             "value": "r2 = 1",
                             "subtree": {
-                              "feature": 0,
+                              "feature": 1,
                               "left": {
-                                "feature": 1,
+                                "feature": 0,
                                 "left": {
                                   "subtree": {
                                     "value": "r0 = 1"
                                   }
                                 },
                                 "right": {
-                                  "value": "r1 = 1",
-                                  "subtree": {
-                                    "value": "r0 = 1"
-                                  }
+                                  "value": "r1 = 1"
                                 }
                               },
                               "right": {
                                 "value": "r1 = 1",
                                 "subtree": {
-                                  "feature": 1,
-                                  "right": {
-                                    "value": "r0 = 1"
-                                  }
+                                  "value": "r0 = 1"
                                 }
                               }
                             }
@@ -933,17 +922,17 @@
                           "feature": 3,
                           "left": {
                             "subtree": {
-                              "feature": 0,
+                              "feature": 1,
                               "left": {
                                 "subtree": {
-                                  "feature": 1,
+                                  "feature": 0,
                                   "right": {
                                     "value": "r0 = 1"
                                   }
                                 }
                               },
                               "right": {
-                                "feature": 1,
+                                "feature": 0,
                                 "left": {
                                   "subtree": {
                                     "value": "r0 = 1"
@@ -984,11 +973,11 @@
                     "subtree": {
                       "feature": 1,
                       "left": {
-                        "feature": 2,
+                        "feature": 0,
                         "left": {
-                          "feature": 0,
+                          "feature": 3,
                           "left": {
-                            "feature": 3,
+                            "feature": 2,
                             "left": {
                               "subtree": {
                                 "value": "r2 = 1",
@@ -1003,16 +992,23 @@
                             "right": {
                               "value": "r3 = 1",
                               "subtree": {
-                                "value": "r2 = 1"
+                                "subtree": {
+                                  "subtree": {
+                                    "value": "r0 = 1"
+                                  }
+                                }
                               }
                             }
                           },
                           "right": {
                             "value": "r3 = 1",
                             "subtree": {
-                              "feature": 3,
-                              "right": {
-                                "value": "r2 = 1"
+                              "value": "r2 = 1",
+                              "subtree": {
+                                "feature": 2,
+                                "right": {
+                                  "value": "r1 = 1"
+                                }
                               }
                             }
                           }
@@ -1023,12 +1019,7 @@
                             "feature": 3,
                             "left": {
                               "subtree": {
-                                "feature": 0,
-                                "left": {
-                                  "subtree": {
-                                    "value": "r0 = 1"
-                                  }
-                                },
+                                "feature": 2,
                                 "right": {
                                   "value": "r1 = 1"
                                 }
@@ -1037,7 +1028,10 @@
                             "right": {
                               "value": "r2 = 1",
                               "subtree": {
-                                "value": "r1 = 1"
+                                "feature": 2,
+                                "right": {
+                                  "value": "r1 = 1"
+                                }
                               }
                             }
                           }
@@ -1156,9 +1150,9 @@
                             "feature": 2,
                             "left": {
                               "subtree": {
-                                "feature": 1,
+                                "feature": 0,
                                 "right": {
-                                  "feature": 0,
+                                  "feature": 1,
                                   "right": {
                                     "value": "r0 = 1"
                                   }
@@ -1257,14 +1251,14 @@
               "subtree": {
                 "feature": 5,
                 "left": {
-                  "feature": 0,
+                  "feature": 1,
                   "left": {
                     "subtree": {
                       "feature": 4,
                       "left": {
                         "feature": 3,
                         "left": {
-                          "feature": 1,
+                          "feature": 0,
                           "left": {
                             "subtree": {
                               "value": "r2 = 1",
@@ -1308,13 +1302,7 @@
                                 }
                               },
                               "right": {
-                                "value": "r1 = 1",
-                                "subtree": {
-                                  "feature": 1,
-                                  "right": {
-                                    "value": "r0 = 1"
-                                  }
-                                }
+                                "value": "r1 = 1"
                               }
                             }
                           }
@@ -1323,42 +1311,39 @@
                       "right": {
                         "value": "r3 = 1",
                         "subtree": {
-                          "feature": 3,
+                          "feature": 2,
                           "left": {
-                            "feature": 2,
+                            "feature": 3,
                             "left": {
-                              "feature": 1,
-                              "left": {
+                              "subtree": {
+                                "value": "r1 = 1",
                                 "subtree": {
-                                  "value": "r1 = 1",
-                                  "subtree": {
-                                    "value": "r0 = 1"
-                                  }
+                                  "value": "r0 = 1"
                                 }
-                              },
-                              "right": {
-                                "value": "r2 = 1"
                               }
                             },
                             "right": {
                               "value": "r2 = 1",
                               "subtree": {
-                                "subtree": {
-                                  "feature": 1,
-                                  "right": {
-                                    "value": "r0 = 1"
-                                  }
-                                }
+                                "value": "r1 = 1"
                               }
                             }
                           },
                           "right": {
                             "value": "r2 = 1",
                             "subtree": {
-                              "value": "r1 = 1",
-                              "subtree": {
-                                "feature": 2,
-                                "right": {
+                              "feature": 3,
+                              "left": {
+                                "subtree": {
+                                  "feature": 0,
+                                  "right": {
+                                    "value": "r0 = 1"
+                                  }
+                                }
+                              },
+                              "right": {
+                                "value": "r1 = 1",
+                                "subtree": {
                                   "value": "r0 = 1"
                                 }
                               }
@@ -1369,10 +1354,10 @@
                     }
                   },
                   "right": {
-                    "feature": 3,
+                    "feature": 4,
                     "left": {
                       "subtree": {
-                        "feature": 4,
+                        "feature": 3,
                         "left": {
                           "feature": 2,
                           "left": {
@@ -1393,11 +1378,16 @@
                         "right": {
                           "value": "r3 = 1",
                           "subtree": {
-                            "feature": 2,
-                            "left": {
-                              "feature": 1,
+                            "subtree": {
+                              "feature": 0,
                               "left": {
-                                "subtree": {
+                                "feature": 2,
+                                "left": {
+                                  "subtree": {
+                                    "value": "r0 = 1"
+                                  }
+                                },
+                                "right": {
                                   "value": "r1 = 1",
                                   "subtree": {
                                     "value": "r0 = 1"
@@ -1405,14 +1395,12 @@
                                 }
                               },
                               "right": {
-                                "value": "r2 = 1"
-                              }
-                            },
-                            "right": {
-                              "value": "r2 = 1",
-                              "subtree": {
+                                "value": "r1 = 1",
                                 "subtree": {
-                                  "value": "r0 = 1"
+                                  "feature": 2,
+                                  "right": {
+                                    "value": "r0 = 1"
+                                  }
                                 }
                               }
                             }
@@ -1426,23 +1414,10 @@
                         "subtree": {
                           "value": "r3 = 1",
                           "subtree": {
-                            "feature": 4,
-                            "left": {
-                              "subtree": {
-                                "feature": 1,
-                                "left": {
-                                  "subtree": {
-                                    "value": "r0 = 1"
-                                  }
-                                },
-                                "right": {
-                                  "value": "r1 = 1"
-                                }
-                              }
-                            },
-                            "right": {
-                              "value": "r2 = 1",
-                              "subtree": {
+                            "value": "r2 = 1",
+                            "subtree": {
+                              "feature": 3,
+                              "right": {
                                 "value": "r1 = 1"
                               }
                             }
@@ -1450,16 +1425,22 @@
                         }
                       },
                       "right": {
-                        "feature": 4,
+                        "feature": 0,
                         "left": {
                           "subtree": {
                             "value": "r3 = 1",
                             "subtree": {
+                              "value": "r2 = 1",
                               "subtree": {
-                                "value": "r1 = 1",
-                                "subtree": {
-                                  "feature": 1,
-                                  "right": {
+                                "feature": 3,
+                                "left": {
+                                  "subtree": {
+                                    "value": "r0 = 1"
+                                  }
+                                },
+                                "right": {
+                                  "value": "r1 = 1",
+                                  "subtree": {
                                     "value": "r0 = 1"
                                   }
                                 }
@@ -1468,14 +1449,13 @@
                           }
                         },
                         "right": {
-                          "feature": 1,
+                          "feature": 3,
                           "left": {
                             "subtree": {
                               "value": "r3 = 1",
                               "subtree": {
                                 "value": "r2 = 1",
                                 "subtree": {
-                                  "value": "r1 = 1",
                                   "subtree": {
                                     "value": "r0 = 1"
                                   }
@@ -1494,10 +1474,10 @@
                 "right": {
                   "value": "r4 = 1",
                   "subtree": {
-                    "feature": 2,
+                    "feature": 4,
                     "left": {
                       "subtree": {
-                        "feature": 4,
+                        "feature": 2,
                         "left": {
                           "subtree": {
                             "feature": 3,
@@ -1524,14 +1504,49 @@
                           }
                         },
                         "right": {
+                          "feature": 1,
+                          "left": {
+                            "subtree": {
+                              "feature": 3,
+                              "left": {
+                                "subtree": {
+                                  "value": "r0 = 1"
+                                }
+                              },
+                              "right": {
+                                "value": "r1 = 1",
+                                "subtree": {
+                                  "value": "r0 = 1"
+                                }
+                              }
+                            }
+                          },
+                          "right": {
+                            "feature": 3,
+                            "left": {
+                              "subtree": {
+                                "value": "r1 = 1"
+                              }
+                            },
+                            "right": {
+                              "value": "r2 = 1"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "right": {
+                      "feature": 2,
+                      "left": {
+                        "subtree": {
                           "value": "r2 = 1",
                           "subtree": {
                             "feature": 3,
                             "left": {
                               "subtree": {
-                                "feature": 1,
+                                "feature": 0,
                                 "left": {
-                                  "feature": 0,
+                                  "feature": 1,
                                   "right": {
                                     "value": "r0 = 1"
                                   }
@@ -1558,27 +1573,11 @@
                             }
                           }
                         }
-                      }
-                    },
-                    "right": {
-                      "feature": 3,
-                      "left": {
-                        "subtree": {
-                          "feature": 4,
-                          "left": {
-                            "subtree": {
-                              "feature": 1,
-                              "left": {
-                                "subtree": {
-                                  "value": "r0 = 1"
-                                }
-                              },
-                              "right": {
-                                "value": "r1 = 1"
-                              }
-                            }
-                          },
-                          "right": {
+                      },
+                      "right": {
+                        "feature": 3,
+                        "left": {
+                          "subtree": {
                             "value": "r2 = 1",
                             "subtree": {
                               "feature": 1,
@@ -1596,25 +1595,6 @@
                               "right": {
                                 "value": "r1 = 1"
                               }
-                            }
-                          }
-                        }
-                      },
-                      "right": {
-                        "feature": 4,
-                        "left": {
-                          "subtree": {
-                            "feature": 1,
-                            "left": {
-                              "subtree": {
-                                "value": "r1 = 1",
-                                "subtree": {
-                                  "value": "r0 = 1"
-                                }
-                              }
-                            },
-                            "right": {
-                              "value": "r2 = 1"
                             }
                           }
                         },
@@ -1653,15 +1633,15 @@
                 "feature": 5,
                 "left": {
                   "subtree": {
-                    "feature": 3,
+                    "feature": 2,
                     "left": {
-                      "feature": 4,
+                      "feature": 1,
                       "left": {
-                        "feature": 1,
+                        "feature": 4,
                         "left": {
                           "feature": 0,
                           "left": {
-                            "feature": 2,
+                            "feature": 3,
                             "left": {
                               "subtree": {
                                 "value": "r2 = 1",
@@ -1674,21 +1654,50 @@
                               }
                             },
                             "right": {
-                              "value": "r3 = 1"
+                              "value": "r3 = 1",
+                              "subtree": {
+                                "subtree": {
+                                  "subtree": {
+                                    "value": "r0 = 1"
+                                  }
+                                }
+                              }
                             }
                           },
                           "right": {
-                            "value": "r3 = 1"
+                            "value": "r3 = 1",
+                            "subtree": {
+                              "subtree": {
+                                "subtree": {
+                                  "feature": 3,
+                                  "right": {
+                                    "value": "r0 = 1"
+                                  }
+                                }
+                              }
+                            }
                           }
                         },
                         "right": {
                           "value": "r3 = 1",
                           "subtree": {
-                            "subtree": {
+                            "feature": 3,
+                            "left": {
                               "subtree": {
-                                "feature": 2,
-                                "right": {
+                                "value": "r1 = 1",
+                                "subtree": {
                                   "value": "r0 = 1"
+                                }
+                              }
+                            },
+                            "right": {
+                              "value": "r2 = 1",
+                              "subtree": {
+                                "subtree": {
+                                  "feature": 0,
+                                  "right": {
+                                    "value": "r0 = 1"
+                                  }
                                 }
                               }
                             }
@@ -1698,17 +1707,33 @@
                       "right": {
                         "value": "r3 = 1",
                         "subtree": {
-                          "feature": 2,
+                          "feature": 4,
                           "left": {
                             "subtree": {
-                              "value": "r1 = 1",
-                              "subtree": {
-                                "value": "r0 = 1"
+                              "feature": 3,
+                              "right": {
+                                "value": "r1 = 1"
                               }
                             }
                           },
                           "right": {
-                            "value": "r2 = 1"
+                            "feature": 3,
+                            "left": {
+                              "subtree": {
+                                "value": "r1 = 1",
+                                "subtree": {
+                                  "value": "r0 = 1"
+                                }
+                              }
+                            },
+                            "right": {
+                              "value": "r2 = 1",
+                              "subtree": {
+                                "subtree": {
+                                  "value": "r0 = 1"
+                                }
+                              }
+                            }
                           }
                         }
                       }
@@ -1719,16 +1744,13 @@
                         "feature": 4,
                         "left": {
                           "subtree": {
-                            "feature": 2,
+                            "feature": 3,
                             "left": {
-                              "feature": 1,
-                              "left": {
-                                "subtree": {
+                              "subtree": {
+                                "feature": 1,
+                                "right": {
                                   "value": "r0 = 1"
                                 }
-                              },
-                              "right": {
-                                "value": "r1 = 1"
                               }
                             },
                             "right": {
@@ -1748,23 +1770,9 @@
                         "right": {
                           "value": "r2 = 1",
                           "subtree": {
-                            "feature": 1,
-                            "left": {
-                              "subtree": {
-                                "feature": 0,
-                                "left": {
-                                  "feature": 2,
-                                  "right": {
-                                    "value": "r0 = 1"
-                                  }
-                                },
-                                "right": {
-                                  "value": "r0 = 1"
-                                }
-                              }
-                            },
+                            "feature": 3,
                             "right": {
-                              "feature": 2,
+                              "feature": 1,
                               "left": {
                                 "subtree": {
                                   "value": "r0 = 1"
@@ -1794,9 +1802,9 @@
                             "subtree": {
                               "feature": 2,
                               "left": {
-                                "feature": 0,
+                                "feature": 1,
                                 "right": {
-                                  "feature": 1,
+                                  "feature": 0,
                                   "right": {
                                     "value": "r0 = 1"
                                   }
@@ -1853,9 +1861,9 @@
                             "subtree": {
                               "feature": 2,
                               "right": {
-                                "feature": 1,
+                                "feature": 0,
                                 "left": {
-                                  "feature": 0,
+                                  "feature": 1,
                                   "right": {
                                     "value": "r0 = 1"
                                   }
@@ -1912,9 +1920,9 @@
   "right": {
     "value": "r8 = 1",
     "subtree": {
-      "feature": 8,
+      "feature": 7,
       "left": {
-        "feature": 7,
+        "feature": 8,
         "left": {
           "feature": 5,
           "left": {
@@ -1930,33 +1938,33 @@
                       "subtree": {
                         "feature": 2,
                         "left": {
-                          "feature": 0,
+                          "feature": 1,
                           "left": {
                             "subtree": {
                               "value": "r2 = 1",
                               "subtree": {
-                                "feature": 1,
+                                "feature": 0,
                                 "left": {
                                   "subtree": {
                                     "value": "r0 = 1"
                                   }
                                 },
                                 "right": {
-                                  "value": "r1 = 1",
-                                  "subtree": {
-                                    "value": "r0 = 1"
-                                  }
+                                  "value": "r1 = 1"
                                 }
                               }
                             }
                           },
                           "right": {
-                            "feature": 1,
+                            "feature": 0,
                             "left": {
                               "subtree": {
                                 "value": "r2 = 1",
                                 "subtree": {
-                                  "value": "r1 = 1"
+                                  "value": "r1 = 1",
+                                  "subtree": {
+                                    "value": "r0 = 1"
+                                  }
                                 }
                               }
                             },
@@ -1997,9 +2005,9 @@
                     }
                   },
                   "right": {
-                    "feature": 2,
+                    "feature": 1,
                     "left": {
-                      "feature": 1,
+                      "feature": 2,
                       "left": {
                         "subtree": {
                           "value": "r4 = 1",
@@ -2025,29 +2033,6 @@
                         "subtree": {
                           "subtree": {
                             "subtree": {
-                              "subtree": {
-                                "feature": 0,
-                                "left": {
-                                  "subtree": {
-                                    "value": "r0 = 1"
-                                  }
-                                },
-                                "right": {
-                                  "value": "r1 = 1"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "right": {
-                      "value": "r5 = 1",
-                      "subtree": {
-                        "subtree": {
-                          "subtree": {
-                            "feature": 1,
-                            "left": {
                               "feature": 0,
                               "left": {
                                 "subtree": {
@@ -2059,6 +2044,29 @@
                               },
                               "right": {
                                 "value": "r2 = 1"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "right": {
+                      "value": "r5 = 1",
+                      "subtree": {
+                        "subtree": {
+                          "subtree": {
+                            "feature": 2,
+                            "left": {
+                              "subtree": {
+                                "feature": 0,
+                                "left": {
+                                  "subtree": {
+                                    "value": "r0 = 1"
+                                  }
+                                },
+                                "right": {
+                                  "value": "r1 = 1"
+                                }
                               }
                             },
                             "right": {
@@ -2087,11 +2095,11 @@
                     "feature": 3,
                     "left": {
                       "subtree": {
-                        "feature": 1,
+                        "feature": 0,
                         "left": {
                           "feature": 2,
                           "left": {
-                            "feature": 0,
+                            "feature": 1,
                             "left": {
                               "subtree": {
                                 "value": "r2 = 1",
@@ -2104,13 +2112,20 @@
                               }
                             },
                             "right": {
-                              "value": "r3 = 1"
+                              "value": "r3 = 1",
+                              "subtree": {
+                                "subtree": {
+                                  "subtree": {
+                                    "value": "r0 = 1"
+                                  }
+                                }
+                              }
                             }
                           },
                           "right": {
                             "value": "r3 = 1",
                             "subtree": {
-                              "feature": 0,
+                              "feature": 1,
                               "left": {
                                 "subtree": {
                                   "value": "r1 = 1",
@@ -2120,7 +2135,12 @@
                                 }
                               },
                               "right": {
-                                "value": "r2 = 1"
+                                "value": "r2 = 1",
+                                "subtree": {
+                                  "subtree": {
+                                    "value": "r0 = 1"
+                                  }
+                                }
                               }
                             }
                           }
@@ -2131,12 +2151,7 @@
                             "feature": 2,
                             "left": {
                               "subtree": {
-                                "feature": 0,
-                                "left": {
-                                  "subtree": {
-                                    "value": "r0 = 1"
-                                  }
-                                },
+                                "feature": 1,
                                 "right": {
                                   "value": "r1 = 1"
                                 }
@@ -2145,12 +2160,7 @@
                             "right": {
                               "value": "r2 = 1",
                               "subtree": {
-                                "feature": 0,
-                                "left": {
-                                  "subtree": {
-                                    "value": "r0 = 1"
-                                  }
-                                },
+                                "feature": 1,
                                 "right": {
                                   "value": "r1 = 1"
                                 }
@@ -2243,7 +2253,7 @@
           "right": {
             "feature": 4,
             "left": {
-              "feature": 2,
+              "feature": 3,
               "left": {
                 "subtree": {
                   "value": "r6 = 1",
@@ -2252,7 +2262,7 @@
                     "subtree": {
                       "value": "r4 = 1",
                       "subtree": {
-                        "feature": 3,
+                        "feature": 2,
                         "left": {
                           "feature": 1,
                           "left": {
@@ -2274,46 +2284,6 @@
                           }
                         },
                         "right": {
-                          "value": "r3 = 1",
-                          "subtree": {
-                            "value": "r2 = 1",
-                            "subtree": {
-                              "feature": 1,
-                              "left": {
-                                "subtree": {
-                                  "feature": 0,
-                                  "right": {
-                                    "value": "r0 = 1"
-                                  }
-                                }
-                              },
-                              "right": {
-                                "value": "r1 = 1",
-                                "subtree": {
-                                  "feature": 0,
-                                  "right": {
-                                    "value": "r0 = 1"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "right": {
-                "feature": 3,
-                "left": {
-                  "subtree": {
-                    "value": "r6 = 1",
-                    "subtree": {
-                      "value": "r5 = 1",
-                      "subtree": {
-                        "value": "r4 = 1",
-                        "subtree": {
                           "value": "r3 = 1",
                           "subtree": {
                             "feature": 0,
@@ -2342,6 +2312,46 @@
                               },
                               "right": {
                                 "value": "r2 = 1"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "right": {
+                "feature": 2,
+                "left": {
+                  "subtree": {
+                    "value": "r6 = 1",
+                    "subtree": {
+                      "value": "r5 = 1",
+                      "subtree": {
+                        "value": "r4 = 1",
+                        "subtree": {
+                          "value": "r3 = 1",
+                          "subtree": {
+                            "value": "r2 = 1",
+                            "subtree": {
+                              "feature": 1,
+                              "left": {
+                                "subtree": {
+                                  "feature": 0,
+                                  "right": {
+                                    "value": "r0 = 1"
+                                  }
+                                }
+                              },
+                              "right": {
+                                "value": "r1 = 1",
+                                "subtree": {
+                                  "feature": 0,
+                                  "right": {
+                                    "value": "r0 = 1"
+                                  }
+                                }
                               }
                             }
                           }
@@ -2391,9 +2401,9 @@
                       "feature": 3,
                       "left": {
                         "subtree": {
-                          "feature": 1,
+                          "feature": 2,
                           "left": {
-                            "feature": 2,
+                            "feature": 1,
                             "left": {
                               "subtree": {
                                 "value": "r1 = 1",
@@ -2405,6 +2415,20 @@
                             "right": {
                               "value": "r2 = 1",
                               "subtree": {
+                                "subtree": {
+                                  "feature": 0,
+                                  "right": {
+                                    "value": "r0 = 1"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "right": {
+                            "value": "r2 = 1",
+                            "subtree": {
+                              "feature": 1,
+                              "left": {
                                 "feature": 0,
                                 "left": {
                                   "subtree": {
@@ -2413,20 +2437,6 @@
                                 },
                                 "right": {
                                   "value": "r1 = 1"
-                                }
-                              }
-                            }
-                          },
-                          "right": {
-                            "value": "r2 = 1",
-                            "subtree": {
-                              "feature": 2,
-                              "left": {
-                                "subtree": {
-                                  "feature": 0,
-                                  "right": {
-                                    "value": "r0 = 1"
-                                  }
                                 }
                               },
                               "right": {
@@ -2460,9 +2470,9 @@
                             }
                           },
                           "right": {
-                            "feature": 0,
+                            "feature": 1,
                             "left": {
-                              "feature": 1,
+                              "feature": 0,
                               "left": {
                                 "subtree": {
                                   "value": "r1 = 1",
@@ -2479,7 +2489,7 @@
                               "value": "r2 = 1",
                               "subtree": {
                                 "subtree": {
-                                  "feature": 1,
+                                  "feature": 0,
                                   "right": {
                                     "value": "r0 = 1"
                                   }
@@ -2499,419 +2509,11 @@
         "right": {
           "value": "r7 = 1",
           "subtree": {
-            "feature": 5,
-            "left": {
-              "subtree": {
-                "value": "r5 = 1",
-                "subtree": {
-                  "feature": 1,
-                  "left": {
-                    "feature": 2,
-                    "left": {
-                      "feature": 3,
-                      "left": {
-                        "feature": 4,
-                        "left": {
-                          "subtree": {
-                            "value": "r3 = 1",
-                            "subtree": {
-                              "value": "r2 = 1",
-                              "subtree": {
-                                "value": "r1 = 1",
-                                "subtree": {
-                                  "value": "r0 = 1"
-                                }
-                              }
-                            }
-                          }
-                        },
-                        "right": {
-                          "value": "r4 = 1",
-                          "subtree": {
-                            "subtree": {
-                              "value": "r2 = 1",
-                              "subtree": {
-                                "feature": 0,
-                                "left": {
-                                  "subtree": {
-                                    "value": "r0 = 1"
-                                  }
-                                },
-                                "right": {
-                                  "value": "r1 = 1"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "right": {
-                        "value": "r4 = 1",
-                        "subtree": {
-                          "feature": 4,
-                          "left": {
-                            "subtree": {
-                              "subtree": {
-                                "value": "r1 = 1"
-                              }
-                            }
-                          },
-                          "right": {
-                            "value": "r3 = 1",
-                            "subtree": {
-                              "subtree": {
-                                "subtree": {
-                                  "feature": 0,
-                                  "right": {
-                                    "value": "r0 = 1"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "right": {
-                      "value": "r4 = 1",
-                      "subtree": {
-                        "feature": 4,
-                        "left": {
-                          "subtree": {
-                            "feature": 3,
-                            "left": {
-                              "subtree": {
-                                "subtree": {
-                                  "feature": 0,
-                                  "right": {
-                                    "value": "r0 = 1"
-                                  }
-                                }
-                              }
-                            },
-                            "right": {
-                              "value": "r2 = 1"
-                            }
-                          }
-                        },
-                        "right": {
-                          "feature": 3,
-                          "left": {
-                            "subtree": {
-                              "value": "r2 = 1",
-                              "subtree": {
-                                "value": "r1 = 1",
-                                "subtree": {
-                                  "value": "r0 = 1"
-                                }
-                              }
-                            }
-                          },
-                          "right": {
-                            "value": "r3 = 1",
-                            "subtree": {
-                              "subtree": {
-                                "value": "r1 = 1"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "right": {
-                    "value": "r4 = 1",
-                    "subtree": {
-                      "feature": 4,
-                      "left": {
-                        "subtree": {
-                          "feature": 2,
-                          "left": {
-                            "subtree": {
-                              "feature": 3,
-                              "right": {
-                                "value": "r1 = 1",
-                                "subtree": {
-                                  "value": "r0 = 1"
-                                }
-                              }
-                            }
-                          },
-                          "right": {
-                            "feature": 3,
-                            "left": {
-                              "subtree": {
-                                "feature": 0,
-                                "left": {
-                                  "subtree": {
-                                    "value": "r0 = 1"
-                                  }
-                                },
-                                "right": {
-                                  "value": "r1 = 1"
-                                }
-                              }
-                            },
-                            "right": {
-                              "value": "r2 = 1",
-                              "subtree": {
-                                "subtree": {
-                                  "feature": 0,
-                                  "right": {
-                                    "value": "r0 = 1"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "right": {
-                        "feature": 2,
-                        "left": {
-                          "feature": 3,
-                          "left": {
-                            "subtree": {
-                              "value": "r2 = 1",
-                              "subtree": {
-                                "value": "r1 = 1"
-                              }
-                            }
-                          },
-                          "right": {
-                            "value": "r3 = 1",
-                            "subtree": {
-                              "subtree": {
-                                "subtree": {
-                                  "value": "r0 = 1"
-                                }
-                              }
-                            }
-                          }
-                        },
-                        "right": {
-                          "value": "r3 = 1",
-                          "subtree": {
-                            "subtree": {
-                              "feature": 3,
-                              "right": {
-                                "value": "r1 = 1",
-                                "subtree": {
-                                  "value": "r0 = 1"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "right": {
-              "feature": 4,
-              "left": {
-                "feature": 3,
-                "left": {
-                  "subtree": {
-                    "value": "r5 = 1",
-                    "subtree": {
-                      "value": "r4 = 1",
-                      "subtree": {
-                        "value": "r3 = 1",
-                        "subtree": {
-                          "feature": 0,
-                          "left": {
-                            "feature": 2,
-                            "left": {
-                              "feature": 1,
-                              "left": {
-                                "subtree": {
-                                  "value": "r1 = 1",
-                                  "subtree": {
-                                    "value": "r0 = 1"
-                                  }
-                                }
-                              },
-                              "right": {
-                                "value": "r2 = 1"
-                              }
-                            },
-                            "right": {
-                              "value": "r2 = 1",
-                              "subtree": {
-                                "subtree": {
-                                  "value": "r0 = 1"
-                                }
-                              }
-                            }
-                          },
-                          "right": {
-                            "value": "r2 = 1",
-                            "subtree": {
-                              "feature": 1,
-                              "left": {
-                                "subtree": {
-                                  "feature": 2,
-                                  "right": {
-                                    "value": "r0 = 1"
-                                  }
-                                }
-                              },
-                              "right": {
-                                "feature": 2,
-                                "right": {
-                                  "value": "r1 = 1"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "right": {
-                  "feature": 2,
-                  "left": {
-                    "subtree": {
-                      "value": "r5 = 1",
-                      "subtree": {
-                        "value": "r4 = 1",
-                        "subtree": {
-                          "value": "r3 = 1",
-                          "subtree": {
-                            "value": "r2 = 1",
-                            "subtree": {
-                              "value": "r1 = 1",
-                              "subtree": {
-                                "feature": 0,
-                                "left": {
-                                  "feature": 1,
-                                  "right": {
-                                    "value": "r0 = 1"
-                                  }
-                                },
-                                "right": {
-                                  "value": "r0 = 1"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "right": {
-                    "value": "r6 = 1",
-                    "subtree": {
-                      "subtree": {
-                        "subtree": {
-                          "subtree": {
-                            "subtree": {
-                              "subtree": {
-                                "feature": 1,
-                                "right": {
-                                  "feature": 0,
-                                  "right": {
-                                    "value": "r0 = 1"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "right": {
-                "value": "r6 = 1",
-                "subtree": {
-                  "subtree": {
-                    "subtree": {
-                      "subtree": {
-                        "feature": 3,
-                        "left": {
-                          "subtree": {
-                            "feature": 1,
-                            "left": {
-                              "feature": 2,
-                              "left": {
-                                "subtree": {
-                                  "value": "r0 = 1"
-                                }
-                              },
-                              "right": {
-                                "value": "r1 = 1",
-                                "subtree": {
-                                  "feature": 0,
-                                  "right": {
-                                    "value": "r0 = 1"
-                                  }
-                                }
-                              }
-                            },
-                            "right": {
-                              "value": "r1 = 1",
-                              "subtree": {
-                                "feature": 2,
-                                "right": {
-                                  "value": "r0 = 1"
-                                }
-                              }
-                            }
-                          }
-                        },
-                        "right": {
-                          "value": "r2 = 1",
-                          "subtree": {
-                            "feature": 1,
-                            "left": {
-                              "subtree": {
-                                "feature": 2,
-                                "right": {
-                                  "value": "r0 = 1"
-                                }
-                              }
-                            },
-                            "right": {
-                              "feature": 2,
-                              "left": {
-                                "subtree": {
-                                  "feature": 0,
-                                  "right": {
-                                    "value": "r0 = 1"
-                                  }
-                                }
-                              },
-                              "right": {
-                                "value": "r1 = 1"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "right": {
-        "value": "r7 = 1",
-        "subtree": {
-          "value": "r6 = 1",
-          "subtree": {
-            "feature": 7,
-            "left": {
+            "value": "r6 = 1",
+            "subtree": {
               "feature": 5,
               "left": {
-                "feature": 2,
+                "feature": 3,
                 "left": {
                   "subtree": {
                     "value": "r4 = 1",
@@ -2921,24 +2523,21 @@
                         "feature": 4,
                         "left": {
                           "subtree": {
-                            "feature": 3,
+                            "feature": 2,
                             "left": {
                               "subtree": {
                                 "value": "r0 = 1"
                               }
                             },
                             "right": {
-                              "value": "r1 = 1",
-                              "subtree": {
-                                "value": "r0 = 1"
-                              }
+                              "value": "r1 = 1"
                             }
                           }
                         },
                         "right": {
                           "value": "r2 = 1",
                           "subtree": {
-                            "feature": 3,
+                            "feature": 2,
                             "left": {
                               "subtree": {
                                 "feature": 1,
@@ -2954,18 +2553,20 @@
                               }
                             },
                             "right": {
-                              "value": "r1 = 1",
-                              "subtree": {
-                                "feature": 1,
+                              "feature": 1,
+                              "left": {
+                                "feature": 0,
                                 "left": {
-                                  "feature": 0,
-                                  "right": {
+                                  "subtree": {
                                     "value": "r0 = 1"
                                   }
                                 },
                                 "right": {
-                                  "value": "r0 = 1"
+                                  "value": "r1 = 1"
                                 }
+                              },
+                              "right": {
+                                "value": "r1 = 1"
                               }
                             }
                           }
@@ -2982,10 +2583,13 @@
                       "subtree": {
                         "value": "r3 = 1",
                         "subtree": {
-                          "feature": 3,
+                          "feature": 2,
                           "left": {
                             "subtree": {
-                              "value": "r1 = 1"
+                              "value": "r1 = 1",
+                              "subtree": {
+                                "value": "r0 = 1"
+                              }
                             }
                           },
                           "right": {
@@ -2996,7 +2600,7 @@
                     }
                   },
                   "right": {
-                    "feature": 3,
+                    "feature": 2,
                     "left": {
                       "subtree": {
                         "value": "r4 = 1",
@@ -3005,20 +2609,18 @@
                           "subtree": {
                             "value": "r2 = 1",
                             "subtree": {
-                              "feature": 1,
-                              "left": {
-                                "feature": 0,
+                              "value": "r1 = 1",
+                              "subtree": {
+                                "feature": 1,
                                 "left": {
-                                  "subtree": {
+                                  "feature": 0,
+                                  "right": {
                                     "value": "r0 = 1"
                                   }
                                 },
                                 "right": {
-                                  "value": "r1 = 1"
+                                  "value": "r0 = 1"
                                 }
-                              },
-                              "right": {
-                                "value": "r1 = 1"
                               }
                             }
                           }
@@ -3132,9 +2734,9 @@
                             "subtree": {
                               "feature": 2,
                               "left": {
-                                "feature": 1,
+                                "feature": 0,
                                 "right": {
-                                  "feature": 0,
+                                  "feature": 1,
                                   "right": {
                                     "value": "r0 = 1"
                                   }
@@ -3160,8 +2762,382 @@
                   }
                 }
               }
+            }
+          }
+        }
+      },
+      "right": {
+        "value": "r7 = 1",
+        "subtree": {
+          "feature": 8,
+          "left": {
+            "feature": 5,
+            "left": {
+              "subtree": {
+                "value": "r5 = 1",
+                "subtree": {
+                  "feature": 3,
+                  "left": {
+                    "feature": 2,
+                    "left": {
+                      "feature": 4,
+                      "left": {
+                        "feature": 1,
+                        "left": {
+                          "subtree": {
+                            "value": "r3 = 1",
+                            "subtree": {
+                              "value": "r2 = 1",
+                              "subtree": {
+                                "value": "r1 = 1",
+                                "subtree": {
+                                  "value": "r0 = 1"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "right": {
+                          "value": "r4 = 1"
+                        }
+                      },
+                      "right": {
+                        "value": "r4 = 1",
+                        "subtree": {
+                          "subtree": {
+                            "value": "r2 = 1",
+                            "subtree": {
+                              "feature": 1,
+                              "left": {
+                                "feature": 0,
+                                "left": {
+                                  "subtree": {
+                                    "value": "r0 = 1"
+                                  }
+                                },
+                                "right": {
+                                  "value": "r1 = 1"
+                                }
+                              },
+                              "right": {
+                                "value": "r1 = 1"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "right": {
+                      "value": "r4 = 1",
+                      "subtree": {
+                        "feature": 4,
+                        "left": {
+                          "subtree": {
+                            "subtree": {
+                              "feature": 0,
+                              "left": {
+                                "subtree": {
+                                  "feature": 1,
+                                  "right": {
+                                    "value": "r0 = 1"
+                                  }
+                                }
+                              },
+                              "right": {
+                                "feature": 1,
+                                "left": {
+                                  "subtree": {
+                                    "value": "r0 = 1"
+                                  }
+                                },
+                                "right": {
+                                  "value": "r1 = 1"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "right": {
+                          "feature": 1,
+                          "left": {
+                            "subtree": {
+                              "value": "r2 = 1",
+                              "subtree": {
+                                "value": "r1 = 1",
+                                "subtree": {
+                                  "value": "r0 = 1"
+                                }
+                              }
+                            }
+                          },
+                          "right": {
+                            "value": "r3 = 1"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "right": {
+                    "value": "r4 = 1",
+                    "subtree": {
+                      "feature": 4,
+                      "left": {
+                        "subtree": {
+                          "feature": 2,
+                          "left": {
+                            "subtree": {
+                              "value": "r1 = 1",
+                              "subtree": {
+                                "feature": 1,
+                                "right": {
+                                  "value": "r0 = 1"
+                                }
+                              }
+                            }
+                          },
+                          "right": {
+                            "value": "r2 = 1",
+                            "subtree": {
+                              "subtree": {
+                                "feature": 0,
+                                "right": {
+                                  "feature": 1,
+                                  "right": {
+                                    "value": "r0 = 1"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "right": {
+                        "value": "r3 = 1",
+                        "subtree": {
+                          "subtree": {
+                            "feature": 2,
+                            "left": {
+                              "subtree": {
+                                "feature": 0,
+                                "left": {
+                                  "feature": 1,
+                                  "right": {
+                                    "value": "r0 = 1"
+                                  }
+                                },
+                                "right": {
+                                  "value": "r0 = 1"
+                                }
+                              }
+                            },
+                            "right": {
+                              "value": "r1 = 1",
+                              "subtree": {
+                                "feature": 1,
+                                "right": {
+                                  "value": "r0 = 1"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             },
             "right": {
+              "feature": 4,
+              "left": {
+                "feature": 3,
+                "left": {
+                  "subtree": {
+                    "value": "r5 = 1",
+                    "subtree": {
+                      "value": "r4 = 1",
+                      "subtree": {
+                        "value": "r3 = 1",
+                        "subtree": {
+                          "feature": 2,
+                          "left": {
+                            "feature": 0,
+                            "left": {
+                              "feature": 1,
+                              "left": {
+                                "subtree": {
+                                  "value": "r1 = 1",
+                                  "subtree": {
+                                    "value": "r0 = 1"
+                                  }
+                                }
+                              },
+                              "right": {
+                                "value": "r2 = 1"
+                              }
+                            },
+                            "right": {
+                              "value": "r2 = 1"
+                            }
+                          },
+                          "right": {
+                            "value": "r2 = 1",
+                            "subtree": {
+                              "feature": 0,
+                              "left": {
+                                "subtree": {
+                                  "value": "r0 = 1"
+                                }
+                              },
+                              "right": {
+                                "feature": 1,
+                                "left": {
+                                  "subtree": {
+                                    "value": "r0 = 1"
+                                  }
+                                },
+                                "right": {
+                                  "value": "r1 = 1"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "feature": 2,
+                  "left": {
+                    "subtree": {
+                      "value": "r5 = 1",
+                      "subtree": {
+                        "value": "r4 = 1",
+                        "subtree": {
+                          "value": "r3 = 1",
+                          "subtree": {
+                            "value": "r2 = 1",
+                            "subtree": {
+                              "value": "r1 = 1",
+                              "subtree": {
+                                "feature": 0,
+                                "left": {
+                                  "feature": 1,
+                                  "right": {
+                                    "value": "r0 = 1"
+                                  }
+                                },
+                                "right": {
+                                  "value": "r0 = 1"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "right": {
+                    "value": "r6 = 1",
+                    "subtree": {
+                      "subtree": {
+                        "subtree": {
+                          "subtree": {
+                            "subtree": {
+                              "subtree": {
+                                "feature": 1,
+                                "right": {
+                                  "feature": 0,
+                                  "right": {
+                                    "value": "r0 = 1"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "right": {
+                "value": "r6 = 1",
+                "subtree": {
+                  "subtree": {
+                    "subtree": {
+                      "subtree": {
+                        "feature": 3,
+                        "left": {
+                          "subtree": {
+                            "feature": 1,
+                            "left": {
+                              "feature": 2,
+                              "left": {
+                                "subtree": {
+                                  "value": "r0 = 1"
+                                }
+                              },
+                              "right": {
+                                "value": "r1 = 1",
+                                "subtree": {
+                                  "feature": 0,
+                                  "right": {
+                                    "value": "r0 = 1"
+                                  }
+                                }
+                              }
+                            },
+                            "right": {
+                              "value": "r1 = 1",
+                              "subtree": {
+                                "feature": 2,
+                                "right": {
+                                  "value": "r0 = 1"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "right": {
+                          "value": "r2 = 1",
+                          "subtree": {
+                            "feature": 2,
+                            "left": {
+                              "subtree": {
+                                "feature": 0,
+                                "right": {
+                                  "feature": 1,
+                                  "right": {
+                                    "value": "r0 = 1"
+                                  }
+                                }
+                              }
+                            },
+                            "right": {
+                              "feature": 1,
+                              "left": {
+                                "subtree": {
+                                  "value": "r0 = 1"
+                                }
+                              },
+                              "right": {
+                                "value": "r1 = 1"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "right": {
+            "value": "r6 = 1",
+            "subtree": {
               "value": "r5 = 1",
               "subtree": {
                 "value": "r4 = 1",
@@ -3178,9 +3154,9 @@
                             "subtree": {
                               "feature": 2,
                               "left": {
-                                "feature": 0,
+                                "feature": 1,
                                 "right": {
-                                  "feature": 1,
+                                  "feature": 0,
                                   "right": {
                                     "value": "r0 = 1"
                                   }
@@ -3255,14 +3231,17 @@
                               }
                             },
                             "right": {
-                              "feature": 3,
-                              "right": {
-                                "feature": 0,
-                                "left": {
-                                  "subtree": {
+                              "feature": 0,
+                              "left": {
+                                "subtree": {
+                                  "feature": 3,
+                                  "right": {
                                     "value": "r0 = 1"
                                   }
-                                },
+                                }
+                              },
+                              "right": {
+                                "feature": 3,
                                 "right": {
                                   "value": "r1 = 1"
                                 }
@@ -3302,7 +3281,7 @@
                         "right": {
                           "feature": 2,
                           "left": {
-                            "feature": 0,
+                            "feature": 1,
                             "left": {
                               "subtree": {
                                 "value": "r1 = 1",
@@ -3312,7 +3291,7 @@
                               }
                             },
                             "right": {
-                              "feature": 1,
+                              "feature": 0,
                               "left": {
                                 "subtree": {
                                   "value": "r1 = 1",
@@ -3336,12 +3315,12 @@
                         "subtree": {
                           "feature": 3,
                           "left": {
-                            "feature": 0,
+                            "feature": 2,
                             "left": {
                               "subtree": {
                                 "feature": 1,
                                 "left": {
-                                  "feature": 2,
+                                  "feature": 0,
                                   "right": {
                                     "value": "r0 = 1"
                                   }
@@ -3359,7 +3338,7 @@
                                 }
                               },
                               "right": {
-                                "feature": 2,
+                                "feature": 0,
                                 "left": {
                                   "subtree": {
                                     "value": "r0 = 1"
@@ -3376,9 +3355,9 @@
                             "subtree": {
                               "feature": 2,
                               "right": {
-                                "feature": 1,
+                                "feature": 0,
                                 "left": {
-                                  "feature": 0,
+                                  "feature": 1,
                                   "right": {
                                     "value": "r0 = 1"
                                   }

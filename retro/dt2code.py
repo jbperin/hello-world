@@ -34,15 +34,6 @@ def deduce_fonction_prototype(fonction):
     nb_output = len(fonction(*fake_parametres))
     return nb_input, nb_output
 
-theFunction = sample_functions.log2_9_9
-# theFunction = sample_functions.not_log2_12_to_low_6
-# theFunction = sample_functions.not_log2_10_10
-
-NBITS_INPUT, NBITS_OUTPUT = deduce_fonction_prototype(theFunction)
-with open ("retro/brute_code/config.h", "w") as ficout:
-    ficout.write (f"#define NBITS_INPUT {min (12,NBITS_INPUT)}\n")
-    ficout.write (f"#define NBITS_OUTPUT {NBITS_OUTPUT}\n")
-print (f"Nb input = {NBITS_INPUT}, Nb ouput = {NBITS_OUTPUT}")
 
 
 
@@ -62,7 +53,6 @@ def build_training_samples():
     df = pd.DataFrame(data)
     return df
 
-theDataframe = build_training_samples()
 
 # build_X_y now filters from the DataFrame
 def build_X_y(idxOfBitToEncode, hypothesis, df=None):
@@ -158,20 +148,17 @@ def remove_pass_and_empty(d):
     else:
         return d
 
-def build_abstree_to_json():
-    listOfIdxOfBitToEncode = list(reversed(range(NBITS_OUTPUT)))
-    hypothesis = []
-
-    abstree = full_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis)
+def build_abstree_to_json(abstree, output_json_path="retro/abstree.json"):
+    
     abstree_serializable = convert_numpy_types(abstree)
     light_abstree = remove_pass_and_empty(abstree_serializable)
-    print(json.dumps(light_abstree, indent=2))
+    # print(json.dumps(light_abstree, indent=2))
 
-    with open("retro/abstree.json", "w") as f:
+    with open(Path(output_json_path), "w") as f:
         f.write(json.dumps(light_abstree, indent=2))
 
-def read_abstree_from_json():
-    with open("retro/abstree.json", "r") as fic_in:
+def read_abstree_from_json(input_json_path="retro/abstree.json"):
+    with open(input_json_path, "r") as fic_in:
         abstree = json.load(fic_in)
     return abstree
 
@@ -216,7 +203,7 @@ def abstree_to_python_code(abstree, indent=0):
 
 
 # Function to generate the code
-def generate_function_code(abstree, indent=0):
+def generate_function_code(abstree, indent, NBITS_INPUT, NBITS_OUTPUT):
     code_lines = ["def compute_r(a):",
                   #"  [a0, a1, a2, a3] = a",
                   f"  [{', '.join([f'a{i}' for i in range(NBITS_INPUT)])}] = a",
@@ -264,59 +251,20 @@ def check_results():
                 break
 
 
-# Génère un arbre abstrait dans "retro/abstree.json"
-build_abstree_to_json()
-
-
-# Lit l'arbre abstrait depuis "retro/abstree.json"
-abstree = read_abstree_from_json()
-
-# Génère le code python d'une fonction depuis l'arbre abstrait et l'enregistre dans retro/abstree.py
-function_code = generate_function_code(abstree)
-save_function_to_file(function_code, 'retro/abstree.py')
-
-
-# Load and run the function from retro/abstree.py
-compute_r = load_and_run_function('retro/abstree.py')
-
 def toBin (val, size):
     return list(reversed(list(map(lambda x: int(x),'{:0{}b}'.format(val, size)))))
 
 
-# Check that generated python code from abstract tree work as the input function
-for v1 in range(2**NBITS_INPUT):
-    binv1 = toBin(v1, NBITS_INPUT)
-    binval1 = theFunction(*reversed(binv1))
-
-    bf_result = compute_r(binv1)
-    print(v1, binv1, binval1, bf_result, bf_result == binval1 )
-    
-    if (bf_result != binval1):
-        print(v1, binv1, binval1, bf_result, bf_result == binval1 )
-        print ("--== ERROR ==--")
-        break
 
 from abstree2asm import generate_function_asm_code, abstree_to_asm6502_code
-# Génère le code assembleur d'une fonction et l'enregistre dans "retro\\brute_code\\fonction.s"
-with open ("retro\\brute_code\\fonction.s", "w") as ficout:
-    for line in generate_function_asm_code(read_abstree_from_json()):
-        # print (line)
-        ficout.write(line+"\n")
 
-# Génère le code assembleur depuis l'arbre abstrait et l'enregistre dans retro\\brute_code\\function_core.s appelé depuis fonction.s
-with open ("retro\\brute_code\\function_core.s", "w") as ficout:
-    for line in abstree_to_asm6502_code(abstree, indent=1):
-        # print (line)
-        ficout.write(line+"\n")
-
-check_results()
 
 from optim_asm import classify_and_extract, apply_optimizations, regenerate_line
 from pathlib import Path
 
-def optimize_ASM_code():
-    # lecture du fichier function_raw.asm
-    file_path = Path("retro/brute_code/function_core.s")
+def optimize_ASM_code(path_to_assembly_file="retro/brute_code/function_core.s"):
+
+    file_path = Path(path_to_assembly_file)
     with file_path.open(encoding="utf-8") as f:
         lines = f.readlines()
 
@@ -331,10 +279,74 @@ def optimize_ASM_code():
     new_lines = [regenerate_line(instr) for instr in optimized_instructions]
 
     # Écriture dans function_clean.asm
-    out_path = Path("retro/brute_code/function_core_opt.s")
+    out_path = Path(path_to_assembly_file[0:-2]+"_opt.s")
     with out_path.open("w", encoding="utf-8") as f:
         f.write("\n".join(new_lines))
 
-optimize_ASM_code()
 
-check_results()
+
+# ——— Main ———
+if __name__ == "__main__":
+
+    theFunction = sample_functions.log2_9_9
+    # theFunction = sample_functions.not_log2_12_to_low_6
+    # theFunction = sample_functions.not_log2_10_10
+
+    NBITS_INPUT, NBITS_OUTPUT = deduce_fonction_prototype(theFunction)
+
+    with open ("retro/brute_code/config.h", "w") as ficout:
+        ficout.write (f"#define NBITS_INPUT {min (12,NBITS_INPUT)}\n")
+        ficout.write (f"#define NBITS_OUTPUT {NBITS_OUTPUT}\n")
+    print (f"Nb input = {NBITS_INPUT}, Nb ouput = {NBITS_OUTPUT}")
+
+    theDataframe = build_training_samples()
+
+    # Génère un arbre abstrait 
+    listOfIdxOfBitToEncode = list(reversed(range(NBITS_OUTPUT)))
+    hypothesis = []
+    abstree = full_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis)
+
+    # filtre, optimise et stocke dans "retro/abstree.json"
+    build_abstree_to_json(abstree, 'retro/abstree.json')
+
+
+    # Lit l'arbre abstrait depuis "retro/abstree.json"
+    abstree = read_abstree_from_json('retro/abstree.json')
+
+    # Génère le code python d'une fonction depuis l'arbre abstrait et l'enregistre dans retro/abstree.py
+    function_code = generate_function_code(abstree, 0, NBITS_INPUT, NBITS_OUTPUT)
+    save_function_to_file(function_code, 'retro/abstree.py')
+
+
+    # Load and run the function from retro/abstree.py
+    compute_r = load_and_run_function('retro/abstree.py')
+
+    # Check that generated python code from abstract tree work as the input function
+    for v1 in range(2**NBITS_INPUT):
+        binv1 = toBin(v1, NBITS_INPUT)
+        binval1 = theFunction(*reversed(binv1))
+
+        bf_result = compute_r(binv1)
+        print(v1, binv1, binval1, bf_result, bf_result == binval1 )
+        
+        if (bf_result != binval1):
+            print(v1, binv1, binval1, bf_result, bf_result == binval1 )
+            print ("--== ERROR ==--")
+            break
+
+    # Génère le code assembleur d'une fonction et l'enregistre dans "retro\\brute_code\\fonction.s"
+    with open ("retro\\brute_code\\fonction.s", "w") as ficout:
+        for line in generate_function_asm_code(read_abstree_from_json()):
+            # print (line)
+            ficout.write(line+"\n")
+
+    # Génère le code assembleur depuis l'arbre abstrait et l'enregistre dans retro\\brute_code\\function_core.s appelé depuis fonction.s
+    with open ("retro\\brute_code\\function_core.s", "w") as ficout:
+        for line in abstree_to_asm6502_code(abstree, indent=1):
+            # print (line)
+            ficout.write(line+"\n")
+    check_results()
+
+    optimize_ASM_code("retro\\brute_code\\function_core.s")
+
+    check_results()

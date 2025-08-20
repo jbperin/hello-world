@@ -637,7 +637,7 @@ def apply_optimizations(instructions):
 
 # ——— Main ———
 if __name__ == "__main__":
-    # lecture du fichier function_raw.asm
+
     file_path = Path("retro/brute_code/function_core.s")
     with file_path.open(encoding="utf-8") as f:
         lines = f.readlines()

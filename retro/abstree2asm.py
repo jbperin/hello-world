@@ -1,9 +1,9 @@
 import json
 from pathlib import Path
-NBITS_INPUT = 3
-NBITS_OUTPUT  = 2
+
+
 def read_abstree_from_json():
-    with open("retro/abstree.json", "r") as fic_in:
+    with open(Path("retro/abstree.json"), "r") as fic_in:
         abstree = json.load(fic_in)
     return abstree
 
@@ -103,10 +103,10 @@ def abstree_to_asm6502_code(abstree, indent=0):
                     code_lines.append(f"{ind}jmp _unefonctionDone")
                     code_lines.append(f"lbl_{new_label}:")
     # Sauvegarde des lignes dans function_raw.asm
-    raw_file_path = Path("retro/function_raw.asm")
-    with raw_file_path.open("w", encoding="utf-8") as raw_ficout:
-        for line in code_lines:
-            raw_ficout.write(line + "\n")
+    # raw_file_path = Path("retro/function_raw.asm")
+    # with raw_file_path.open("w", encoding="utf-8") as raw_ficout:
+    #     for line in code_lines:
+    #         raw_ficout.write(line + "\n")
 
     return code_lines
 
@@ -165,7 +165,11 @@ def generate_function_asm_code(abstree, indent=0):
 
     return code_lines
 
-with open ("retro\\brute_code\\fonction.s", "w") as ficout:
-    for line in generate_function_asm_code(read_abstree_from_json()):
-        # print (line)
-        ficout.write(line+"\n")
+# ——— Main ———
+if __name__ == "__main__":
+
+
+    with open ("retro\\brute_code\\fonction.s", "w") as ficout:
+        for line in generate_function_asm_code(read_abstree_from_json()):
+            # print (line)
+            ficout.write(line+"\n")
