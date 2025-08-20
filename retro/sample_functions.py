@@ -66,6 +66,18 @@ def log2_10_10(a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
     # Output as list of bits (LSB first)
     return toBin(mathval1, 10)
 
+def log2_12_12(a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
+    bits = [a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0]
+    
+    def f(i): return min((2**12)-1,round(math.log2((i))*(((2**12)-1)/12))) if i != 0 else 0
+
+    v1 = 0
+    for i, b in enumerate(reversed(bits)):
+        v1 += b << i
+    mathval1 = f(v1)
+    # Output as list of bits (LSB first)
+    return toBin(mathval1, 12)
+
 def log2_10_to_high_6 (a9, a8, a7, a6, a5, a4, a3, a2, a1, a0):
     bits = [a9, a8, a7, a6, a5, a4, a3, a2, a1, a0]
     
