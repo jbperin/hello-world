@@ -61,41 +61,41 @@ def classify_and_extract(line: str):
     indent_level = indent // 2
     stripped = line.strip("\n")
 
-    # # 1. Comment multi-if
-    # if stripped.startswith("; if (") and "and" in stripped:
-    #     conds_raw = re.findall(r"\((a\d+) *([!=]=) *(\d+)\)", stripped)
-    #     conditions = []
-    #     for reg, op, val in conds_raw:
-    #         conditions.append({
-    #             "reg": int(reg[1:]),  # a3 -> 3
-    #             "op": op,
-    #             "value": int(val)
-    #         })
-    #     return {
-    #         "type": "comment_multi_if",
-    #         "conditions": conditions,
-    #         "indent": indent,
-    #         "raw": line.rstrip("\n")
-    #     }
+    # 1. Comment multi-if
+    if stripped.startswith("; if (") and "and" in stripped:
+        conds_raw = re.findall(r"\((a\d+) *([!=]=) *(\d+)\)", stripped)
+        conditions = []
+        for reg, op, val in conds_raw:
+            conditions.append({
+                "reg": int(reg[1:]),  # a3 -> 3
+                "op": op,
+                "value": int(val)
+            })
+        return {
+            "type": "comment_multi_if",
+            "conditions": conditions,
+            "indent": indent,
+            "raw": line.rstrip("\n")
+        }
 
-    # # 2. Multi-bit AND + CMP branch
-    # m = re.match(
-    #     r"lda (\w+): and #((?:BIT_\d+\+?)+): cmp #((?:BIT_\d+\+?)+): .\(:beq skip: jmp lbl_(\d+): skip:.\)",
-    #     stripped
-    # )
-    # if m:
-    #     var, and_bits_raw, cmp_bits_raw, label = m.groups()
-    #     and_bits = [int(b.replace("BIT_", "")) for b in and_bits_raw.split("+")]
-    #     cmp_bits = [int(b.replace("BIT_", "")) for b in cmp_bits_raw.split("+")]
-    #     return {
-    #         "type": "and_multi_bit_branch",
-    #         "var": var,
-    #         "and_bits": and_bits,
-    #         "cmp_bits": cmp_bits,
-    #         "label": int(label),
-    #         "indent": indent,
-    #         "raw": line.rstrip("\n")
-    #     }
+    # 2. Multi-bit AND + CMP branch
+    m = re.match(
+        r"lda (\w+): and #((?:BIT_\d+\+?)+): cmp #((?:BIT_\d+\+?)+): .\(:beq skip: jmp lbl_(\d+): skip:.\)",
+        stripped
+    )
+    if m:
+        var, and_bits_raw, cmp_bits_raw, label = m.groups()
+        and_bits = [int(b.replace("BIT_", "")) for b in and_bits_raw.split("+")]
+        cmp_bits = [int(b.replace("BIT_", "")) for b in cmp_bits_raw.split("+")]
+        return {
+            "type": "and_multi_bit_branch",
+            "var": var,
+            "and_bits": and_bits,
+            "cmp_bits": cmp_bits,
+            "label": int(label),
+            "indent": indent,
+            "raw": line.rstrip("\n")
+        }
     
     for name, rx in patterns.items():
         m = rx.match(line)
