@@ -144,6 +144,13 @@ def generate_function_asm_code(abstree, indent=0):
                   "sav_reg_0 		        .dsb	2",
                   "sav_reg_1 		        .dsb	2",
                   "sav_reg_7 		        .dsb	2",
+                  "",
+                  "theFunction:",
+                  ".(",
+                  '#include "function_core.s"',
+                  "_unefonctionDone",
+                  ".)",
+                  "    rts",
                   "_uneFonction:",
                   ".(",
                   "lda tmp0: sta sav_reg_0",
@@ -163,9 +170,8 @@ def generate_function_asm_code(abstree, indent=0):
                   # f"  [{', '.join([f'r{i}' for i in range(NBITS_OUTPUT)])}] = [{', '.join([f'0' for i in range(NBITS_OUTPUT)])}]",
                  ]  # Function header
     # code_lines += abstree_to_asm6502_code(abstree, indent=indent+1)
-    code_lines += ['#include "function_core.s"']
+    code_lines += ['jsr theFunction']
     code_lines += [
-                  "_unefonctionDone",
                   "lda tmp7: sta _function_output",
                   "lda tmp7+1: sta _function_output+1",
                   "lda sav_reg_0: sta tmp0: ",
