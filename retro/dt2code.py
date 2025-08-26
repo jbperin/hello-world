@@ -77,7 +77,7 @@ def full_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis):
     idxOfBitToEncode = listOfIdxOfBitToEncode[0]
 
     X, y = build_X_y( idxOfBitToEncode, hypothesis, theDataframe)
-
+    # print (idxOfBitToEncode, hypothesis)
     if len(y) == 1:
         if (y[0] == 0):
             result = {'value': 'pass'}
@@ -327,7 +327,7 @@ if __name__ == "__main__":
         binval1 = theFunction(*reversed(binv1))
 
         bf_result = compute_r(binv1)
-        print(v1, binv1, binval1, bf_result, bf_result == binval1 )
+        # print(v1, binv1, binval1, bf_result, bf_result == binval1 )
         
         if (bf_result != binval1):
             print(v1, binv1, binval1, bf_result, bf_result == binval1 )

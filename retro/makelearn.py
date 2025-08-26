@@ -23,19 +23,17 @@ B = [b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15]
 def toBin (val, size):
     return list(reversed(list(map(lambda x: int(x),'{:0{}b}'.format(val, size)))))
 
-NBITS = 4
-idxOfBitToEncode = 0
-
+NBITS = 8
+idxOfBitToEncode = 6
 X=[]
 y=[]
-
 minterms = []
 dontcares  = []
-
+def f(i): return min((2**NBITS)-1,round(math.log2((i))*(((2**NBITS))/NBITS))) if i != 0 else 0
 
 for v1 in range(2**NBITS):
         binv1       = toBin(v1, NBITS)
-        mathval1    = round(math.sqrt(v1))
+        mathval1    = f(v1) # round(math.sqrt(v1)) #
         binval1     = toBin (mathval1, NBITS)
         targetbit   = binval1[idxOfBitToEncode]
         print (v1, binv1, mathval1, binval1, targetbit)

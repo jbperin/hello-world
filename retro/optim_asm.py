@@ -59,7 +59,7 @@ def normalize_label(value: str) -> str:
 def classify_and_extract(line: str):
     indent = len(line) - len(line.lstrip(" "))
     indent_level = indent // 2
-    stripped = line.strip("\n")
+    stripped = line.lstrip(" ").strip("\n")
 
     # 1. Comment multi-if
     if stripped.startswith("; if (") and "and" in stripped:
@@ -74,29 +74,40 @@ def classify_and_extract(line: str):
         return {
             "type": "comment_multi_if",
             "conditions": conditions,
-            "indent": indent,
+            "indent": indent_level,
             "raw": line.rstrip("\n")
         }
 
     # 2. Multi-bit AND + CMP branch
-    m = re.match(
-        r"lda (\w+): and #((?:BIT_\d+\+?)+): cmp #((?:BIT_\d+\+?)+): .\(:beq skip: jmp lbl_(\d+): skip:.\)",
-        stripped
-    )
+    # m = re.match(
+    #     r"lda (\w+): and #((?:BIT_\d+\+?)+): cmp #((?:BIT_\d+\+?)+): .\(:beq skip: jmp lbl_(\d+): skip:.\)",
+    #     stripped
+    # )
+    m = re.match(r'(\s*)lda (\w+\+?\d*): and #((?:BIT_\d+\+?)+)(?:: cmp #((?:BIT_\d+\+?)*)|): .*jmp (\w+):', line)
     if m:
-        var, and_bits_raw, cmp_bits_raw, label = m.groups()
-        and_bits = [int(b.replace("BIT_", "")) for b in and_bits_raw.split("+")]
-        cmp_bits = [int(b.replace("BIT_", "")) for b in cmp_bits_raw.split("+")]
+        indent_str, var, and_bits_raw, cmp_bits_raw, label = m.groups()
+
+        # Extraire la liste des bits du AND
+        and_bits = re.findall(r'BIT_(\d+)', and_bits_raw)
+        and_bits = [int(b) for b in and_bits]
+
+        # Extraire éventuellement les bits du CMP
+        if cmp_bits_raw:
+            cmp_bits = re.findall(r'BIT_(\d+)', cmp_bits_raw)
+            cmp_bits = [int(b) for b in cmp_bits]
+        else:
+            cmp_bits = []   # <── cas ligne 11
+
         return {
             "type": "and_multi_bit_branch",
             "var": var,
             "and_bits": and_bits,
             "cmp_bits": cmp_bits,
-            "label": int(label),
-            "indent": indent,
-            "raw": line.rstrip("\n")
+            "label": label[4:],
+            "raw": line,
+            "indent": indent_level,
         }
-    
+
     for name, rx in patterns.items():
         m = rx.match(line)
         if m:
@@ -170,7 +181,11 @@ def regenerate_line(instr: dict) -> str:
     elif instr["type"] == "comment_multi_if":
         # for cond in instr["conditions"]:
         #     conds.append(f"({ 'a'+str(cond['reg']) } {cond['op']} {cond['value']})")
-        joined = " and ".join(instr["conditions"])
+        # print (instr)
+        if (type(instr["conditions"][0]) == type("")):
+            joined = " and ".join(instr["conditions"])
+        else:
+            joined = " and ".join([f"(a{v['reg']} {v['op']} {v['value']})" for v in instr["conditions"]]) # join(instr["conditions"])
         result = f"{indent}; if {joined}:"
 
     elif instr["type"] == "and_multi_bit_branch":
@@ -210,6 +225,9 @@ from opt_remove_multiple_jumps import opt_remove_double_jumps
 from opt_merge_consecutive_assigns import opt_merge_consecutive_assigns
 from opt_merge_consecutive_uncomplemented_conditions import opt_merge_consecutive_uncomplemented_conditions
 
+from opt_merge_consecutive_identical_else_clause import opt_merge_consecutive_identical_else_clause
+from opt_change_final_jmp_by_rts import opt_change_final_jmp_by_rts
+from opt_rework_branching import opt_rework_branching
 
 
 def apply_optimizations(instructions):
@@ -217,6 +235,7 @@ def apply_optimizations(instructions):
     filters = [
         opt_merge_consecutive_assigns,
         opt_merge_consecutive_uncomplemented_conditions,
+        opt_merge_consecutive_identical_else_clause,
         # opt_remove_double_jumps,
     ]
     for f in filters:

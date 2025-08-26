@@ -28,6 +28,13 @@ _function_output 		.dsb	2
 sav_reg_0 		        .dsb	2
 sav_reg_1 		        .dsb	2
 sav_reg_7 		        .dsb	2
+
+theFunction:
+.(
+#include "function_core.s"
+_unefonctionDone
+.)
+    rts
 _uneFonction:
 .(
 lda tmp0: sta sav_reg_0
@@ -41,8 +48,7 @@ lda _function_input_0: sta tmp0
 lda _function_input_0+1: sta tmp0+1
 lda _function_input_1: sta tmp1
 lda _function_input_1+1: sta tmp1+1
-#include "function_core_opt.s"
-_unefonctionDone
+jsr theFunction
 lda tmp7: sta _function_output
 lda tmp7+1: sta _function_output+1
 lda sav_reg_0: sta tmp0: 
