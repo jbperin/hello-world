@@ -121,9 +121,34 @@ def opt_merge_consecutive_identical_else_clause(instructions):
     # 9: attente same assign /.../
     # 10: attente else
     etat                        = 0 
+
     new_instrs                  = []
+
     stack                       = []
-    # label terminal_jmp
+
+
+    last_assign               = []  
+    first_assign              = []
+
+
+    def check_same_assign(first, last):
+        if len(first) != len(last):
+            return False
+        for i in range(len(first)):
+            if first[i]["type"] != last[i]["type"]:
+                return False
+            if "addr" in first[i] and "addr" in last[i]:
+                if first[i]["addr"] != last[i]["addr"]:
+                    return False
+            elif "addr" in first[i] or "addr" in last[i]:
+                return False
+            if "value" in first[i] and "value" in last[i]:
+                if first[i]["value"] != last[i]["value"]:
+                    return False
+            elif "value" in first[i] or "value" in last[i]:
+                return False
+        return True
+
     for num_line, instr in enumerate(instructions):
 
         if etat == 0:
@@ -145,6 +170,8 @@ def opt_merge_consecutive_identical_else_clause(instructions):
                 etat = 0   
                 new_instrs.extend(stack)
                 stack = []
+                last_assign = []
+                first_assign = []
                 new_instrs.append(instr)
             else:
                 raise ValueError(f"Unexpected instruction type {instr['type']} at line {num_line} in state {etat}")
@@ -159,7 +186,9 @@ def opt_merge_consecutive_identical_else_clause(instructions):
                 # raise ValueError(f"Unexpected instruction type {instr['type']} at line {num_line} in state {etat}")
                 etat = 0
                 new_instrs.extend(stack)
-                stack = []
+                stack = [] 
+                last_assign = []
+                first_assign = []   
                 new_instrs.append(instr)
         elif etat == 3:
             if instr ["type"] == "label":
@@ -180,15 +209,20 @@ def opt_merge_consecutive_identical_else_clause(instructions):
                 etat = 0
                 new_instrs.extend(stack)
                 stack = []
+                first_assign = []
+                last_assign = []
                 new_instrs.append(instr)
         elif etat == 5:
             if instr ["type"] in ["comment_assign", "comment_multi_assign", "assign_or_bit", "assign_multi_or_bit"]:
                 etat = 6
                 stack.append(instr)
+                first_assign.append(instr)
             else:
                 etat = 0
                 new_instrs.extend(stack)
                 stack = []
+                first_assign = []
+                last_assign = []
                 new_instrs.append(instr)
         elif etat == 6:
             if instr ["type"] == "terminal_jmp":
@@ -197,10 +231,13 @@ def opt_merge_consecutive_identical_else_clause(instructions):
             elif instr ["type"] in ["comment_assign", "comment_multi_assign", "assign_or_bit", "assign_multi_or_bit"]:
                 etat = 6
                 stack.append(instr)
+                first_assign.append(instr)
             else:
                 etat = 0
                 new_instrs.extend(stack)
                 stack = []
+                first_assign = []
+                last_assign = []
                 new_instrs.append(instr)
         elif etat == 7:
             if instr ["type"] == "label":
@@ -210,6 +247,8 @@ def opt_merge_consecutive_identical_else_clause(instructions):
                 etat = 0
                 new_instrs.extend(stack)
                 stack = []
+                first_assign = []
+                last_assign = []
                 new_instrs.append(instr)
             else:
                 raise ValueError(f"Unexpected instruction type {instr['type']} at line {num_line} in state {etat}")
@@ -225,11 +264,14 @@ def opt_merge_consecutive_identical_else_clause(instructions):
                 print ("Check same assignement")
                 new_instrs.extend(stack)
                 stack = []
+                first_assign = []
+                last_assign = []
                 etat = 0
                 new_instrs.append(instr)
         elif etat == 9:
             if instr ["type"] in ["comment_assign", "comment_multi_assign", "assign_or_bit", "assign_multi_or_bit"]:
                 stack.append(instr)
+                last_assign.append(instr)
                 etat = 10
             elif instr ["type"] == "comment_else":
                 stack.append(instr)
@@ -237,15 +279,30 @@ def opt_merge_consecutive_identical_else_clause(instructions):
             else:
                 new_instrs.extend(stack)
                 stack = []
+                first_assign = []
+                last_assign = []   
                 etat = 0
                 new_instrs.append(instr)
         elif etat == 10:
             if instr ["type"] == "comment_else":
-                etat = 9
-                stack.append(instr)
+                # etat = 9
+                # stack.append(instr)
+                if not check_same_assign(first_assign, last_assign):
+                    print ("Different assignement")
+                    new_instrs.extend(stack)
+                    stack = []
+                    first_assign = []
+                    last_assign = []   
+                    etat = 0
+                else:
+                    print ("Same assignement")
+
+                    etat = 9
+                    stack.append(instr)
             elif instr ["type"] in ["comment_assign", "comment_multi_assign", "assign_or_bit", "assign_multi_or_bit"]:
                 etat = 10
                 stack.append(instr) 
+                last_assign.append(instr)
             elif instr ["type"] in ["comment_cond", "and_bit_branch", "comment_multi_if" , "and_multi_bit_branch"]:
                 # vérifier que l'assignement est le même
                 etat = 1
@@ -264,8 +321,20 @@ def opt_merge_consecutive_identical_else_clause(instructions):
                 pass
         elif etat == 12:
             if instr ["type"] == "comment_else":
-                etat = 9
-                stack.append(instr) 
+                # TODO: vérifier que l'assignement est le même
+                if not check_same_assign(first_assign, last_assign):
+                    print ("Different assignement")
+                    new_instrs.extend(stack)
+                    stack = []
+                    first_assign = []
+                    last_assign = []   
+                    etat = 0
+                else:
+                    print ("Same assignement")
+                    # on supprime le else
+                    stack = stack[:-len(last_assign)-1]
+                    etat = 9
+                    stack.append(instr) 
             else:
                 
                 print ("Check same assignement")
@@ -277,7 +346,7 @@ def opt_merge_consecutive_identical_else_clause(instructions):
         # elif (instr["type"] in ["comment_multi_if"]):
         #     print (" --= HERE: comment_multi_if ==--")
         num_line += 1
-    return (instructions)
+    return (new_instrs)
 
 
 # ——— Main ———

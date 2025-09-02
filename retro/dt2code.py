@@ -72,20 +72,79 @@ def display_tree(tree):
     r = export_text(tree)
     print(r)
 
-def full_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis):
+# def full_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis):
+
+#     idxOfBitToEncode = listOfIdxOfBitToEncode[0]
+
+#     X, y = build_X_y( idxOfBitToEncode, hypothesis, theDataframe)
+#     # print (idxOfBitToEncode, hypothesis)
+#     if len(y) == 1:
+#         if (y[0] == 0):
+#             result = {'value': 'pass'}
+#         else: 
+#             result = {'value': f"r{idxOfBitToEncode} = {y[0]}"}
+#         if (len(listOfIdxOfBitToEncode) != 1):
+#             listOfIdxOfBitToEncode.pop(0)
+#             result['subtree'] = full_abstract_tree(listOfIdxOfBitToEncode, hypothesis)
+#         return result
+    
+#     tree = DecisionTreeClassifier().fit(X, y) # max_depth=2
+#     # display_tree(tree)
+#     node_id=0
+
+#     if tree.tree_.children_left[node_id] == tree.tree_.children_right[node_id]:  # Leaf node
+#         listOfIdxOfBitToEncode.pop(0)  
+#         if len(listOfIdxOfBitToEncode) != 0:
+#             if (y[0] == 0):
+#                 result = {'value': 'pass'}
+#             else:
+#                 result = {'value': f"r{idxOfBitToEncode} = {y[0]}"}
+#             result['subtree']= full_abstract_tree(listOfIdxOfBitToEncode, hypothesis)
+
+#             # listOfIdxOfBitToEncode.insert(0, sav)  # Restore the index for the next call
+#             return result
+#         else:
+#             if (y[0] == 0):
+#                 result = {'value': 'pass'}
+#             else:
+#                 result = {'value': f"r{idxOfBitToEncode} = {y[0]}"}
+#             # listOfIdxOfBitToEncode.insert(0, sav)
+#             return result
+#     else:
+#         result = {
+#             'feature': tree.tree_.feature[node_id],
+#             # 'threshold': "", #tree.tree_.threshold[node_id], #
+#             # 'value': "", # tree.tree_.value[node_id][0].tolist(), # 
+#         }
+#         savl = listOfIdxOfBitToEncode.copy()
+#         result['left'] = full_abstract_tree(listOfIdxOfBitToEncode, hypothesis + [(tree.tree_.feature[node_id], 0)])
+#         listOfIdxOfBitToEncode = savl.copy()
+#         result['right'] = full_abstract_tree(listOfIdxOfBitToEncode, hypothesis + [(tree.tree_.feature[node_id], 1)])
+#         listOfIdxOfBitToEncode = savl.copy()
+
+#         return result
+
+def build_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis):
 
     idxOfBitToEncode = listOfIdxOfBitToEncode[0]
 
     X, y = build_X_y( idxOfBitToEncode, hypothesis, theDataframe)
+    
     # print (idxOfBitToEncode, hypothesis)
     if len(y) == 1:
         if (y[0] == 0):
-            result = {'value': 'pass'}
+            result =  {}
         else: 
-            result = {'value': f"r{idxOfBitToEncode} = {y[0]}"}
+            result = {'assigns': [f"r{idxOfBitToEncode} = {y[0]}"]}
         if (len(listOfIdxOfBitToEncode) != 1):
             listOfIdxOfBitToEncode.pop(0)
-            result['subtree'] = full_abstract_tree(listOfIdxOfBitToEncode, hypothesis)
+            subtree_part= build_abstract_tree(listOfIdxOfBitToEncode, hypothesis)
+            for k,v in subtree_part.items():
+                if k == 'assigns' and 'assigns' in result.keys():
+                    result[k].extend(v)
+                else:
+                    result[k]=v
+
         return result
     
     tree = DecisionTreeClassifier().fit(X, y) # max_depth=2
@@ -94,35 +153,43 @@ def full_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis):
 
     if tree.tree_.children_left[node_id] == tree.tree_.children_right[node_id]:  # Leaf node
         listOfIdxOfBitToEncode.pop(0)  
+        result = {}
         if len(listOfIdxOfBitToEncode) != 0:
-            if (y[0] == 0):
-                result = {'value': 'pass'}
-            else:
-                result = {'value': f"r{idxOfBitToEncode} = {y[0]}"}
-            result['subtree']= full_abstract_tree(listOfIdxOfBitToEncode, hypothesis)
+            
+            if (y[0] != 0):
+                result = {'assigns': [f"r{idxOfBitToEncode} = {y[0]}"]}
+                
+            subtree_part=build_abstract_tree(listOfIdxOfBitToEncode, hypothesis)
 
-            # listOfIdxOfBitToEncode.insert(0, sav)  # Restore the index for the next call
-            return result
+            for k,v in subtree_part.items():
+                if k == 'assigns' and 'assigns' in result.keys():
+                    result[k].extend(v)
+                else:
+                    result[k]=v
         else:
-            if (y[0] == 0):
-                result = {'value': 'pass'}
-            else:
-                result = {'value': f"r{idxOfBitToEncode} = {y[0]}"}
-            # listOfIdxOfBitToEncode.insert(0, sav)
-            return result
+            if (y[0] != 0):
+                result = {'assigns': [f"r{idxOfBitToEncode} = {y[0]}"]}
+
+        return result
     else:
         result = {
             'feature': tree.tree_.feature[node_id],
             # 'threshold': "", #tree.tree_.threshold[node_id], #
             # 'value': "", # tree.tree_.value[node_id][0].tolist(), # 
         }
+        
         savl = listOfIdxOfBitToEncode.copy()
-        result['left'] = full_abstract_tree(listOfIdxOfBitToEncode, hypothesis + [(tree.tree_.feature[node_id], 0)])
+        left_part = build_abstract_tree(listOfIdxOfBitToEncode, hypothesis + [(tree.tree_.feature[node_id], 0)])
+        if left_part != {} : result['left'] = left_part
+            
         listOfIdxOfBitToEncode = savl.copy()
-        result['right'] = full_abstract_tree(listOfIdxOfBitToEncode, hypothesis + [(tree.tree_.feature[node_id], 1)])
+        right_part = build_abstract_tree(listOfIdxOfBitToEncode, hypothesis + [(tree.tree_.feature[node_id], 1)])
+        if right_part != {} : result['right'] = right_part
+            
         listOfIdxOfBitToEncode = savl.copy()
 
         return result
+
 
 def convert_numpy_types(obj):
     if isinstance(obj, dict):
@@ -134,73 +201,92 @@ def convert_numpy_types(obj):
     else:
         return obj
 
-def remove_pass_and_empty(d):
-    if isinstance(d, dict):
-        # Remove 'value': 'pass' at this level
-        d = {k: v for k, v in d.items() if not (k == 'value' and v == 'pass')}
-        # Recursively process sub-dictionaries
-        d = {k: remove_pass_and_empty(v) for k, v in d.items()}
-        # Remove keys with empty dicts
-        d = {k: v for k, v in d.items() if not (isinstance(v, dict) and len(v) == 0)}
-        return d
-    elif isinstance(d, list):
-        return [remove_pass_and_empty(item) for item in d]
-    else:
-        return d
+# def remove_pass_and_empty(d):
+#     if isinstance(d, dict):
+#         # Remove 'value': 'pass' at this level
+#         d = {k: v for k, v in d.items() if not (k == 'value' and v == 'pass')}
+#         # Recursively process sub-dictionaries
+#         d = {k: remove_pass_and_empty(v) for k, v in d.items()}
+#         # Remove keys with empty dicts
+#         d = {k: v for k, v in d.items() if not (isinstance(v, dict) and len(v) == 0)}
+#         return d
+#     elif isinstance(d, list):
+#         return [remove_pass_and_empty(item) for item in d]
+#     else:
+#         return d
 
 def build_abstree_to_json(abstree, output_json_path="retro/abstree.json"):
     
-    abstree_serializable = convert_numpy_types(abstree)
-    light_abstree = remove_pass_and_empty(abstree_serializable)
-    # print(json.dumps(light_abstree, indent=2))
-
     with open(Path(output_json_path), "w") as f:
-        f.write(json.dumps(light_abstree, indent=2))
+        f.write(json.dumps(convert_numpy_types(abstree), indent=2))
 
 def read_abstree_from_json(input_json_path="retro/abstree.json"):
     with open(input_json_path, "r") as fic_in:
         abstree = json.load(fic_in)
     return abstree
 
-def abstree_to_python_code(abstree, indent=0):
+# def abstree_to_python_code(abstree, indent=0):
+#     code_lines = []
+#     ind = '  ' * indent
+#     # Handle value assignment
+#     if 'value' in abstree:
+#         code_lines.append(f"{ind}{abstree['value']}")
+    
+#     # If there is a subtree, process it recursively
+#     if 'subtree' in abstree:
+#         if 'feature' in abstree['subtree']:
+#             var = f"a{abstree['subtree']['feature']}"
+#             if 'left' in abstree['subtree']:
+#                 code_lines.append(f"{ind}if ({var} == 0):")
+#                 code_lines += abstree_to_python_code(abstree['subtree']['left'], indent + 1)   
+#                 if 'right' in abstree['subtree']:
+#                     code_lines.append(f"{ind}else:")     
+#                     code_lines += abstree_to_python_code(abstree['subtree']['right'], indent + 1)
+#             else:
+#                 if 'right' in abstree['subtree']:  
+#                     code_lines.append(f"{ind}if ({var} != 0):")       
+#                     code_lines += abstree_to_python_code(abstree['subtree']['right'], indent + 1)
+#         else:
+#             code_lines += abstree_to_python_code(abstree['subtree'], indent)
+#     else:
+#         # If there is a feature, handle it
+#         if 'feature' in abstree:
+#             var = f"a{abstree['feature']}"
+#             if 'left' in abstree:
+#                 code_lines.append(f"{ind}if ({var} == 0):")
+#                 code_lines += abstree_to_python_code(abstree['left'], indent + 1)
+#                 if 'right' in abstree:
+#                     code_lines.append(f"{ind}else:")
+#                     code_lines += abstree_to_python_code(abstree['right'], indent + 1)
+#             else:
+#                 if 'right' in abstree:
+#                     code_lines.append(f"{ind}if ({var} != 0):")
+#                     code_lines += abstree_to_python_code(abstree['right'], indent + 1)
+#     return code_lines
+
+def new_abstree_to_python_code(abstree, indent=0):
     code_lines = []
     ind = '  ' * indent
     # Handle value assignment
-    if 'value' in abstree:
-        code_lines.append(f"{ind}{abstree['value']}")
+    if 'assigns' in abstree:
+        for ass in abstree['assigns']:
+            code_lines.append(f"{ind}{ass}")
     
     # If there is a subtree, process it recursively
-    if 'subtree' in abstree:
-        if 'feature' in abstree['subtree']:
-            var = f"a{abstree['subtree']['feature']}"
-            if 'left' in abstree['subtree']:
-                code_lines.append(f"{ind}if ({var} == 0):")
-                code_lines += abstree_to_python_code(abstree['subtree']['left'], indent + 1)   
-                if 'right' in abstree['subtree']:
-                    code_lines.append(f"{ind}else:")     
-                    code_lines += abstree_to_python_code(abstree['subtree']['right'], indent + 1)
-            else:
-                if 'right' in abstree['subtree']:  
-                    code_lines.append(f"{ind}if ({var} != 0):")       
-                    code_lines += abstree_to_python_code(abstree['subtree']['right'], indent + 1)
+    if 'feature' in abstree:
+        var = f"a{abstree['feature']}"
+        if 'left' in abstree:
+            code_lines.append(f"{ind}if ({var} == 0):")
+            code_lines += new_abstree_to_python_code(abstree['left'], indent + 1)   
+            if 'right' in abstree:
+                code_lines.append(f"{ind}else:")     
+                code_lines += new_abstree_to_python_code(abstree['right'], indent + 1)
         else:
-            code_lines += abstree_to_python_code(abstree['subtree'], indent)
-    else:
-        # If there is a feature, handle it
-        if 'feature' in abstree:
-            var = f"a{abstree['feature']}"
-            if 'left' in abstree:
-                code_lines.append(f"{ind}if ({var} == 0):")
-                code_lines += abstree_to_python_code(abstree['left'], indent + 1)
-                if 'right' in abstree:
-                    code_lines.append(f"{ind}else:")
-                    code_lines += abstree_to_python_code(abstree['right'], indent + 1)
-            else:
-                if 'right' in abstree:
-                    code_lines.append(f"{ind}if ({var} != 0):")
-                    code_lines += abstree_to_python_code(abstree['right'], indent + 1)
-    return code_lines
+            if 'right' in abstree:  
+                code_lines.append(f"{ind}if ({var} != 0):")       
+                code_lines += new_abstree_to_python_code(abstree['right'], indent + 1)
 
+    return code_lines
 
 # Function to generate the code
 def generate_function_code(abstree, indent, NBITS_INPUT, NBITS_OUTPUT):
@@ -210,7 +296,7 @@ def generate_function_code(abstree, indent, NBITS_INPUT, NBITS_OUTPUT):
                   #"  [r0, r1, r2, r3] = [0, 0, 0, 0]",
                   f"  [{', '.join([f'r{i}' for i in range(NBITS_OUTPUT)])}] = [{', '.join([f'0' for i in range(NBITS_OUTPUT)])}]",
                  ]  # Function header
-    code_lines += abstree_to_python_code(abstree, indent=indent+1)
+    code_lines += new_abstree_to_python_code(abstree, indent=indent+1)
     code_lines.append(f"  r = [{', '.join([f'r{i}' for i in range(NBITS_OUTPUT)])}]")
     code_lines.append(f"  return r")
     return code_lines
@@ -288,7 +374,7 @@ def optimize_ASM_code(path_to_assembly_file="retro/brute_code/function_core.s"):
 # ——— Main ———
 if __name__ == "__main__":
 
-    theFunction = sample_functions.not_log2_10_10
+    theFunction = sample_functions.uneFct_5_5 # not_log2_5_5 #
     # theFunction = sample_functions.not_log2_12_to_low_6
     # theFunction = sample_functions.not_log2_10_10
 
@@ -304,7 +390,7 @@ if __name__ == "__main__":
     # Génère un arbre abstrait 
     listOfIdxOfBitToEncode = list(reversed(range(NBITS_OUTPUT)))
     hypothesis = []
-    abstree = full_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis)
+    abstree = build_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis)
 
     # filtre, optimise et stocke dans "retro/abstree.json"
     build_abstree_to_json(abstree, 'retro/abstree.json')
@@ -334,19 +420,19 @@ if __name__ == "__main__":
             print ("--== ERROR ==--")
             break
 
-    # Génère le code assembleur d'une fonction et l'enregistre dans "retro\\brute_code\\fonction.s"
-    with open ("retro\\brute_code\\fonction.s", "w") as ficout:
-        for line in generate_function_asm_code(read_abstree_from_json()):
-            # print (line)
-            ficout.write(line+"\n")
+    # # Génère le code assembleur d'une fonction et l'enregistre dans "retro\\brute_code\\fonction.s"
+    # with open ("retro\\brute_code\\fonction.s", "w") as ficout:
+    #     for line in generate_function_asm_code(read_abstree_from_json()):
+    #         # print (line)
+    #         ficout.write(line+"\n")
 
-    # Génère le code assembleur depuis l'arbre abstrait et l'enregistre dans retro\\brute_code\\function_core.s appelé depuis fonction.s
-    with open ("retro\\brute_code\\function_core.s", "w") as ficout:
-        for line in abstree_to_asm6502_code(abstree, indent=1):
-            # print (line)
-            ficout.write(line+"\n")
-    check_results()
+    # # Génère le code assembleur depuis l'arbre abstrait et l'enregistre dans retro\\brute_code\\function_core.s appelé depuis fonction.s
+    # with open ("retro\\brute_code\\function_core.s", "w") as ficout:
+    #     for line in abstree_to_asm6502_code(abstree, indent=1):
+    #         # print (line)
+    #         ficout.write(line+"\n")
+    # check_results()
 
-    optimize_ASM_code("retro\\brute_code\\function_core.s")
+    # optimize_ASM_code("retro\\brute_code\\function_core.s")
 
-    check_results()
+    # check_results()
