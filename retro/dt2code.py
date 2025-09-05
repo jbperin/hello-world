@@ -288,6 +288,37 @@ def new_abstree_to_python_code(abstree, indent=0):
 
     return code_lines
 
+def to_condition(pairs):
+    return " and ".join(f"(a{a} == {b})" for a, b in pairs)
+
+def optimized_abstree_to_python_code(abstree, indent=0):
+    code_lines = []
+    ind = '  ' * indent
+    # Handle value assignment
+    if 'assigns' in abstree:
+        for ass in abstree['assigns']:
+            code_lines.append(f"{ind}{ass}")
+    
+    # If there is a subtree, process it recursively
+    if 'feature' in abstree:
+        var = f"a{abstree['feature']}"
+        if 'left' in abstree:
+            code_lines.append(f"{ind}if ({var} == 0):")
+            code_lines += optimized_abstree_to_python_code(abstree['left'], indent + 1)   
+            if 'right' in abstree:
+                code_lines.append(f"{ind}else:")     
+                code_lines += optimized_abstree_to_python_code(abstree['right'], indent + 1)
+        else:
+            if 'right' in abstree:  
+                code_lines.append(f"{ind}if ({var} != 0):")       
+                code_lines += optimized_abstree_to_python_code(abstree['right'], indent + 1)
+
+    if 'features' in abstree:
+        code_lines.append(f"{ind}if {to_condition(abstree['features'])}:")
+        code_lines += optimized_abstree_to_python_code(abstree['right'], indent + 1)
+
+    return code_lines
+
 # Function to generate the code
 def generate_function_code(abstree, indent, NBITS_INPUT, NBITS_OUTPUT):
     code_lines = ["def compute_r(a):",
@@ -296,7 +327,7 @@ def generate_function_code(abstree, indent, NBITS_INPUT, NBITS_OUTPUT):
                   #"  [r0, r1, r2, r3] = [0, 0, 0, 0]",
                   f"  [{', '.join([f'r{i}' for i in range(NBITS_OUTPUT)])}] = [{', '.join([f'0' for i in range(NBITS_OUTPUT)])}]",
                  ]  # Function header
-    code_lines += new_abstree_to_python_code(abstree, indent=indent+1)
+    code_lines += optimized_abstree_to_python_code(abstree, indent=indent+1) # new_abstree_to_python_code(abstree, indent=indent+1) #
     code_lines.append(f"  r = [{', '.join([f'r{i}' for i in range(NBITS_OUTPUT)])}]")
     code_lines.append(f"  return r")
     return code_lines
@@ -342,6 +373,54 @@ def toBin (val, size):
 
 
 
+def optimize_abstree(node):    
+    """
+    Optimise récursivement un nœud de l'arbre  
+    en regroupant les tests de bits successifs univoques.
+    """
+
+    if "assigns" in node and "feature" not in node:
+        # Noeud feuille avec des assigns mais pas de features
+        return node
+    if "feature" in node:
+        if "left" in node and "right" in node: 
+            # Cas: deux branches
+            node["left"] = optimize_abstree(node["left"])
+            node["right"] = optimize_abstree(node["right"])
+            return node
+        elif ("left" in node and "right" not in node) or ("right" in node and "left" not in node):
+            # On regroupe les tests de bits successifs univoques
+            features    = [[node["feature"], 0 if "left" in node else 1]]
+            current     = node["left"] if "left" in node else node["right"]
+            assigns     = node.get("assigns", [])
+            while ("feature" in current) and (("left" in current and "right" not in current) or ("right" in current and "left" not in current)) and ("assigns" not in current):
+                feature     = current["feature"]
+                left        = current.get("left")
+                right       = current.get("right")
+                if left is not None and right is None:
+                    features.append([feature, 0])
+                    current = left
+                elif right is not None and left is None:
+                    features.append([feature, 1])
+                    current = right
+                else:
+                    break
+            # Quand on sort de la boucle: current est sur un test non univoque ou ne contient qu'assigns
+            # Si on a qu'une seule feature dans la liste, on la remet en "feature"
+            if len(features) == 1:
+                return {k: v for k, v in node.items() if v is not None}
+            else:
+                # Si on a plusieurs features, on crée un noeud avec "features" qui regroupe les feature
+                # Le sous arbre correspondant est dans "right"
+                new_node = {
+                    "assigns": assigns if assigns else None,
+                    "features": features if features else None,
+                    "right": optimize_abstree(current) if current else None
+                }
+                return {k: v for k, v in new_node.items() if v is not None}
+
+
+
 from abstree2asm import generate_function_asm_code, abstree_to_asm6502_code
 
 
@@ -374,9 +453,9 @@ def optimize_ASM_code(path_to_assembly_file="retro/brute_code/function_core.s"):
 # ——— Main ———
 if __name__ == "__main__":
 
-    theFunction = sample_functions.uneFct_5_5 # not_log2_5_5 #
+    # theFunction = sample_functions.uneFct_5_5 # not_log2_5_5 # 
     # theFunction = sample_functions.not_log2_12_to_low_6
-    # theFunction = sample_functions.not_log2_10_10
+    theFunction = sample_functions.log2_12_12 # log2_8_8 # 
 
     NBITS_INPUT, NBITS_OUTPUT = deduce_fonction_prototype(theFunction)
 
@@ -399,8 +478,14 @@ if __name__ == "__main__":
     # Lit l'arbre abstrait depuis "retro/abstree.json"
     abstree = read_abstree_from_json('retro/abstree.json')
 
+    optimized_abstree = optimize_abstree(abstree)
+
+    with open(Path('retro/abstree_optimized.json'), "w") as f:
+        f.write(json.dumps(optimized_abstree, indent=2))
+
+
     # Génère le code python d'une fonction depuis l'arbre abstrait et l'enregistre dans retro/abstree.py
-    function_code = generate_function_code(abstree, 0, NBITS_INPUT, NBITS_OUTPUT)
+    function_code = generate_function_code(optimized_abstree, 0, NBITS_INPUT, NBITS_OUTPUT)
     save_function_to_file(function_code, 'retro/abstree.py')
 
 
