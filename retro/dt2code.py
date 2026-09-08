@@ -455,7 +455,7 @@ if __name__ == "__main__":
 
     # theFunction = sample_functions.uneFct_5_5 # not_log2_5_5 # 
     # theFunction = sample_functions.not_log2_12_to_low_6
-    theFunction = sample_functions.log2_12_12 # log2_8_8 # 
+    theFunction = sample_functions.log2_4_4 # log2_8_8 # 
 
     NBITS_INPUT, NBITS_OUTPUT = deduce_fonction_prototype(theFunction)
 
@@ -467,7 +467,7 @@ if __name__ == "__main__":
     theDataframe = build_training_samples()
 
     # Génère un arbre abstrait 
-    listOfIdxOfBitToEncode = list(reversed(range(NBITS_OUTPUT)))
+    listOfIdxOfBitToEncode = [0, 1, 2, 3] # list(reversed(range(NBITS_OUTPUT)))
     hypothesis = []
     abstree = build_abstract_tree   (listOfIdxOfBitToEncode,  hypothesis)
 

@@ -1,14 +1,106 @@
 {
-  "assigns": [
-    "r2 = 1"
-  ],
-  "feature": 4,
+  "feature": 3,
   "left": {
-    "feature": 3,
+    "feature": 2,
     "left": {
+      "feature": 0,
+      "left": {
+        "feature": 1,
+        "right": {
+          "assigns": [
+            "r2 = 1"
+          ]
+        }
+      },
+      "right": {
+        "feature": 1,
+        "right": {
+          "assigns": [
+            "r1 = 1",
+            "r2 = 1"
+          ]
+        }
+      }
+    },
+    "right": {
       "assigns": [
-        "r0 = 1"
-      ]
+        "r3 = 1"
+      ],
+      "feature": 1,
+      "left": {
+        "feature": 0,
+        "right": {
+          "assigns": [
+            "r0 = 1"
+          ]
+        }
+      },
+      "right": {
+        "assigns": [
+          "r1 = 1"
+        ],
+        "feature": 0,
+        "right": {
+          "assigns": [
+            "r0 = 1"
+          ]
+        }
+      }
+    }
+  },
+  "right": {
+    "assigns": [
+      "r3 = 1"
+    ],
+    "feature": 2,
+    "left": {
+      "feature": 0,
+      "left": {
+        "assigns": [
+          "r2 = 1"
+        ],
+        "feature": 1,
+        "right": {
+          "assigns": [
+            "r0 = 1"
+          ]
+        }
+      },
+      "right": {
+        "feature": 1,
+        "left": {
+          "assigns": [
+            "r2 = 1",
+            "r0 = 1"
+          ]
+        },
+        "right": {
+          "assigns": [
+            "r1 = 1",
+            "r2 = 1"
+          ]
+        }
+      }
+    },
+    "right": {
+      "assigns": [
+        "r1 = 1",
+        "r2 = 1"
+      ],
+      "feature": 1,
+      "left": {
+        "feature": 0,
+        "right": {
+          "assigns": [
+            "r0 = 1"
+          ]
+        }
+      },
+      "right": {
+        "assigns": [
+          "r0 = 1"
+        ]
+      }
     }
   }
 }

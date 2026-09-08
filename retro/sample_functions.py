@@ -38,10 +38,15 @@ def uneFct_5_5(a4, a3, a2, a1, a0):
     v1 = 0
     for i, b in enumerate(reversed(bits)):
         v1 += b << i
-    if v1 > 7:
-        mathval1 = 4
+
+
+    if a3 == 1 and a2 == 1: # v1 == 2**3 + 2**4:
+        mathval1 = 2**4 + 2**1
     else:
-        mathval1 = 5
+        if a4 == 1 and a1 == 1:
+            mathval1 = 2**3
+        else:
+            mathval1 = 0
     # Output as list of bits (LSB first)
     return toBin(mathval1, 5)
 
